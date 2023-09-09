@@ -1,40 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <script src="script.js"></script>
-    <title>CC</title>
-</head>
-
-<body>
-    <nav>
-        <div class="logo">My Logo</div>
-        <ul>
+    
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="style.css">
+        <title>CC</title>
+    </head>
+    
+    <body>
+        <nav>
+            <div class="logo">My Logo</div>
+            <ul>
             <li>Home</li>
             <li>About</li>
             <li>Contact</li>
         </ul>
     </nav>
-
+    
     <br><br>
     <form action="action.php" method="get">
-
+        
         <div class="inputDiv">
             Please Select your Currency ::
-            <select name="" id="">
+            <select name="" id="baseCurrency" required>
                 <Option value="INR">INR</Option>
                 <Option value="USD">USD</Option>
                 <Option value="EUR">EUR</Option>
             </select>
-
+            
             <br>
             Please enter amount ::
-            <input type="number" name="" id="">
+            <input type="number" name="" id="amount" required>
             <br>
-            <button type="submit">Submit</button>
+            <button id="submit">Submit</button>
         </div>
     </form>
     <br><br>
@@ -49,10 +48,15 @@
                 </tr>
             </thead>
             <tbody id="data">
-                
+                <tr>
+                    <td>Web</td>
+                    <td>Web</td>
+                    <td>Web</td>
+                </tr>
             </tbody>
         </table>
     </div>
 </body>
 
+<script src="script.js"></script>
 </html>

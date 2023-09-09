@@ -42,8 +42,9 @@ input, button, select{
 
 table{
     border: 2px solid;
-    width: 50%;
+    width: 80vw;
     text-align: center;
+    border-collapse:collapse;
 }
 td,th{
     border: 2px solid;
@@ -51,5 +52,5 @@ td,th{
 }
 
 .output{
-    /* display: none; */
+    display: none;
 }
