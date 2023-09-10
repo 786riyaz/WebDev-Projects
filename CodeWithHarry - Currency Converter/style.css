@@ -3,7 +3,9 @@
     padding: 0;
 }
 body{
-    background-color: aqua;
+    background-color: rgb(210, 171, 240);
+    font-weight: 900;
+    font-size: large;
 }
 
 ul{
@@ -18,7 +20,7 @@ li{
     background-color: black;
     font-size: 32px;
     padding: 10px 100px 10px 0px;
-    color: aqua;
+    color: rgb(210, 171, 240);
 }
 
 nav{
@@ -37,7 +39,7 @@ input[type=number], select{
     border: none;
     display: block;
     width: 90%;
-    background-color: aqua;
+    background-color: rgb(210, 171, 240);
 }
 button{
     border: 5px solid;
@@ -46,7 +48,7 @@ button{
     padding: 10px;
     display: block;
     margin: auto;
-    background-color: aqua;
+    background-color: rgb(210, 171, 240);
 }
 
 .box{
