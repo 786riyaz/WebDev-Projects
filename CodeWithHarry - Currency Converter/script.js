@@ -4,7 +4,6 @@
 
 console.clear();
 console.log("Application Started");
-debugger;
 let safeMode, liveMode;
 
 //For Safe Mode Uncomment these block
