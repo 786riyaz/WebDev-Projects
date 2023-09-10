@@ -1,53 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
-    
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="style.css">
-        <title>CC</title>
-    </head>
-    
-    <body>
-        <nav>
-            <div class="logo">My Logo</div>
-            <ul>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>CC</title>
+</head>
+
+<body>
+    <nav>
+        <ul>
+            <li>Logo</li>
             <li>Home</li>
             <li>About</li>
             <li>Contact</li>
         </ul>
     </nav>
-    
-    <br><br>
+
     <form action="action.php" method="get">
-        
-        <div class="inputDiv">
-            Please Select your Currency ::
-            <select name="" id="baseCurrency" required>
-                <Option value="INR">INR</Option>
-                <Option value="USD">USD</Option>
-                <Option value="EUR">EUR</Option>
-            </select>
-            
-            <br>
-            Please enter amount ::
-            <input type="number" name="" id="amount" required>
-            <br>
-            <button id="submit">Submit</button>
+
+        <div class="inputMain">
+            <div class="">
+                <label for="Mode">Safe Mode</label>
+                <input type="checkbox" name="Mode" id="Mode" checked>
+            </div>
+
+            <div class="box">
+                <label for="baseCurrency">Please Select your Currency</label>
+                <select name="baseCurrency" id="baseCurrency" required></select>
+            </div>
+            <div class="box">
+                <label for="amount">
+                    Please Enter Amount ::
+                </label>
+                <input type="number" name="amount" id="amount" required>
+            </div>
         </div>
+        <button id="submit">Submit</button>
     </form>
-    <br><br>
+    <br>
     <div class="output">
         <table>
-            <caption>Data Table</caption>
+            <caption>*** Currency Data ***</caption>
             <thead>
+
                 <tr>
                     <th>Currency</th>
                     <th>Code</th>
                     <th>Value</th>
                 </tr>
             </thead>
-            <tbody id="data">
+            <tbody>
                 <tr>
                     <td>Web</td>
                     <td>Web</td>
@@ -59,4 +63,5 @@
 </body>
 
 <script src="script.js"></script>
+
 </html>

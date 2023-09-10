@@ -1,0 +1,14 @@
+--------------------------------Remaining
+
+--------------------------------Done
+dynamic option for mode
+
+Demo site with static DD value and static Data
+Demo site with static DD value and dynamic Data
+
+live mode
+safe mode
+
+all at once
+
+CSS

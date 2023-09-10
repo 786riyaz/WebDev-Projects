@@ -1,0 +1,62 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+nav {
+    background-color: yellow;
+    display: flex;
+    font-size: xx-large;
+}
+
+ul {
+    display: flex;
+}
+
+ul li {
+    display: flex;
+    margin: 10px;
+}
+
+.logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px;
+}
+
+.inputDiv{
+    padding: 10px;
+    border: 5px solid red;
+    display: inline-block;
+    margin: 10px;;
+}
+
+
+button, select{
+    border: 2px solid;
+    padding: 10px;
+    width: 100%;
+}
+
+input{
+    width:80%;
+    margin: auto;
+    border: 2px solid;
+    padding: 10px;
+}
+
+table{
+    border: 2px solid;
+    width: 80vw;
+    text-align: center;
+    border-collapse:collapse;
+}
+td,th{
+    border: 2px solid;
+    border-collapse:collapse;
+}
+
+.output{
+    display: none;
+}

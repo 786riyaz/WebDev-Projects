@@ -2,10 +2,10 @@
 // const client = new currencyapi('YOUR-API-KEY')
 // await client.latest()
 
+console.clear();
 console.log("Application Started");
-
-let safeMode;
-let liveMode;
+debugger;
+let safeMode, liveMode;
 
 //For Safe Mode Uncomment these block
 liveMode = false, safeMode = true;
@@ -16,17 +16,14 @@ liveMode = false, safeMode = true;
 let tableHTMLstring = ``;
 let CurrencyData = "";
 let outputDiv = document.getElementsByClassName("output");
-// outputDiv[0].style.display = "none";
 
 // Setting testing data in table
 const tableBody = document.getElementsByTagName("tbody");
-tableBody.data.innerHTML = `<tr><td>Data</td><td>Data</td><td>Data</td></tr>`;
+tableBody[0].innerHTML = `<tr><td>Data</td><td>Data</td><td>Data</td></tr>`;
 
 // setting all options in DropDown
 let selectComponent = document.getElementsByTagName("select")[0];
-// console.log("select Component ::: ")
-// console.log(selectComponent);
-let totalCurrencies = ["ADA", "AED", "AFN", "ALL", "AMD", "ANG", "AOA", "ARB", "ARS", "AUD", "AVAX", "AWG", "AZN", "BAM", "BBD", "BDT", "BGN", "BHD", "BIF", "BMD", "BNB", "BND", "BOB", "BRL", "BSD", "BTC", "BTN", "BUSD", "BWP", "BYN", "BYR", "BZD", "CAD", "CDF", "CHF", "CLF", "CLP", "CNY", "COP", "CRC", "CUC", "CUP", "CVE", "CZK", "DAI", "DJF", "DKK", "DOP", "DOT", "DZD", "EGP", "ERN", "ETB", "ETH", "EUR", "FJD", "FKP", "GBP", "GEL", "GGP", "GHS", "GIP", "GMD", "GNF", "GTQ", "GYD", "HKD", "HNL", "HRK", "HTG", "HUF", "IDR", "ILS", "IMP", "INR", "IQD", "IRR", "ISK", "JEP", "JMD", "JOD", "JPY", "KES", "KGS", "KHR", "KMF", "KPW", "KRW", "KWD", "KYD", "KZT", "LAK", "LBP", "LKR", "LRD", "LSL", "LTC", "LTL", "LVL", "LYD", "MAD", "MATIC", "MDL", "MGA", "MKD", "MMK", "MNT", "MOP", "MRO", "MUR", "MVR", "MWK", "MXN", "MYR", "MZN", "NAD", "NGN", "NIO", "NOK", "NPR", "NZD", "OMR", "OP", "PAB", "PEN", "PGK", "PHP", "PKR", "PLN", "PYG", "QAR", "RON", "RSD", "RUB", "RWF", "SAR", "SBD", "SCR", "SDG", "SEK", "SGD", "SHP", "SLL", "SOL", "SOS", "SRD", "STD", "SVC", "SYP", "SZL", "THB", "TJS", "TMT", "TND", "TOP", "TRY", "TTD", "TWD", "TZS", "UAH", "UGX", "USD", "USDC", "USDT", "UYU", "UZS", "VEF", "VND", "VUV", "WST", "XAF", "XAG", "XAU", "XCD", "XDR", "XOF", "XPD", "XPF", "XPT", "XRP", "YER", "ZAR", "ZMK", "ZMW", "ZWL"];
+let totalCurrencies = ["INR","USD","ADA", "AED", "AFN", "ALL", "CAD","CLP", "EUR", "IQD"];
 
 for (let k = 0; k < totalCurrencies.length; k++) {
     let option = document.createElement("option");
@@ -38,30 +35,36 @@ for (let k = 0; k < totalCurrencies.length; k++) {
 // Call a function to populate data in table When user click on sumit button 
 const btn = document.getElementById("submit");
 btn.addEventListener("click", (e) => {
-    console.log("clicked");
     e.preventDefault(addEventListener);
     var baseCurrency = document.getElementById("baseCurrency").value;
     var amount = document.getElementById("amount").value;
 
     if (baseCurrency == "" || amount == "") {
-        console.log("No value entered")
         alert("Please Enter Value in fields")
         return;
     }
     populateData(baseCurrency, amount);
 })
 
+// Call a function to populate data in table When user click on sumit button 
+const mode = document.getElementById("Mode");
+mode.addEventListener("click",()=>{
+    if(mode.checked){   liveMode = false, safeMode = true;  }
+    else {  liveMode = true, safeMode = false;  }
+})
+
 // Function to populate data in the table
 const populateData = async (baseCurrency, amount) => {
-    console.log("inside populate function");
-    outputDiv[0].style.display = "inline-block";
+    debugger;
+    tableBody[0].innerHTML = "";
+    tableHTMLstring = ``;
+    outputDiv[0].style.display = "block";
 
     console.log("Entered amount ::: " + amount);
     console.log("Selected Currency ::: " + baseCurrency)
 
-
     if (safeMode && !liveMode) { // Safe Mode
-        console.log("~~~~~~~~~~~~~~~~~~~~~> Inside Safe Mode <~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        console.log("~~~~~~~~~~> Inside Safe Mode <~~~~~~~~~~");
         let data;
 
         // Static Data
@@ -69,23 +72,16 @@ const populateData = async (baseCurrency, amount) => {
 
         data = JSON.parse(data);
         CurrencyData = data;
-        console.log("Currenty Data (Inside Safe Mode) ::: ")
-        console.log(CurrencyData);
     }
     if (liveMode && !safeMode) { // Live Mode
-        console.log("~~~~~~~~~~~~~~~~~~~~~> Inside Live Mode <~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        console.log("~~~~~~~~~~> Inside Live Mode <~~~~~~~~~~");
         url = "https://api.currencyapi.com/v3/latest?apikey=cur_live_aXn4PmHLh2XrEMl0jCx4b8EkzkCtohocyZthujuQ&base_currency=" + baseCurrency
-        console.log("URL to fetch ")
-        console.log(url)
+        console.log("URL to fetch ::: " + url);
         let response = await fetch(url);
-        console.log("Response of the service ")
-        console.log(response);
+        // console.log("Response of the service ")
+        // console.log(response);
         let responseJSON = await response.json();
-        console.log("Response in json format ")
-        console.log(responseJSON);
         CurrencyData = responseJSON.data;
-        console.log("Currenty Data (Inside Live Mode) ::: ")
-        console.log(CurrencyData);
     }
 
     console.log("Currenty Data (Global) ::: ")
@@ -93,7 +89,8 @@ const populateData = async (baseCurrency, amount) => {
 
     let keys = Object.keys(CurrencyData);
 
-    for (let i = 0; i < keys.length; i++) {
+    // for (let i = 0; i < keys.length; i++) {
+    for (let i = 0; i < 10; i++) {      // To show only 10 records
         // Extracting values from json to populate in table
         let key = keys[i];
         let code = CurrencyData[keys[i]].code;
@@ -103,5 +100,5 @@ const populateData = async (baseCurrency, amount) => {
     }
 
     // Setting Values in table
-    tableBody.data.innerHTML = tableHTMLstring;
+    tableBody[0].innerHTML = tableHTMLstring;
 }

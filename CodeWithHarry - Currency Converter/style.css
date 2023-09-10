@@ -1,56 +1,89 @@
-* {
+*{
     margin: 0;
     padding: 0;
 }
+body{
+    background-color: aqua;
+}
 
-nav {
-    background-color: yellow;
+ul{
+    background-color: black;
     display: flex;
-    font-size: xx-large;
+    margin: auto;
 }
 
-ul {
-    display: flex;
+li{
+    width: 33vw;
+    list-style: none;
+    background-color: black;
+    font-size: 32px;
+    padding: 10px 100px 10px 0px;
+    color: aqua;
 }
 
-ul li {
-    display: flex;
-    margin: 10px;
+nav{
+    border: 5px solid;
+    margin: 1px;
 }
 
-.logo {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 10px;
-}
-
-.inputDiv{
-    padding: 10px;
-    border: 5px solid red;
-}
-
-.inputDiv *{
+form *{
     padding: 3px;
-    margin: 10px;
+    margin: 3px;
 }
 
-input, button, select{
-    border: 2px solid;
-    width: 10%;
-}
-
-table{
-    border: 2px solid;
-    width: 80vw;
+input[type=number], select{
+    margin: auto;
     text-align: center;
-    border-collapse:collapse;
+    border: none;
+    display: block;
+    width: 90%;
+    background-color: aqua;
 }
-td,th{
-    border: 2px solid;
-    border-collapse:collapse;
+button{
+    border: 5px solid;
+    border-radius: 30px;
+    width: 50%;
+    padding: 10px;
+    display: block;
+    margin: auto;
+    background-color: aqua;
+}
+
+.box{
+    margin-bottom:20px ;
+    text-align: center;
+    border: 3px solid;
+    border-radius: 40px;
+}
+
+.box label{
+    display: block;
 }
 
 .output{
     display: none;
+    margin: auto;
+    width: 100%;
+}
+
+table{
+    text-align: center;
+    border: 4px solid;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+td,th{
+    border: 2px solid;
+}
+
+th{
+    font-size: x-large;
+}
+
+caption{
+    font-size: xx-large;
+    font-weight: 900;
+    text-decoration: underline;
+    padding: 10px;
 }
