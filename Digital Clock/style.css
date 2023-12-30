@@ -1,0 +1,33 @@
+*{
+    /* to remove all the default padding and margin */
+    margin:0;
+    padding: 0;;
+}
+
+body{
+    background-image: radial-gradient(circle farthest-corner at 10% 20%, rgba(176,229,208,1) 42%, rgba(92,202,238,0.41) 93.6%);
+}
+
+.clock{
+    font-family: Arial;
+    font-size: 80px;
+    position: absolute;
+    font-weight: 600;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    border: 1px solid #606060;
+    background-color: #222222;
+    color: #fff;
+    padding: 40px;
+    border-radius: 50px;
+}
+
+.container h1{
+    text-align: center;
+    color:#023e8a;
+    font-size: 60px;
+    font-family: 'Montserrat', sans-serif;
+    position: relative;
+    top: 110px;
+}
