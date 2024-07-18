@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Input Number Event</title>
+</head>
+
+<body>
+    <h1> Can you guess the hidden number between 0 to 1000 </h1>
+    <input type="number" id="GuesedNumber" />
+    <p id="Notice"> </p>
+    <h3 id="RemaingAttempts">Remaining Attemp(s) :: 5</h3>
+    <h3 id="Answer">Correct Answer is :: XXX</h3>
+    <script>
+        console.log("Script Stared....");
+        let randomly_Generated_Number = Math.floor(Math.random() * 1000);
+        console.log("Randomly Generated number ::", randomly_Generated_Number);
+        let TotalAttempt = 5;
+        document.addEventListener('DOMContentLoaded', (event) => {
+            let notice = document.getElementById("Notice");
+            let RemaingAttempts = document.getElementById("RemaingAttempts");
+            let Answer = document.getElementById("Answer");
+
+            // we can use change or input method
+            // document.getElementById('myNumber').addEventListener('input', function(event) {
+            document.getElementById('GuesedNumber').addEventListener('change', function (event) {
+                console.log('Input Value :: ' + event.target.value);
+                verifyInput(event.target.value);
+            });
+
+            function verifyInput(value) {
+                decreseAttemp();
+                console.log('Verifing Number :: ' + value);
+                if (randomly_Generated_Number == value) {
+                    notice.textContent = "You Guessed it right.";
+                    notice.classList.add('GreenBG');
+                    document.getElementById('GuesedNumber').disabled = true;
+                } else if (randomly_Generated_Number < value) {
+                    notice.textContent = "Guess a Smaller number";
+                } else if (randomly_Generated_Number > value) {
+                    notice.textContent = "Guess a Larger number";
+                }
+            }
+
+            function decreseAttemp() {
+                TotalAttempt--;
+                RemaingAttempts.textContent = "Remaining Attemp(s) :: " + TotalAttempt;
+                if(TotalAttempt <= 0){
+                    Answer.textContent = "Correct Answer is :: " + randomly_Generated_Number;
+                    notice.textContent = "You Lose!!!";
+                    notice.classList.add('RedBG');
+                    document.getElementById('GuesedNumber').disabled = true;
+                }
+            }
+        });
+
+    </script>
+    <style>
+        .GreenBG {
+            background-color: green;
+            color: white;
+        }
+        .RedBG{
+            background-color: red;
+            color: white;
+        }
+    </style>
+</body>
+
+</html>
