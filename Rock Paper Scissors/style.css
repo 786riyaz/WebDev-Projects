@@ -5,35 +5,44 @@ input[type="radio"]{
     width:3vh;
 } 
 
-input[type="radio"]:checked{
-    content:url('/images/new-home-page/checkedCheckbox.png');
-} 
+input[type="radio"]:checked+label {
+    content: url('/images/new-home-page/checkedCheckbox.png');
+    background-color: aqua;
+}
 */
 
-table{
+table {
     margin: auto;
 }
 
-td{
+td {
     justify-content: center;
     align-items: center;
 }
 
-.rock{
-    content:url('Images/Rock.png');
+.rock {
+    content: url('Images/Rock.png');
     height: 200px;
 }
-.paper{
-    content:url('Images/Paper.png');
+
+.paper {
+    content: url('Images/Paper.png');
     height: 200px;
 }
-.scissors{
-    content:url('Images/Scissor.png');
+
+.scissors {
+    content: url('Images/Scissor.png');
     height: 200px;
 }
-.GreenText{
+
+.GreenText {
     color: Green;
 }
-.RedText{
+
+.RedText {
     color: Red;
+}
+
+.Hidden {
+    display: none;
 }

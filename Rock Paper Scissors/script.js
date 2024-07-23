@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     let Radio_Button_Scissors = document.getElementById('Scissors');
     let FinalMessage = document.getElementById("FinalMessage");
     let Note = document.getElementById("Note");
-
+    let ReplayButton = document.getElementById("ReplayButton");
 
     // console.log(Radio_Button_Rock);
     // console.log(Radio_Button_Paper);
@@ -47,39 +47,60 @@ document.addEventListener('DOMContentLoaded', (event) => {
             console.log("------------DRAW----------------");
             FinalMessage.textContent = "Its Draw!!!!"
             Note.textContent = "Computer Also Choosed :: " + ComputerChoice;
+            FinalMessage.classList.remove('GreenText');
+            FinalMessage.classList.remove('RedText');
         } else {
             if (input == "Rock" && ComputerChoice == "Scissors") {
                 console.log("------------WIN----------------");
                 FinalMessage.textContent = "You Win.";
                 FinalMessage.classList.add('GreenText');
+                FinalMessage.classList.remove('RedText');
             } else if (input == "Rock" && ComputerChoice == "Paper") {
                 console.log("------------LOSS----------------");
                 FinalMessage.textContent = "You Loss.";
                 FinalMessage.classList.add('RedText');
+                FinalMessage.classList.remove('GreenText');
             }
 
             else if (input == "Paper" && ComputerChoice == "Rock") {
                 console.log("------------WIN----------------");
                 FinalMessage.textContent = "You Win.";
                 FinalMessage.classList.add('GreenText');
+                FinalMessage.classList.remove('RedText');
             } else if (input == "Paper" && ComputerChoice == "Scissors") {
                 console.log("------------LOSS----------------");
                 FinalMessage.textContent = "You Loss.";
                 FinalMessage.classList.add('RedText');
+                FinalMessage.classList.remove('GreenText');
             }
 
             else if (input == "Scissors" && ComputerChoice == "Rock") {
                 console.log("------------LOSS----------------");
                 FinalMessage.textContent = "You Loss.";
                 FinalMessage.classList.add('RedText');
+                FinalMessage.classList.remove('GreenText');
             } else if (input == "Scissors" && ComputerChoice == "Paper") {
                 console.log("------------WIN----------------");
                 FinalMessage.textContent = "You Win.";
                 FinalMessage.classList.add('GreenText');
+                FinalMessage.classList.remove('RedText');
             }
-            
+
             Note.innerHTML = "Computer Choosed :: <u>" + ComputerChoice + "</u>";
             // Note.textContent = "Computer Choosed :: " + ComputerChoice;
+        }
+        ReplayButton.classList.remove('Hidden');
+        Radio_Button_Rock.disabled = true;
+        Radio_Button_Paper.disabled = true;
+        Radio_Button_Scissors.disabled = true;
+
+        ReplayButton.addEventListener("click", function (event) {
+            console.log('Refresh Button Clicked !!!!');
+            RefreshPage(event.target.value);
+        });
+        function RefreshPage(input) {
+            console.log("Refreshing the Page!!!");
+            location.reload();
         }
     }
 });
