@@ -1,0 +1,39 @@
+/* 
+input[type="radio"]{
+    content:url('Icon.png');
+    height:3vh;
+    width:3vh;
+} 
+
+input[type="radio"]:checked{
+    content:url('/images/new-home-page/checkedCheckbox.png');
+} 
+*/
+
+table{
+    margin: auto;
+}
+
+td{
+    justify-content: center;
+    align-items: center;
+}
+
+.rock{
+    content:url('Images/Rock.png');
+    height: 200px;
+}
+.paper{
+    content:url('Images/Paper.png');
+    height: 200px;
+}
+.scissors{
+    content:url('Images/Scissor.png');
+    height: 200px;
+}
+.GreenText{
+    color: Green;
+}
+.RedText{
+    color: Red;
+}
