@@ -1,0 +1,10 @@
+.mainDiv{
+    /* margin: auto;
+    display: inline-block;
+    align-content: center; 
+    */
+    border: 3px solid red;
+    max-width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+}
