@@ -30,21 +30,26 @@ document.addEventListener('DOMContentLoaded', (event) => {
         } else {
             console.log("Same Address Unchecked");
             sameDetailsDiv.style.display = "block";
+            
         }
     }
-
+    
     HideSubmissionController = function () {
         SubmissionController.style.display = "none";
     };
-
+    
     SearchButton.addEventListener('click', function (event) {
+        
         console.log('Input Value :: ' + TelePhoneNumber.value);
         TelePhoneNumber = TelePhoneNumber.value + "";
-
+        
         fetch(`../Php/fetch.php?telephoneNumber=${TelePhoneNumber}`)
+        // fetch(`fetch.php?telephoneNumber=${TelePhoneNumber}`)
             // fetch(`test.php`)
+            
             .then((response) => response.json())
             .then((data) => {
+                console.log("aaaa")
                 console.log("Received Data :: ", data);
 
                 if (data.length > 0) {

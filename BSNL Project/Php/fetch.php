@@ -13,7 +13,7 @@ if (true) {
     if ($conn->connect_error) {
         die('Connection Failed : ' . $conn->connect_error);
     } else {
-        $stmt = "SELECT CD.TelephoneNumber, CD.Service, CD.Name, CD.MobileNumber, CD.Address, C.Complain_Description ,C.Is_Resolved, C.Complain_ID FROM CustomerDetails CD LEFT JOIN Complain C ON C.Telephone_Number = CD.TelephoneNumber AND C.Is_Resolved = 0 WHERE CD.TelephoneNumber = '" . $_GET['telephoneNumber'] . "'";
+        $stmt = "SELECT CD.TelephoneNumber, CD.Service, CD.Name, CD.MobileNumber, CD.Address ,C.Is_Resolved, C.Complain_ID FROM CustomerDetails CD LEFT JOIN Complain C ON C.Telephone_Number = CD.TelephoneNumber AND C.Is_Resolved = 0 WHERE CD.TelephoneNumber = '" . $_GET['telephoneNumber'] . "'";
         $result = mysqli_query($conn, $stmt);
         $output = [];
 

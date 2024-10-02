@@ -1,4 +1,4 @@
-console.log("Dashboard Script Started....");
+console.log("Dashboard Script Started rrr....");
 
 // Sample data for fault orders
 let faultOrders = [
@@ -15,6 +15,7 @@ let faultOrders = [
     { id: 1, phone: '040-80000', address: '123 Street A', mobile: '9876543210', date: '2024-09-25', duration: '2 hours' }];
 
 fetch(`../Php/fetchComplain.php`)
+// fetch(`fetchComplain.php`)
     // fetch(`test.php`)
     .then((response) => response.json())
     .then((data) => {
