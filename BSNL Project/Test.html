@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <input type="text" name="Name" id="Name">
+  <input type="button" value="Click" id="button">
+</body>
+<script>
+  console.log("Script Started")
+  let name = document.getElementById("Name");
+  let button = document.getElementById("button");
+  // console.log(button)
+  button.addEventListener("click",function(){
+    console.log("Button Clicked")
+    console.log("Value :: ", name.value )
+  })
+
+</script>
+</html>

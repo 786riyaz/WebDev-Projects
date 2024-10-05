@@ -1,4 +1,4 @@
-console.log("Script Started .....");
+console.log("Complain Booking Script Started .....");
 
 document.addEventListener('DOMContentLoaded', (event) => {
     let TelePhoneNumber = document.getElementById('TelephoneNumber');
@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
     showHide = function () {
         if (SameAddress) {
-            console.log("Same Address Checked");
+            console.log("Same Address Checked - set same address");
             sameDetailsDiv.style.display = "none";
         } else {
             console.log("Same Address Unchecked");
@@ -42,62 +42,64 @@ document.addEventListener('DOMContentLoaded', (event) => {
     };
 
     SearchButton.addEventListener('click', function (event) {
+        TelePhoneNumber = document.getElementById('TelephoneNumber');
+        console.log('Input Field :: ' + TelePhoneNumber);
         console.log('Input Value :: ' + TelePhoneNumber.value);
         TelePhoneNumber = TelePhoneNumber.value + "";
 
-        fetch(`../Php/Customer_Details_Fetch.php?telephoneNumber=${TelePhoneNumber}`)
+        if (true) {
+            fetch(`../Php/Customer_Details_Fetch.php?telephoneNumber=${TelePhoneNumber}`)
+                .then((response) => response.json())
+                .then((data) => {
+                    console.log("Received Data :: ", data);
 
-            .then((response) => response.json())
-            .then((data) => {
-                console.log("aaaa")
-                console.log("Received Data :: ", data);
-
-                if (data.length > 0) {
-                    console.log("Record(s) Found");
-                    console.log("Resolved ??? ", data[0].Is_Resolved);
-                    if (data[0].Is_Resolved == 0) {
-                        Address.value = data[0].Address;
-                        Number.value = data[0].MobileNumber;
-                        CurrentAddress.value = data[0].Address;
-                        CurrentNumber.value = data[0].MobileNumber;
-
-                        console.log("Complain is already in progress with ID " + data[0].Complain_ID);
-                        AlreadyBooked.innerHTML = "Complain is already in progress with ID " + data[0].Complain_ID;
-                        AlreadyBooked.style.display = "block";
-
-                        HideSubmissionController();
-                    } else {
-                        if (confirm(`Is this Correct? \n\nName :: ${data[0].Name} \nAddress :: ${data[0].Address} \nMobile Number :: ${data[0].MobileNumber} \nService :: ${data[0].Service}`)) {
-                            console.log("Details are verified...");
+                    if (data.length > 0) {
+                        console.log("Record(s) Found");
+                        console.log("Resolved ??? ", data[0].Is_Resolved);
+                        if (data[0].Is_Resolved == 0) {
                             Address.value = data[0].Address;
                             Number.value = data[0].MobileNumber;
                             CurrentAddress.value = data[0].Address;
                             CurrentNumber.value = data[0].MobileNumber;
-                            // Description.style.display = "block";
+
+                            console.log("Complain is already in progress with ID " + data[0].Complain_ID);
+                            AlreadyBooked.innerHTML = "Complain is already in progress with ID " + data[0].Complain_ID;
+                            AlreadyBooked.style.display = "block";
+
+                            HideSubmissionController();
                         } else {
-                            console.log("Details are Declined....");
+                            if (confirm(`Is this Correct? \n\nName :: ${data[0].Name} \nAddress :: ${data[0].Address} \nMobile Number :: ${data[0].MobileNumber} \nService :: ${data[0].Service}`)) {
+                                console.log("Details are verified...");
+                                Address.value = data[0].Address;
+                                Number.value = data[0].MobileNumber;
+                                CurrentAddress.value = data[0].Address;
+                                CurrentNumber.value = data[0].MobileNumber;
+                                // Description.style.display = "block";
+                            } else {
+                                console.log("Details are Declined....");
+                            }
                         }
                     }
-                }
-                else {
-                    AlreadyBooked.innerHTML = "We Could not found any record with given telephone number";
-                }
-            })
+                    else {
+                        AlreadyBooked.innerHTML = "We Could not found any record with given telephone number";
+                    }
+                })
+        }
     });
 
-    $(document).ready(function() {
-        $('#sheetdb-form').on('submit', function(event) {
+    $(document).ready(function () {
+        $('#sheetdb-form').on('submit', function (event) {
             event.preventDefault(); // Prevent the default form submission
-    
+
             $.ajax({
                 type: 'POST',
                 url: '../Php/Complain_Register.php', // Your PHP file that handles the submission
                 data: $(this).serialize(), // Serialize the form data
-                success: function(response) {
+                success: function (response) {
                     $('#AlreadyBooked').text(response); // Display the response message
                     $('#sheetdb-form')[0].reset(); // Reset the form fields
                 },
-                error: function() {
+                error: function () {
                     $('#AlreadyBooked').text('An error occurred while submitting the form.');
                 }
             });

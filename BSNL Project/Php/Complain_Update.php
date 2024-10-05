@@ -14,16 +14,17 @@ $ResolutionRemark = $_POST['ResolutionRemark'];
 $ResolutionCode = $_POST['ResolutionCode'];
 $DateTime = $_POST['DateTime'];
 $ID = $_POST['ID'];
+$Duration = $_POST['Duration'];
 
 // $conn->close();
 if ($conn->connect_error) {
     die('Connection Failed : ' . $conn->connect_error);
 } else {
     // Prepare the SQL statement
-    $stmt = $conn->prepare("UPDATE complain SET Is_Resolved = 1, Resolution_Code = ?, Resolution_Remark = ?, Resolution_Date_Time = ? WHERE Complain_id = ?");
+    $stmt = $conn->prepare("UPDATE complain SET Is_Resolved = 1, Resolution_Code = ?, Resolution_Remark = ?, Resolution_Date_Time = ?, Resolution_Duration = ? WHERE Complain_id = ?");
 
     // Bind parameters
-    $stmt->bind_param("sssi", $ResolutionCode, $ResolutionRemark, $DateTime, $ID);
+    $stmt->bind_param("ssssi", $ResolutionCode, $ResolutionRemark, $DateTime, $Duration, $ID);
 
     // Execute the statement
     if ($stmt->execute()) {
