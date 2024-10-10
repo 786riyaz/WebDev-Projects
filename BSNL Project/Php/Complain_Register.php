@@ -12,15 +12,15 @@ $conn = new mysqli($HOST_NAME, $USERNAME, $PASSWORD, $DABASENAME);
 // Form Variable Declaration
 $CurrentAddress = $_POST['CurrentAddress'];
 $CurrentNumber = $_POST['CurrentNumber'];
-$TelephoneNumber = $_POST['TelephoneNumber'];
+$circuit_id = $_POST['circuit_id'];
 
 // $conn->close();
 if ($conn->connect_error) {
     die('Connection Failed : ' . $conn->connect_error);
 } else {
 
-    $stmt = $conn->prepare("INSERT INTO complain (Telephone_Number, Current_Address,Current_Mobile_Number) VALUES (?, ?, ?)");
-    $stmt->bind_param("ssi", $TelephoneNumber, $CurrentAddress, $CurrentNumber);
+    $stmt = $conn->prepare("INSERT INTO complain (circuit_id, current_Address,current_contect) VALUES (?, ?, ?)");
+    $stmt->bind_param("ssi", $circuit_id, $CurrentAddress, $CurrentNumber);
 
     // Execute the statement
     if ($stmt->execute()) {
