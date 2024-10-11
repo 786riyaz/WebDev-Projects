@@ -66,6 +66,7 @@ fetch(`../Php/Complain_Fetch_Completed.php`)
                 let NoComplainMessage = document.getElementById('NoComplainMessage');
                 NoComplainMessage.style.display = "none";
 
+                console.log("Received Data :: ",data)
                 faultOrders = [];
                 for (let i = 0; i < data.length; i++) {
                     temp = {};

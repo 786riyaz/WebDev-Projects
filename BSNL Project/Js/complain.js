@@ -1,4 +1,4 @@
-console.log("Dashboard Script Started !!! ....");
+console.log("Dashboard Script Started");
 
 let Current_Date_Time = new Date(Date.now());
 let Current_Date_Time_SQL = Current_Date_Time.toISOString().slice(0, 19).replace('T', ' ');
@@ -6,6 +6,7 @@ let Current_Date_Time_SQL = Current_Date_Time.toISOString().slice(0, 19).replace
 updateComplainDetails = function (element, duration) {
     console.log("Update ComplainDetails Initiated ");
     let CloseButtonID = element.id;
+    console.log("Close Button ID :: ", element);
     console.log("Close Button ID :: ", CloseButtonID);
 
     let TargetComplainID = element.id.split("_")[1];
@@ -28,7 +29,9 @@ updateComplainDetails = function (element, duration) {
         Duration: duration,
         ID: parseInt(TargetComplainID)
     };
-    
+
+    console.log("Data to update :: ",data);
+    // debugger
     // Create an object to send via AJAX
     $.ajax({
         type: 'POST',
@@ -71,14 +74,16 @@ fetch(`../Php/complain_fetch_unresolved.php`)
                 faultOrders = [];
                 for (let i = 0; i < data.length; i++) {
                     temp = {};
-                    temp.id = data[i].Complain_ID;
-                    temp.phone = data[i].circuit_id;
-                    temp.address = data[i].current_Address;
-                    temp.mobile = data[i].current_contect;
-                    temp.date = data[i].booking_date;
+                    temp.Complain_ID = data[i].Complain_ID;
+                    temp.Exchange = data[i].Exchange;
+                    temp.circuit_id = data[i].circuit_id;
+                    temp.Name = data[i].Name;
+                    temp.current_address = data[i].current_address;
+                    temp.current_contact = data[i].current_contact;
+                    temp.booking_date = data[i].booking_date;
                     temp.duration = 0;
 
-                    const dateString = temp.date; // Ensure temp.date is in a valid format
+                    const dateString = temp.booking_date; // Ensure temp.date is in a valid format
 
                     // Create dateObject from the dateString
                     const dateObject = new Date(dateString.replace(" ", "T"));
@@ -128,13 +133,17 @@ RenderWholePage = function () {
         tbody.innerHTML = ''; // Clear the table before populating
 
         faultOrders.slice(start, end).forEach(order => {
+            console.log(order);
             const orderRow = document.createElement('tr');
+
             orderRow.innerHTML = `
-            <td>${order.id}</td>
-            <td>${order.phone}</td>
-            <td>${order.address}</td>
-            <td>${order.mobile}</td>
-            <td>${order.date}</td>
+            <td>${order.Complain_ID}</td>
+            <td>${order.Exchange}</td>
+            <td>${order.circuit_id}</td>
+            <td>${order.Name}</td>
+            <td>${order.current_address}</td>
+            <td>${order.current_contact}</td>
+            <td>${order.booking_date}</td>
             <td>${order.duration}</td>
             <td><button type="button" class="btn btn-outline-danger assignBtn" >Assign</button></td>
             <td><button type="button" class="btn btn-outline-secondary closeBtn">Close</button></td>`;
@@ -145,7 +154,7 @@ RenderWholePage = function () {
             remarkRow.style.display = 'none'; // Hidden by default
 
             remarkRow.innerHTML = `<td colspan="2">
-                                   <select class="form-select" aria-label="Default select example" id="ResolutionCode_${order.id}">
+                                   <select class="form-select" aria-label="Default select example" id="ResolutionCode_${order.Complain_ID}">
                                        <option selected>Choose Issue</option>
                                        <option value="200">Power Issue (200)</option>
                                        <option value="300">Cable Issue (300)</option>
@@ -155,13 +164,13 @@ RenderWholePage = function () {
                                <td colspan="5">
                                    <div class="input-group mb-3">
                                        <span class="input-group-text" id="inputGroup-sizing-default">Remark</span>
-                                       <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"  id="ResolutionRemark_${order.id}">
+                                       <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"  id="ResolutionRemark_${order.Complain_ID}">
                                    </div>
                                </td>
-                               <td><button type="button" class="btn btn-outline-secondary" onClick="updateComplainDetails(this,${order.duration})" id="CloseButton_${order.id}">Submit</button></td>`;
+                               <td><button type="button" class="btn btn-outline-secondary" onClick="updateComplainDetails(this,${order.duration})" id="CloseButton_${order.Complain_ID}">Submit</button></td>`;
 
             const MessageRow = document.createElement('tr');
-            MessageRow.classList.add(`Message_${order.id}`);         // Riyaz Patha
+            MessageRow.classList.add(`Message_${order.Complain_ID}`);         // Riyaz Patha
             MessageRow.style.display = 'none'; // Hidden by default
             MessageRow.innerHTML = `<td colspan="2" ><h3>Message</h3></td>`;
 

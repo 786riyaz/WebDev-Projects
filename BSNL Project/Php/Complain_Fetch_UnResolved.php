@@ -13,7 +13,7 @@ if (true) {
     if ($conn->connect_error) {
         die('Connection Failed : ' . $conn->connect_error);
     } else {
-        $stmt = "SELECT * from Complain where is_resolved = 0";
+        $stmt = "SELECT * from Complain where Is_Resolved = 0";
         $result = mysqli_query($conn, $stmt);
         $output = [];
 

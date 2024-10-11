@@ -1,5 +1,7 @@
 console.log("Complain Booking Script Started .....");
 
+let ReceivedData = [];
+
 document.addEventListener('DOMContentLoaded', (event) => {
     let circuit_id = document.getElementById('circuit_id');
     let SearchButton = document.getElementById('SearchButton');
@@ -52,6 +54,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 .then((response) => response.json())
                 .then((data) => {
                     console.log("Received Data :: ", data);
+                    ReceivedData = data[0];
+                    // ReceivedData = data[0];
 
                     if (data.length > 0) {
                         console.log("Record(s) Found");
@@ -87,27 +91,38 @@ document.addEventListener('DOMContentLoaded', (event) => {
         }
     });
 
-    $(document).ready(function () {
-        $('#sheetdb-form').on('submit', function (event) {
-            event.preventDefault(); // Prevent the default form submission
-
-            $.ajax({
-                type: 'POST',
-                url: '../Php/complain_register.php', // Your PHP file that handles the submission
-                data: $(this).serialize(), // Serialize the form data
-                success: function (response) {
-                    $('#AlreadyBooked').text(response); // Display the response message
-                    $('#sheetdb-form')[0].reset(); // Reset the form fields
-                },
-                error: function () {
-                    $('#AlreadyBooked').text('An error occurred while submitting the form.');
-                }
-            });
-            console.log("Complain Booked");
-            AlreadyBooked.style.display = "block";
-
+    // $(document).ready(function () {
+    $('#sheetdb-form').on('submit', function (event) {
+        const data = {
+            Name: ReceivedData.Name,
+            Exchange: ReceivedData.Exchange,
+            Address_A: ReceivedData.Address_A,
+            Address_B: ReceivedData.Address_B,
+            Contact: ReceivedData.Contect,
+            Circuit_ID: ReceivedData.Circuit_ID,
+            CurrentAddress: CurrentAddress.value || ReceivedData.Address_A,
+            Current_Contact: CurrentNumber.value || ReceivedData.Contect
+        };
+        console.log("Data to Submit :: ", data);
+        event.preventDefault(); // Prevent the default form submission
+        $.ajax({
+            type: 'POST',
+            url: '../Php/complain_register.php', // Your PHP file that handles the submission
+            data: data, // Serialize the form data
+            // data: $(this).serialize(), // Serialize the form data
+            success: function (response) {
+                $('#AlreadyBooked').text(response); // Display the response message
+                $('#sheetdb-form')[0].reset(); // Reset the form fields
+            },
+            error: function () {
+                $('#AlreadyBooked').text('An error occurred while submitting the form.');
+            }
         });
+        console.log("Complain Booked");
+        AlreadyBooked.style.display = "block";
+
     });
+    // });
 
     showHide(true);
 
