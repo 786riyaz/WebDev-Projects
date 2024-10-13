@@ -13,7 +13,7 @@ if (true) {
     if ($conn->connect_error) {
         die('Connection Failed : ' . $conn->connect_error);
     } else {
-        $stmt = "SELECT * from customerdetails ";
+        $stmt = "SELECT * from circuitdetails";
         $result = mysqli_query($conn, $stmt);
         $output = [];
 

@@ -1,67 +1,11 @@
-console.log("Dashboard Script Started");
+console.log("search started pending complain..")
 
-let Current_Date_Time = new Date(Date.now());
-let Current_Date_Time_SQL = Current_Date_Time.toISOString().slice(0, 19).replace('T', ' ');
 
-updateComplainDetails = function (element, duration) {
-    console.log("Update ComplainDetails Initiated ");
-    let CloseButtonID = element.id;
-    console.log("Close Button ID :: ", element);
-    console.log("Close Button ID :: ", CloseButtonID);
+document.getElementById('searchBtn1').addEventListener('click', function () {
+    let searchInput = document.getElementById('searchInput1').value;
 
-    let TargetComplainID = element.id.split("_")[1];
-    console.log("Target Complain ID :: ", TargetComplainID);
-
-    let ResolutionRemarkID = 'ResolutionRemark_' + TargetComplainID;
-    let ResolutionCodeID = 'ResolutionCode_' + TargetComplainID;
-    // let DurationID = 'Duration_' + TargetComplainID;
-    let MessageID = 'Message_' + TargetComplainID;
-    let MessageTR = document.getElementsByClassName(MessageID)[0];
-
-    let ResolutionRemark = document.getElementById(ResolutionRemarkID).value;
-    let ResolutionCode = document.getElementById(ResolutionCodeID).value;
-    // let Duration = document.getElementById(DurationID).value;
-
-    const data = {
-        ResolutionRemark: ResolutionRemark,
-        ResolutionCode: ResolutionCode,
-        DateTime: Current_Date_Time_SQL,
-        Duration: duration,
-        ID: parseInt(TargetComplainID)
-    };
-
-    console.log("Data to update :: ",data);
-    // debugger
-    // Create an object to send via AJAX
-    $.ajax({
-        type: 'POST',
-        url: '../Php/complain_update.php', // Your PHP file that handles the submission
-        data: data, // Send the data object
-        success: function (response) {
-            console.log("Response :: ", response);
-            if (response == "Complain Details update!") {
-                alert("Complain Details Updated!");
-                location.reload();
-            } else {
-                MessageTR.innerHTML = '<td colspan="6"><h3>An Error is Occured while Updating the Complain Detals</h3></td>'
-                MessageTR.style.display = 'block';
-            }
-        },
-        error: function () {
-            MessageTR.innerHTML = '<td colspan="6"><h3>An Error is Occured while Updating the Complain Detals</h3></td>'
-            MessageTR.style.display = 'block';
-        }
-    });
-}
-
-// Sample data for fault orders
-let faultOrders = [{ id: 1, phone: '040-80000', address: '123 Street A', mobile: '9876543210', date: '2024-09-25', duration: '2 hours' },
-    { id: 2, phone: '02717-69587', address: '456 Street B', mobile: '9876543222', date: '2024-09-26', duration: '3 hours' },
-    { id: 1, phone: '040-80000', address: '123 Street A', mobile: '9876543210', date: '2024-09-25', duration: '2 hours' },
-    { id: 2, phone: '02717-69587', address: '456 Street B', mobile: '9876543222', date: '2024-09-26', duration: '3 hours' },
-    { id: 1, phone: '040-80000', address: '123 Street A', mobile: '9876543210', date: '2024-09-25', duration: '2 hours' }];
-
-fetch(`../Php/complain_fetch_unresolved.php`)
+    // Fetch data from the PHP script based on search input
+    fetch(`../Php/pending_complete_complain_search.php?search=${searchInput}`)
     .then((response) => response.json())
     .then((data) => {
 
@@ -250,3 +194,4 @@ RenderWholePage = function () {
     renderTable(currentPage);
     renderPagination();
 }
+});

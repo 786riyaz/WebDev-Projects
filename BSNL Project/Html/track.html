@@ -41,19 +41,22 @@
                     <div class="mb-3">
                         <!-- <label for="TelephoneNumber" class="form-label">Service Id</label> -->
                         <div class="input-btn">
-                            <input type="text" class="form-control" id="" name="" placeholder="Telephone Number" required>
-                            <button type="button" id="SearchButton"><i class="fa fa-search"></i></button>
+                            <input type="text" class="form-control" id="track_circuit_id" name="" placeholder="Circuit Id" >
+                            <button type="button" id="Search_Button"><i class="fa fa-search"></i></button>
                         </div>
                         <small class="text-muted">OR</small>
                     </div>
                     <div class="mb-3">
                         <!-- <label for="PhoneNumber" class="form-label">Number</label> -->
-                        <input type="text" class="form-control" placeholder="Track Id" name="" required>
+                        <input type="text" class="form-control" placeholder="Track Id" name="" id="track_id" >
                     </div>
+                    
                     <div class="d-flex justify-content-around">
-                        <button type="submit" class="btn btn-outline-primary">Search</button>
+                        <button type="submit" class="btn btn-outline-primary" id="">Search</button>
                         <button type="reset" class="btn btn-outline-dark">Cancel</button>
-                    </div>
+                        
+                    </div><br>
+                    <h5 id="trackmessage">helloooo</h5>
                 </form>
             </div>
         </div>
@@ -63,6 +66,7 @@
     </body>
 
 </body>
+<script src="../Js/track.js"></script>
 
 </html>
 
