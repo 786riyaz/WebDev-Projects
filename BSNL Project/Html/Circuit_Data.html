@@ -33,7 +33,7 @@
                     </a>
                 </li>
                 <li class="sidebar-item">
-                    <a href="dataadd.html" class="sidebar-link">
+                    <a href="Circuit_Data.html" class="sidebar-link">
                         <i class="lni lni-agenda"></i>
                         <span>Data</span>
                     </a>
@@ -46,10 +46,10 @@
                     </a>
                     <ul id="auth" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
                         <li class="sidebar-item">
-                            <a href="complain.html" class="sidebar-link">Pending</a>
+                            <a href="Complain_Pending.html" class="sidebar-link">Pending</a>
                         </li>
                         <li class="sidebar-item">
-                            <a href="complete.html" class="sidebar-link">Complete</a>
+                            <a href="Complain_Complete.html" class="sidebar-link">Complete</a>
                         </li>
                     </ul>
                 </li>
@@ -91,7 +91,9 @@
                       </div>
                       <hr>
 
-                      <form class="row g-4" id="add-button" action="../Php/addnewcircuit.php" method="post">
+                      <!-- <form class="row g-4" id="add-button" action="../Php/addnewcircuit.php" method="post"> -->
+                      <!-- <form class="row g-4" id="add-button" > -->
+                        <div class="row g-4" id="add-button">
                         <div class="col-md-4">
                             <input type="text" class="form-control" id="Exchange" placeholder="Exchange" name="Exchange" >
                         </div>
@@ -120,11 +122,12 @@
                             <!-- <input class="file-input" type="file" id="image" name="image"> -->
                         </div>
                         <div class="col-12">
-                            <button type="submit" class="btn btn-primary">Submit</button>
+                            <button type="submit" class="btn btn-primary" id="NewSubmitButton">Submit</button>
                             <button type="button" class="btn btn-dark" id="addDetailshide">Close</button> <!-- Changed from submit to button -->
                         </div>
                         <hr>
-                    </form>
+                    <!-- </form> -->
+                </div>
                     
 
 
@@ -285,9 +288,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
     crossorigin="anonymous"></script>
-    <script src="../Js/circuitdetail.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="../Js/Circuit_Data.js"></script>
     <script src="../Js/all_data_search.js"></script>
-    <script src="../Js/update.js"></script>
-    
-
 </html>

@@ -1,6 +1,5 @@
 console.log("search started...")
 
-
 document.getElementById('searchBtn').addEventListener('click', function () {
     let searchInput = document.getElementById('searchInput').value;
 

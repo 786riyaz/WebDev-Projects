@@ -31,7 +31,7 @@ updateComplainDetails = function (element, duration) {
     };
 
     console.log("Data to update :: ",data);
-    // debugger
+    debugger
     // Create an object to send via AJAX
     $.ajax({
         type: 'POST',

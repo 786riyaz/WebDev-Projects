@@ -1,4 +1,4 @@
-console.log("Complain Completed Script Started !!!");
+console.log("Complain Completed Script Started");
 
 let Current_Date_Time = new Date(Date.now());
 let Current_Date_Time_SQL = Current_Date_Time.toISOString().slice(0, 19).replace('T', ' ');
@@ -83,6 +83,7 @@ fetch(`../Php/Complain_Fetch_Completed.php`)
                     temp.code = data[i].complain_solve_code;
                     faultOrders.push(temp);
                 }
+                console.log("FFFF :: ",faultOrders);
                 RenderWholePage();
             }
             else {
@@ -94,6 +95,7 @@ fetch(`../Php/Complain_Fetch_Completed.php`)
     })
 
 RenderWholePage = function () {
+    console.log("faultOrders ::", faultOrders)
     const hamBurger = document.querySelector(".toggle-btn");
 
     hamBurger.addEventListener("click", function () {
@@ -112,7 +114,10 @@ RenderWholePage = function () {
         tbody.innerHTML = ''; // Clear the table before populating
 
         faultOrders.slice(start, end).forEach(order => {
+            // console.log("Order 1::", order)
+            
             const orderRow = document.createElement('tr');
+            // console.log("Order 2::", order)
             orderRow.innerHTML = `
             <td>${order.Complain_ID}</td>
             <td>${order.Exchange}</td>
@@ -123,7 +128,6 @@ RenderWholePage = function () {
             <td>${order.booking_date}</td>
             <td>${order.complain_solve_date}</td>
             <td>${order.duration}</td>
-            
             <td><button type="button" class="btn btn-outline-secondary closeBtn">Remark</button></td>`;
 
             // Remark row (hidden by default)
@@ -132,12 +136,12 @@ RenderWholePage = function () {
             remarkRow.style.display = 'none';               // Hidden by default
 
             remarkRow.innerHTML = `<td colspan="2">
-                                 <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"  id="ResolutionCode_${order.id}" disabled>
+                                 <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"  id="ResolutionCode_${order.Complain_ID}" disabled>
                                </td>
                                <td colspan="8">
                                    <div class="input-group mb-3">
                                        <span class="input-group-text" id="inputGroup-sizing-default">Remark</span>
-                                       <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"  id="ResolutionRemark_${order.id}" disabled>
+                                       <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"  id="ResolutionRemark_${order.Complain_ID}" disabled>
                                    </div>
                                </td>`;
 
@@ -145,8 +149,8 @@ RenderWholePage = function () {
             tbody.appendChild(orderRow);
             tbody.appendChild(remarkRow);
 
-            let ResolutionCode = document.getElementById(`ResolutionCode_${order.id}`);
-            let ResolutionRemark = document.getElementById(`ResolutionRemark_${order.id}`);
+            let ResolutionCode = document.getElementById(`ResolutionCode_${order.Complain_ID}`);
+            let ResolutionRemark = document.getElementById(`ResolutionRemark_${order.Complain_ID}`);
 
             ResolutionRemark.value = order.remark;
             ResolutionCode.value = order.code;

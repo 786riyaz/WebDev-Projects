@@ -16,7 +16,7 @@ if ($conn->connect_error) {
 }
 
 // SQL query to fetch data
-$sql = "SELECT * FROM circuitdetails";
+$sql = "SELECT * FROM circuitdetails where is_active = 1 order by Sr_no";
 $result = $conn->query($sql);
 
 $data = [];
