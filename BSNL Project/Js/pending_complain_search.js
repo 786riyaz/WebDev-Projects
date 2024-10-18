@@ -1,11 +1,11 @@
-console.log("search started pending complain..")
+console.log("search started pending complain.aaa.")
 
 
 document.getElementById('searchBtn1').addEventListener('click', function () {
     let searchInput = document.getElementById('searchInput1').value;
 
     // Fetch data from the PHP script based on search input
-    fetch(`../Php/pending_complete_complain_search.php?search=${searchInput}`)
+    fetch(`../Php/pending_complain_search.php?search=${searchInput}`)
     .then((response) => response.json())
     .then((data) => {
 

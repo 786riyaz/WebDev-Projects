@@ -1,9 +1,9 @@
-console.log("Dashboard Script Started");
+console.log("Dashboard Script Started.....");
 
 let Current_Date_Time = new Date(Date.now());
 let Current_Date_Time_SQL = Current_Date_Time.toISOString().slice(0, 19).replace('T', ' ');
 
-updateComplainDetails = function (element, duration) {
+updateComplainDetails = function (element, duration, booking_date) {
     console.log("Update ComplainDetails Initiated ");
     let CloseButtonID = element.id;
     console.log("Close Button ID :: ", element);
@@ -22,11 +22,14 @@ updateComplainDetails = function (element, duration) {
     let ResolutionCode = document.getElementById(ResolutionCodeID).value;
     // let Duration = document.getElementById(DurationID).value;
 
+    // Calculating Duratoin
+    // 
+
     const data = {
         ResolutionRemark: ResolutionRemark,
         ResolutionCode: ResolutionCode,
-        DateTime: Current_Date_Time_SQL,
-        Duration: duration,
+        DateTime: Current_Date_Time_SQL,            // Hidded Date
+        Duration: duration,                         // Calculated Duration
         ID: parseInt(TargetComplainID)
     };
 
@@ -153,7 +156,8 @@ RenderWholePage = function () {
             remarkRow.classList.add('CloseRemark');         // Riyaz Pathan
             remarkRow.style.display = 'none'; // Hidden by default
 
-            remarkRow.innerHTML = `<td colspan="2">
+            remarkRow.innerHTML = ` </tr>
+                               <td colspan="2">
                                    <select class="form-select" aria-label="Default select example" id="ResolutionCode_${order.Complain_ID}">
                                        <option selected>Choose Issue</option>
                                        <option value="200">Power Issue (200)</option>
@@ -167,7 +171,7 @@ RenderWholePage = function () {
                                        <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"  id="ResolutionRemark_${order.Complain_ID}">
                                    </div>
                                </td>
-                               <td><button type="button" class="btn btn-outline-secondary" onClick="updateComplainDetails(this,${order.duration})" id="CloseButton_${order.Complain_ID}">Submit</button></td>`;
+                               <td><button type="button" class="btn btn-outline-secondary" onClick="updateComplainDetails(this,${order.duration},${order.booking_date})" id="CloseButton_${order.Complain_ID}">Submit</button></td>`;
 
             const MessageRow = document.createElement('tr');
             MessageRow.classList.add(`Message_${order.Complain_ID}`);         // Riyaz Patha
@@ -180,6 +184,7 @@ RenderWholePage = function () {
             tbody.appendChild(remarkRow);
             tbody.appendChild(MessageRow);
         });
+        
         addCloseClass();
     }
 

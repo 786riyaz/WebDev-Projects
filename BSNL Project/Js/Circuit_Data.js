@@ -1,4 +1,4 @@
-console.log("Circuit Data Started !!!!!!!!");
+console.log("Circuit Data Started !!!!aaaaa!!!!");
 
 const recordsPerPage = 20;
 let currentPage = 1;
@@ -88,6 +88,9 @@ function renderTable() {
             console.log("button click huwa....")
             const index = this.getAttribute('data-index');
             document.getElementById(`update-data-${index}`).style.display = 'table-row';
+
+
+            // document.getElementById(`remove-reason-${index}`).style.display = 'none';
         });
     });
 
@@ -95,6 +98,8 @@ function renderTable() {
         button.addEventListener('click', function () {
             const index = this.getAttribute('data-index');
             document.getElementById(`remove-reason-${index}`).style.display = 'table-row';
+
+            // document.getElementById(`update-data-${index}`).style.display = 'none';
         });
     });
 
