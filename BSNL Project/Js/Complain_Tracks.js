@@ -1,4 +1,4 @@
-console.log("Tracking AAAA......");
+console.log("Tracking ......");
 
 document.addEventListener('DOMContentLoaded', (event) => {
     let trackmessage = document.getElementById('trackmessage');
@@ -12,26 +12,26 @@ document.addEventListener('DOMContentLoaded', (event) => {
         complain_id = document.getElementById('track_id');
 
         // console.log('Input Field Circuit ID :: ' + circuit_id);
-        console.log('Input Value Circuit ID :: ' + circuit_id.value);
+        // console.log('Input Value Circuit ID :: ' + circuit_id.value);
         circuit_id = circuit_id.value + "";
 
         // console.log('Input Field Circuit ID :: ' + complain_id);
-        console.log('Input Value Circuit ID :: ' + complain_id.value);
+        // console.log('Input Value Circuit ID :: ' + complain_id.value);
         complain_id = complain_id.value + "";
 
         fetch(`../Php/Track_Complain_Data_Fetch.php?circuit_id=${circuit_id}&complain_id=${complain_id}`)
             .then((response) => response.json())
             .then((data) => {
-                console.log("Received Data :: ", data);
+                // console.log("Received Data :: ", data);
 
 
                 if (true) {
                     if (data.length > 0) {
                         let pending_Complain_ID = undefined;
                         let pending_Circuit_ID = undefined;
-                        console.log("Customer Details Found");
+                        // console.log("Customer Details Found");
                         for (let i = 0; i < data.length; i++) {
-                            console.log(data[i].Complain_ID, " :: ", data[i].Is_Resolved)
+                            // console.log(data[i].Complain_ID, " :: ", data[i].Is_Resolved)
 
                             if (data[i].Is_Resolved == "0") {
                                 pending_Complain_ID = data[i].Complain_ID;
@@ -40,10 +40,10 @@ document.addEventListener('DOMContentLoaded', (event) => {
                                 Address_A = data[i].Address_A;
                                 contact = data[i].contact;
                                 Name = data[i].Name;;
-                                console.log(booking_date)
-                                console.log(Address_A)
-                                console.log(contact)
-                                console.log(Name)
+                                // console.log(booking_date)
+                                // console.log(Address_A)
+                                // console.log(contact)
+                                // console.log(Name)
                                 break;
                             }
                         }

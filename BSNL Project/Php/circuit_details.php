@@ -2,10 +2,10 @@
 
 <?php
 // Database connection details
-$servername = "localhost";
-$username = "root";
-$password = "";
-$database = "bsnl_test";
+    $servername = "localhost";
+    $username = "u152745363_Devil";
+    $password = "Bsnl@2261";
+    $database = "u152745363_bsnl_test";
 
 // Create a connection
 $conn = new mysqli($servername, $username, $password, $database);
@@ -16,7 +16,7 @@ if ($conn->connect_error) {
 }
 
 // SQL query to fetch data
-$sql = "SELECT * FROM circuitdetails where is_active = 1 order by Sr_no";
+$sql = "SELECT * FROM circuitdetails where Is_Active = 1 order by Sr_no";
 $result = $conn->query($sql);
 
 $data = [];

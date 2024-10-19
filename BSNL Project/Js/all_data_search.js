@@ -1,4 +1,4 @@
-console.log("search started...")
+console.log("search started..aaa.")
 
 document.getElementById('searchBtn').addEventListener('click', function () {
     let searchInput = document.getElementById('searchInput').value;
@@ -7,6 +7,7 @@ document.getElementById('searchBtn').addEventListener('click', function () {
     fetch(`../Php/all_data_search.php?search=${searchInput}`)
         .then(response => response.json())
         .then(data => {
+            // console.log(data)
             let tbody = document.getElementById('circuitdata');
             tbody.innerHTML = ''; // Clear existing table rows
 

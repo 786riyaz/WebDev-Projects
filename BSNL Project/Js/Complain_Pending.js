@@ -1,9 +1,25 @@
-console.log("Dashboard Script Started.....");
+console.log("Dashboard Script Started");
 
+// let Current_Date_Time = new Date(Date.now());
+// let Current_Date_Time_SQL = Current_Date_Time.toISOString().slice(0, 19).replace('T', ' ');
+
+// console.log(Current_Date_Time)
+// console.log(Current_Date_Time_SQL)
 let Current_Date_Time = new Date(Date.now());
-let Current_Date_Time_SQL = Current_Date_Time.toISOString().slice(0, 19).replace('T', ' ');
 
-updateComplainDetails = function (element, duration, booking_date) {
+// Format the date to 'YYYY-MM-DD HH:MM:SS' in local time
+let Current_Date_Time_SQL = Current_Date_Time.getFullYear() + '-' +
+    ('0' + (Current_Date_Time.getMonth() + 1)).slice(-2) + '-' +
+    ('0' + Current_Date_Time.getDate()).slice(-2) + ' ' +
+    ('0' + Current_Date_Time.getHours()).slice(-2) + ':' +
+    ('0' + Current_Date_Time.getMinutes()).slice(-2) + ':' +
+    ('0' + Current_Date_Time.getSeconds()).slice(-2);
+
+console.log(Current_Date_Time);        // Logs the current time in local time zone
+console.log(Current_Date_Time_SQL);    // Logs the current time formatted in local time zone
+
+
+updateComplainDetails = function (element, duration) {
     console.log("Update ComplainDetails Initiated ");
     let CloseButtonID = element.id;
     console.log("Close Button ID :: ", element);
@@ -22,19 +38,16 @@ updateComplainDetails = function (element, duration, booking_date) {
     let ResolutionCode = document.getElementById(ResolutionCodeID).value;
     // let Duration = document.getElementById(DurationID).value;
 
-    // Calculating Duratoin
-    // 
-
     const data = {
         ResolutionRemark: ResolutionRemark,
         ResolutionCode: ResolutionCode,
-        DateTime: Current_Date_Time_SQL,            // Hidded Date
-        Duration: duration,                         // Calculated Duration
+        DateTime: Current_Date_Time_SQL,
+        Duration: duration,
         ID: parseInt(TargetComplainID)
     };
 
     console.log("Data to update :: ",data);
-    debugger
+    // debugger
     // Create an object to send via AJAX
     $.ajax({
         type: 'POST',
@@ -69,7 +82,7 @@ fetch(`../Php/complain_fetch_unresolved.php`)
     .then((data) => {
 
         if (true) {
-            console.log("Received Data :: ", data);
+            // console.log("Received Data :: ", data);
             if (data.length > 0) {
                 let NoComplainMessage = document.getElementById('NoComplainMessage');
                 NoComplainMessage.style.display = "none";
@@ -87,7 +100,7 @@ fetch(`../Php/complain_fetch_unresolved.php`)
                     temp.duration = 0;
 
                     const dateString = temp.booking_date; // Ensure temp.date is in a valid format
-
+                    
                     // Create dateObject from the dateString
                     const dateObject = new Date(dateString.replace(" ", "T"));
                     const dateString1 = dateObject;
@@ -100,10 +113,15 @@ fetch(`../Php/complain_fetch_unresolved.php`)
                     // Calculate the current time as a Date object and get its Unix timestamp
                     const currentUnixEpoch = Date.now(); // This is already in milliseconds
                     const currentUnixEpochInSeconds = Math.floor(currentUnixEpoch / 1000);
-
+                    
+                    
+                    
                     // Calculate the difference in seconds
                     const differenceInSeconds = currentUnixEpochInSeconds - unixEpochInSeconds;
+                    const durationaaa = Math.floor(differenceInSeconds / 3600);
                     temp.duration = Math.floor(differenceInSeconds / 3600);
+                    
+                    console.log(dateString)
                     faultOrders.push(temp);
                 }
 
@@ -136,7 +154,7 @@ RenderWholePage = function () {
         tbody.innerHTML = ''; // Clear the table before populating
 
         faultOrders.slice(start, end).forEach(order => {
-            console.log(order);
+            // console.log(order);
             const orderRow = document.createElement('tr');
 
             orderRow.innerHTML = `
@@ -156,8 +174,7 @@ RenderWholePage = function () {
             remarkRow.classList.add('CloseRemark');         // Riyaz Pathan
             remarkRow.style.display = 'none'; // Hidden by default
 
-            remarkRow.innerHTML = ` </tr>
-                               <td colspan="2">
+            remarkRow.innerHTML = `<td colspan="2">
                                    <select class="form-select" aria-label="Default select example" id="ResolutionCode_${order.Complain_ID}">
                                        <option selected>Choose Issue</option>
                                        <option value="200">Power Issue (200)</option>
@@ -171,7 +188,7 @@ RenderWholePage = function () {
                                        <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"  id="ResolutionRemark_${order.Complain_ID}">
                                    </div>
                                </td>
-                               <td><button type="button" class="btn btn-outline-secondary" onClick="updateComplainDetails(this,${order.duration},${order.booking_date})" id="CloseButton_${order.Complain_ID}">Submit</button></td>`;
+                               <td><button type="button" class="btn btn-outline-secondary" onClick="updateComplainDetails(this,${order.duration})" id="CloseButton_${order.Complain_ID}">Submit</button></td>`;
 
             const MessageRow = document.createElement('tr');
             MessageRow.classList.add(`Message_${order.Complain_ID}`);         // Riyaz Patha
@@ -184,7 +201,6 @@ RenderWholePage = function () {
             tbody.appendChild(remarkRow);
             tbody.appendChild(MessageRow);
         });
-        
         addCloseClass();
     }
 

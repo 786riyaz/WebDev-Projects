@@ -1,4 +1,4 @@
-console.log("search started pending complain.aaa.")
+console.log("search pending complain started")
 
 
 document.getElementById('searchBtn1').addEventListener('click', function () {
@@ -10,7 +10,7 @@ document.getElementById('searchBtn1').addEventListener('click', function () {
     .then((data) => {
 
         if (true) {
-            console.log("Received Data :: ", data);
+            // console.log("Received Data :: ", data);
             if (data.length > 0) {
                 let NoComplainMessage = document.getElementById('NoComplainMessage');
                 NoComplainMessage.style.display = "none";
@@ -77,7 +77,7 @@ RenderWholePage = function () {
         tbody.innerHTML = ''; // Clear the table before populating
 
         faultOrders.slice(start, end).forEach(order => {
-            console.log(order);
+            // console.log(order);
             const orderRow = document.createElement('tr');
 
             orderRow.innerHTML = `

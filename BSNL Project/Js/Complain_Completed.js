@@ -4,7 +4,7 @@ let Current_Date_Time = new Date(Date.now());
 let Current_Date_Time_SQL = Current_Date_Time.toISOString().slice(0, 19).replace('T', ' ');
 
 updateComplainDetails = function (element) {
-    console.log("Update ComplainDetails Initiated ");
+    // console.log("Update ComplainDetails Initiated ");
     let TargetComplainID = element.id.split("_")[1];
 
     let ResolutionRemarkID = 'ResolutionRemark_' + TargetComplainID;
@@ -66,7 +66,7 @@ fetch(`../Php/Complain_Fetch_Completed.php`)
                 let NoComplainMessage = document.getElementById('NoComplainMessage');
                 NoComplainMessage.style.display = "none";
 
-                console.log("Received Data :: ",data)
+                // console.log("Received Data :: ",data)
                 faultOrders = [];
                 for (let i = 0; i < data.length; i++) {
                     temp = {};
@@ -83,7 +83,7 @@ fetch(`../Php/Complain_Fetch_Completed.php`)
                     temp.code = data[i].complain_solve_code;
                     faultOrders.push(temp);
                 }
-                console.log("FFFF :: ",faultOrders);
+                // console.log("FFFF :: ",faultOrders);
                 RenderWholePage();
             }
             else {
@@ -95,7 +95,7 @@ fetch(`../Php/Complain_Fetch_Completed.php`)
     })
 
 RenderWholePage = function () {
-    console.log("faultOrders ::", faultOrders)
+    // console.log("faultOrders ::", faultOrders)
     const hamBurger = document.querySelector(".toggle-btn");
 
     hamBurger.addEventListener("click", function () {

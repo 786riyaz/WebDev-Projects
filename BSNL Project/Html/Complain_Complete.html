@@ -67,8 +67,8 @@
                     </a>
                 </li>
             </ul>
-            <div class="sidebar-footer">
-                <a href="login.html" class="sidebar-link">
+            <div class="sidebar-footer" id="logout-btn">
+               <a href="" class="sidebar-link">
                     <i class="lni lni-exit"></i>
                     <span>Logout</span>
                 </a>
@@ -169,5 +169,10 @@ crossorigin="anonymous"></script>
 <script src="../Js/Complain_Completed.js"></script>
 <script src="../Js/complete_complain_search.js"></script>
 <!-- <script src="../Js/dashbord.js"></script> -->
+<script>document.querySelector('.toggle-btn').addEventListener('click', function () {
+        document.getElementById('sidebar').classList.toggle('expand');
+    });
+</script>
+<script src="../Js/login.js"></script>
 
 </html>

@@ -1,4 +1,4 @@
-console.log("search started complete complain.aaaassaa.")
+console.log("search complete complain started..")
 
 
 document.getElementById('searchBtn2').addEventListener('click', function () {
@@ -15,7 +15,7 @@ document.getElementById('searchBtn2').addEventListener('click', function () {
                 let NoComplainMessage = document.getElementById('NoComplainMessage');
                 NoComplainMessage.style.display = "none";
 
-                console.log("Received Data :: ",data)
+                // console.log("Received Data :: ",data)
                 faultOrders = [];
                 for (let i = 0; i < data.length; i++) {
                     temp = {};

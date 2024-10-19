@@ -1,9 +1,9 @@
-console.log("Complain Booking Script Started.aaa...");
+console.log("Complain Booking Script Started....");
 
 let ReceivedData = [];
 
 
-console.log("pending count.....")
+// console.log("pending count.....")
 
 let setCountInUI = function () {
     let pendingCount = 0, completeCount = 0;
@@ -12,7 +12,7 @@ let setCountInUI = function () {
     }
     document.getElementById("PendingFaults").innerText = pendingCount;
 
-    console.log(TempRecords)
+    // console.log(TempRecords)
 }
 
 let FetchComplainRecords = function () {
@@ -49,17 +49,17 @@ document.addEventListener('DOMContentLoaded', (event) => {
     AlreadyBooked.style.display = "none";
 
     SameAddressCheckBox.addEventListener('change', function (event) {
-        console.log("Check box Checked....");
+        // console.log("Check box Checked....");
         SameAddress = event.target.checked;
         showHide(SameAddress);
     });
 
     showHide = function () {
         if (SameAddress) {
-            console.log("Same Address Checked - set same address");
+            // console.log("Same Address Checked - set same address");
             sameDetailsDiv.style.display = "none";
         } else {
-            console.log("Same Address Unchecked");
+            // console.log("Same Address Unchecked");
             sameDetailsDiv.style.display = "block";
         }
     }
@@ -70,8 +70,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
     SearchButton.addEventListener('click', function (event) {
         circuit_id = document.getElementById('circuit_id');
-        console.log('Input Field :: ' + circuit_id);
-        console.log('Input Value :: ' + circuit_id.value);
+        // console.log('Input Field :: ' + circuit_id);
+        // console.log('Input Value :: ' + circuit_id.value);
         circuit_id = circuit_id.value + "";
 
         if (true) {
@@ -79,14 +79,14 @@ document.addEventListener('DOMContentLoaded', (event) => {
             fetch(`../Php/Complain_User_Data_Fetch.php?circuit_id=${circuit_id}`)
                 .then((response) => response.json())
                 .then((data) => {
-                    console.log("Received Data :: ", data);
+                    // console.log("Received Data :: ", data);
                     ReceivedData = data[0];
                     // ReceivedData = data[0];
 
                     if (data.length > 0) {
-                        console.log("Customer Details Found");
+                        // console.log("Customer Details Found");
                         if (confirm(`Is this Correct? \n\nName :: ${data[0].Name} \nAddress :: ${data[0].Address_A} \nMobile Number :: ${data[0].Contect} \nExchange :: ${data[0].Exchange}`)) {
-                            console.log("Details are verified...");
+                            // console.log("Details are verified...");
                             Address.value = data[0].Address_A;
                             Number.value = data[0].Contect;
                             CurrentAddress.value = data[0].Address_A;
@@ -95,24 +95,25 @@ document.addEventListener('DOMContentLoaded', (event) => {
                             fetch(`../Php/Circuit_And_Complain_Fetching.php?circuit_id=${circuit_id}`)
                                 .then((response) => response.json())
                                 .then((data) => {
-                                    console.log("Received Data :: ", data);
+                                    // console.log("Received Data :: ", data);
 
                                     if (data.length > 0) {
-                                        console.log("Record(s) Found");
-                                        console.log("Resolved ??? ", data[0].Is_Resolved);
+                                        // console.log("Record(s) Found");
+                                        // console.log("Resolved ??? ", data[0].Is_Resolved);
                                         Address.value = data[0].Address_A;
                                         Number.value = data[0].Contect;
                                         CurrentAddress.value = data[0].Address_A;
                                         CurrentNumber.value = data[0].Contect;
-                                        console.log("Complain is already in progress with ID " + data[0].complain_id);
+                                        // console.log("Complain is already in progress with ID " + data[0].complain_id);
                                         AlreadyBooked.innerHTML = "Complain is already in progress with ID " + data[0].complain_id;
                                         AlreadyBooked.style.display = "block";
                                         HideSubmissionController();
                                     }
                                     else {
                                         // AlreadyBooked.innerHTML = "You can book your complain now.";
-                                        console.log("You can book your complain now");
+                                        // console.log("You can book your complain now");
                                         SubmissionController.style.display = "";
+                                        
                                     }
                                 })
                         } else {
@@ -172,8 +173,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
     // $(document).ready(function () {
     SubmitButton.addEventListener('click', function (event) {
         $('#sheetdb-form').on('submit', function (event) {
-            console.log("Submit Button Clicked.");
-            debugger;
+            // console.log("Submit Button Clicked.");
+            // debugger;
             const data = {
                 Name: ReceivedData.Name,
                 Exchange: ReceivedData.Exchange,
@@ -184,8 +185,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 CurrentAddress: CurrentAddress.value || ReceivedData.Address_A,
                 Current_Contact: CurrentNumber.value || ReceivedData.Contect
             };
-            console.log("Data to Submit :: ", data);
-            debugger;
+            // console.log("Data to Submit :: ", data);
+            // debugger;
             event.preventDefault(); // Prevent the default form submission
             $.ajax({
                 type: 'POST',
@@ -193,8 +194,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 data: data, // Serialize the form data
                 // data: $(this).serialize(), // Serialize the form data
                 success: function (response) {
-                    debugger
-                    console.log("Response ::: ", response)
+                    // debugger
+                    // console.log("Response ::: ", response)
                     $('#AlreadyBooked').text(response); // Display the response message
                     $('#sheetdb-form')[0].reset(); // Reset the form fields
                 },
@@ -202,7 +203,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
                     $('#AlreadyBooked').text('An error occurred while submitting the form.');
                 }
             });
-            console.log("Complain Booked");
+            // console.log("Complain Booked");
             AlreadyBooked.style.display = "block";
         });
     });

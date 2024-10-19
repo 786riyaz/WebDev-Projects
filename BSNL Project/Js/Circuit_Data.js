@@ -1,4 +1,4 @@
-console.log("Circuit Data Started !!!!aaaaa!!!!");
+console.log("Circuit Data Started !!!!aaa!!!!");
 
 const recordsPerPage = 20;
 let currentPage = 1;
@@ -210,6 +210,7 @@ function renderPaginationControls() {
 fetch(`../Php/circuit_details.php`)
     .then((response) => response.json())
     .then((fetchedData) => {
+        // console.log(fetchedData)
         data = fetchedData; // Store the fetched data
         totalPages = Math.ceil(data.length / recordsPerPage); // Calculate total pages
 

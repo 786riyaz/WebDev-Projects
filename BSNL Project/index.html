@@ -14,87 +14,112 @@
 
 <body>
     <!-- Navigation Header -->
-    <header class="header">
-        <div class="container d-flex justify-content-between align-items-center">
-            <a href="" class="logo">Shivam Telecom</a>
-            <nav class="navbar">
-
-                  
-                <a href="#" class="nav-link" >Pending Complain : <span id="PendingFaults">00</span></a>   
-                <a href="index.html" class="nav-link">Book Complain</a>
-                <a href="/Html/Complain_Track.html" class="nav-link">Track Complain</a>
-                <a href="/Html/login.html" class="nav-link">Login</a>
-            </nav>
-        </div>
+    <header>
+        <nav class="navbar navbar-light bg-light fixed-top">
+            <div class="container-fluid">
+                <!-- Navbar brand -->
+                <a class="navbar-brand fw-bolder fs-4" href="/Html/shivam.html">Shivam Telecom</a>
+    
+                <!-- Toggler for small screens -->
+                <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="offcanvas" 
+                        data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+    
+                <!-- Links for larger screens -->
+                <div class="d-none d-lg-flex justify-content-end">
+                    <a href="#" class="nav-link text-dark fs-5">Pending Complain: <span id="PendingFaults">00</span></a>
+                    <a class="nav-link text-dark fs-5" href="../index.html">Book Complain</a>
+                    <a class="nav-link text-dark fs-5" href="/Html/Complain_Track.html">Track Complain</a>
+                    <a class="nav-link text-dark fs-5" href="/Html/login.html">Login</a>
+                </div>
+    
+                <!-- Offcanvas menu for small screens -->
+                <div class="offcanvas offcanvas-end bg-white" tabindex="-1" id="offcanvasNavbar" 
+                    aria-labelledby="offcanvasNavbarLabel">
+                    <div class="offcanvas-header">
+                        <h5 class="offcanvas-title text-dark" id="offcanvasNavbarLabel">Shivam Telecom</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                    </div>
+                    <div class="offcanvas-body">
+                        <!-- Offcanvas Links -->
+                        <ul class="navbar-nav justify-content-end flex-grow-1 pe-3 text-dark">
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" aria-current="page" href="../index.html">Book Complain</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" href="/Html/Complain_Track.html">Track Complain</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" href="/Html/login.html">Login</a>
+                            </li>
+                        </ul>
+                        <!-- Offcanvas Search Form -->
+                        <form class="d-flex mt-3" role="search">
+                            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                            <button class="btn btn-success" type="submit">Search</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </nav>
     </header>
 
     <!-- Complaint Form -->
-    <div class="container my-5">
-        <div class="booking-box mx-auto col-lg-6 col-md-8 col-sm-12">
-            <h2 class="text-center">Register a Complaint</h2>
+    <div class="d-flex justify-content-center align-items-center vh-100">
+        <div class="booking-box col-lg-6 col-md-8 col-sm-12">
+            <h2 class="text-center mb-5">Register a Complaint</h2>
             <form id="sheetdb-form">
                 <div class="mb-3">
-                    <div class="input-btn">
-                        <input type="text" class="form-control" id="circuit_id" name="circuit_id"
-                            placeholder="Service Id" required>
-                        <button type="button" id="SearchButton"><i class="fa fa-search"></i></button>
+                    <div class="input-btn d-flex">
+                        <input type="text" class="form-control" id="circuit_id" name="circuit_id" placeholder="Service Id" required>
+                        <button type="button" id="SearchButton" class="btn btn-outline-secondary ms-2"><i class="fa fa-search"></i></button>
                     </div>
                     <small class="text-muted">Eg. 040-89876567/02717-69587 (Landline)</small>
                 </div>
 
                 <div class="mb-3">
-                    <!-- <label for="Address" class="form-label">Address</label> -->
-                    <textarea class="form-control" id="Address" placeholder="Address" name="Address" rows="3"
-                        required disabled></textarea>
+                    <textarea class="form-control" id="Address" placeholder="Address" name="Address" rows="3" required disabled></textarea>
                 </div>
 
                 <div class="mb-3">
-                    <!-- <label for="PhoneNumber" class="form-label">Number</label> -->
-                    <input type="text" class="form-control" id="Number" placeholder="Number" name="Number"
-                        required disabled>
+                    <input type="text" class="form-control" id="Number" placeholder="Number" name="Number" required disabled>
                 </div>
 
-                <div class="modify_details">
+                <div class="modify_details mb-3">
                     <label>Modify your Contact number & Address</label>
                     <input type="checkbox" id="SameAddress" checked>
                 </div>
 
                 <div id="sameDetailsDiv">
-
                     <div class="mb-3" id="addressField">
-                        <!-- <label for="CurrentAddress" class="form-label">Current Address</label> -->
-                        <textarea class="form-control" placeholder="Current Address" name="CurrentAddress" rows="3"
-                            id="CurrentAddress"></textarea>
+                        <textarea class="form-control" placeholder="Current Address" name="CurrentAddress" rows="3" id="CurrentAddress"></textarea>
                     </div>
 
                     <div class="mb-3" id="numberField">
-                        <!-- <label for="NewNumber" class="form-label">New Number</label> -->
-                        <input type="text" class="form-control" placeholder="New Number" name="CurrentNumber"
-                            id="CurrentNumber">
+                        <input type="text" class="form-control" placeholder="New Number" name="CurrentNumber" id="CurrentNumber">
                     </div>
-
                 </div>
 
-                <h4 id="AlreadyBooked">Complain Already Booked</h4>
+                <h4 id="AlreadyBooked" class="text-danger">Complain Already Booked</h4>
 
                 <div id="SubmissionController">
                     <div class="d-flex justify-content-around">
-                        <!-- <input type="submit" value="Submit"> -->
                         <button type="submit" class="btn btn-outline-primary" id="SubmitButton">Submit</button>
                         <button type="reset" class="btn btn-outline-dark" id="CancelButton">Cancel</button>
                     </div>
                 </div>
-
             </form>
         </div>
     </div>
 
     <!-- Bootstrap JS -->
-    <!-- JQuery script  -->
-    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="/Js/Complain_Booking.js"></script>
+
 </body>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="/Js/Complain_Booking.js"></script>
+
+
 
 </html>

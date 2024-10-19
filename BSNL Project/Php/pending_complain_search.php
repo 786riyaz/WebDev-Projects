@@ -1,14 +1,17 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
 if (isset($_GET['search'])) {
     // Database Variables
     $HOST_NAME = "localhost";
-    $USERNAME = "root";
-    $PASSWORD = "";
-    $DATABASE_NAME = "bsnl_test";
+    $USERNAME = "u152745363_Devil";
+    $PASSWORD = "Bsnl@2261";
+    $DABASENAME = "u152745363_bsnl_test";
 
     // Database Connection
-    $conn = new mysqli($HOST_NAME, $USERNAME, $PASSWORD, $DATABASE_NAME);
+    $conn = new mysqli($HOST_NAME, $USERNAME, $PASSWORD, $DABASENAME);
 
     if ($conn->connect_error) {
         die('Connection Failed: ' . $conn->connect_error);
@@ -17,7 +20,7 @@ if (isset($_GET['search'])) {
         $searchCircuitID = mysqli_real_escape_string($conn, $_GET['search']);
 
         // SQL query to search by Circuit_ID
-        $stmt = "SELECT * FROM Complain WHERE Circuit_ID LIKE '%$searchCircuitID%' AND Is_Resolved = 0";
+        $stmt = "SELECT * FROM complain WHERE Circuit_ID LIKE '%$searchCircuitID%' AND Is_Resolved = 0";
         $result = mysqli_query($conn, $stmt);
         $output = [];
 

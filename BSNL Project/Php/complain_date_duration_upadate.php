@@ -1,9 +1,12 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 // Database Variables
-$HOST_NAME = "localhost";
-$USERNAME = "root";
-$PASSWORD = "";
-$DATABASE_NAME = "bsnl_test";
+    $HOST_NAME = "localhost";
+    $USERNAME = "u152745363_Devil";
+    $PASSWORD = "Bsnl@2261";
+    $DABASENAME = "u152745363_bsnl_test";
 
 // Database Connection
 $conn = new mysqli($HOST_NAME, $USERNAME, $PASSWORD, $DATABASE_NAME);

@@ -68,8 +68,8 @@
                     </a>
                 </li>
             </ul>
-            <div class="sidebar-footer">
-                <a href="login.html" class="sidebar-link">
+            <div class="sidebar-footer" id="logout-btn">
+                <a href="" class="sidebar-link">
                     <i class="lni lni-exit"></i>
                     <span>Logout</span>
                 </a>
@@ -292,5 +292,9 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="../Js/Circuit_Data.js"></script>
     <script src="../Js/all_data_search.js"></script>
-    
+    <script>document.querySelector('.toggle-btn').addEventListener('click', function () {
+        document.getElementById('sidebar').classList.toggle('expand');
+    });
+</script>
+    <script src="../Js/login.js"></script>
 </html>
