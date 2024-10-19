@@ -1,7 +1,7 @@
-console.log("Complain Booking Script Started....");
+console.log("Complain Booking Script Started...");
+let DebugMode = true;
 
 let ReceivedData = [];
-
 
 // console.log("pending count.....")
 
@@ -79,10 +79,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
             fetch(`../Php/Complain_User_Data_Fetch.php?circuit_id=${circuit_id}`)
                 .then((response) => response.json())
                 .then((data) => {
-                    // console.log("Received Data :: ", data);
+                    if (DebugMode) { console.log("Received Data :: ", data); }
                     ReceivedData = data[0];
-                    // ReceivedData = data[0];
-
+                    if (DebugMode) { console.log("Received Data :: ", ReceivedData); }
                     if (data.length > 0) {
                         // console.log("Customer Details Found");
                         if (confirm(`Is this Correct? \n\nName :: ${data[0].Name} \nAddress :: ${data[0].Address_A} \nMobile Number :: ${data[0].Contect} \nExchange :: ${data[0].Exchange}`)) {
@@ -113,7 +112,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
                                         // AlreadyBooked.innerHTML = "You can book your complain now.";
                                         // console.log("You can book your complain now");
                                         SubmissionController.style.display = "";
-                                        
+                                        AlreadyBooked.style.display = "none";
+
                                     }
                                 })
                         } else {
@@ -172,39 +172,85 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
     // $(document).ready(function () {
     SubmitButton.addEventListener('click', function (event) {
-        $('#sheetdb-form').on('submit', function (event) {
-            // console.log("Submit Button Clicked.");
-            // debugger;
-            const data = {
-                Name: ReceivedData.Name,
-                Exchange: ReceivedData.Exchange,
-                Address_A: ReceivedData.Address_A,
-                Address_B: ReceivedData.Address_B,
-                Contact: ReceivedData.Contect,
-                Circuit_ID: ReceivedData.Circuit_ID,
-                CurrentAddress: CurrentAddress.value || ReceivedData.Address_A,
-                Current_Contact: CurrentNumber.value || ReceivedData.Contect
-            };
-            // console.log("Data to Submit :: ", data);
-            // debugger;
-            event.preventDefault(); // Prevent the default form submission
-            $.ajax({
-                type: 'POST',
-                url: '../Php/complain_register.php', // Your PHP file that handles the submission
-                data: data, // Serialize the form data
-                // data: $(this).serialize(), // Serialize the form data
-                success: function (response) {
-                    // debugger
-                    // console.log("Response ::: ", response)
-                    $('#AlreadyBooked').text(response); // Display the response message
-                    $('#sheetdb-form')[0].reset(); // Reset the form fields
-                },
-                error: function () {
-                    $('#AlreadyBooked').text('An error occurred while submitting the form.');
-                }
-            });
-            // console.log("Complain Booked");
-            AlreadyBooked.style.display = "block";
-        });
+        if (DebugMode) { console.log("Submit Button Clicked"); }
+        let ReadyToSubmit = false;
+        if (DebugMode) { console.log("Data to submit :: ", JSON.stringify(ReceivedData)); }
+        if (ReceivedData && ReceivedData.Name && ReceivedData.Exchange && (ReceivedData.Address_A || ReceivedData.Address_B) && ReceivedData.Contect && ReceivedData.Circuit_ID && (CurrentAddress.value || ReceivedData.Address_A) && (CurrentNumber.value || ReceivedData.Contect)) {
+            ReadyToSubmit = true;
+        }
+        if (ReadyToSubmit) {
+            console.log("Calling data submit function////");
+            submitData();
+        } else {
+            alert("Unable to Submit the Details, Please fill all the details.")
+        }
     });
 });
+
+let submitData = function () {
+    $('#sheetdb-form').on('submit', function (event) {
+        if (DebugMode) { console.log("Data submission started."); }
+
+        // Calculate Current Booking Date --- Old Method
+        /*
+        let Current_Date_Time = new Date(Date.now());
+        let Current_Date_Time_SQL = Current_Date_Time.toISOString().slice(0, 19).replace('T', ' ');
+        console.log(Current_Date_Time);
+        console.log(Current_Date_Time_SQL);
+        */
+        
+        // Calculate Current Booking Date --- New Method
+        let Current_Date_Time = new Date(Date.now());
+
+        // Manually format the date-time in local time for SQL format
+        let year = Current_Date_Time.getFullYear();
+        let month = String(Current_Date_Time.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed
+        let day = String(Current_Date_Time.getDate()).padStart(2, '0');
+        let hours = String(Current_Date_Time.getHours()).padStart(2, '0');
+        let minutes = String(Current_Date_Time.getMinutes()).padStart(2, '0');
+        let seconds = String(Current_Date_Time.getSeconds()).padStart(2, '0');
+
+        // SQL format: 'YYYY-MM-DD HH:MM:SS'
+        let Current_Date_Time_SQL = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+
+        console.log(Current_Date_Time); // Local time
+        console.log(Current_Date_Time_SQL); // Same local time in SQL format
+
+        // debugger;
+        const data = {
+            Name: ReceivedData.Name,
+            Exchange: ReceivedData.Exchange,
+            Address_A: ReceivedData.Address_A,
+            Address_B: ReceivedData.Address_B,
+            Contact: ReceivedData.Contect,
+            Circuit_ID: ReceivedData.Circuit_ID,
+            CurrentAddress: CurrentAddress.value || ReceivedData.Address_A,
+            Current_Contact: CurrentNumber.value || ReceivedData.Contect,
+            Booking_Date: Current_Date_Time_SQL
+        };
+        if (DebugMode) { console.log("Data to Submit :: ", data); }
+        // debugger;
+        event.preventDefault(); // Prevent the default form submission
+        $.ajax({
+            type: 'POST',
+            url: '../Php/complain_register.php', // Your PHP file that handles the submission
+            data: data, // Serialize the form data
+            success: function (response) {
+                $('#AlreadyBooked').text(response); // Display the response message
+                AlreadyBooked.style.display = "block";
+                $('#sheetdb-form')[0].reset(); // Reset the form fields
+
+                // Refresh the page after 1 seconds
+                setTimeout(function () {
+                    alert(response);
+                    location.reload();
+                }, 1000);
+            },
+            error: function () {
+                $('#AlreadyBooked').text('An error occurred while submitting the form.');
+                AlreadyBooked.style.display = "block";
+            }
+        });
+        // console.log("Complain Booked");
+    });
+}

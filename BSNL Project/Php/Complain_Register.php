@@ -3,10 +3,10 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 // Database Variables
-    $HOST_NAME = "localhost";
-    $USERNAME = "u152745363_Devil";
-    $PASSWORD = "Bsnl@2261";
-    $DABASENAME = "u152745363_bsnl_test";
+$HOST_NAME = "localhost";
+$USERNAME = "root";
+$PASSWORD = "";
+$DABASENAME = "bsnl_test";
     
 // Datanase Connection
 $conn = new mysqli($HOST_NAME, $USERNAME, $PASSWORD, $DABASENAME);
@@ -19,14 +19,15 @@ $Address_A = $_POST['Address_A'];
 $CurrentAddress = $_POST['CurrentAddress'];
 $Contact = $_POST['Contact'];
 $Current_Contact = $_POST['Current_Contact'];
+$Booking_Date = $_POST['Booking_Date'];
 
 // $conn->close();
 if ($conn->connect_error) {
     die('Connection Failed : ' . $conn->connect_error);
 } else {
 
-    $stmt = $conn->prepare("INSERT INTO complain (Exchange, Circuit_ID, Name, Address_A, Current_Address, Contact, Current_Contact) VALUES (?, ?, ?,?,?,?,?)");
-    $stmt->bind_param("sisssii", $Exchange, $Circuit_ID, $Name, $Address_A, $CurrentAddress, $Contact, $Current_Contact);
+    $stmt = $conn->prepare("INSERT INTO complain (Exchange, Circuit_ID, Name, Address_A, Current_Address, Contact, Current_Contact, Booking_Date) VALUES (?, ?, ?,?,?,?,?,?)");
+    $stmt->bind_param("sisssiis", $Exchange, $Circuit_ID, $Name, $Address_A, $CurrentAddress, $Contact, $Current_Contact, $Booking_Date);
 
     // Execute the statement
     if ($stmt->execute()) {

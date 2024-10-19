@@ -6,9 +6,9 @@ error_reporting(E_ALL);
 if (isset($_GET['search'])) {
     // Database Variables
     $HOST_NAME = "localhost";
-    $USERNAME = "u152745363_Devil";
-    $PASSWORD = "Bsnl@2261";
-    $DABASENAME = "u152745363_bsnl_test";
+    $USERNAME = "root";
+    $PASSWORD = "";
+    $DABASENAME = "bsnl_test";
 
     // Database Connection
     $conn = new mysqli($HOST_NAME, $USERNAME, $PASSWORD, $DABASENAME);

@@ -18,7 +18,6 @@ let Current_Date_Time_SQL = Current_Date_Time.getFullYear() + '-' +
 console.log(Current_Date_Time);        // Logs the current time in local time zone
 console.log(Current_Date_Time_SQL);    // Logs the current time formatted in local time zone
 
-
 updateComplainDetails = function (element, duration) {
     console.log("Update ComplainDetails Initiated ");
     let CloseButtonID = element.id;
@@ -30,23 +29,28 @@ updateComplainDetails = function (element, duration) {
 
     let ResolutionRemarkID = 'ResolutionRemark_' + TargetComplainID;
     let ResolutionCodeID = 'ResolutionCode_' + TargetComplainID;
-    // let DurationID = 'Duration_' + TargetComplainID;
+    let HiddenDateTimeID = 'HideDateTime_' + TargetComplainID;
+    let HiddenDurationID = 'HideDuration_' + TargetComplainID;
+
     let MessageID = 'Message_' + TargetComplainID;
     let MessageTR = document.getElementsByClassName(MessageID)[0];
 
     let ResolutionRemark = document.getElementById(ResolutionRemarkID).value;
     let ResolutionCode = document.getElementById(ResolutionCodeID).value;
-    // let Duration = document.getElementById(DurationID).value;
+    let HiddenDateTime = document.getElementById(HiddenDateTimeID).value;
+    let HiddenDuration = document.getElementById(HiddenDurationID).value;
 
     const data = {
         ResolutionRemark: ResolutionRemark,
         ResolutionCode: ResolutionCode,
-        DateTime: Current_Date_Time_SQL,
+        ResolveDateTime: Current_Date_Time_SQL,
         Duration: duration,
+        HiddenDateTime: HiddenDateTime,
+        HiddenDuration: HiddenDuration,
         ID: parseInt(TargetComplainID)
     };
 
-    console.log("Data to update :: ",data);
+    console.log("Data to update :: ", JSON.stringify(data));
     // debugger
     // Create an object to send via AJAX
     $.ajax({
@@ -71,16 +75,11 @@ updateComplainDetails = function (element, duration) {
 }
 
 // Sample data for fault orders
-let faultOrders = [{ id: 1, phone: '040-80000', address: '123 Street A', mobile: '9876543210', date: '2024-09-25', duration: '2 hours' },
-    { id: 2, phone: '02717-69587', address: '456 Street B', mobile: '9876543222', date: '2024-09-26', duration: '3 hours' },
-    { id: 1, phone: '040-80000', address: '123 Street A', mobile: '9876543210', date: '2024-09-25', duration: '2 hours' },
-    { id: 2, phone: '02717-69587', address: '456 Street B', mobile: '9876543222', date: '2024-09-26', duration: '3 hours' },
-    { id: 1, phone: '040-80000', address: '123 Street A', mobile: '9876543210', date: '2024-09-25', duration: '2 hours' }];
+let faultOrders = [];
 
 fetch(`../Php/complain_fetch_unresolved.php`)
     .then((response) => response.json())
     .then((data) => {
-
         if (true) {
             // console.log("Received Data :: ", data);
             if (data.length > 0) {
@@ -114,8 +113,6 @@ fetch(`../Php/complain_fetch_unresolved.php`)
                     const currentUnixEpoch = Date.now(); // This is already in milliseconds
                     const currentUnixEpochInSeconds = Math.floor(currentUnixEpoch / 1000);
                     
-                    
-                    
                     // Calculate the difference in seconds
                     const differenceInSeconds = currentUnixEpochInSeconds - unixEpochInSeconds;
                     const durationaaa = Math.floor(differenceInSeconds / 3600);
@@ -124,7 +121,6 @@ fetch(`../Php/complain_fetch_unresolved.php`)
                     console.log(dateString)
                     faultOrders.push(temp);
                 }
-
                 RenderWholePage();
             }
             else {
@@ -175,6 +171,12 @@ RenderWholePage = function () {
             remarkRow.style.display = 'none'; // Hidden by default
 
             remarkRow.innerHTML = `<td colspan="2">
+                                   <input type="datetime-local" class="form-control HiddenDate" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="HideDateTime_${order.Complain_ID}" value = "${order.booking_date}" onchange = "CalculateNewDuration(this.id, this.value)">
+                               </td>
+                               <td >
+                                   <input type="text" class="form-control HiddenDuration" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="HideDuration_${order.Complain_ID}" value = "${order.duration}" disabled>
+                               </td>
+                               <td colspan="2">
                                    <select class="form-select" aria-label="Default select example" id="ResolutionCode_${order.Complain_ID}">
                                        <option selected>Choose Issue</option>
                                        <option value="200">Power Issue (200)</option>
@@ -182,7 +184,7 @@ RenderWholePage = function () {
                                        <option value="500">Server Issue (500)</option>
                                    </select>
                                </td>
-                               <td colspan="7">
+                               <td colspan="4">
                                    <div class="input-group mb-3">
                                        <span class="input-group-text" id="inputGroup-sizing-default">Remark</span>
                                        <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"  id="ResolutionRemark_${order.Complain_ID}">
@@ -271,3 +273,37 @@ RenderWholePage = function () {
     renderTable(currentPage);
     renderPagination();
 }
+
+let CalculateNewDuration = function (id, value) {
+    console.log("Calculating new duration.....");
+    console.log("ID :: ", id);
+    console.log("New Date :: ", value);
+
+    let numberID = id.split("_")[1];
+
+    let bookingDate = new Date(value); // booking date
+    let Current_Date = Date.now(); // current date in milliseconds
+    
+    // Calculate the difference in milliseconds
+    let differenceInMs = Current_Date - bookingDate.getTime();
+    
+    // Convert milliseconds to hours
+    let differenceInHours = differenceInMs / (1000 * 60 * 60);
+    
+    console.log("Difference in hours :: ", differenceInHours);
+
+    let durationField = document.getElementById(`HideDuration_${numberID}`);
+    durationField.value = parseInt(differenceInHours);
+}
+
+document.getElementById('searchBtn1').addEventListener('click', function () {
+    let searchInput = document.getElementById('searchInput1').value;
+    /*
+    faultOrders for faultOrders[i].circuit_id = searchInput
+        sortreRecord[]
+
+
+        RenderWholePage();
+*/
+
+});

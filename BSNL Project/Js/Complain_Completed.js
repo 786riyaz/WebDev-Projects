@@ -76,9 +76,11 @@ fetch(`../Php/Complain_Fetch_Completed.php`)
                     temp.Name = data[i].Name;
                     temp.current_address = data[i].current_address;
                     temp.current_contact = data[i].current_contact;
-                    temp.booking_date = data[i].booking_date;
+                    // temp.booking_date = data[i].booking_date;
+                    temp.booking_date = data[i].Hidden_Date;
                     temp.complain_solve_date = data[i].complain_solve_date;
-                    temp.duration = data[i].Resolution_Duration;
+                    //temp.duration = data[i].Resolution_Duration;
+                    temp.duration = data[i].Hidden_Duration;
                     temp.remark = data[i].complain_solve_remark;
                     temp.code = data[i].complain_solve_code;
                     faultOrders.push(temp);
