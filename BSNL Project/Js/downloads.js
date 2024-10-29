@@ -26,31 +26,31 @@ fetch(`../Php/circuit_details.php`)
         document.getElementById("downloadBtn").addEventListener("click", exportJsonToExcel);
     })
 
-    
+
 fetch(`../Php/complain_fetch_unresolved.php`)
-.then((response) => response.json())
-.then((fetchedData) => {
-    // console.log(fetchedData)
+    .then((response) => response.json())
+    .then((fetchedData) => {
+        // console.log(fetchedData)
 
-    let PendingFaults = document.getElementById('PendingFaults');
+        let PendingFaults = document.getElementById('PendingFaults');
 
-    function exportJsonToExcel() {
-        // Create a new workbook
-        const workbook = XLSX.utils.book_new();
+        function exportJsonToExcel() {
+            // Create a new workbook
+            const workbook = XLSX.utils.book_new();
 
-        // Convert JSON data to a worksheet
-        const worksheet = XLSX.utils.json_to_sheet(fetchedData);
+            // Convert JSON data to a worksheet
+            const worksheet = XLSX.utils.json_to_sheet(fetchedData);
 
-        // Append the worksheet to the workbook
-        XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
+            // Append the worksheet to the workbook
+            XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
 
-        // Export the workbook as an Excel file
-        XLSX.writeFile(workbook, "data.xlsx");
-    }
+            // Export the workbook as an Excel file
+            XLSX.writeFile(workbook, "data.xlsx");
+        }
 
-    // Event listener for the export button
-    document.getElementById("PendingFaults").addEventListener("click", exportJsonToExcel);
-})
+        // Event listener for the export button
+        document.getElementById("PendingFaults").addEventListener("click", exportJsonToExcel);
+    })
 
 
 
@@ -79,5 +79,5 @@ fetch(`../Php/Complain_Fetch_Completed.php`)
         document.getElementById("CompleteFaults").addEventListener("click", exportJsonToExcel);
     })
 
-    
+
 
