@@ -99,7 +99,7 @@ fetch(`../Php/complain_fetch_unresolved.php`)
                     temp.duration = 0;
 
                     const dateString = temp.booking_date; // Ensure temp.date is in a valid format
-                    
+
                     // Create dateObject from the dateString
                     const dateObject = new Date(dateString.replace(" ", "T"));
                     const dateString1 = dateObject;
@@ -112,12 +112,12 @@ fetch(`../Php/complain_fetch_unresolved.php`)
                     // Calculate the current time as a Date object and get its Unix timestamp
                     const currentUnixEpoch = Date.now(); // This is already in milliseconds
                     const currentUnixEpochInSeconds = Math.floor(currentUnixEpoch / 1000);
-                    
+
                     // Calculate the difference in seconds
                     const differenceInSeconds = currentUnixEpochInSeconds - unixEpochInSeconds;
                     const durationaaa = Math.floor(differenceInSeconds / 3600);
                     temp.duration = Math.floor(differenceInSeconds / 3600);
-                    
+
                     console.log(dateString)
                     faultOrders.push(temp);
                 }
@@ -283,13 +283,13 @@ let CalculateNewDuration = function (id, value) {
 
     let bookingDate = new Date(value); // booking date
     let Current_Date = Date.now(); // current date in milliseconds
-    
+
     // Calculate the difference in milliseconds
     let differenceInMs = Current_Date - bookingDate.getTime();
-    
+
     // Convert milliseconds to hours
     let differenceInHours = differenceInMs / (1000 * 60 * 60);
-    
+
     console.log("Difference in hours :: ", differenceInHours);
 
     let durationField = document.getElementById(`HideDuration_${numberID}`);

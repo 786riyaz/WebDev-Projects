@@ -117,7 +117,7 @@ RenderWholePage = function () {
 
         faultOrders.slice(start, end).forEach(order => {
             // console.log("Order 1::", order)
-            
+
             const orderRow = document.createElement('tr');
             // console.log("Order 2::", order)
             orderRow.innerHTML = `

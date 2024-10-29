@@ -198,7 +198,7 @@ let submitData = function () {
         console.log(Current_Date_Time);
         console.log(Current_Date_Time_SQL);
         */
-        
+
         // Calculate Current Booking Date --- New Method
         let Current_Date_Time = new Date(Date.now());
 
