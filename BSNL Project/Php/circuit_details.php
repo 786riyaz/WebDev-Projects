@@ -1,5 +1,3 @@
-
-
 <?php
 // Database connection details
 $HOST_NAME = "localhost";

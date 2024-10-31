@@ -8,7 +8,7 @@ if (true) {
     $USERNAME = "root";
     $PASSWORD = "";
     $DABASENAME = "bsnl_test";
-    
+
     // Datanase Connection
     $conn = new mysqli($HOST_NAME, $USERNAME, $PASSWORD, $DABASENAME);
 

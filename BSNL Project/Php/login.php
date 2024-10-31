@@ -13,7 +13,7 @@ if (true) {
 
     // Datanase Connection
     $conn = new mysqli($HOST_NAME, $USERNAME, $PASSWORD, $DABASENAME);
-    
+
     if ($conn->connect_error) {
         die('Connection Failed : ' . $conn->connect_error);
     } else {
@@ -33,6 +33,6 @@ if (true) {
     $conn->close();
 
     echo json_encode($output);
-     //echo $output;
+    //echo $output;
 }
 ?>
