@@ -1,6 +1,5 @@
 <?php
 
-
 if (true) {
     // Database Variables
     $HOST_NAME = "localhost";
@@ -32,4 +31,5 @@ if (true) {
     echo json_encode($output);
     // echo $output;
 }
+
 ?>
