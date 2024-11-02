@@ -1,0 +1,7 @@
+PHP Login System Tutorial: Creating Login Page & Script in PHP | PHP Tutorial #42
+Code With Harry
+https://www.youtube.com/watch?v=DNxvyMT81mE
+
+Email Verification - Part 1/5: Login & Registration Form Design using Bootstrap & File Setup in PHP
+Funda Of Web IT
+https://www.youtube.com/watch?v=mKEQ7TJldN8&list=PLRheCL1cXHrtQ68Jmh_gHL0FMWYw6u0c0&index=1
