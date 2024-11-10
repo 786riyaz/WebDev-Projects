@@ -94,7 +94,7 @@
         <div class="main p-3">
             <div class="text-center">
                 <h1>
-                    Pending Faults
+                    Bsnl Pending Faults
                     <hr>
                     <div class="input-group mb-3">
                         <input type="text" class="form-control" placeholder="Search Number / Complain Id"
@@ -113,29 +113,47 @@
                                 <th scope="col">Contact</th>
                                 <th scope="col">Date</th>
                                 <th scope="col">Duration</th>
-                                <th scope="col">Assign</th>
-                                <th scope="col">Close</th>
+                                <th scope="col">Reassign</th>
+                                
                             </tr>
                         </thead>
-                        <tbody id="faultOrdersBody">
-                            <!-- Rows will be dynamically inserted -->
+                        <tbody id="">
+                            <tr>
+                            <td>10</td>
+                            <td>AHDVST</td>
+                            <td>15261352615</td>
+                            <td>CITY</td>
+                            <td>15 NUMBER</td>
+                            <td>000000000</td>
+                            <td>08-11-2024</td>
+                            <td>5</td>
+                            <td><button type="button" class="btn btn-outline-danger assignBtn" >Re-Assign</button></td>
+                        </tr>
+
+                            <tr id="remark_reassign" style="display: none;">
+                                <td colspan="1">
+                                    <select class="form-select" aria-label="Default select example" id="" disabled>
+                                        <option >ROOC</option>
+                                    </select>
+                                </td>
+                                <td colspan="3">
+                                    <div class="input-group mb-3" >
+                                        <span class="input-group-text" id="inputGroup-sizing-default" >F Remark</span>
+                                        <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"  id="" disabled>
+                                    </div>
+                                </td>
+                                <td colspan="4">
+                                    <div class="input-group mb-3" >
+                                        <span class="input-group-text" id="inputGroup-sizing-default" >Bsnl Remark</span>
+                                        <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"  id="">
+                                    </div>
+                                </td>
+                                <td><button type="button" class="btn btn-outline-secondary" onClick="" id="">Submit</button></td>
+                            </tr>
                         </tbody>
                     </table>
 
 
-                    <!-- <nav aria-label="Page navigation example">
-                        <ul class="pagination justify-content-end">
-                            <li class="page-item disabled">
-                                <a class="page-link">Previous</a>
-                            </li>
-                            <li class="page-item"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                            <li class="page-item">
-                                <a class="page-link" href="#">Next</a>
-                            </li>
-                        </ul>
-                    </nav> -->
                     <nav aria-label="Page navigation example">
                         <ul class="pagination justify-content-end" id="pagination">
                             <!-- Pagination buttons will be dynamically inserted here -->
@@ -143,7 +161,7 @@
                     </nav>
                 </h1>
             </div>
-            <h1 id="NoComplainMessage">No complain</h1>
+            <!-- <h1 id="NoComplainMessage">No complain</h1> -->
         </div>
     </div>
 </body>
@@ -156,9 +174,23 @@
         document.getElementById('sidebar').classList.toggle('expand');
     });
 </script>
+<script>
+    let remark_reassign = document.getElementById('remark_reassign');
+document.querySelectorAll('.assignBtn').forEach(function(button) {
+    button.addEventListener('click', function() {
+        if(remark_reassign.style.display = 'none'){
+            remark_reassign.style.display = 'table-row';
+        }
+        
+    });
+});
+
+
+</script>
+
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="../Js/Complain_Pending.js"></script>
-<script src="../Js/pending_complain_search.js"></script>
+
 <script src="../Js/login.js"></script>
 
 </html>
