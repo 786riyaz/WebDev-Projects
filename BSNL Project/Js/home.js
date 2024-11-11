@@ -46,28 +46,28 @@ document.getElementById("FetchButton").addEventListener("click", function () {
     tempData = [];
     year = document.getElementById("yearDD").value;
     month = document.getElementById("monthDD").value;
-    switch (month) {
-        case "Jan": month = "01"; break;
-        case "Feb": month = "02"; break;
-        case "Mar": month = "03"; break;
-        case "Apr": month = "04"; break;
-        case "May": month = "05"; break;
-        case "Jun": month = "06"; break;
-        case "July": month = "07"; break;
-        case "Aug": month = "08"; break;
-        case "Sept": month = "09"; break;
-        case "Oct": month = "10"; break;
-        case "Nov": month = "11"; break;
-        case "Dec": month = "12"; break;
+    switch(month){
+        case "Jan" : month = "01";        break;
+        case "Feb" : month = "02";        break;
+        case "Mar" : month = "03";        break;
+        case "Apr" : month = "04";        break;
+        case "May" : month = "05";        break;
+        case "Jun" : month = "06";        break;
+        case "July" : month = "07";        break;
+        case "Aug" : month = "08";        break;
+        case "Sept" : month = "09";        break;
+        case "Oct" : month = "10";        break;
+        case "Nov" : month = "11";        break;
+        case "Dec" : month = "12";        break;
     }
 
-    for (let i = 0; i < TempRecords.length; i++) {
+    for(let i=0; i<TempRecords.length;i++){
         let currentData = TempRecords[i].Resolution_Date_Time;
         console.log(currentData);
         let currentYear = currentData.split("-")[0];
         let currentMonth = currentData.split("-")[1];
 
-        if (currentMonth == month && currentYear == year) {
+        if(currentMonth == month && currentYear == year){
             tempData.push(TempRecords[i]);
         }
     }

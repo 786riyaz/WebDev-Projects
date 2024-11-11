@@ -1,9 +1,4 @@
-console.log("Circuit Data Started !!!!aaa!!!!");
-
-document.querySelector('.toggle-btn').addEventListener('click', function () {
-        document.getElementById('sidebar').classList.toggle('expand');
-    });
-
+console.log("Circuit Data Started..!!!!..");
 
 const recordsPerPage = 20;
 let currentPage = 1;
@@ -42,10 +37,10 @@ function renderTable() {
                 <th colspan="10">
                     <div class="input-group mb-3">
                         <span class="input-group-text">Reason</span>
-                        <input type="text" class="form-control" id="Reason_${order.Circuit_ID}">
+                        <input type="text" class="form-control">
                     </div>
-                    <td><button type="button" class="btn btn-outline-danger remove-confirm" data-index="${index}" id = "Submit_${order.Circuit_ID}" onclick = "removeRecord(this)">Submit</button></td>
-                    <td><button type="button" class="btn btn-outline-danger cancel-remove" data-index="${index}" id = "Cancel_${order.Circuit_ID}">Cancel</button></td>
+                    <td><button type="button" class="btn btn-outline-danger remove-confirm" data-index="${index}">Remove</button></td>
+                    <td><button type="button" class="btn btn-outline-danger cancel-remove" data-index="${index}">Cancel</button></td>
                 </th>
             </tr>
             <tr id="update-data-${index}" style="display:none;" >
@@ -93,9 +88,6 @@ function renderTable() {
             console.log("button click huwa....")
             const index = this.getAttribute('data-index');
             document.getElementById(`update-data-${index}`).style.display = 'table-row';
-
-
-            // document.getElementById(`remove-reason-${index}`).style.display = 'none';
         });
     });
 
@@ -103,8 +95,6 @@ function renderTable() {
         button.addEventListener('click', function () {
             const index = this.getAttribute('data-index');
             document.getElementById(`remove-reason-${index}`).style.display = 'table-row';
-
-            // document.getElementById(`update-data-${index}`).style.display = 'none';
         });
     });
 
@@ -215,7 +205,6 @@ function renderPaginationControls() {
 fetch(`../Php/circuit_details.php`)
     .then((response) => response.json())
     .then((fetchedData) => {
-        // console.log(fetchedData)
         data = fetchedData; // Store the fetched data
         totalPages = Math.ceil(data.length / recordsPerPage); // Calculate total pages
 
@@ -228,127 +217,3 @@ fetch(`../Php/circuit_details.php`)
 document.querySelector('.toggle-btn').addEventListener('click', function () {
     document.getElementById('sidebar').classList.toggle('expand');
 });
-
-
-let removeRecord = function (element) {
-    console.log("Remove Record Function Started....");
-
-    let Submit_Button_ID = element.id;
-    console.log("Submit Button ID :: ", Submit_Button_ID);
-
-    let Record_ID = Submit_Button_ID.split("_")[1];
-    console.log("Record ID :: ", Record_ID);
-
-    let Reason = document.getElementById(`Reason_${Record_ID}`);
-    Reason = Reason.value;
-    console.log("Remove Reason :: ", Reason);
-
-    let Current_Date_Time = new Date(Date.now());
-    let Current_Date_Time_SQL = Current_Date_Time.toISOString().slice(0, 19).replace('T', ' ');
-
-    const data = {
-        Reason: Reason,
-        Date: Current_Date_Time_SQL,
-        Circuit_ID: parseInt(Record_ID)
-    };
-
-    console.log("Data to update :: ", data);
-
-    // Create an object to send via AJAX
-    try {
-        console.log("Data to update :: ", data);
-        $.ajax({
-            type: 'POST',
-            url: '../Php/Circuit_Data_Remove_User.php', // Your PHP file that handles the submission
-            data: data, // Send the data object
-            success: function (response) {
-                console.log("Response :: ", response);
-                if (response == "User Removed Successfully!") {
-                    alert("User Removed Successfully!");
-                    location.reload();
-                } else {
-                    // MessageTR.innerHTML = '<td colspan="6"><h3>An Error is Occured while Updating the Complain Detals</h3></td>'
-                    // MessageTR.style.display = 'block';
-                }
-            },
-            error: function () {
-                // MessageTR.innerHTML = '<td colspan="6"><h3>An Error is Occured while Updating the Complain Detals</h3></td>'
-                // MessageTR.style.display = 'block';
-            }
-        });
-    } catch (e) {
-        console.log("Error ::: ", e);
-    }
-
-
-}
-
-
-let SubmitButton = document.getElementById("NewSubmitButton");
-
-SubmitButton.addEventListener('click', function () {
-    console.log("Submit Button Clicked");
-    SubmitNewDetails();
-})
-let SubmitNewDetails = function () {
-    // Declaring All the required elements Value
-    let Exchange = document.getElementById("Exchange");
-    let Circuit_id = document.getElementById("Circuit_id");
-    let Name = document.getElementById("Name");
-    let Address_A = document.getElementById("Address_A");
-    let Address_B = document.getElementById("Address_B");
-    let Contect = document.getElementById("Contect");
-    let Connectivity = document.getElementById("Connectivity");
-    let Cable_Lenght = document.getElementById("Cable_Lenght");
-
-    Exchange = Exchange.value;
-    Circuit_id = Circuit_id.value;
-    Name = Name.value;
-    Address_A = Address_A.value;
-    Address_B = Address_B.value;
-    Contect = Contect.value;
-    Connectivity = Connectivity.value;
-    Cable_Lenght = Cable_Lenght.value;
-
-    console.log("Submitting new record in DB");
-
-    const data = {
-        Exchange: Exchange,
-        Circuit_id: Circuit_id,
-        Name: Name,
-        Address_A: Address_A,
-        Address_B: Address_B,
-        Contect: Contect,
-        Connectivity: Connectivity,
-        Cable_Lenght: Cable_Lenght,
-    };
-
-    console.log("Data to Submit :: ", data);
-    if (true) {
-        // debugger;
-        $.ajax({
-            type: 'POST',
-            url: '../Php/Circuit_Data_Add_New.php', // Your PHP file that handles the submission
-            data: data, // Serialize the form data
-            // data: $(this).serialize(), // Serialize the form data
-            success: function (response) {
-                debugger
-                console.log("Response ::: ", response)
-                if (response == "Your details have been added successfully.") {
-                    alert("Your Data has been submitted!!!");
-                    location.reload(); // Reload the page to show the updated data
-                }
-
-                // $('#AlreadyBooked').text(response); // Display the response message
-                // $('#sheetdb-form')[0].reset(); // Reset the form fields
-            },
-            error: function () {
-                // $('#AlreadyBooked').text('An error occurred while submitting the form.');
-            }
-        });
-    }
-    console.log("Complain Booked");
-    AlreadyBooked.style.display = "block";
-
-}
-

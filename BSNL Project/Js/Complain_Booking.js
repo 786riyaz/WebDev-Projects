@@ -94,7 +94,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
                             fetch(`../Php/Circuit_And_Complain_Fetching.php?circuit_id=${circuit_id}`)
                                 .then((response) => response.json())
                                 .then((data) => {
-                                    // console.log("Received Data :: ", data);
+                                    console.log("Received Data :: ", data);
 
                                     if (data.length > 0) {
                                         // console.log("Record(s) Found");
@@ -142,9 +142,20 @@ document.addEventListener('DOMContentLoaded', (event) => {
                                 CurrentAddress.value = data[0].Address_A;
                                 CurrentNumber.value = data[0].Contect;
 
-                                console.log("Complain is already in progress with ID " + data[0].complain_id);
-                                AlreadyBooked.innerHTML = "Complain is already in progress with ID " + data[0].complain_id;
-                                AlreadyBooked.style.display = "block";
+                                // console.log("Complain is already in progress with ID " + data[0].complain_id);
+                                // AlreadyBooked.innerHTML = "Complain is already in progress with ID " + data[0].complain_id;
+                                // AlreadyBooked.style.display = "";
+                                // location.reload();
+                                setTimeout(function () {
+    console.log("Complain is already in progress with ID " + data[0].complain_id);
+    AlreadyBooked.innerHTML = "Complain is already in progress with ID " + data[0].complain_id;
+    AlreadyBooked.style.display = "";
+    alert("Complain is already in progress with ID " + data[0].complain_id);
+    location.reload(); // Reload the page after showing the alert
+}, 1000);  // 1000 milliseconds = 1 second
+
+                                 
+                               
 
                                 HideSubmissionController();
                             } else {
@@ -172,6 +183,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
     // $(document).ready(function () {
     SubmitButton.addEventListener('click', function (event) {
+        
         if (DebugMode) { console.log("Submit Button Clicked"); }
         let ReadyToSubmit = false;
         if (DebugMode) { console.log("Data to submit :: ", JSON.stringify(ReceivedData)); }
@@ -198,7 +210,7 @@ let submitData = function () {
         console.log(Current_Date_Time);
         console.log(Current_Date_Time_SQL);
         */
-
+        
         // Calculate Current Booking Date --- New Method
         let Current_Date_Time = new Date(Date.now());
 
@@ -215,7 +227,7 @@ let submitData = function () {
 
         console.log(Current_Date_Time); // Local time
         console.log(Current_Date_Time_SQL); // Same local time in SQL format
-
+        
         // debugger;
         const data = {
             Name: ReceivedData.Name,

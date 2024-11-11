@@ -1,4 +1,13 @@
+
+
+
 console.log("Complain Completed Script Started");
+
+document.querySelector('.toggle-btn').addEventListener('click', function () {
+        document.getElementById('sidebar').classList.toggle('expand');
+    });
+
+
 
 let Current_Date_Time = new Date(Date.now());
 let Current_Date_Time_SQL = Current_Date_Time.toISOString().slice(0, 19).replace('T', ' ');
@@ -117,7 +126,7 @@ RenderWholePage = function () {
 
         faultOrders.slice(start, end).forEach(order => {
             // console.log("Order 1::", order)
-
+            
             const orderRow = document.createElement('tr');
             // console.log("Order 2::", order)
             orderRow.innerHTML = `
@@ -134,7 +143,7 @@ RenderWholePage = function () {
 
             // Remark row (hidden by default)
             const remarkRow = document.createElement('tr');
-            remarkRow.classList.add('CloseRemark');         // Riyaz Pathan
+            remarkRow.classList.add('CloseRemark');         // 
             remarkRow.style.display = 'none';               // Hidden by default
 
             remarkRow.innerHTML = `<td colspan="2">
@@ -226,3 +235,28 @@ RenderWholePage = function () {
     renderTable(currentPage);
     renderPagination();
 }
+
+document.getElementById('searchBtn2').addEventListener('click', function () {
+    let searchInput = document.getElementById('searchInput2').value.trim(); // Get the search input and trim whitespace
+    console.log("Search input:", searchInput);
+    
+    // Filter faultOrders where circuit_id matches the search input
+    const filteredOrders = faultOrders.filter(order => order.circuit_id.includes(searchInput));
+
+    // Log filtered orders for debugging
+    console.log("Filtered faultOrders:", filteredOrders);
+
+    // Update the global faultOrders array with the filtered results
+    faultOrders = filteredOrders;
+
+    // Call RenderWholePage() to display the filtered results
+    RenderWholePage();
+});
+
+
+
+
+
+
+
+

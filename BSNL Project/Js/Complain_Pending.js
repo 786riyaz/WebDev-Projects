@@ -1,5 +1,7 @@
 console.log("Dashboard Script Started");
-
+document.querySelector('.toggle-btn').addEventListener('click', function () {
+        document.getElementById('sidebar').classList.toggle('expand');
+    });
 // let Current_Date_Time = new Date(Date.now());
 // let Current_Date_Time_SQL = Current_Date_Time.toISOString().slice(0, 19).replace('T', ' ');
 
@@ -39,6 +41,7 @@ updateComplainDetails = function (element, duration) {
     let ResolutionCode = document.getElementById(ResolutionCodeID).value;
     let HiddenDateTime = document.getElementById(HiddenDateTimeID).value;
     let HiddenDuration = document.getElementById(HiddenDurationID).value;
+
 
     const data = {
         ResolutionRemark: ResolutionRemark,
@@ -99,7 +102,7 @@ fetch(`../Php/complain_fetch_unresolved.php`)
                     temp.duration = 0;
 
                     const dateString = temp.booking_date; // Ensure temp.date is in a valid format
-
+                    
                     // Create dateObject from the dateString
                     const dateObject = new Date(dateString.replace(" ", "T"));
                     const dateString1 = dateObject;
@@ -112,12 +115,12 @@ fetch(`../Php/complain_fetch_unresolved.php`)
                     // Calculate the current time as a Date object and get its Unix timestamp
                     const currentUnixEpoch = Date.now(); // This is already in milliseconds
                     const currentUnixEpochInSeconds = Math.floor(currentUnixEpoch / 1000);
-
+                    
                     // Calculate the difference in seconds
                     const differenceInSeconds = currentUnixEpochInSeconds - unixEpochInSeconds;
                     const durationaaa = Math.floor(differenceInSeconds / 3600);
                     temp.duration = Math.floor(differenceInSeconds / 3600);
-
+                    
                     console.log(dateString)
                     faultOrders.push(temp);
                 }
@@ -171,7 +174,7 @@ RenderWholePage = function () {
             remarkRow.style.display = 'none'; // Hidden by default
 
             remarkRow.innerHTML = `<td colspan="2">
-                                   <input type="datetime-local" class="form-control HiddenDate" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="HideDateTime_${order.Complain_ID}" value = "${order.booking_date}" onchange = "CalculateNewDuration(this.id, this.value)">
+                                   <input type="datetime-local" class="form-control HiddenDate" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="HideDateTime_${order.Complain_ID}" value = "${order.booking_date}" onchange = "CalculateNewDuration(this.id, this.value)" disabled>
                                </td>
                                <td >
                                    <input type="text" class="form-control HiddenDuration" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="HideDuration_${order.Complain_ID}" value = "${order.duration}" disabled>
@@ -181,7 +184,7 @@ RenderWholePage = function () {
                                        <option selected>Choose Issue</option>
                                        <option value="200">Power Issue (200)</option>
                                        <option value="300">Cable Issue (300)</option>
-                                       <option value="500">Server Issue (500)</option>
+                                       <option value="500">ROOC</option>
                                    </select>
                                </td>
                                <td colspan="4">
@@ -283,27 +286,44 @@ let CalculateNewDuration = function (id, value) {
 
     let bookingDate = new Date(value); // booking date
     let Current_Date = Date.now(); // current date in milliseconds
-
+    
     // Calculate the difference in milliseconds
     let differenceInMs = Current_Date - bookingDate.getTime();
-
+    
     // Convert milliseconds to hours
     let differenceInHours = differenceInMs / (1000 * 60 * 60);
-
+    
     console.log("Difference in hours :: ", differenceInHours);
 
     let durationField = document.getElementById(`HideDuration_${numberID}`);
     durationField.value = parseInt(differenceInHours);
 }
 
+// document.getElementById('searchBtn1').addEventListener('click', function () {
+//     let searchInput = document.getElementById('searchInput1').value;
+//     /*
+//     faultOrders for faultOrders[i].circuit_id = searchInput
+//         sortreRecord[]
+
+
+//         RenderWholePage();
+// */
+
+// });
+
 document.getElementById('searchBtn1').addEventListener('click', function () {
-    let searchInput = document.getElementById('searchInput1').value;
-    /*
-    faultOrders for faultOrders[i].circuit_id = searchInput
-        sortreRecord[]
+    let searchInput = document.getElementById('searchInput1').value.trim(); // Get the search input and trim whitespace
+    console.log("Search input:", searchInput);
+    
+    // Filter faultOrders where circuit_id matches the search input
+    const filteredOrders = faultOrders.filter(order => order.circuit_id.includes(searchInput));
 
+    // Log filtered orders for debugging
+    console.log("Filtered faultOrders:", filteredOrders);
 
-        RenderWholePage();
-*/
+    // Update the global faultOrders array with the filtered results
+    faultOrders = filteredOrders;
 
+    // Call RenderWholePage() to display the filtered results
+    RenderWholePage();
 });
