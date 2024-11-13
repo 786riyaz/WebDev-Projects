@@ -1,9 +1,11 @@
+
+
 <?php
 // Database connection details
 $HOST_NAME = "localhost";
 $USERNAME = "root";
 $PASSWORD = "";
-$DABASENAME = "bsnl_test";
+$DABASENAME = "u152745363_bsnl_test";
 
 // Create a connection
 $conn = new mysqli($HOST_NAME, $USERNAME, $PASSWORD, $DABASENAME);
@@ -32,4 +34,7 @@ $conn->close();
 // Return the data as JSON
 header('Content-Type: application/json');
 echo json_encode($data);
+
+
+
 ?>

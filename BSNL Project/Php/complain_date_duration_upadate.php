@@ -6,7 +6,7 @@ error_reporting(E_ALL);
 $HOST_NAME = "localhost";
 $USERNAME = "root";
 $PASSWORD = "";
-$DABASENAME = "bsnl_test";
+$DABASENAME = "u152745363_bsnl_test";
 
 // Database Connection
 $conn = new mysqli($HOST_NAME, $USERNAME, $PASSWORD, $DATABASE_NAME);
