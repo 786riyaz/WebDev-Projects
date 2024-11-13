@@ -9,7 +9,7 @@ error_reporting(E_ALL);
 $HOST_NAME = "localhost";
 $USERNAME = "root";
 $PASSWORD = "";
-$DABASENAME = "bsnl_test";
+$DABASENAME = "u152745363_bsnl_test";
 
 // Datanase Connection
 $conn = new mysqli($HOST_NAME, $USERNAME, $PASSWORD, $DABASENAME);

@@ -1,5 +1,4 @@
 <?php
-
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
@@ -10,11 +9,11 @@ if (true) {
     $HOST_NAME = "localhost";
     $USERNAME = "root";
     $PASSWORD = "";
-    $DABASENAME = "bsnl_test";
+    $DABASENAME = "u152745363_bsnl_test";
 
     // Datanase Connection
     $conn = new mysqli($HOST_NAME, $USERNAME, $PASSWORD, $DABASENAME);
-
+    
     if ($conn->connect_error) {
         die('Connection Failed : ' . $conn->connect_error);
     } else {
@@ -34,7 +33,6 @@ if (true) {
     $conn->close();
 
     echo json_encode($output);
-    //echo $output;
+     //echo $output;
 }
-
 ?>

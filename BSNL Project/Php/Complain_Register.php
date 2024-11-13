@@ -6,8 +6,8 @@ error_reporting(E_ALL);
 $HOST_NAME = "localhost";
 $USERNAME = "root";
 $PASSWORD = "";
-$DABASENAME = "bsnl_test";
-
+$DABASENAME = "u152745363_bsnl_test";
+    
 // Datanase Connection
 $conn = new mysqli($HOST_NAME, $USERNAME, $PASSWORD, $DABASENAME);
 
@@ -26,7 +26,7 @@ if ($conn->connect_error) {
     die('Connection Failed : ' . $conn->connect_error);
 } else {
 
-    $stmt = $conn->prepare("INSERT INTO complain (Exchange, Circuit_ID, Name, Address_A, Current_Address, Contact, Current_Contact, Booking_Date) VALUES (?, ?, ?,?,?,?,?,?)");
+    $stmt = $conn->prepare("INSERT INTO complain (Exchange, Circuit_ID, Name, Address_A, Current_Address, Contact, Current_Contact, Booking_Date) VALUES (?, ?,?, ?,?,?,?,?)");
     $stmt->bind_param("sisssiis", $Exchange, $Circuit_ID, $Name, $Address_A, $CurrentAddress, $Contact, $Current_Contact, $Booking_Date);
 
     // Execute the statement

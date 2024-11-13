@@ -1,14 +1,13 @@
 <?php
-
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-// Database Variables
 $HOST_NAME = "localhost";
 $USERNAME = "root";
 $PASSWORD = "";
-$DABASENAME = "bsnl_test";
+$DABASENAME = "u152745363_bsnl_test";
+
 // Database Connection
 $conn = new mysqli($HOST_NAME, $USERNAME, $PASSWORD, $DABASENAME);
 
@@ -51,5 +50,4 @@ if ($stmt->execute()) {
 // Close connections
 $stmt->close();
 $conn->close();
-
 ?>

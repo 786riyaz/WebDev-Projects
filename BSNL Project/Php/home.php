@@ -1,11 +1,12 @@
 <?php
 
+
 if (true) {
     // Database Variables
     $HOST_NAME = "localhost";
     $USERNAME = "root";
     $PASSWORD = "";
-    $DABASENAME = "bsnl_test";
+    $DABASENAME = "u152745363_bsnl_test";
 
     // Datanase Connection
     $conn = new mysqli($HOST_NAME, $USERNAME, $PASSWORD, $DABASENAME);
@@ -31,5 +32,4 @@ if (true) {
     echo json_encode($output);
     // echo $output;
 }
-
 ?>
