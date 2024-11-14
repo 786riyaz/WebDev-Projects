@@ -29,19 +29,19 @@
             </div>
             <ul class="sidebar-nav">
                 <li class="sidebar-item">
-                    <a href="home.html" class="sidebar-link">
+                    <a href="/Html/home.html" class="sidebar-link">
                         <i class="lni lni-user"></i>
                         <span>Profile</span>
                     </a>
                 </li>
                 <li class="sidebar-item">
-                    <a href="Circuit_Data.html" class="sidebar-link">
+                    <a href="/Html/Circuit_Data.html" class="sidebar-link">
                         <i class="lni lni-agenda"></i>
                         <span>Data</span>
                     </a>
                 </li>
                 <li class="sidebar-item">
-                    <a href="complain_booking_new.html" class="sidebar-link">
+                    <a href="/Html/complain_booking_new.html" class="sidebar-link">
                         <i class="fa-solid fa-book"></i>
                         <span>Complain Book</span>
                     </a>
@@ -59,14 +59,14 @@
                         <span>Complain</span>
                     </a>
                     <ul id="auth" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
-                        <li class="sidebar-item">
-                            <a href="Complain_Pending_bsnl_menu.html" class="sidebar-link">Bsnl Pending</a>
+                      <li class="sidebar-item">
+                        <a href="/Html/Complain_Pending_bsnl_menu.html" class="sidebar-link">Bsnl Pending</a>
+                    </li> 
+                      <li class="sidebar-item">
+                            <a href="/Html/Complain_Pending.html" class="sidebar-link">Pending</a>
                         </li>
                         <li class="sidebar-item">
-                            <a href="Complain_Pending.html" class="sidebar-link">Pending</a>
-                        </li>
-                        <li class="sidebar-item">
-                            <a href="Complain_Complete.html" class="sidebar-link">Complete</a>
+                            <a href="/Html/Complain_Complete.html" class="sidebar-link">Complete</a>
                         </li>
                     </ul>
                 </li>
@@ -84,11 +84,12 @@
                 </li>
             </ul>
             <div class="sidebar-footer" id="logout-btn">
-                <a href="#" class="sidebar-link">
-                    <i class="lni lni-exit"></i>
-                    <span>Logout</span>
-                </a>
-            </div>
+              <a href="logout.php" class="sidebar-link" id="logout-button">
+                  <i class="lni lni-exit"></i>
+                  <span >Logout</span>
+              </a>
+          </div>
+          
         </aside>
         <!-- ------------------------------------------------left menu-------------------------------------- -->
         <div class="main p-3">
@@ -114,11 +115,11 @@
                                 <th scope="col">Date</th>
                                 <th scope="col">Duration</th>
                                 <th scope="col">Reassign</th>
-                                
+                                <th scope="col">Close</th>
                             </tr>
                         </thead>
                         <tbody id="">
-                            <tr>
+                        <tr>
                             <td>10</td>
                             <td>AHDVST</td>
                             <td>15261352615</td>
@@ -128,6 +129,7 @@
                             <td>08-11-2024</td>
                             <td>5</td>
                             <td><button type="button" class="btn btn-outline-danger assignBtn" >Re-Assign</button></td>
+                            <td><button type="button" class="btn btn-outline-danger closebtn" >Close</button></td>
                         </tr>
 
                             <tr id="remark_reassign" style="display: none;">
@@ -142,7 +144,14 @@
                                         <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"  id="" disabled>
                                     </div>
                                 </td>
-                                <td colspan="4">
+                                <td colspan="2">
+                                    <select class="form-select" aria-label="Default select example" id="ResolutionCode_${order.Complain_ID}">
+                                        <option selected>Choose Issue</option>
+                                        <option value="200">r a f</option>
+                                       
+                                    </select>
+                                </td>
+                                <td colspan="3">
                                     <div class="input-group mb-3" >
                                         <span class="input-group-text" id="inputGroup-sizing-default" >Bsnl Remark</span>
                                         <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"  id="">
@@ -150,6 +159,28 @@
                                 </td>
                                 <td><button type="button" class="btn btn-outline-secondary" onClick="" id="">Submit</button></td>
                             </tr>
+
+                            <tr id="close_complain" style="display: none;">
+                                    <td colspan="1">
+                                        <select class="form-select" aria-label="Default select example" id="" disabled>
+                                            <option >ROOC</option>
+                                        </select>
+                                    </td>
+                                    <td colspan="3">
+                                        <div class="input-group mb-3" >
+                                        <span class="input-group-text" id="inputGroup-sizing-default" >F Remark</span>
+                                        <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"  id="" placeholder="asdas" disabled>
+                                    </div>
+                                </td>
+
+                                <td colspan="5">
+                                    <div class="input-group mb-3" >
+                                        <span class="input-group-text" id="inputGroup-sizing-default" >Bsnl Remark</span>
+                                        <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"  id="">
+                                    </div>
+                                </td>
+                                <td><button type="button" class="btn btn-outline-secondary" onClick="" id="">Submit</button></td>
+                            </tr> 
                         </tbody>
                     </table>
 
@@ -175,22 +206,39 @@
     });
 </script>
 <script>
-    let remark_reassign = document.getElementById('remark_reassign');
-document.querySelectorAll('.assignBtn').forEach(function(button) {
+   let remark_reassign = document.getElementById('remark_reassign');
+document.querySelectorAll('.assignBtn').forEach(function(button,index) {
     button.addEventListener('click', function() {
-        if(remark_reassign.style.display = 'none'){
+        // const remark_reassign = document.getElementById('remark_reassign')[index];
+        if(remark_reassign.style.display = 'none'||remark_reassign.style.display === ''){
             remark_reassign.style.display = 'table-row';
+            close_complain.style.display = 'none';
+        }else{
+            remark_reassign.style.display = 'none';
         }
-        
     });
 });
 
-
+let close_complain = document.getElementById('close_complain');
+document.querySelectorAll('.closebtn').forEach(function(button,index) {
+    button.addEventListener('click', function() {
+        // const remark_reassign = document.getElementById('remark_reassign')[index];
+        if(close_complain.style.display = 'none'||close_complain.style.display === ''){
+            close_complain.style.display = 'table-row';
+            remark_reassign.style.display = 'none';
+        }else{
+            close_complain.style.display = 'none';
+        }
+    });
+});
 </script>
 
-
+<script>
+    // Prevent the user from using the back button after logout
+    if (window.history.replaceState) {
+        window.history.replaceState(null, null, window.location.href);
+    }
+</script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-<script src="../Js/login.js"></script>
 
 </html>
