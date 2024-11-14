@@ -30,19 +30,19 @@
             </div>
             <ul class="sidebar-nav">
                 <li class="sidebar-item">
-                    <a href="home.html" class="sidebar-link">
+                    <a href="/Html/home.html" class="sidebar-link">
                         <i class="lni lni-user"></i>
                         <span>Profile</span>
                     </a>
                 </li>
                 <li class="sidebar-item">
-                    <a href="Circuit_Data.html" class="sidebar-link">
+                    <a href="/Html/Circuit_Data.html" class="sidebar-link">
                         <i class="lni lni-agenda"></i>
                         <span>Data</span>
                     </a>
                 </li>
                 <li class="sidebar-item">
-                    <a href="complain_booking_new.html" class="sidebar-link">
+                    <a href="/Html/complain_booking_new.html" class="sidebar-link">
                         <i class="fa-solid fa-book"></i>
                         <span>Complain Book</span>
                     </a>
@@ -60,14 +60,14 @@
                         <span>Complain</span>
                     </a>
                     <ul id="auth" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
-                        <li class="sidebar-item">
-                            <a href="Complain_Pending_bsnl_menu.html" class="sidebar-link">Bsnl Pending</a>
+                      <li class="sidebar-item">
+                        <a href="/Html/Complain_Pending_bsnl_menu.html" class="sidebar-link">Bsnl Pending</a>
+                    </li> 
+                      <li class="sidebar-item">
+                            <a href="/Html/Complain_Pending.html" class="sidebar-link">Pending</a>
                         </li>
                         <li class="sidebar-item">
-                            <a href="Complain_Pending.html" class="sidebar-link">Pending</a>
-                        </li>
-                        <li class="sidebar-item">
-                            <a href="Complain_Complete.html" class="sidebar-link">Complete</a>
+                            <a href="/Html/Complain_Complete.html" class="sidebar-link">Complete</a>
                         </li>
                     </ul>
                 </li>
@@ -85,11 +85,12 @@
                 </li>
             </ul>
             <div class="sidebar-footer" id="logout-btn">
-                <a href="#" class="sidebar-link">
-                    <i class="lni lni-exit"></i>
-                    <span>Logout</span>
-                </a>
-            </div>
+              <a href="logout.php" class="sidebar-link" id="logout-button">
+                  <i class="lni lni-exit"></i>
+                  <span >Logout</span>
+              </a>
+          </div>
+          
         </aside>
 
         <!-- ------------------------------------------------left menu-------------------------------------- -->
@@ -139,5 +140,10 @@
 <script>document.querySelector('.toggle-btn').addEventListener('click', function () {
         document.getElementById('sidebar').classList.toggle('expand');
     }); </script>
-
+<script>
+    // Prevent the user from using the back button after logout
+    if (window.history.replaceState) {
+        window.history.replaceState(null, null, window.location.href);
+    }
+</script>
 </html>

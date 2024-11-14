@@ -4,42 +4,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" 
-        integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+        integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <title>Track Complain</title>
-
-    <style>
-        /* Basic styling for the container */
-        .booking-box {
-            padding: 2rem;
-            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
-            border-radius: 10px;
-            background-color: white;
-        }
-
-        /* Input button group styling */
-        .input-btn {
-            display: flex;
-        }
-
-        .input-btn input {
-            flex-grow: 1;
-        }
-
-        .input-btn button {
-            margin-left: 10px;
-        }
-
-        /* Full page height for centering */
-        .vh-100 {
-            height: 100vh;
-        }
-    </style>
+    <link rel="stylesheet" href="../Css/booking.css">
+    <title>Booking</title>
 </head>
 
 <body>
+    <!-- Navigation Header -->
     <header>
         <nav class="navbar navbar-light bg-light fixed-top">
             <div class="container-fluid">
@@ -54,7 +28,8 @@
     
                 <!-- Links for larger screens -->
                 <div class="d-none d-lg-flex justify-content-end">
-                    <a class="nav-link text-dark fs-5" href="/Html/complain_booking.html">Book Complain</a>
+                    <a href="#" class="nav-link text-dark fs-5">Pending Complain: <span id="PendingFaults">00</span></a>
+                    <!-- <a class="nav-link text-dark fs-5" href="../index.html">Book Complain</a> -->
                     <a class="nav-link text-dark fs-5" href="/Html/Complain_Track.html">Track Complain</a>
                     <a class="nav-link text-dark fs-5" href="/Html/home.html">Dashboard</a>
                 </div>
@@ -89,54 +64,67 @@
             </div>
         </nav>
     </header>
-    
-    
 
-
-
-
-    <!-- Complaint Tracking Form -->
+    <!-- Complaint Form -->
     <div class="d-flex justify-content-center align-items-center vh-100">
         <div class="booking-box col-lg-6 col-md-8 col-sm-12">
-            <h2 class="text-center mb-5">Complain Track</h2>
-            <form action="" method="post" id="sheetdb-form">
+            <h2 class="text-center mb-5">Register a Complaint</h2>
+            <form id="sheetdb-form">
                 <div class="mb-3">
-                    <div class="input-btn">
-                        <input type="text" class="form-control" id="track_circuit_id" name="" placeholder="Circuit Id">
-                        <button type="button" id="Circuit_Search" class="btn btn-outline-secondary">
-                            <i class="fa fa-search"></i>
-                        </button>
+                    <div class="input-btn d-flex">
+                        <input type="text" class="form-control" id="circuit_id" name="circuit_id" placeholder="Service Id" required>
+                        <button type="button" id="SearchButton" class="btn btn-outline-secondary ms-2"><i class="fa fa-search"></i></button>
                     </div>
-                    <small class="text-muted d-block text-center">OR</small>
+                    <small class="text-muted">Eg. 040-89876567/02717-69587 (Landline)</small>
                 </div>
 
                 <div class="mb-3">
-                    <div class="input-btn">
-                        <input type="text" class="form-control" id="track_id" name="" placeholder="Complain Id">
-                        <button type="button" id="Complain_Search" class="btn btn-outline-secondary">
-                            <i class="fa fa-search"></i>
-                        </button>
+                    <textarea class="form-control" id="Address" placeholder="Address" name="Address" rows="3" required disabled></textarea>
+                </div>
+
+                <div class="mb-3">
+                    <input type="text" class="form-control" id="Number" placeholder="Number" name="Number" required disabled>
+                </div>
+
+                <div class="modify_details mb-3">
+                    <label>Modify your Contact number & Address</label>
+                    <input type="checkbox" id="SameAddress" checked>
+                </div>
+
+                <div id="sameDetailsDiv">
+                    <div class="mb-3" id="addressField">
+                        <textarea class="form-control" placeholder="Current Address" name="CurrentAddress" rows="3" id="CurrentAddress"></textarea>
+                    </div>
+
+                    <div class="mb-3" id="numberField">
+                        <input type="text" class="form-control" placeholder="New Number" name="CurrentNumber" id="CurrentNumber">
                     </div>
                 </div>
 
-                <div class="d-flex justify-content-around">
-                    <button type="submit" class="btn btn-outline-primary" id="Searchbtn">Search</button>
-                    <button type="reset" class="btn btn-outline-dark">Cancel</button>
-                </div>
+                <h4 id="AlreadyBooked" class="text-danger">Complain Already Booked</h4>
 
-                <h6 id="trackmessage" class="text-danger mt-3">Tracking Message Here...</h6>
+                <div id="SubmissionController">
+                    <div class="d-flex justify-content-around">
+                        <button type="submit" class="btn btn-outline-primary" id="SubmitButton">Submit</button>
+                        <button type="reset" class="btn btn-outline-dark" id="CancelButton">Cancel</button>
+                    </div>
+                </div>
             </form>
         </div>
     </div>
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="/Js/Complain_Booking.js"></script>
+
 </body>
-<script src="../Js/Complain_Tracks.js"></script>
 <script>
     // Prevent the user from using the back button after logout
     if (window.history.replaceState) {
         window.history.replaceState(null, null, window.location.href);
     }
 </script>
+
+
 </html>
