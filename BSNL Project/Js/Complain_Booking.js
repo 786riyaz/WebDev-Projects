@@ -94,7 +94,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
                             fetch(`../Php/Circuit_And_Complain_Fetching.php?circuit_id=${circuit_id}`)
                                 .then((response) => response.json())
                                 .then((data) => {
-                                    console.log("Received Data :: ", data);
+                                    // console.log("Received Data :: ", data);
 
                                     if (data.length > 0) {
                                         // console.log("Record(s) Found");
@@ -183,7 +183,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
     // $(document).ready(function () {
     SubmitButton.addEventListener('click', function (event) {
-        
         if (DebugMode) { console.log("Submit Button Clicked"); }
         let ReadyToSubmit = false;
         if (DebugMode) { console.log("Data to submit :: ", JSON.stringify(ReceivedData)); }
@@ -227,7 +226,7 @@ let submitData = function () {
 
         console.log(Current_Date_Time); // Local time
         console.log(Current_Date_Time_SQL); // Same local time in SQL format
-        
+
         // debugger;
         const data = {
             Name: ReceivedData.Name,

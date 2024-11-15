@@ -41,18 +41,52 @@ updateComplainDetails = function (element, duration) {
     let ResolutionCode = document.getElementById(ResolutionCodeID).value;
     let HiddenDateTime = document.getElementById(HiddenDateTimeID).value;
     let HiddenDuration = document.getElementById(HiddenDurationID).value;
+    console.log("ResolutionCode:", ResolutionCode);
+    if(ResolutionCode === "ROOC"){
+        const data1 = {
+            ResolutionRemark: ResolutionRemark,
+            ResolutionCode: ResolutionCode,
+            ResolveDateTime: Current_Date_Time_SQL,
+            Duration: duration,
+            HiddenDateTime: HiddenDateTime,
+            HiddenDuration: HiddenDuration,
+            ID: parseInt(TargetComplainID)
+        };
+        console.log("Data to update :: ", JSON.stringify(data1));
+        // debugger
+        // Create an object to send via AJAX
+        $.ajax({
+            type: 'POST',
+            url: '../Php/pending_bsnl_complain_update.php', // Your PHP file that handles the submission
+            data: data1, // Send the data object
+            success: function (response) {
+                console.log("Response :: ", response);
+                if (response == "Complain Details update!") {
+                    alert("Complain Details Updated!");
+                    location.reload();
+                } else {
+                    MessageTR.innerHTML = '<td colspan="6"><h3>An Error is Occured while Updating the Complain Detals</h3></td>'
+                    MessageTR.style.display = 'block';
+                }
+            },
+            error: function () {
+                MessageTR.innerHTML = '<td colspan="6"><h3>An Error is Occured while Updating the Complain Detals</h3></td>'
+                MessageTR.style.display = 'block';
+            }
+        });
 
-
-    const data = {
-        ResolutionRemark: ResolutionRemark,
-        ResolutionCode: ResolutionCode,
-        ResolveDateTime: Current_Date_Time_SQL,
-        Duration: duration,
-        HiddenDateTime: HiddenDateTime,
-        HiddenDuration: HiddenDuration,
-        ID: parseInt(TargetComplainID)
-    };
-
+    }
+    else{
+        const data = {
+            ResolutionRemark: ResolutionRemark,
+            ResolutionCode: ResolutionCode,
+            ResolveDateTime: Current_Date_Time_SQL,
+            Duration: duration,
+            HiddenDateTime: HiddenDateTime,
+            HiddenDuration: HiddenDuration,
+            ID: parseInt(TargetComplainID)
+        };
+        
     console.log("Data to update :: ", JSON.stringify(data));
     // debugger
     // Create an object to send via AJAX
@@ -75,6 +109,9 @@ updateComplainDetails = function (element, duration) {
             MessageTR.style.display = 'block';
         }
     });
+
+    }
+
 }
 
 // Sample data for fault orders
@@ -182,9 +219,9 @@ RenderWholePage = function () {
                                <td colspan="2">
                                    <select class="form-select" aria-label="Default select example" id="ResolutionCode_${order.Complain_ID}">
                                        <option selected>Choose Issue</option>
-                                       <option value="200">Power Issue (200)</option>
+                                       <option value="ROOC">ROOC</option>
                                        <option value="300">Cable Issue (300)</option>
-                                       <option value="500">ROOC</option>
+                                       <option value="500">Server Issue (500)</option>
                                    </select>
                                </td>
                                <td colspan="4">
