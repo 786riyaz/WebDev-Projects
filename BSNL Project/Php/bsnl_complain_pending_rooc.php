@@ -12,11 +12,10 @@ if (true) {
     // Datanase Connection
     $conn = new mysqli($HOST_NAME, $USERNAME, $PASSWORD, $DABASENAME);
 
-    $CircuitID = $_GET['circuit_id'];
     if ($conn->connect_error) {
         die('Connection Failed : ' . $conn->connect_error);
     } else {
-        $stmt = "SELECT * from circuitdetails where circuit_id = '$CircuitID' and Is_Active = '1'";
+        $stmt = "SELECT * from complain where Is_Resolved = 2";
         $result = mysqli_query($conn, $stmt);
         $output = [];
 
