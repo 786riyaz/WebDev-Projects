@@ -1,5 +1,127 @@
 console.log("bsnl menu pending complain js started...")
 
+let Current_Date_Time = new Date(Date.now());
+
+// Format the date to 'YYYY-MM-DD HH:MM:SS' in local time
+let Current_Date_Time_SQL = Current_Date_Time.getFullYear() + '-' +
+    ('0' + (Current_Date_Time.getMonth() + 1)).slice(-2) + '-' +
+    ('0' + Current_Date_Time.getDate()).slice(-2) + ' ' +
+    ('0' + Current_Date_Time.getHours()).slice(-2) + ':' +
+    ('0' + Current_Date_Time.getMinutes()).slice(-2) + ':' +
+    ('0' + Current_Date_Time.getSeconds()).slice(-2);
+
+console.log(Current_Date_Time);        // Logs the current time in local time zone
+console.log(Current_Date_Time_SQL); 
+
+
+updateComplainDetails = function (element, duration) {
+    console.log("Update Complain Details Initiated");
+
+    // Extract IDs and fetch elements
+    let CloseButtonID = element.id;
+    let TargetComplainID = CloseButtonID.split("_")[1];
+    console.log("Close Button ID:", CloseButtonID);
+    console.log("Target Complain ID:", TargetComplainID);
+
+    // Define element IDs based on the TargetComplainID
+
+    let BsnlRemarkID = `BsnlRemark_${TargetComplainID}`;
+    let ResolutionCodeID = `ResolutionCode_${TargetComplainID}`;
+   
+    let MessageID = `Message_${TargetComplainID}`;
+    let MessageTR = document.getElementsByClassName(MessageID)[0];
+
+    // Fetch values from input fields
+    let BsnlRemark = document.getElementById(BsnlRemarkID)?.value || '';
+    let ResolutionCode = document.getElementById(ResolutionCodeID)?.value || '';
+ 
+
+    // Set the current date and time in SQL format for the resolve date
+    let ResolveDateTime = new Date().toISOString().slice(0, 19).replace('T', ' '); 
+    
+    if(ResolutionCode === "Return to Franchises"){
+        const data1 = {
+            BsnlRemark : BsnlRemark,
+            ResolveDateTime : Current_Date_Time_SQL,
+            ResolutionCode: ResolutionCode,
+            Duration: duration,
+            ID: parseInt(TargetComplainID)
+        };
+        $.ajax({
+            type: 'POST',
+            url: '../Php/bsnl_complain_reassign.php',
+            data: data1,
+            success: function (response) {
+                console.log("Response:", response);
+                if (response == "Complain Details update!") {
+                    alert("Complain Details Updated!");
+                    location.reload();
+                } else {
+                    MessageTR.innerHTML = '<td colspan="6"><h3>An Error is Occured while Updating the Complain Detals</h3></td>'
+                    MessageTR.style.display = 'none';
+                }
+            },
+            error: function () {
+                MessageTR.innerHTML = '<td colspan="6"><h3>An Error is Occured while Updating the Complain Detals</h3></td>'
+                MessageTR.style.display = 'none';
+            }
+        });
+    }
+
+    else{
+
+    
+    // Create data object for AJAX request
+    const data = {
+        BsnlRemark : BsnlRemark,
+        ResolveDateTime : Current_Date_Time_SQL,
+        Duration: duration,
+        ID: parseInt(TargetComplainID)
+    };
+
+    console.log("Data to update:", JSON.stringify(data));
+
+    // AJAX request to update complain details
+    $.ajax({
+        type: 'POST',
+        url: '../Php/bsnl_complain_update.php',
+        data: data,
+        success: function (response) {
+            console.log("Response:", response);
+            if (response == "Complain Details update!") {
+                alert("Complain Details Updated!");
+                location.reload();
+            } else {
+                MessageTR.innerHTML = '<td colspan="6"><h3>An Error is Occured while Updating the Complain Detals</h3></td>'
+                MessageTR.style.display = 'none';
+            }
+        },
+        error: function () {
+            MessageTR.innerHTML = '<td colspan="6"><h3>An Error is Occured while Updating the Complain Detals</h3></td>'
+            MessageTR.style.display = 'none';
+        }
+    });
+
+}
+};
+
+// Function to display error messages
+function displayErrorMessage(message, MessageTR) {
+    MessageTR.innerHTML = `<td colspan="6"><h3>${message}</h3></td>`;
+    MessageTR.style.display = 'block';
+}
+
+
+
+
+
+
+
+
+
+
+
+
 fetch(`../Php/bsnl_complain_pending_rooc.php`)
     .then((response) => response.json())
     .then((data) => {
@@ -77,63 +199,68 @@ RenderWholePage = function () {
         const end = start + recordsPerPage;
         const tbody = document.getElementById('faultOrdersBody2');
         tbody.innerHTML = ''; // Clear the table before populating
-        
-        faultOrders.slice(start, end).forEach(order => {
-            // Create the order row
-            console.log(order);
 
+        // Handle case if faultOrders is empty or undefined
+        if (!faultOrders || faultOrders.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="10" class="text-center">No complaints found.</td></tr>`;
+            return;
+        }
+
+        faultOrders.slice(start, end).forEach(order => {
+            const { Complain_ID, Exchange, circuit_id, Name, current_address, current_contact, booking_date, duration } = order;
+
+            // Create the main order row
             const orderRow = document.createElement('tr');
             orderRow.innerHTML = `
-                <td>${order.Complain_ID}</td>
-                <td>${order.Exchange}</td>
-                <td>${order.circuit_id}</td>
-                <td>${order.Name}</td>
-                <td>${order.current_address}</td>
-                <td>${order.current_contact}</td>
-                <td>${order.booking_date}</td>
-                <td>${order.duration}</td>
+                <td>${Complain_ID}</td>
+                <td>${Exchange}</td>
+                <td>${circuit_id}</td>
+                <td>${Name}</td>
+                <td>${current_address}</td>
+                <td>${current_contact}</td>
+                <td>${booking_date}</td>
+                <td>${duration}</td>
                 <td><button type="button" class="btn btn-outline-danger assignBtn">Assign</button></td>
                 <td><button type="button" class="btn btn-outline-danger closeBtn">Close</button></td>
             `;
-    
-            // Create the remark_reassign row (hidden by default)
+
+            // Create the hidden remark row
             const remarkRow = document.createElement('tr');
             remarkRow.classList.add('remark_reassign');
-            remarkRow.style.display = 'none'; // Hidden by default
-            remarkRow.innerHTML = `
-                <td colspan="1">
-                    <select class="form-select" aria-label="Default select example" disabled>
+            remarkRow.style.display = 'none';
+            remarkRow.innerHTML = `<td colspan="1">
+                    <select class="form-select" aria-label="Select ROOC" disabled>
                         <option>ROOC</option>
                     </select>
                 </td>
                 <td colspan="3">
                     <div class="input-group mb-3">
-                        <span class="input-group-text" id="complain_solve_remark_${order.Complain_ID}">F Remark</span>
+                        <span class="input-group-text">Franchises Remark</span>
                         <input type="text" class="form-control" disabled>
                     </div>
                 </td>
-                <td colspan="2">
-                    <select class="form-select" aria-label="Default select example">
+                <td colspan="1">
+                    <select class="form-select" aria-label="Choose Issue" id="ResolutionCode_${order.Complain_ID}">
                         <option selected>Choose Issue</option>
-                        <option value="200">r a f</option>
+                        <option value="Return to Franchises">Return to Franchises</option>
                     </select>
                 </td>
-                <td colspan="3">
+                <td colspan="4">
                     <div class="input-group mb-3">
-                        <span class="input-group-text">Bsnl Remark</span>
-                        <input type="text" class="form-control">
+                        <span class="input-group-text">BSNL Remark</span>
+                          <input type="text" class="form-control" id="BsnlRemark_${Complain_ID}">
                     </div>
                 </td>
-                <td><button type="button" class="btn btn-outline-secondary assignBtn">Submit</button></td>
-            `;
-    
-            // Create the close_complain row (hidden by default)
+                <td><button type="button" class="btn btn-outline-secondary assignBtn" onClick="updateComplainDetails(this, ${duration})" id="CloseButton_${order.Complain_ID}">Submit</button></td>
+                 `;
+
+            // Create the hidden close row
             const closeComplainRow = document.createElement('tr');
             closeComplainRow.classList.add('close_complain');
             closeComplainRow.style.display = 'none';
             closeComplainRow.innerHTML = `
                 <td colspan="1">
-                    <select class="form-select" aria-label="Default select example" disabled>
+                    <select class="form-select" aria-label="Select ROOC" disabled>
                         <option>ROOC</option>
                     </select>
                 </td>
@@ -145,119 +272,81 @@ RenderWholePage = function () {
                 </td>
                 <td colspan="5">
                     <div class="input-group mb-3">
-                        <span class="input-group-text">Bsnl Remark</span>
-                        <input type="text" class="form-control">
+                        <span class="input-group-text">BSNL Remark</span>
+                        <input type="text" class="form-control" id="BsnlRemark_${Complain_ID}">
                     </div>
                 </td>
-                <td><button type="button" class="btn btn-outline-secondary closeBtn">Submit</button></td>
+                <td>
+                    <button type="button" class="btn btn-outline-secondary closeBtn" 
+                            onClick="updateComplainDetails(this, ${duration})"  
+                            id="CloseButton_${Complain_ID}">
+                        Submit
+                    </button>
+                </td>
             `;
-            
-            let complain_solve_remark = order.complain_solve_remark;
-            console.log(complain_solve_remark)
 
-            // Create the message row (hidden by default)
-            const MessageRow = document.createElement('tr');
-            MessageRow.classList.add(`Message_${order.Complain_ID}`);
-            MessageRow.style.display = 'none'; // Hidden by default
-            MessageRow.innerHTML = `<td colspan="2"><h3>Message</h3></td>`;
-    
-            // Append all rows to the table body
+            // Create message row for error display
+            const messageRow = document.createElement('tr');
+            messageRow.classList.add(`Message_${order.Complain_ID}`);
+            messageRow.style.display = 'none';
+            messageRow.innerHTML = `<td colspan="10"><h3>Message</h3></td>`;
+
+            // Append rows to the table body
             tbody.appendChild(orderRow);
             tbody.appendChild(remarkRow);
             tbody.appendChild(closeComplainRow);
-            tbody.appendChild(MessageRow);
-        });
-    
-        // Call addCloseClass after appending rows to attach event listeners
-        addCloseClass();
-    }
-    
-    function addCloseClass() {
-        // Toggle each remark_reassign row when clicking an assignBtn
-        document.querySelectorAll('.assignBtn').forEach((button, index) => {
-            button.addEventListener('click', function () {
-                const remarkReassignRow = document.querySelectorAll('.remark_reassign')[index];
-                const closeComplainRow = document.querySelectorAll('.close_complain')[index];
-    
-                if (remarkReassignRow.style.display === 'none' || remarkReassignRow.style.display === '') {
-                    remarkReassignRow.style.display = 'table-row';
-                    closeComplainRow.style.display = 'none';
-                } else {
-                    remarkReassignRow.style.display = 'none';
-                }
-            });
-        });
-    
-        // Toggle each close_complain row when clicking a closeBtn
-        document.querySelectorAll('.closeBtn').forEach((button, index) => {
-            button.addEventListener('click', function () {
-                const closeComplainRow = document.querySelectorAll('.close_complain')[index];
-                const remarkReassignRow = document.querySelectorAll('.remark_reassign')[index];
-    
-                if (closeComplainRow.style.display === 'none' || closeComplainRow.style.display === '') {
-                    closeComplainRow.style.display = 'table-row';
-                    remarkReassignRow.style.display = 'none';
-                } else {
-                    closeComplainRow.style.display = 'none';
-                }
-            });
-        });
-    }
-    
+            tbody.appendChild(messageRow);
 
-    // Function to render pagination buttons
+            // Event listeners for buttons
+            orderRow.querySelector('.assignBtn').addEventListener('click', () => toggleRow(remarkRow, closeComplainRow));
+            orderRow.querySelector('.closeBtn').addEventListener('click', () => toggleRow(closeComplainRow, remarkRow));
+        });
+    }
+
+    // Toggle visibility of rows
+    function toggleRow(rowToShow, rowToHide) {
+        rowToShow.style.display = rowToShow.style.display === 'none' ? 'table-row' : 'none';
+        rowToHide.style.display = 'none';
+    }
+
+    // Render pagination controls
     function renderPagination() {
         const totalPages = Math.ceil(faultOrders.length / recordsPerPage);
         const pagination = document.getElementById('pagination');
         pagination.innerHTML = ''; // Clear pagination buttons
 
-        // Create Previous button
+        // Previous button
         const prevBtn = document.createElement('li');
-        prevBtn.classList.add('page-item');
-        if (currentPage === 1) prevBtn.classList.add('disabled');
+        prevBtn.classList.add('page-item', currentPage === 1 ? 'disabled' : '');
         prevBtn.innerHTML = `<a class="page-link" href="#">Previous</a>`;
-        prevBtn.onclick = () => {
-            if (currentPage > 1) {
-                currentPage--;
-                renderTable(currentPage);
-                renderPagination();
-            }
-        };
+        prevBtn.onclick = () => currentPage > 1 && navigatePage(--currentPage);
         pagination.appendChild(prevBtn);
 
-        // Create page number buttons
+        // Page number buttons
         for (let i = 1; i <= totalPages; i++) {
             const pageBtn = document.createElement('li');
-            pageBtn.classList.add('page-item');
-            if (i === currentPage) pageBtn.classList.add('active');
+            pageBtn.classList.add('page-item', i === currentPage ? 'active' : '');
             pageBtn.innerHTML = `<a class="page-link" href="#">${i}</a>`;
-            pageBtn.onclick = () => {
-                currentPage = i;
-                renderTable(currentPage);
-                renderPagination();
-            };
+            pageBtn.onclick = () => navigatePage(i);
             pagination.appendChild(pageBtn);
         }
 
-        // Create Next button
+        // Next button
         const nextBtn = document.createElement('li');
-        nextBtn.classList.add('page-item');
-        if (currentPage === totalPages) nextBtn.classList.add('disabled');
+        nextBtn.classList.add('page-item', currentPage === totalPages ? 'disabled' : '');
         nextBtn.innerHTML = `<a class="page-link" href="#">Next</a>`;
-        nextBtn.onclick = () => {
-            if (currentPage < totalPages) {
-                currentPage++;
-                renderTable(currentPage);
-                renderPagination();
-            }
-        };
+        nextBtn.onclick = () => currentPage < totalPages && navigatePage(++currentPage);
         pagination.appendChild(nextBtn);
     }
 
+    // Navigate to a specific page
+    function navigatePage(page) {
+        currentPage = page;
+        renderTable(currentPage);
+        renderPagination();
+    }
 
-
-    // Populate the table and render pagination
+    // Initialize table and pagination
     renderTable(currentPage);
     renderPagination();
-    
-}
+};
