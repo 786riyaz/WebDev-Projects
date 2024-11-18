@@ -46,7 +46,7 @@ header("Expires: 0"); // Proxies
             </div>
             <ul class="sidebar-nav">
                 <li class="sidebar-item">
-                    <a href="/Html/home.php" class="sidebar-link">
+                    <a href="/php/home2.php" class="sidebar-link">
                         <i class="lni lni-user"></i>
                         <span>Profile</span>
                     </a>

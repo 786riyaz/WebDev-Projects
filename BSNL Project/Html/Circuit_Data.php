@@ -47,7 +47,7 @@ header("Expires: 0"); // Proxies
             </div>
             <ul class="sidebar-nav">
                 <li class="sidebar-item">
-                    <a href="home.php" class="sidebar-link">
+                    <a href="/php/home2.php" class="sidebar-link">
                         <i class="lni lni-user"></i>
                         <span>Profile</span>
                     </a>
@@ -110,7 +110,7 @@ header("Expires: 0"); // Proxies
           
         </aside>
         <!-- ------------------------------------------------left menu-------------------------------------- -->
-        <div class="main p-3">
+        <div class="main p-3" >
             <div class="text-center">
                 <h1>
                     Total Orders</h1>
@@ -184,91 +184,13 @@ header("Expires: 0"); // Proxies
                           </tr>
                         </thead>
                         <tbody class="table-group-divider" id="circuitdata">
-                          
-                          <!-- <tr>
-                            <th>1</th>
-                            <th>AHDVST</th>
-                            <td>10002351685</td>
-                            <td>Smart City</td>
-                            <td>Shymal row house part 2 annad nagar road</td>
-                            <td>Shymal row house part 5 nehru nagar road</td>
-                            <td>5648729654</td>
-                            <td>4F</td>
-                            <td>200 meter</td>
-                            <td>20-10-2024</td>
-                            <td><button type="button" class="btn btn-outline-danger" id="edit-data">Edit</button></td>
-                            <td><button class="btn btn-outline-dark" type="button" id="remove-data">Remove</button></td>
-                          </tr>
-                          <tr id="remove-resone">
-                            <th colspan="10" >
-                                <div class="input-group mb-3" >
-                                    <span class="input-group-text" id="inputGroup-sizing-default">Reason</span>
-                                    <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
-                                  </div>
-                                  <td><button type="button" class="btn btn-outline-danger">Remove</button></td>
-                                  <td><button type="button" class="btn btn-outline-danger" id="cancle-remove">Cancle</button></td>
-                            </th>
-                          </tr>
-                          <tr id="update-data">
-                            <th colspan="12">
-                                <form class="row g-4" id="">
-                                    <div class="col-md-4">
-                                         <label for="inputEmail4" class="form-label">Circuit Id</label> 
-                                        <input type="email" class="form-control" id="inputEmail4" placeholder="Exchange" required>
-                                      </div>
-                                    <div class="col-md-4">
-                                       <label for="inputEmail4" class="form-label">Circuit Id</label> 
-                                      <input type="email" class="form-control" id="inputEmail4" placeholder="Circuit Id" required>
-                                    </div>
-                                    <div class="col-md-4">
-                                      <label for="inputPassword4" class="form-label">Name</label> 
-                                      <input type="password" class="form-control" id="inputPassword4" placeholder="Name" required>
-                                    </div>
-                                    <div class="col-12">
-                                       <label for="inputAddress" class="form-label">Address A</label> 
-                                      <input type="text" class="form-control" id="inputAddress" placeholder="Address A" required>
-                                    </div>
-                                    <div class="col-12">
-                                       <label for="inputAddress2" class="form-label">Address B</label> 
-                                      <input type="text" class="form-control" id="inputAddress2" placeholder="Address B" required>
-                                    </div>
-                                    <div class="col-md-4">
-                                       <label for="inputCity" class="form-label">Exchange</label> 
-                                      <input type="text" class="form-control" id="inputCity" placeholder="Contact">
-                                    </div>
-                                    <div class="col-md-4">
-                                         <label for="inputCity" class="form-label">Exchange</label> 
-                                        <input type="text" class="form-control" id="inputCity" placeholder="Connectivity">
-                                    </div>
-                                      <div class="col-md-4">
-                                         <label for="inputCity" class="form-label">Exchange</label> 
-                                        <input type="text" class="form-control" id="inputCity" placeholder="Cable length">
-                                      </div>
-                                      <div class="col-2">
-                                        <div class="file">
-                                          <input class="file-input" type="file" id="gridCheck" name="image" required>
-                                           <label class="form-label" for="gridCheck">
-                                            Upload CAF
-                                          </label> 
-                                        </div>
-                                      </div>                                  
-                                    <div class="col-12">
-                                      <button type="submit" class="btn btn-primary">Update</button>
-                                      <button type="submit" class="btn btn-dark" id="no-update">Close</button>
-                                    </div>
-                                  </form>
-                            </th>
-                          </tr>                            -->
+                        
+             
                         </tbody>
                       </table>
                       <nav aria-label="Page navigation example" id="pagination-controls" >
-                        <!-- <ul class="pagination justify-content-end" >
-                          <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                          <li class="page-item"><a class="page-link" href="#">1</a></li>
-                          <li class="page-item"><a class="page-link" href="#">2</a></li>
-                          <li class="page-item"><a class="page-link" href="#">3</a></li>
-                          <li class="page-item"><a class="page-link" href="#">Next</a></li>
-                        </ul> -->
+                       
+        
                       </nav>
 
                    
@@ -311,4 +233,6 @@ header("Expires: 0"); // Proxies
           }
         });
         </script>
+
+
 </html>
