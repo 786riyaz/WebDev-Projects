@@ -23,6 +23,15 @@ function renderTable() {
 
     // Loop through the current page's data and generate table rows
     pageData.forEach((order, index) => {
+        let actionButtons = '';
+        // Show Edit and Remove buttons only for admin or manager
+        if (userRole === 'admin' || userRole === 'manager') {
+            actionButtons = `
+                <td><button type="button" class="btn btn-outline-danger edit-data" id="editdata" data-index="${index}">Edit</button></td>
+                <td><button class="btn btn-outline-dark remove-data" data-index="${index}">Remove</button></td>
+            `;
+        }
+    
         tbody.innerHTML += `
             <tr>  
                 <td>${order.Sr_no}</td>
@@ -35,8 +44,7 @@ function renderTable() {
                 <td>${order.Connectivity}</td>
                 <td>${order.Cable_Lenght}</td>
                 <td>${order.work_order_date}</td>
-                <td><button type="button" class="btn btn-outline-danger edit-data" id="editdata" data-index="${index}">Edit</button></td>
-                <td><button class="btn btn-outline-dark remove-data" data-index="${index}">Remove</button></td>
+                ${actionButtons} <!-- Insert the action buttons dynamically -->
             </tr>
             <tr id="remove-reason-${index}" style="display:none;">
                 <th colspan="10">
@@ -44,36 +52,36 @@ function renderTable() {
                         <span class="input-group-text">Reason</span>
                         <input type="text" class="form-control" id="Reason_${order.Circuit_ID}">
                     </div>
-                    <td><button type="button" class="btn btn-outline-danger remove-confirm" data-index="${index}" id = "Submit_${order.Circuit_ID}" onclick = "removeRecord(this)">Submit</button></td>
-                    <td><button type="button" class="btn btn-outline-danger cancel-remove" data-index="${index}" id = "Cancel_${order.Circuit_ID}">Cancel</button></td>
+                    <td><button type="button" class="btn btn-outline-danger remove-confirm" data-index="${index}" id="Submit_${order.Circuit_ID}" onclick="removeRecord(this)">Submit</button></td>
+                    <td><button type="button" class="btn btn-outline-danger cancel-remove" data-index="${index}" id="Cancel_${order.Circuit_ID}">Cancel</button></td>
                 </th>
             </tr>
-            <tr id="update-data-${index}" style="display:none;" >
+            <tr id="update-data-${index}" style="display:none;">
                 <th colspan="12">
                     <form class="row g-4" method="POST">
                         <div class="col-md-4">
-                            <input type="text" class="form-control" name="Exchange"  value="${order.Exchange}" placeholder="Exchange" required>
+                            <input type="text" class="form-control" name="Exchange" value="${order.Exchange}" placeholder="Exchange" required>
                         </div>
                         <div class="col-md-4">
-                            <input type="number" class="form-control" name="Circuit_ID"  value="${order.Circuit_ID}" placeholder="Circuit Id" required>
+                            <input type="number" class="form-control" name="Circuit_ID" value="${order.Circuit_ID}" placeholder="Circuit Id" required>
                         </div>
                         <div class="col-md-4">
-                            <input type="text" class="form-control" name="Name"  value="${order.Name}" placeholder="Name" required>
+                            <input type="text" class="form-control" name="Name" value="${order.Name}" placeholder="Name" required>
                         </div>
                         <div class="col-12">
-                            <input type="text" class="form-control" name="Address_A"  value="${order.Address_A}" placeholder="Address A" required>
+                            <input type="text" class="form-control" name="Address_A" value="${order.Address_A}" placeholder="Address A" required>
                         </div>
                         <div class="col-12">
-                            <input type="text" class="form-control" name="Address_B"  value="${order.Address_B}" placeholder="Address B" required>
+                            <input type="text" class="form-control" name="Address_B" value="${order.Address_B}" placeholder="Address B" required>
                         </div>
                         <div class="col-md-4">
-                            <input type="number" class="form-control" name="Contect"  value="${order.Contect}" placeholder="Contact">
+                            <input type="number" class="form-control" name="Contect" value="${order.Contect}" placeholder="Contact">
                         </div>
                         <div class="col-md-4">
-                            <input type="text" class="form-control"  name="Connectivity"  value="${order.Connectivity}" placeholder="Connectivity">
+                            <input type="text" class="form-control" name="Connectivity" value="${order.Connectivity}" placeholder="Connectivity">
                         </div>
                         <div class="col-md-4">
-                            <input type="text" class="form-control" name="Cable_Lenght"  value="${order.Cable_Lenght}" placeholder="Cable length">
+                            <input type="text" class="form-control" name="Cable_Lenght" value="${order.Cable_Lenght}" placeholder="Cable length">
                         </div>
                         <div class="col-12">
                             <button type="submit" class="btn btn-primary update-btn" data-index="${index}">Update</button>
@@ -83,7 +91,7 @@ function renderTable() {
                 </th>
             </tr>
         `;
-    });
+    });    
 
     // Update pagination controls
     renderPaginationControls();

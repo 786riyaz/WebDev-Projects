@@ -44,7 +44,7 @@ updateComplainDetails = function (element, duration) {
             BsnlRemark : BsnlRemark,
             ResolveDateTime : Current_Date_Time_SQL,
             ResolutionCode: ResolutionCode,
-            Duration: duration,
+            Duration: 0,
             ID: parseInt(TargetComplainID)
         };
         $.ajax({
@@ -67,10 +67,7 @@ updateComplainDetails = function (element, duration) {
             }
         });
     }
-
     else{
-
-    
     // Create data object for AJAX request
     const data = {
         BsnlRemark : BsnlRemark,
@@ -112,20 +109,10 @@ function displayErrorMessage(message, MessageTR) {
 }
 
 
-
-
-
-
-
-
-
-
-
-
 fetch(`../Php/bsnl_complain_pending_rooc.php`)
     .then((response) => response.json())
     .then((data) => {
-        console.log(data)
+        console.log("Data ::: ", data);
 
         // console.log("Received Data :: ", data);
         if (data.length > 0) {
@@ -236,7 +223,7 @@ RenderWholePage = function () {
                 <td colspan="3">
                     <div class="input-group mb-3">
                         <span class="input-group-text">Franchises Remark</span>
-                        <input type="text" class="form-control" disabled>
+                        <input type="text" class="form-control" placeholder="asdas" value = "${order.complain_solve_remark}" disabled>
                     </div>
                 </td>
                 <td colspan="1">
@@ -267,7 +254,7 @@ RenderWholePage = function () {
                 <td colspan="3">
                     <div class="input-group mb-3">
                         <span class="input-group-text">F Remark</span>
-                        <input type="text" class="form-control" placeholder="asdas" disabled>
+                        <input type="text" class="form-control" placeholder="asdas" value = "${order.complain_solve_remark}" disabled>
                     </div>
                 </td>
                 <td colspan="5">

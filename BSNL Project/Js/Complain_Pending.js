@@ -121,7 +121,7 @@ fetch(`../Php/complain_fetch_unresolved.php`)
     .then((response) => response.json())
     .then((data) => {
         if (true) {
-            // console.log("Received Data :: ", data);
+            console.log("Received Data :: ", data);
             if (data.length > 0) {
                 let NoComplainMessage = document.getElementById('NoComplainMessage');
                 NoComplainMessage.style.display = "none";
