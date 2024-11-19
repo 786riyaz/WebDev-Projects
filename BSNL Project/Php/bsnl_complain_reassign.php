@@ -25,7 +25,8 @@ if ($conn->connect_error) {
     die('Connection Failed : ' . $conn->connect_error);
 } else {
     // Prepare the SQL statement
-    $stmt = $conn->prepare("UPDATE complain SET Is_Resolved = 0, complain_solve_code = ?, complain_solve_remark = ?, complain_solve_date = ?,Resolution_Duration = ? WHERE Complain_ID = ?");
+    // $stmt = $conn->prepare("UPDATE complain SET Is_Resolved = 0, complain_solve_code = ?, complain_solve_remark = ?, complain_solve_date = ?,Resolution_Duration = ? WHERE Complain_ID = ?");
+    $stmt = $conn->prepare("UPDATE complain SET Is_Resolved = 0, complain_solve_code = ?, complain_solve_remark = ?, booking_date = ?,Resolution_Duration = ? WHERE Complain_ID = ?");
 
     // Bind parameters
     $stmt->bind_param("ssssi", $ResolutionCode, $ResolutionRemark, $ResolveDateTime, $Duration, $ID);
