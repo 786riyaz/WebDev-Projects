@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #573BFF;
+            --sidebar-bg: linear-gradient(135deg, #11998E 0%, #38EF7D 100%);
+        }
+
+        body {
+            background-color: #f5f7fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .login-container {
+            height: 100vh;
+        }
+
+        .login-left {
+            background: var(--sidebar-bg);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            color: white;
+            text-align: center;
+        }
+
+        .login-left h1 {
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+
+        .login-left p {
+            opacity: 0.9;
+            margin-bottom: 2rem;
+        }
+
+        .login-right {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+        }
+
+        .auth-card {
+            width: 100%;
+            max-width: 450px;
+            border: none;
+            border-radius: 20px;
+            background: #f0f2f5;
+            box-shadow: 8px 8px 15px #d9dade, -8px -8px 15px #ffffff;
+            display: none;
+        }
+
+        .auth-card.active {
+            display: block;
+        }
+
+        .login-header {
+            text-align: center;
+            padding: 2rem 2rem 1rem;
+        }
+
+        .login-header h3 {
+            color: #3d3d3d;
+        }
+
+        .login-header p {
+            color: #7a7a7a;
+        }
+
+        .login-body {
+            padding: 1.5rem 2rem 2rem;
+        }
+
+        .form-control {
+            height: 50px;
+            border-radius: 8px;
+            background: #f0f2f5;
+            border: none;
+            box-shadow: inset 3px 3px 5px #d9dade, inset -3px -3px 5px #ffffff;
+            padding-left: 45px;
+        }
+
+        .input-group-text {
+            position: absolute;
+            z-index: 4;
+            height: 50px;
+            background: transparent;
+            border: none;
+            color: #7a7a7a;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .btn-auth {
+            background: var(--primary-color);
+            border: none;
+            width: 100%;
+            padding: 12px;
+            font-weight: 600;
+            border-radius: 8px;
+            box-shadow: 3px 3px 8px #d9dade, -3px -3px 8px #ffffff, inset 2px 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-auth:hover {
+            background: #4a2fe6;
+        }
+
+        .password-strength {
+            height: 4px;
+            background: #e0e0e0;
+            border-radius: 2px;
+            margin-top: 5px;
+            overflow: hidden;
+        }
+
+        .strength-meter {
+            height: 100%;
+            width: 0;
+            transition: width 0.3s, background 0.3s;
+        }
+
+        .toggle-auth {
+            color: var(--primary-color);
+            cursor: pointer;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .toggle-auth:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container-fluid login-container">
+        <div class="row g-0 h-100">
+            <!-- Left Side with Branding -->
+            <div class="col-lg-6 login-left">
+                <div id="welcome-message">
+                    <h1>Welcome Back</h1>
+                    <p>Streamline your workflow with our powerful dashboard. Login to access your personalized
+                        workspace.</p>
+                    <img src="https://illustrations.popsy.co/amber/digital-nomad.svg" alt="Illustration"
+                        style="width: 100%; max-width: 300px;">
+                </div>
+                <div id="register-message" style="display: none;">
+                    <h1>Join Us Today</h1>
+                    <p>Create your account to unlock all features and start your journey with our platform.</p>
+                    <img src="https://illustrations.popsy.co/amber/designer.svg" alt="Illustration"
+                        style="width: 100%; max-width: 300px;">
+                </div>
+            </div>
+
+            <!-- Right Side with Auth Forms -->
+            <div class="col-lg-6 login-right">
+                <!-- Login Card -->
+                <div class="auth-card active" id="login-card">
+                    <div class="login-header">
+                        <div style="
+                            width: 80px;
+                            height: 80px;
+                            margin: 0 auto 20px;
+                            background: #f0f2f5;
+                            border-radius: 50%;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            box-shadow: 5px 5px 10px #d9dade, -5px -5px 10px #ffffff;
+                        ">
+                            <i class="fas fa-user-circle" style="font-size: 40px; color: var(--primary-color);"></i>
+                        </div>
+                        <h3>Sign In</h3>
+                        <p>Enter your credentials</p>
+                    </div>
+                    <div class="login-body">
+                        <form>
+                            <div class="mb-3 position-relative">
+                                <input type="text" class="form-control" id="login-username" placeholder="Username">
+                                <span class="input-group-text"><i class="fas fa-user"></i></span>
+                            </div>
+
+                            <div class="mb-3 position-relative">
+                                <input type="password" class="form-control" id="login-password" placeholder="Password">
+                                <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                            </div>
+
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="remember" style="
+                                        width: 18px;
+                                        height: 18px;
+                                        margin-top: 0;
+                                        box-shadow: inset 2px 2px 4px #d9dade, 
+                                                    inset -2px -2px 4px #ffffff;
+                                        border: none;
+                                    ">
+                                    <label class="form-check-label" for="remember" style="
+                                        color: #7a7a7a;
+                                        font-size: 0.9rem;
+                                    ">Remember me</label>
+                                </div>
+                                <a href="#" style="
+                                    color: var(--primary-color);
+                                    text-decoration: none;
+                                    font-size: 0.9rem;
+                                ">Forgot password?</a>
+                            </div>
+
+                            <button type="submit" class="btn btn-auth mb-3">Login</button>
+
+                            <div class="text-center" style="color: #7a7a7a;">
+                                Don't have an account? <a href="#" class="toggle-auth"
+                                    onclick="toggleAuth('register')">Sign up</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Register Card -->
+                <div class="auth-card" id="register-card">
+                    <div class="login-header">
+                        <div style="
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 20px;
+            background: #f0f2f5;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 5px 5px 10px #d9dade, -5px -5px 10px #ffffff;
+        ">
+                            <i class="fas fa-user-plus" style="font-size: 40px; color: var(--primary-color);"></i>
+                        </div>
+                        <h3>Create Account</h3>
+                        <p>Fill in your details to register</p>
+                    </div>
+                    <div class="login-body">
+                        <form>
+                            <div class="row g-3">
+                                <!-- First Column -->
+                                <div class="col-md-6">
+                                    <div class="position-relative mb-3">
+                                        <input type="text" class="form-control" id="fullname" placeholder="Full Name">
+                                        <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                    </div>
+
+                                    <div class="position-relative mb-3">
+                                        <input type="email" class="form-control" id="email" placeholder="Email Address">
+                                        <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                                    </div>
+                                </div>
+
+                                <!-- Second Column -->
+                                <div class="col-md-6">
+                                    <div class="position-relative mb-3">
+                                        <input type="text" class="form-control" id="username" placeholder="Username">
+                                        <span class="input-group-text"><i class="fas fa-at"></i></span>
+                                    </div>
+
+                                    <div class="position-relative mb-3">
+                                        <input type="password" class="form-control" id="password" placeholder="Password"
+                                            oninput="checkPasswordStrength()">
+                                        <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                                        <div class="password-strength">
+                                            <div class="strength-meter" id="strength-meter"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Full Width Row -->
+                            <div class="position-relative mb-3">
+                                <input type="password" class="form-control" id="confirm-password"
+                                    placeholder="Confirm Password">
+                                <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                            </div>
+
+                            <!-- Compact Terms Row -->
+                            <div class="d-flex align-items-center mb-3">
+                                <input class="form-check-input me-2" type="checkbox" id="terms" style="
+                    width: 18px;
+                    height: 18px;
+                    margin-top: 0;
+                    box-shadow: inset 2px 2px 4px #d9dade, 
+                                inset -2px -2px 4px #ffffff;
+                    border: none;
+                ">
+                                <label class="form-check-label" for="terms" style="
+                    color: #7a7a7a;
+                    font-size: 0.85rem;
+                ">I agree to <a href="#" style="color: var(--primary-color);">Terms</a></label>
+                            </div>
+
+                            <button type="submit" class="btn btn-auth w-100 mb-2">Register</button>
+
+                            <div class="text-center" style="color: #7a7a7a; font-size: 0.9rem;">
+                                Already have an account? <a href="#" class="toggle-auth"
+                                    onclick="toggleAuth('login')">Sign in</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function toggleAuth(formType) {
+            // Toggle cards
+            document.getElementById('login-card').classList.toggle('active', formType === 'login');
+            document.getElementById('register-card').classList.toggle('active', formType === 'register');
+
+            // Toggle welcome messages
+            document.getElementById('welcome-message').style.display = formType === 'login' ? 'block' : 'none';
+            document.getElementById('register-message').style.display = formType === 'register' ? 'block' : 'none';
+        }
+
+        function checkPasswordStrength() {
+            const password = document.getElementById('password').value;
+            const meter = document.getElementById('strength-meter');
+            let strength = 0;
+
+            if (password.length > 0) strength += 1;
+            if (password.length >= 8) strength += 1;
+            if (/[A-Z]/.test(password)) strength += 1;
+            if (/\d/.test(password)) strength += 1;
+            if (/[^A-Za-z0-9]/.test(password)) strength += 1;
+
+            let width = strength * 20;
+            let color = '#dc3545'; // red
+
+            if (strength >= 4) {
+                color = '#28a745'; // green
+            } else if (strength >= 2) {
+                color = '#ffc107'; // yellow
+            }
+
+            meter.style.width = width + '%';
+            meter.style.background = color;
+        }
+    </script>
+</body>
+
+</html>

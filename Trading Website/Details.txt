@@ -1,0 +1,41 @@
+Advanve GRID strategy YouTube Link :: 
+https://youtu.be/RPpxvFlCd80?si=SLVW9D3iBVdooOip
+
+Delta Exchange Futures GRID Strategy AI Tool :: 
+https://www.pivottrading.co.in/beta/algo-tools/crypto/advanced-jobbing.php
+Not Working
+
+Delta Exchange API :: 
+https://docs.delta.exchange/#introduction
+
+============================================================================
+Step 1: Open Delta Exchange Account
+https://www.delta.exchange/?code=TANGQK
+
+Step 2: Change your margin mode to Portfolio/Cross Mode
+https://www.pivottrading.co.in/beta/algo-tools/crypto/margin-mode.png
+
+Step 3: Create API. Share API details
+https:// youtu. be/MHAkUZ21guI ? si=rmSIABc05eDex2Xv
+Whitelist IP: 104.237.5.195
+
+Step 4: Configure Algo and use it.
+https://www.pivottrading.co.in/beta/algo-tools/crypto/advanced -jobbingtphp
+
+Tutorial Video about Strategy
+https://www.youtube.com/watch?v=-W5khEVYfRU
+============================================================================
+Grok Chatting ::: 
+https://grok.com/chat/11333bad-fb44-4c50-be17-be7b0e95b16d
+============================================================================
+Delta Exchange Copy Trading | Trading Machine | Swastik Algo | Copy Trading
+https://www.youtube.com/watch?v=UftivOn4RE0
+============================================================================
+account liqudate
+
+======================================================================
+33291475
+
+API KEY :- zPuYvamkewz8FgjEGnkRZBVgjlK2Nd
+
+API Secret :- B94GtMnVp3hoZXrHMxV4YsMaxC597EKd4aI39sqkm8ln3A3s6VsHB0n7oBYC

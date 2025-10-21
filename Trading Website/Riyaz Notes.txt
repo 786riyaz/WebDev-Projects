@@ -1,0 +1,23 @@
+API Environments:
+Production (India): https://api.india.delta.exchange – For real trading.
+Testnet (India): https://cdn-ind.testnet.deltaex.org – For testing without real money.
+Global APIs: Separate URLs for non-Indian users (e.g., https://api.delta.exchange).
+For Developers: Use the Testnet for development and testing to avoid risking real funds. Your client’s website should allow users to switch between testnet and production environments.
+
+
+
+
+
+
+Key Endpoints (from https://docs.delta.exchange/):
+Market Data:
+/v2/assets: Get a list of supported cryptocurrencies (e.g., BTC, ETH).
+/v2/tickers: Get real-time price data for trading pairs.
+/v2/l2orderbook: Get the order book (buy/sell orders) for a specific asset.
+Account Management:
+/v2/orders: View or place orders (e.g., buy 3 BTC at $40,000).
+/v2/balances: Check a user’s account balance.
+Trading:
+POST /v2/orders: Place a new trade order (e.g., limit order, market order).
+GET /v2/positions: View open trading positions.
+For Developers: Your website’s frontend will display data fetched from these endpoints (e.g., a dashboard showing prices or balances). The backend will handle API calls and authentication.

@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <style>
+        :root {
+            --primary-color: #573BFF;
+            --info-color: #00C3F9;
+            --sidebar-bg: #fff;
+            --content-bg: #f8f9fa;
+            --header-bg: linear-gradient(135deg, #11998E 0%, #38EF7D 100%);
+            --danger-color: #dc3545;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--content-bg);
+            overflow-x: hidden;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 250px;
+            min-height: 100vh;
+            background: var(--sidebar-bg);
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            transition: all 0.3s;
+        }
+
+        .sidebar.collapsed {
+            width: 70px;
+        }
+
+        .sidebar.collapsed .logo-title,
+        .sidebar.collapsed .item-name {
+            display: none;
+        }
+
+        .sidebar.collapsed .nav-link {
+            text-align: center;
+            padding: 12px 0;
+        }
+
+        .sidebar.collapsed .nav-link i {
+            margin-right: 0;
+        }
+
+        .sidebar-header {
+            padding: 20px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo-title {
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-left: 10px;
+            transition: all 0.3s;
+        }
+
+        .sidebar-body {
+            padding: 20px 0;
+        }
+
+        .nav-item {
+            margin-bottom: 5px;
+        }
+
+        .nav-link {
+            padding: 12px 20px;
+            color: #495057;
+            border-radius: 0 30px 30px 0;
+            transition: all 0.3s;
+            white-space: nowrap;
+        }
+
+        .nav-link-profile {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            color: #fff;
+            padding: 8px 16px;
+            border-radius: 20px;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+
+        .nav-link-profile:hover,
+        .nav-link-profile.active {
+            color: #fff;
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .nav-link-profile.active::after {
+            content: '';
+            position: absolute;
+            bottom: 2px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 3px;
+            background: #fff;
+            border-radius: 2px;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            background-color: rgba(87, 59, 255, 0.1);
+            color: var(--primary-color);
+        }
+
+        .nav-link i {
+            width: 24px;
+            text-align: center;
+            margin-right: 10px;
+            transition: all 0.3s;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: 250px;
+            transition: all 0.3s;
+        }
+
+        .sidebar.collapsed+.main-content {
+            margin-left: 70px;
+        }
+
+        /* Header */
+        .header {
+            background: var(--header-bg);
+            color: white;
+            padding: 40px 0 10px;
+            position: relative;
+            overflow: hidden;
+            margin-top: 60px;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Navbar */
+        .iq-navbar {
+            background: var(--header-bg);
+            padding: 15px 20px;
+            position: fixed;
+            top: 0;
+            right: 0;
+            left: 250px;
+            z-index: 100;
+            transition: all 0.3s;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .sidebar.collapsed~.main-content .iq-navbar {
+            left: 70px;
+        }
+
+        .navbar-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-item.dropdown {
+            margin-left: 15px;
+        }
+
+        .dropdown-menu {
+            border: none;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        /* Search */
+        .search-container {
+            position: relative;
+            width: 300px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 10px 20px 10px 40px;
+            background-color: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            border-radius: 25px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .search-input:focus {
+            outline: none;
+            background-color: rgba(255, 255, 255, 0.25);
+            border-color: rgba(255, 255, 255, 0.5);
+            box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.1);
+        }
+
+        .search-input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: rgba(224, 232, 235, 0.7);
+            z-index: 1000;
+            pointer-events: none;
+        }
+
+        /* Cards */
+         .position-card {
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s;
+            margin-bottom: 20px;
+            border: none;
+            border-left: 4px solid transparent;
+        }
+
+        .position-long {
+            border-left-color: var(--success-color);
+        }
+
+        .position-short {
+            border-left-color: var(--danger-color);
+        }
+
+        .position-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .pnl-positive {
+            color: var(--success-color);
+            font-weight: 600;
+        }
+
+        .pnl-negative {
+            color: var(--danger-color);
+            font-weight: 600;
+        }
+
+        .pnl-neutral {
+            color: var(--warning-color);
+            font-weight: 600;
+        }
+
+        .exit-form {
+            background: rgba(0, 0, 0, 0.02);
+            border-radius: 8px;
+            padding: 10px;
+            margin-top: 10px;
+            display: none;
+        }
+
+        .badge-leverage {
+            background-color: rgba(0, 195, 249, 0.1);
+            color: var(--info-color);
+            font-weight: 500;
+        }
+
+         /* Compact table styling */
+        .compact-table th {
+            font-size: 0.85rem;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .compact-table td {
+            font-size: 0.85rem;
+            vertical-align: middle;
+            white-space: nowrap;
+        }
+
+        /* Toggle switch for exit form */
+        .exit-toggle {
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .exit-toggle:hover {
+            transform: scale(1.1);
+        }
+
+        /* Footer */
+        .footer {
+            background: #fff;
+            padding: 20px 0;
+            margin-top: 30px;
+            box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.02);
+        }
+
+        /* Toggle Button */
+        .sidebar-toggle {
+            background: none;
+            border: none;
+            color: var(--primary-color);
+            font-size: 1.25rem;
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        /* Table Actions */
+        .table-actions .btn {
+            padding: 0.25rem 0.5rem;
+            font-size: 0.875rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+
+            .sidebar.active {
+                transform: translateX(0);
+                width: 250px;
+            }
+
+            .sidebar.collapsed {
+                width: 70px;
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+
+            .iq-navbar {
+                left: 0;
+            }
+
+            .search-container {
+                width: 200px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .search-container {
+                width: 150px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-header d-flex align-items-center">
+            <div class="d-flex align-items-center">
+                <i class="fa-solid fa-user-tie" style="color: #573BFF;"></i>
+                <h4 class="logo-title">Admin</h4>
+            </div>
+            <button class="sidebar-toggle" id="sidebarToggle">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+        </div>
+        <div class="sidebar-body">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="#">
+                        <i class="fas fa-th-large"></i>
+                        <span class="item-name">Dashboard</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="#">
+                        <i class="fas fa-users"></i>
+                        <span class="item-name">Users</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        <i class="fas fa-chart-line"></i>
+                        <span class="item-name">Trades</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        <i class="fa-solid fa-crosshairs"></i>
+                        <span class="item-name">Positions</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        <i class="fa-solid fa-receipt"></i>
+                        <span class="item-name">Balance</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        <i class="fas fa-cog"></i>
+                        <span class="item-name">Settings</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Navbar -->
+        <nav class="nav navbar navbar-expand-lg navbar-light iq-navbar">
+            <div class="container-fluid navbar-inner">
+                <div class="search-container">
+                    <i class="bi bi-search search-icon"></i>
+                    <input type="text" class="search-input" placeholder="Search...">
+                </div>
+
+                <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+                    <ul class="mb-2 navbar-nav align-items-center navbar-list mb-lg-0">
+                        <li class="nav-item dropdown">
+                            <a class="py-0 nav-link-profile d-flex align-items-center" href="#" id="navbarDropdown"
+                                role="button" data-bs-toggle="dropdown">
+                                <i class="fa-solid fa-user-tie"></i>
+                                <div class="caption ms-3 d-none d-md-block">
+                                    <h6 class="mb-0 caption-title">Admin</h6>
+                                    <p class="mb-0 caption-sub-title">Administrator</p>
+                                </div>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li><a class="dropdown-item" href="#"><i class="fas fa-user me-2"></i>Profile</a></li>
+                                <li><a class="dropdown-item" href="#"><i class="fas fa-cog me-2"></i>Settings</a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li><a class="dropdown-item" href="#"><i class="fas fa-sign-out-alt me-2"></i>Logout</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Header -->
+        <div class="header">
+            <div class="container header-content">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <h1>Positions</h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Content -->
+        <div class="container-fluid content-inner mt-n5 py-4">
+            <!-- Filters -->
+            <div class="card shadow-sm border-0 mb-4">
+                <div class="card-body">
+                    <div class="row g-3 align-items-end">
+                        <div class="col-lg-9">
+                            <div class="row g-3">
+                                <div class="col-md-3">
+                                    <label class="form-label text-muted small mb-1">Master Script</label>
+                                    <select class="form-select form-select-sm">
+                                        <option selected>All Scripts</option>
+                                        <option>Strategy Alpha</option>
+                                        <option>Strategy Beta</option>
+                                        <option>Manual Trading</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="form-label text-muted small mb-1">User</label>
+                                    <select class="form-select form-select-sm">
+                                        <option selected>All Users</option>
+                                        <option>John Doe (ID: 1001)</option>
+                                        <option>Jane Smith (ID: 1002)</option>
+                                        <option>Mike Johnson (ID: 1003)</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="form-label text-muted small mb-1">Account</label>
+                                    <select class="form-select form-select-sm">
+                                        <option selected>All Accounts</option>
+                                        <option>Main Account (ACC2001)</option>
+                                        <option>Secondary Account (ACC2002)</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="form-label text-muted small mb-1">Symbol</label>
+                                    <select class="form-select form-select-sm">
+                                        <option selected>All Symbols</option>
+                                        <option>BTC/USDT</option>
+                                        <option>ETH/USDT</option>
+                                        <option>XRP/USDT</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="d-flex justify-content-end gap-2">
+                                <button class="btn btn-sm btn-outline-secondary">
+                                    <i class="fas fa-filter me-1"></i> Filter
+                                </button>
+                                <button class="btn btn-sm btn-outline-secondary">
+                                    <i class="fas fa-download me-1"></i> Export
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Summary Cards -->
+            <div class="row mb-4">
+                <div class="col-md-3">
+                    <div class="card position-card position-long">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <h6 class="text-muted mb-2">Open Positions</h6>
+                                    <h3 class="mb-0">24</h3>
+                                </div>
+                                <div class="bg-primary bg-opacity-10 p-3 rounded">
+                                    <i class="fas fa-layer-group text-primary"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card position-card position-long">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <h6 class="text-muted mb-2">Long Positions</h6>
+                                    <h3 class="mb-0">16</h3>
+                                </div>
+                                <div class="bg-success bg-opacity-10 p-3 rounded">
+                                    <i class="fas fa-arrow-up text-success"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card position-card position-short">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <h6 class="text-muted mb-2">Short Positions</h6>
+                                    <h3 class="mb-0">8</h3>
+                                </div>
+                                <div class="bg-danger bg-opacity-10 p-3 rounded">
+                                    <i class="fas fa-arrow-down text-danger"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card position-card">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <h6 class="text-muted mb-2">Total uPNL</h6>
+                                    <h3 class="mb-0 pnl-positive">+$2,458.75</h3>
+                                </div>
+                                <div class="bg-info bg-opacity-10 p-3 rounded">
+                                    <i class="fas fa-coins text-info"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Positions Table -->
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card shadow-sm border-0">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h5 class="card-title mb-0">Current Positions</h5>
+                                <div>
+                                    <div class="btn-group btn-group-sm">
+                                        <button class="btn btn-outline-secondary active">All</button>
+                                        <button class="btn btn-outline-secondary">Long</button>
+                                        <button class="btn btn-outline-secondary">Short</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table compact-table">
+                                    <thead>
+                                        <tr>
+                                            <th>User ID</th>
+                                            <th>Account ID</th>
+                                            <th>Account Name</th>
+                                            <th>Symbol</th>
+                                            <th>Side</th>
+                                            <th>Size</th>
+                                            <th>Entry Price</th>
+                                            <th>Mark Price</th>
+                                            <th>Leverage</th>
+                                            <th>uPNL</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>1001</td>
+                                            <td>ACC2001</td>
+                                            <td>John's Main</td>
+                                            <td><strong>BTC/USDT</strong></td>
+                                            <td><span class="badge bg-success">Long</span></td>
+                                            <td>0.05 BTC</td>
+                                            <td>$42,156.20</td>
+                                            <td>$42,480.70</td>
+                                            <td><span class="badge badge-leverage">5x</span></td>
+                                            <td class="pnl-positive">+$162.25</td>
+                                            <td>
+                                                <i class="fas fa-times-circle text-danger exit-toggle me-2"
+                                                    data-bs-toggle="tooltip" title="Close Position"
+                                                    onclick="toggleExitForm(this)"></i>
+                                                <div class="exit-form">
+                                                    <div class="row g-2">
+                                                        <div class="col-md-6">
+                                                            <button class="btn btn-sm btn-danger w-100">Market
+                                                                Exit</button>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <button class="btn btn-sm btn-warning w-100">Limit
+                                                                Exit</button>
+                                                        </div>
+                                                        <div class="col-md-12 mt-2">
+                                                            <div class="input-group input-group-sm">
+                                                                <input type="text" class="form-control"
+                                                                    placeholder="Limit price">
+                                                                <button class="btn btn-primary"
+                                                                    type="button">Set</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>1002</td>
+                                            <td>ACC2002</td>
+                                            <td>Jane's Trading</td>
+                                            <td><strong>ETH/USDT</strong></td>
+                                            <td><span class="badge bg-danger">Short</span></td>
+                                            <td>2.1 ETH</td>
+                                            <td>$2,245.60</td>
+                                            <td>$2,230.40</td>
+                                            <td><span class="badge badge-leverage">10x</span></td>
+                                            <td class="pnl-positive">+$31.92</td>
+                                            <td>
+                                                <i class="fas fa-times-circle text-danger exit-toggle me-2"
+                                                    data-bs-toggle="tooltip" title="Close Position"
+                                                    onclick="toggleExitForm(this)"></i>
+                                                <div class="exit-form">
+                                                    <div class="row g-2">
+                                                        <div class="col-md-6">
+                                                            <button class="btn btn-sm btn-danger w-100">Market
+                                                                Exit</button>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <button class="btn btn-sm btn-warning w-100">Limit
+                                                                Exit</button>
+                                                        </div>
+                                                        <div class="col-md-12 mt-2">
+                                                            <div class="input-group input-group-sm">
+                                                                <input type="text" class="form-control"
+                                                                    placeholder="Limit price">
+                                                                <button class="btn btn-primary"
+                                                                    type="button">Set</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>1001</td>
+                                            <td>ACC2001</td>
+                                            <td>John's Main</td>
+                                            <td><strong>SOL/USDT</strong></td>
+                                            <td><span class="badge bg-success">Long</span></td>
+                                            <td>15 SOL</td>
+                                            <td>$58.42</td>
+                                            <td>$57.85</td>
+                                            <td><span class="badge badge-leverage">5x</span></td>
+                                            <td class="pnl-negative">-$8.55</td>
+                                            <td>
+                                                <i class="fas fa-times-circle text-danger exit-toggle me-2"
+                                                    data-bs-toggle="tooltip" title="Close Position"
+                                                    onclick="toggleExitForm(this)"></i>
+                                                <div class="exit-form">
+                                                    <div class="row g-2">
+                                                        <div class="col-md-6">
+                                                            <button class="btn btn-sm btn-danger w-100">Market
+                                                                Exit</button>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <button class="btn btn-sm btn-warning w-100">Limit
+                                                                Exit</button>
+                                                        </div>
+                                                        <div class="col-md-12 mt-2">
+                                                            <div class="input-group input-group-sm">
+                                                                <input type="text" class="form-control"
+                                                                    placeholder="Limit price">
+                                                                <button class="btn btn-primary"
+                                                                    type="button">Set</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>1003</td>
+                                            <td>ACC2003</td>
+                                            <td>Mike's Portfolio</td>
+                                            <td><strong>XRP/USDT</strong></td>
+                                            <td><span class="badge bg-danger">Short</span></td>
+                                            <td>500 XRP</td>
+                                            <td>$0.62</td>
+                                            <td>$0.615</td>
+                                            <td><span class="badge badge-leverage">3x</span></td>
+                                            <td class="pnl-positive">+$2.50</td>
+                                            <td>
+                                                <i class="fas fa-times-circle text-danger exit-toggle me-2"
+                                                    data-bs-toggle="tooltip" title="Close Position"
+                                                    onclick="toggleExitForm(this)"></i>
+                                                <div class="exit-form">
+                                                    <div class="row g-2">
+                                                        <div class="col-md-6">
+                                                            <button class="btn btn-sm btn-danger w-100">Market
+                                                                Exit</button>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <button class="btn btn-sm btn-warning w-100">Limit
+                                                                Exit</button>
+                                                        </div>
+                                                        <div class="col-md-12 mt-2">
+                                                            <div class="input-group input-group-sm">
+                                                                <input type="text" class="form-control"
+                                                                    placeholder="Limit price">
+                                                                <button class="btn btn-primary"
+                                                                    type="button">Set</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <ul class="list-inline mb-0">
+                            <li class="list-inline-item"><a href="#">Privacy Policy</a></li>
+                            <li class="list-inline-item"><a href="#">Terms of Use</a></li>
+                            <li class="list-inline-item float-end">© 2023 Trading Dashboard</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </main>
+
+
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Sidebar toggle functionality
+            $('#sidebarToggle').click(function () {
+                $('.sidebar').toggleClass('collapsed');
+                const icon = $(this).find('i');
+                if ($('.sidebar').hasClass('collapsed')) {
+                    icon.removeClass('fa-chevron-left').addClass('fa-chevron-right');
+                } else {
+                    icon.removeClass('fa-chevron-right').addClass('fa-chevron-left');
+                }
+            });
+
+            // Initialize tooltips
+            $('[data-bs-toggle="tooltip"]').tooltip();
+        });
+
+        // Toggle exit form visibility
+        function toggleExitForm(element) {
+            const exitForm = $(element).siblings('.exit-form');
+            $('.exit-form').not(exitForm).slideUp();
+            exitForm.slideToggle();
+        }
+    </script>
+</body>
+
+</html>

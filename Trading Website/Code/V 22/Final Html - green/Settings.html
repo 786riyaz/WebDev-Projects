@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+
+
+    <!-- ---------------------------------main css----------------------------------------- -->
+    <!-- <link rel="stylesheet" href="../Final Css/main/1.css"> -->
+   <link rel="stylesheet" href="../Final Css/main.css">
+
+
+
+
+</head>
+
+<body>
+    <!-- Sidebar -->
+   <aside class="sidebar">
+        <div class="sidebar-header-card">
+            <div class="admin-profile">
+                <i class="fa-solid fa-user-astronaut"></i>
+                <span class="item-name"> Administrator</span>
+
+            </div>
+            <button class="toggle-btn" id="sidebarToggle">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+        </div>
+
+        <div class="sidebar-body">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="index.html">
+                        <i class="fas fa-th-large"></i>
+                        <span class="item-name">Dashboard</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link " href="user.html">
+                        <i class="fas fa-users"></i>
+                        <span class="item-name">Users</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="trades.html">
+                        <i class="fas fa-chart-line"></i>
+                        <span class="item-name">Trades</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="Positions.html">
+                        <i class="fa-solid fa-crosshairs"></i>
+                        <span class="item-name">Positions</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="Fund.html">
+                        <i class="fa-solid fa-receipt"></i>
+                        <span class="item-name">Fund</span>
+                    </a>
+                </li>
+                <li class="nav-item ">
+                    <a class="nav-link active" href="Settings.html">
+                        <i class="fas fa-cog"></i>
+                        <span class="item-name">Settings</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Navbar -->
+        <nav class="nav navbar navbar-expand-lg navbar-light iq-navbar">
+            <div class="container-fluid navbar-inner">
+                <div class="search-container">
+                    <i class="bi bi-search search-icon"></i>
+                    <input type="text" class="search-input" placeholder="Search...">
+                </div>
+
+                <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+                    <ul class="mb-2 navbar-nav align-items-center navbar-list mb-lg-0">
+                        <li class="nav-item dropdown">
+                            <a class="py-0 nav-link-profile d-flex align-items-center" href="#" id="navbarDropdown"
+                                role="button" data-bs-toggle="dropdown">
+                                <i class="fa-solid fa-user-tie"></i>
+                                <div class="caption ms-3 d-none d-md-block">
+                                    <h6 class="mb-0 caption-title">Admin</h6>
+                                    <p class="mb-0 caption-sub-title">Administrator</p>
+                                </div>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li><a class="dropdown-item" href="profil.html"><i
+                                            class="fas fa-user me-2"></i>Profile</a></li>
+                                <li><a class="dropdown-item" href="#"><i class="fas fa-cog me-2"></i>Settings</a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li><a class="dropdown-item" href="#"><i class="fas fa-sign-out-alt me-2"></i>Logout</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Header -->
+        <div class="header">
+            <div class="container-fluid px-3">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <h1>Settings</h1>
+                            </div>
+                            <div>
+                                <button class="btn btn-light">
+                                    <i class="fas fa-save me-2"></i> Save Settings
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Content -->
+        <div class="container-fluid content-inner mt-n5 py-4">
+            <!-- Master Settings -->
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card settings-card">
+                        <div class="card-body">
+                            <div class="settings-section">
+                                <h4 class="settings-title">Master Account Settings</h4>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Master Account</label>
+                                        <select class="form-select">
+                                            <option selected>Select Master Account</option>
+                                            <option>Strategy Alpha (ID: MA1001)</option>
+                                            <option>Strategy Beta (ID: MA1002)</option>
+                                            <option>Manual Trading (ID: MA1003)</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Copy Trade Method</label>
+                                        <select class="form-select">
+                                            <option selected>Same as Master (Limit)</option>
+                                            <option>Market Orders Only</option>
+                                            <option>Custom Settings</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" id="copyTradeToggle"
+                                                checked>
+                                            <label class="form-check-label" for="copyTradeToggle">Enable Copy
+                                                Trading</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" id="successOnlyToggle">
+                                            <label class="form-check-label" for="successOnlyToggle">Copy Success Trades
+                                                Only</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div><br>
+
+                            <!-- Client Accounts -->
+
+
+
+
+                            <!-- Algorithm Settings -->
+                            <div class="settings-section">
+                                <h4 class="settings-title">Algorithm Settings</h4>
+                                <div class="row">
+                                    <div class="col-md-4 mb-3">
+                                        <label class="form-label">Reference Algorithm</label>
+                                        <select class="form-select">
+                                            <option selected>AlgoLab Copy Method</option>
+                                            <option>Mirror Trading</option>
+                                            <option>Smart Copy</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <div class="form-check form-switch pt-4">
+                                            <input class="form-check-input" type="checkbox" id="algoToggle" checked>
+                                            <label class="form-check-label" for="algoToggle">Enable Algorithm</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label class="form-label">Risk Management</label>
+                                        <select class="form-select">
+                                            <option selected>Conservative</option>
+                                            <option>Moderate</option>
+                                            <option>Aggressive</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="alert alert-info">
+                                    <i class="fas fa-info-circle me-2"></i>
+                                    When enabled, the algorithm will optimize trade copying based on the reference
+                                    method selected.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="master-settings-section bg-light p-4 rounded-3 shadow-sm mb-4">
+            <h4 class="master-settings-title fw-bold mb-4 d-flex align-items-center">
+                <i class="fas fa-crown me-2 text-warning"></i> Master Configuration
+            </h4>
+
+            <div class="table-responsive">
+                <table class="table table-hover align-middle">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Master</th>
+                            <th>Total Client</th>
+                            <th>View</th>
+                            <th>Edit</th>
+                            <th>Delete</th>
+                            <th>Gonggle</th>
+                            <th>Method</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="fw-semibold">Master 1</td>
+                            <td>
+                                <span class="badge bg-primary rounded-pill">2</span>
+                            </td>
+                            <td>
+                                <button class="btn btn-sm btn-outline-info view-clients-btn" data-bs-toggle="collapse"
+                                    data-bs-target="#clientDetails1">
+                                    <i class="fas fa-eye me-1"></i> View
+                                </button>
+                            </td>
+                            <td>
+                                <button class="btn btn-sm btn-outline-primary">
+                                    <i class="fas fa-edit me-1"></i> Edit
+                                </button>
+                            </td>
+                            <td>
+                                <button class="btn btn-sm btn-outline-danger">
+                                    <i class="fas fa-trash-alt me-1"></i> Delete
+                                </button>
+                            </td>
+                            <td>
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" id="gonggleSwitch1" checked>
+                                    <label class="form-check-label" for="gonggleSwitch1">
+                                        <span class="text-success gonggle-status">ON</span>
+                                    </label>
+                                </div>
+                            </td>
+                            <td>
+                                <select class="form-select form-select-sm">
+                                    <option value="1">Same as Master</option>
+                                    <option value="2">Market</option>
+                                    <option value="3">Limit</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <!-- Client Details Table (Collapsed by default) -->
+                        <tr class="collapse" id="clientDetails1">
+                            <td colspan="7" class="p-0">
+                                <div class="p-3 bg-white">
+                                    <h5 class="mb-3 fw-bold"><i class="fas fa-users me-2"></i>Client
+                                        Details for Master 1</h5>
+                                    <div class="table-responsive">
+                                        <table class="table table-sm table-bordered">
+                                            <thead class="table-light">
+                                                <tr>
+                                                    <th class="sortable">User ID <i class="fas fa-sort"></i></th>
+                                                    <th class="sortable">User Name <i class="fas fa-sort"></i></th>
+                                                    <th class="sortable">Account Name <i class="fas fa-sort"></i>
+                                                    </th>
+                                                    <th class="sortable">Login Status <i class="fas fa-sort"></i>
+                                                    </th>
+                                                    <th class="sortable">Multiplier <i class="fas fa-sort"></i></th>
+                                                    <th class="sortable">Expiry Date <i class="fas fa-sort"></i>
+                                                    </th>
+                                                    <th class="sortable">Status <i class="fas fa-sort"></i></th>
+                                                    <th>Actions</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>#1001</td>
+                                                    <td>John Doe</td>
+                                                    <td>John's Trading Account</td>
+                                                    <td>
+                                                        <span class="badge bg-success">
+                                                            <i class="fas fa-plug"></i> Connected
+                                                        </span>
+                                                    </td>
+                                                    <td>
+                                                        <select class="form-select form-select-sm"
+                                                            style="width: 100px;">
+                                                            <option selected>0</option>
+
+                                                        </select>
+                                                    </td>
+                                                    <td>2023-12-31</td>
+                                                    <td>
+                                                        <span class="badge bg-success">Active</span>
+                                                    </td>
+                                                    <td>
+                                                        <div class="btn-group btn-group-sm" role="group">
+                                                            <button class="btn btn-outline-primary" title="View">
+                                                                <i class="fas fa-eye"></i>
+                                                            </button>
+                                                            <button class="btn btn-outline-success" title="Edit">
+                                                                <i class="fas fa-edit"></i>
+                                                            </button>
+                                                            <button class="btn btn-outline-danger" title="Delete">
+                                                                <i class="fas fa-trash"></i>
+                                                            </button>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>#1002</td>
+                                                    <td>Jane Smith</td>
+                                                    <td>Jane Investment</td>
+                                                    <td>
+                                                        <span class="badge bg-danger">
+                                                            <i class="fas fa-unlink"></i> Disconnected
+                                                        </span>
+                                                    </td>
+                                                    <td>
+                                                        <select class="form-select form-select-sm"
+                                                            style="width: 100px;">
+                                                            <option selected>0</option>
+
+                                                        </select>
+                                                    </td>
+                                                    <td>2023-11-15</td>
+                                                    <td>
+                                                        <span class="badge bg-warning text-dark">Inactive</span>
+                                                    </td>
+                                                    <td>
+                                                        <div class="btn-group btn-group-sm" role="group">
+                                                            <button class="btn btn-outline-primary" title="View">
+                                                                <i class="fas fa-eye"></i>
+                                                            </button>
+                                                            <button class="btn btn-outline-success" title="Edit">
+                                                                <i class="fas fa-edit"></i>
+                                                            </button>
+                                                            <button class="btn btn-outline-danger" title="Delete">
+                                                                <i class="fas fa-trash"></i>
+                                                            </button>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>#1003</td>
+                                                    <td>Mike Johnson</td>
+                                                    <td>Mike's Portfolio</td>
+                                                    <td>
+                                                        <span class="badge bg-success">
+                                                            <i class="fas fa-plug"></i> Connected
+                                                        </span>
+                                                    </td>
+                                                    <td>
+                                                        <select class="form-select form-select-sm"
+                                                            style="width: 100px;">
+
+                                                            <option selected>0</option>
+                                                        </select>
+                                                    </td>
+                                                    <td>2024-01-20</td>
+                                                    <td>
+                                                        <span class="badge bg-success">Active</span>
+                                                    </td>
+                                                    <td>
+                                                        <div class="btn-group btn-group-sm" role="group">
+                                                            <button class="btn btn-outline-primary" title="View">
+                                                                <i class="fas fa-eye"></i>
+                                                            </button>
+                                                            <button class="btn btn-outline-success" title="Edit">
+                                                                <i class="fas fa-edit"></i>
+                                                            </button>
+                                                            <button class="btn btn-outline-danger" title="Delete">
+                                                                <i class="fas fa-trash"></i>
+                                                            </button>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>#1004</td>
+                                                    <td>Sarah Williams</td>
+                                                    <td>Sarah Trading</td>
+                                                    <td>
+                                                        <span class="badge bg-secondary">
+                                                            <i class="fas fa-sync-alt"></i> Connecting...
+                                                        </span>
+                                                    </td>
+                                                    <td>
+                                                        <select class="form-select form-select-sm"
+                                                            style="width: 100px;">
+                                                            <option selected>0</option>
+                                                        </select>
+                                                    </td>
+                                                    <td>2023-10-05</td>
+                                                    <td>
+                                                        <span class="badge bg-danger">Expired</span>
+                                                    </td>
+                                                    <td>
+                                                        <div class="btn-group btn-group-sm" role="group">
+                                                            <button class="btn btn-outline-primary" title="View">
+                                                                <i class="fas fa-eye"></i>
+                                                            </button>
+                                                            <button class="btn btn-outline-success" title="Edit">
+                                                                <i class="fas fa-edit"></i>
+                                                            </button>
+                                                            <button class="btn btn-outline-danger" title="Delete">
+                                                                <i class="fas fa-trash"></i>
+                                                            </button>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <!-- Additional master rows would go here -->
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="d-flex justify-content-end mt-3">
+                <button class="btn btn-success me-2">
+                    <i class="fas fa-save me-1"></i> Save Configuration
+                </button>
+                <button class="btn btn-primary">
+                    <i class="fas fa-plus me-1"></i> Add New Master
+                </button>
+            </div>
+        </div>
+
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <ul class="list-inline mb-0">
+                            <li class="list-inline-item"><a href="#">Privacy Policy</a></li>
+                            <li class="list-inline-item"><a href="#">Terms of Use</a></li>
+                            <li class="list-inline-item float-end">© 2025</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </main>
+
+
+
+
+    <!-- jQuery and Bootstrap Bundle with Popper -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Sidebar toggle functionality
+            $('#sidebarToggle').click(function () {
+                $('.sidebar').toggleClass('collapsed');
+                const icon = $(this).find('i');
+                if ($('.sidebar').hasClass('collapsed')) {
+                    icon.removeClass('fa-chevron-left').addClass('fa-chevron-right');
+                } else {
+                    icon.removeClass('fa-chevron-right').addClass('fa-chevron-left');
+                }
+            });
+
+
+        });
+    </script>
+
+    <script>
+        document.getElementById('selectAll').addEventListener('change', function () {
+            const checkboxes = document.querySelectorAll('.row-checkbox');
+            checkboxes.forEach(checkbox => {
+                checkbox.checked = this.checked;
+            });
+        });
+    </script>
+
+    <script>
+        // Handle Gonggle switch changes
+        document.querySelectorAll('.form-check-input').forEach(switchElement => {
+            switchElement.addEventListener('change', function () {
+                const statusElement = this.closest('.form-switch').querySelector('.gonggle-status');
+                if (this.checked) {
+                    statusElement.textContent = 'ON';
+                    statusElement.className = 'text-success gonggle-status';
+                } else {
+                    statusElement.textContent = 'OFF';
+                    statusElement.className = 'text-danger gonggle-status';
+                }
+            });
+        });
+
+        // Handle View button click to toggle icon
+        document.querySelectorAll('.view-clients-btn').forEach(button => {
+            button.addEventListener('click', function () {
+                const icon = this.querySelector('i');
+                if (icon.classList.contains('fa-eye')) {
+                    icon.classList.remove('fa-eye');
+                    icon.classList.add('fa-eye-slash');
+                } else {
+                    icon.classList.remove('fa-eye-slash');
+                    icon.classList.add('fa-eye');
+                }
+            });
+        });
+
+
+
+
+
+        // Function to populate select with numbers from 1 to 1000
+        function populateMultiplierSelect(selectElement, selectedValue = 10) {
+            // Clear existing options
+            selectElement.innerHTML = '';
+
+            // Add options from 1 to 1000
+            for (let i = 0; i <= 1000; i++) {
+                const option = document.createElement('option');
+                option.value = i;
+                option.textContent = i;
+                if (i === selectedValue) {
+                    option.selected = true;
+                }
+                selectElement.appendChild(option);
+            }
+        }
+
+        // Usage: Apply to all multiplier selects in the table
+        document.addEventListener('DOMContentLoaded', function () {
+            const multiplierSelects = document.querySelectorAll('td select.form-select-sm');
+            multiplierSelects.forEach(select => {
+                // Get the currently selected value or default to 10
+                const currentValue = select.querySelector('option[selected]') ?
+                    parseInt(select.querySelector('option[selected]').value) : 10;
+
+                // Repopulate with full range
+                populateMultiplierSelect(select, currentValue);
+            });
+        });
+    </script>
+</body>
+
+</html>

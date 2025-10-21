@@ -1,0 +1,1669 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+
+    <!-- ---------------------------------------------main css--------------------------------- -->
+    <link rel="stylesheet" href="../Final Css/main.css">
+</head>
+<style>
+    /* Form Controls */
+    .form-control:focus,
+    .form-select:focus {
+        border-color: #573BFF;
+        box-shadow: 0 0 0 3px rgba(87, 59, 255, 0.1);
+    }
+
+    .btn-primary {
+        background-color: #573BFF;
+        border-color: #573BFF;
+        padding: 10px 20px;
+        border-radius: 8px;
+    }
+
+    .card {
+        border-radius: 10px;
+        border: none;
+       
+    }
+
+    .card-header {
+        border-radius: 10px 10px 0 0 !important;
+        padding: 1.25rem 1.5rem;
+      
+    }
+
+    .form-label {
+        font-weight: 500;
+        margin-bottom: 0.5rem;
+    }
+
+    .input-group-text {
+        background-color: #f8f9fa;
+    }
+
+    #submitBtn {
+        min-width: 150px;
+    }
+
+    .invalid-feedback {
+        font-size: 0.85rem;
+    }
+
+    @media (max-width: 768px) {
+        .row.g-3>[class^="col-"] {
+            margin-bottom: 1rem;
+        }
+
+        .row.g-3 {
+            margin-bottom: 0;
+        }
+    }
+
+
+    .master-card {
+        border-left: 4px solid #0d6efd;
+        transition: all 0.3s ease;
+    }
+
+    .master-card:hover {
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+        transform: translateY(-2px);
+    }
+
+    .user-card {
+        border-left: 4px solid #6c757d;
+        margin-bottom: 10px;
+    }
+
+    .user-card:hover {
+        background-color: #f8f9fa;
+    }
+
+    .badge-user-count {
+        font-size: 0.9rem;
+        background-color: #6c757d;
+    }
+
+    .collapse-icon {
+        transition: transform 0.3s ease;
+    }
+
+    .collapsed .collapse-icon {
+        transform: rotate(-90deg);
+    }
+
+    .account-stats {
+        background-color: #fff;
+        border-radius: 8px;
+        padding: 15px;
+        margin-bottom: 20px;
+         box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    }
+</style>
+
+<body>
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-header-card">
+            <div class="admin-profile">
+                <i class="fa-solid fa-user-astronaut"></i>
+                <span class="item-name"> Administrator</span>
+
+            </div>
+            <button class="toggle-btn" id="sidebarToggle">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+        </div>
+
+        <div class="sidebar-body">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="index.html">
+                        <i class="fas fa-th-large"></i>
+                        <span class="item-name">Dashboard</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="user.html">
+                        <i class="fas fa-users"></i>
+                        <span class="item-name">Users</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="trades.html">
+                        <i class="fas fa-chart-line"></i>
+                        <span class="item-name">Trades</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="Positions.html">
+                        <i class="fa-solid fa-crosshairs"></i>
+                        <span class="item-name">Positions</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="Fund.html">
+                        <i class="fa-solid fa-receipt"></i>
+                        <span class="item-name">Fund</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="Settings.html">
+                        <i class="fas fa-cog"></i>
+                        <span class="item-name">Settings</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+
+
+
+
+
+        <!-- Navbar -->
+        <nav class="nav navbar navbar-expand-lg navbar-light iq-navbar">
+            <div class="container-fluid navbar-inner">
+                <div class="search-container">
+                    <i class="bi bi-search search-icon"></i>
+                    <input type="text" class="search-input" placeholder="Search...">
+                </div>
+
+                <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+                    <ul class="mb-2 navbar-nav align-items-center navbar-list mb-lg-0">
+                        <li class="nav-item dropdown">
+                            <a class="py-0 nav-link-profile d-flex align-items-center" href="#" id="navbarDropdown"
+                                role="button" data-bs-toggle="dropdown">
+                                <i class="fa-solid fa-user-tie"></i>
+                                <div class="caption ms-3 d-none d-md-block">
+                                    <h6 class="mb-0 caption-title">Admin</h6>
+                                    <p class="mb-0 caption-sub-title">Administrator</p>
+                                </div>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li><a class="dropdown-item" href="profil.html"><i
+                                            class="fas fa-user me-2"></i>Profile</a></li>
+                                <li><a class="dropdown-item" href="#"><i class="fas fa-cog me-2"></i>Settings</a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li><a class="dropdown-item" href="#"><i class="fas fa-sign-out-alt me-2"></i>Logout</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Header -->
+        <div class="header">
+            <div class="container-fluid px-3">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <h1>Users</h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Content -->
+        <div class="container-fluid content-inner mt-n5 py-4">
+
+
+            <div class="row mb-4">
+                <div class="col-md-4">
+                    <div class="account-stats">
+                        <h5 class="text-muted">Total Masters</h5>
+                        <h2 class="text-primary">12</h2>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="account-stats">
+                        <h5 class="text-muted">Total Users</h5>
+                        <h2 class="text-success">84</h2>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="account-stats">
+                        <h5 class="text-muted">Active Today</h5>
+                        <h2 class="text-warning">23</h2>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="card shadow-sm border-0 mb-4">
+                <div class="card-body">
+                    <div class="row g-3 align-items-end">
+                        <!-- Filter Section -->
+                        <div class="col-lg-9">
+                            <div class="row g-3">
+                                <!-- Broker Select -->
+                                <div class="col-md-2">
+                                    <label for="brokerSelect" class="form-label text-muted small mb-1">User ID</label>
+                                    <input type="text" class="form-control form-control-sm" id="brokerSelect"
+                                        placeholder="User ID">
+                                </div>
+                                <div class="col-md-2">
+                                    <label for="brokerSelect" class="form-label text-muted small mb-1">User Name</label>
+                                    <input type="text" class="form-control form-control-sm" id="brokerSelect"
+                                        placeholder="User Name">
+                                </div>
+                                <!-- Date Range -->
+                                <div class="col-md-4">
+                                    <label for="dateFromField" class="form-label text-muted small mb-1">Date
+                                        Range</label>
+                                    <div class="input-group input-group-sm">
+                                        <input type="date" class="form-control form-control-sm" id="dateFromField">
+                                        <span class="input-group-text">to</span>
+                                        <input type="date" class="form-control form-control-sm" id="dateToField">
+                                    </div>
+                                </div>
+
+                                <!-- Search Button -->
+                                <div class="col-lg-2 d-flex align-items-end">
+                                    <div class="input-group">
+                                        <!-- <input type="text" class="form-control form-control-sm" placeholder="Search..."> -->
+                                        <button class="btn btn-primary btn-sm py-1 px-2 " type="button">
+                                            <i class="bi bi-search"></i> Search
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div class="col-lg-3">
+                            <div class="d-flex justify-content-end gap-2">
+                                <button class="btn btn-sm btn-outline-secondary">
+                                    <i class="fa-solid fa-upload"></i>
+                                    <span class="d-none d-lg-inline ms-1">Import</span>
+                                </button>
+                                <button class="btn btn-sm btn-outline-secondary">
+                                    <i class="bi bi-download"></i>
+                                    <span class="d-none d-lg-inline ms-1">Export</span>
+                                </button>
+                                <button class="btn btn-sm btn-success" type="button" data-bs-toggle="modal"
+                                    data-bs-target="#addUserModal">
+                                    <i class="bi bi-plus-lg"></i>
+                                    <span class="d-none d-lg-inline ms-1" id="addUserBtn">Add User</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <!-- User Form -->
+            <div id="addUserForm" class="col-md-12 mt-4" style="display: none;">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <div class="container-fluid">
+                            <div class="card shadow-sm">
+                                <div class="card-header bg-light-teal text-black">
+                                    <h5 class="mb-0">Create New User</h5>
+                                </div>
+                                <div class="card-body">
+                                    <form class="needs-validation" novalidate>
+                                        <div class="row g-3 mb-4">
+                                            <div class="col-md-6">
+                                                <label for="userId" class="form-label">User ID <span
+                                                        class="text-danger">*</span></label>
+                                                <div class="input-group">
+                                                    <span class="input-group-text"><i class="fas fa-id-card"></i></span>
+                                                    <input type="text" class="form-control" id="userId"
+                                                        placeholder="Enter unique user ID" required>
+                                                    <div class="invalid-feedback">Please provide a user ID.</div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="userName" class="form-label">User Name <span
+                                                        class="text-danger">*</span></label>
+                                                <div class="input-group">
+                                                    <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                                    <input type="text" class="form-control" id="userName"
+                                                        placeholder="Enter full name" required>
+                                                    <div class="invalid-feedback">Please provide a user name.</div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row g-3 mb-4">
+                                            <div class="col-md-6">
+                                                <label for="accountId" class="form-label">Account ID <span
+                                                        class="text-danger">*</span></label>
+                                                <div class="input-group">
+                                                    <span class="input-group-text"><i
+                                                            class="fas fa-address-card"></i></span>
+                                                    <input type="text" class="form-control" id="accountId"
+                                                        placeholder="Enter account ID" required>
+                                                    <div class="invalid-feedback">Please provide an account ID.</div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="accountName" class="form-label">Account Name <span
+                                                        class="text-danger">*</span></label>
+                                                <div class="input-group">
+                                                    <span class="input-group-text"><i
+                                                            class="fas fa-building"></i></span>
+                                                    <input type="text" class="form-control" id="accountName"
+                                                        placeholder="Enter account name" required>
+                                                    <div class="invalid-feedback">Please provide an account name.</div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row g-3 mb-4">
+                                            <div class="col-md-4">
+                                                <label for="brokerSelect" class="form-label">Broker <span
+                                                        class="text-danger">*</span></label>
+                                                <select class="form-select" id="brokerSelect" required>
+                                                    <option selected disabled value="">Select Broker</option>
+                                                    <option value="1">Delta</option>
+                                                    <option value="2">Broker Two</option>
+                                                    <option value="3">Broker Three</option>
+                                                </select>
+                                                <div class="invalid-feedback">Please select a broker.</div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label for="userTypeSelect" class="form-label">User Type <span
+                                                        class="text-danger">*</span></label>
+                                                <select class="form-select " id="userTypeSelect" required>
+                                                    <option selected disabled value="">Select Type</option>
+                                                    <option value="master">Master</option>
+                                                    <option value="user">Child</option>
+                                                </select>
+                                                <div class="invalid-feedback">Please select user type.</div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label for="expiryDate" class="form-label">Expiry Date <span
+                                                        class="text-danger">*</span></label>
+                                                <div class="input-group">
+                                                    <span class="input-group-text"><i
+                                                            class="fas fa-calendar-alt"></i></span>
+                                                    <input type="date" class="form-control" id="expiryDate" required>
+                                                    <div class="invalid-feedback">Please select expiry date.</div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row g-3 mb-4" id="masterDropdownContainer" style="display:none;">
+                                            <div class="col-md-6">
+                                                <label for="masterSelect" class="form-label">Master Account <span
+                                                        class="text-danger">*</span></label>
+                                                <select class="form-select" id="masterSelect">
+                                                    <option selected disabled value="">Select Master Account</option>
+                                                    <option value="master1">Master Account 1</option>
+                                                    <option value="master2">Master Account 2</option>
+                                                    <option value="master3">Master Account 3</option>
+                                                </select>
+                                                <div class="invalid-feedback">Please select a master account.</div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="multiplierSelect" class="form-label">Multiplier <span
+                                                        class="text-danger">*</span></label>
+                                                <select class="form-select" id="multiplierSelect">
+                                                    <option selected disabled value="">Select Multiplier</option>
+
+
+                                                </select>
+                                                <div class="invalid-feedback">Please select a multiplier.</div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row g-3 mb-4">
+                                            <div class="col-md-6">
+                                                <label for="apiKey" class="form-label">API Key <span
+                                                        class="text-danger">*</span></label>
+                                                <div class="input-group">
+                                                    <span class="input-group-text"><i class="fas fa-key"></i></span>
+                                                    <input type="password" class="form-control" id="apiKey"
+                                                        placeholder="Enter API key" required>
+                                                    <button class="btn btn-outline-secondary" type="button"
+                                                        id="toggleApiKey">
+                                                        <i class="fas fa-eye"></i>
+                                                    </button>
+                                                    <div class="invalid-feedback">Please provide API key.</div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="apiSecret" class="form-label">API Secret <span
+                                                        class="text-danger">*</span></label>
+                                                <div class="input-group">
+                                                    <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                                                    <input type="password" class="form-control" id="apiSecret"
+                                                        placeholder="Enter API secret" required>
+                                                    <button class="btn btn-outline-secondary" type="button"
+                                                        id="toggleApiSecret">
+                                                        <i class="fas fa-eye"></i>
+                                                    </button>
+                                                    <div class="invalid-feedback">Please provide API secret.</div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="d-flex justify-content-between mt-5">
+                                            <button type="button" class="btn btn-outline-secondary" id="cancelBtn">
+                                                <i class="fas fa-times me-2"></i>Cancel
+                                            </button>
+                                            <button type="submit" class="btn btn-primary px-4" id="submitBtn">
+                                                <i class="fas fa-plus-circle me-2"></i>Create User
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- User Table -->
+            <div class="col-md-12 mt-4">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h5 class="card-title">User Details</h5>
+                            <a href="#" class="btn btn-sm btn-link">View All</a>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-hover table-striped">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th class="sortable">User ID <i class="fas fa-sort"></i></th>
+                                        <th class="sortable">User Name <i class="fas fa-sort"></i></th>
+                                        <th class="sortable">Account Name <i class="fas fa-sort"></i></th>
+                                        <th class="sortable">Login Status <i class="fas fa-sort"></i></th>
+                                        <th class="sortable">Multiplier <i class="fas fa-sort"></i></th>
+                                        <th class="sortable">Expiry Date <i class="fas fa-sort"></i></th>
+                                        <th class="sortable">Status <i class="fas fa-sort"></i></th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>#1001</td>
+                                        <td>John Doe</td>
+                                        <td>John's Trading Account</td>
+                                        <td>
+                                            <span class="badge bg-success">
+                                                <i class="fas fa-plug"></i> Connected
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <select class="form-select form-select-sm" style="width: 100px;">
+                                                <option selected>0</option>
+
+                                            </select>
+                                        </td>
+                                        <td>2023-12-31</td>
+                                        <td>
+                                            <span class="badge bg-success">Active</span>
+                                        </td>
+                                        <td>
+                                            <div class="btn-group btn-group-sm" role="group">
+                                                <button class="btn btn-outline-primary" title="View">
+                                                    <i class="fas fa-eye"></i>
+                                                </button>
+                                                <button class="btn btn-outline-success" title="Edit">
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
+                                                <button class="btn btn-outline-danger" title="Delete">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>#1002</td>
+                                        <td>Jane Smith</td>
+                                        <td>Jane Investment</td>
+                                        <td>
+                                            <span class="badge bg-danger">
+                                                <i class="fas fa-unlink"></i> Disconnected
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <select class="form-select form-select-sm" style="width: 100px;">
+                                                <option selected>0</option>
+
+                                            </select>
+                                        </td>
+                                        <td>2023-11-15</td>
+                                        <td>
+                                            <span class="badge bg-warning text-dark">Inactive</span>
+                                        </td>
+                                        <td>
+                                            <div class="btn-group btn-group-sm" role="group">
+                                                <button class="btn btn-outline-primary" title="View">
+                                                    <i class="fas fa-eye"></i>
+                                                </button>
+                                                <button class="btn btn-outline-success" title="Edit">
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
+                                                <button class="btn btn-outline-danger" title="Delete">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>#1003</td>
+                                        <td>Mike Johnson</td>
+                                        <td>Mike's Portfolio</td>
+                                        <td>
+                                            <span class="badge bg-success">
+                                                <i class="fas fa-plug"></i> Connected
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <select class="form-select form-select-sm" style="width: 100px;">
+
+                                                <option selected>0</option>
+                                            </select>
+                                        </td>
+                                        <td>2024-01-20</td>
+                                        <td>
+                                            <span class="badge bg-success">Active</span>
+                                        </td>
+                                        <td>
+                                            <div class="btn-group btn-group-sm" role="group">
+                                                <button class="btn btn-outline-primary" title="View">
+                                                    <i class="fas fa-eye"></i>
+                                                </button>
+                                                <button class="btn btn-outline-success" title="Edit">
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
+                                                <button class="btn btn-outline-danger" title="Delete">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>#1004</td>
+                                        <td>Sarah Williams</td>
+                                        <td>Sarah Trading</td>
+                                        <td>
+                                            <span class="badge bg-secondary">
+                                                <i class="fas fa-sync-alt"></i> Connecting...
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <select class="form-select form-select-sm" style="width: 100px;">
+                                                <option selected>0</option>
+                                            </select>
+                                        </td>
+                                        <td>2023-10-05</td>
+                                        <td>
+                                            <span class="badge bg-danger">Expired</span>
+                                        </td>
+                                        <td>
+                                            <div class="btn-group btn-group-sm" role="group">
+                                                <button class="btn btn-outline-primary" title="View">
+                                                    <i class="fas fa-eye"></i>
+                                                </button>
+                                                <button class="btn btn-outline-success" title="Edit">
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
+                                                <button class="btn btn-outline-danger" title="Delete">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <nav aria-label="Table pagination">
+                            <ul class="pagination justify-content-center mt-3">
+                                <li class="page-item disabled">
+                                    <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+                                </li>
+                                <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                <li class="page-item">
+                                    <a class="page-link" href="#">Next</a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <br>
+
+            <!-- Search and Filter -->
+
+
+            <!-- Masters List with Users -->
+            <div class="accordion" id="mastersAccordion">
+                <!-- Master 1 -->
+                <div class="card mb-3 master-card">
+                    <div class="card-header bg-white" id="master1Heading">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <button
+                                class="btn btn-link text-decoration-none text-dark fw-bold d-flex align-items-center collapsed"
+                                type="button" data-bs-toggle="collapse" data-bs-target="#master1Collapse"
+                                aria-expanded="false" aria-controls="master1Collapse">
+                                <i class="fas fa-chevron-down collapse-icon me-2"></i>
+                                <span>Master Account: <span class="text-primary">MASTER001</span></span>
+                            </button>
+                            <div>
+                                <span class="badge badge-user-count rounded-pill me-2"> users</span>
+                                <span class="badge bg-success">Active</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="master1Collapse" class="collapse" aria-labelledby="master1Heading"
+                        data-bs-parent="#mastersAccordion">
+                        <div class="card-body p-0">
+                            <div class="p-3">
+                                <div class="row">
+                                    <div class="col-md-6 mb-2">
+                                        <strong>Created:</strong> 15 Jan 2023
+                                    </div>
+                                    <div class="col-md-6 mb-2">
+                                        <strong>Last Active:</strong> 2 hours ago
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="p-3 bg-light border-top border-bottom">
+                                <h5 class="mb-3 fw-bold"><i class="fas fa-users me-2"></i>User Accounts</h5>
+                                <div class="table-responsive">
+                                    <table class="table table-sm table-bordered bg-white">
+                                        <thead class="table-light">
+                                            <tr>
+                                                <th class="sortable">User ID <i class="fas fa-sort"></i></th>
+                                                <th class="sortable">User Name <i class="fas fa-sort"></i></th>
+                                                <th class="sortable">Account Name <i class="fas fa-sort"></i></th>
+                                                <th class="sortable">Login Status <i class="fas fa-sort"></i></th>
+                                                <th class="sortable">Multiplier <i class="fas fa-sort"></i></th>
+                                                <th class="sortable">Expiry Date <i class="fas fa-sort"></i></th>
+                                                <th class="sortable">Status <i class="fas fa-sort"></i></th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <!-- User 1 -->
+                                            <tr>
+                                                <td>#1001</td>
+                                                <td>USER001</td>
+                                                <td>Primary Account</td>
+                                                <td>
+                                                    <span class="badge bg-success">
+                                                        <i class="fas fa-plug"></i> Connected
+                                                    </span>
+                                                </td>
+                                                <td>
+                                                    <select class="form-select form-select-sm" style="width: 100px;">
+                                                        <option>1</option>
+                                                        <option selected>2</option>
+                                                        <option>3</option>
+                                                        <option>5</option>
+                                                    </select>
+                                                </td>
+                                                <td>2023-12-31</td>
+                                                <td>
+                                                    <span class="badge bg-success">Active</span>
+                                                </td>
+                                                <td>
+                                                    <div class="btn-group btn-group-sm" role="group">
+                                                        <button class="btn btn-outline-primary" title="View">
+                                                            <i class="fas fa-eye"></i>
+                                                        </button>
+                                                        <button class="btn btn-outline-success" title="Edit">
+                                                            <i class="fas fa-edit"></i>
+                                                        </button>
+                                                        <button class="btn btn-outline-danger" title="Delete">
+                                                            <i class="fas fa-trash"></i>
+                                                        </button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+
+                                            <!-- User 2 -->
+                                            <tr>
+                                                <td>#1002</td>
+                                                <td>USER002</td>
+                                                <td>Secondary Account</td>
+                                                <td>
+                                                    <span class="badge bg-danger">
+                                                        <i class="fas fa-unlink"></i> Disconnected
+                                                    </span>
+                                                </td>
+                                                <td>
+                                                    <select class="form-select form-select-sm" style="width: 100px;">
+                                                        <option selected>1</option>
+                                                        <option>2</option>
+                                                        <option>3</option>
+                                                        <option>5</option>
+                                                    </select>
+                                                </td>
+                                                <td>2023-11-15</td>
+                                                <td>
+                                                    <span class="badge bg-warning text-dark">Inactive</span>
+                                                </td>
+                                                <td>
+                                                    <div class="btn-group btn-group-sm" role="group">
+                                                        <button class="btn btn-outline-primary" title="View">
+                                                            <i class="fas fa-eye"></i>
+                                                        </button>
+                                                        <button class="btn btn-outline-success" title="Edit">
+                                                            <i class="fas fa-edit"></i>
+                                                        </button>
+                                                        <button class="btn btn-outline-danger" title="Delete">
+                                                            <i class="fas fa-trash"></i>
+                                                        </button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+
+                                            <!-- Add more users as needed -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="p-3 text-end">
+                                <button class="btn btn-sm btn-outline-primary me-2">
+                                    <i class="fas fa-file-export me-1"></i>Export
+                                </button>
+                                <button class="btn btn-sm btn-primary" data-bs-toggle="modal"
+                                    data-bs-target="#addUserModal1">
+                                    <i class="fas fa-plus me-1"></i>Add New User
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Master 2 -->
+                <div class="card mb-3 master-card">
+                    <div class="card-header bg-white" id="master2Heading">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <button
+                                class="btn btn-link text-decoration-none text-dark fw-bold d-flex align-items-center collapsed"
+                                type="button" data-bs-toggle="collapse" data-bs-target="#master2Collapse"
+                                aria-expanded="false" aria-controls="master2Collapse">
+                                <i class="fas fa-chevron-down collapse-icon me-2"></i>
+                                <span>Master Account: <span class="text-primary">MASTER002</span></span>
+                            </button>
+                            <div>
+                                <span class="badge badge-user-count rounded-pill me-2">0 users</span>
+                                <span class="badge bg-success">Active</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="master2Collapse" class="collapse" aria-labelledby="master2Heading"
+                        data-bs-parent="#mastersAccordion">
+                        <div class="card-body p-0">
+                            <!-- Similar structure as Master 1 -->
+                            <div class="p-3">
+                                <div class="row">
+                                    <div class="col-md-6 mb-2">
+                                        <strong>Created:</strong> 20 Feb 2023
+                                    </div>
+                                    <div class="col-md-6 mb-2">
+                                        <strong>Last Active:</strong> 5 hours ago
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="p-3 bg-light border-top border-bottom">
+                                <h5 class="mb-3 fw-bold"><i class="fas fa-users me-2"></i>User Accounts</h5>
+                                <p class="text-muted">User accounts for MASTER002 would be displayed here in the same
+                                    table format</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Add more master accounts as needed -->
+            </div>
+
+
+
+
+        </div>
+
+
+        <!-- -----------------------------------------------------------------view buttons -->
+        <!-- User Details M odal view -->
+        <div class="modal fade" id="userDetailsModal" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header bg-primary text-white">
+                        <h5 class="modal-title"><i class="fas fa-user-circle me-2"></i>User Details</h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body p-0">
+                        <div class="table-responsive">
+                            <table class="table table-borderless table-striped table-hover mb-0">
+                                <tbody>
+                                    <tr class="border-bottom">
+                                        <th width="30%" class="ps-4 bg-light">User ID</th>
+                                        <td id="detail-user-id" class="fw-bold">#1001</td>
+                                    </tr>
+                                    <tr class="border-bottom">
+                                        <th class="ps-4 bg-light">User Name</th>
+                                        <td id="detail-user-name">John Doe</td>
+                                    </tr>
+                                    <tr class="border-bottom">
+                                        <th class="ps-4 bg-light">Account ID</th>
+                                        <td id="detail-account-id" class="text-primary">ACC-001</td>
+                                    </tr>
+                                    <tr class="border-bottom">
+                                        <th class="ps-4 bg-light">Account Name</th>
+                                        <td id="detail-account-name">John's Trading Account</td>
+                                    </tr>
+                                    <tr class="border-bottom">
+                                        <th class="ps-4 bg-light">Broker</th>
+                                        <td id="detail-broker"><span class="badge bg-info">Broker XYZ</span></td>
+                                    </tr>
+                                    <tr class="border-bottom">
+                                        <th class="ps-4 bg-light">User Type</th>
+                                        <td id="detail-user-type"><span class="badge bg-success">Premium</span></td>
+                                    </tr>
+                                    <tr class="border-bottom">
+                                        <th class="ps-4 bg-light">Expiry Date</th>
+                                        <td id="detail-expiry-date"><span class="text-danger fw-bold">2023-12-31</span>
+                                        </td>
+                                    </tr>
+                                    <tr class="border-bottom">
+                                        <th class="ps-4 bg-light">Master Account</th>
+                                        <td id="detail-master-account">MASTER-100</td>
+                                    </tr>
+                                    <tr class="border-bottom">
+                                        <th class="ps-4 bg-light">Multiplier</th>
+                                        <td id="detail-multiplier">0</td>
+                                    </tr>
+                                    <tr class="border-bottom">
+                                        <th class="ps-4 bg-light">API Key</th>
+                                        <td id="detail-api-key" class="font-monospace">****-****-****-1234</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="ps-4 bg-light">API Secret</th>
+                                        <td id="detail-api-secret" class="font-monospace">****************</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="modal-footer bg-light">
+                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                            <i class="fas fa-times me-2"></i>Close
+                        </button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Edit User Modal -->
+        <div class="modal fade" id="editUserModal" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header bg-light">
+                        <h5 class="modal-title fw-bold"><i class="fas fa-user-edit me-2"></i>Edit User</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="editUserForm" class="row g-3">
+                            <!-- Column 1: Basic Info -->
+                            <div class="col-md-6">
+                                <div class="card h-100 border-0 shadow-sm">
+                                    <div class="card-header bg-light-teal">
+                                        <h6 class="mb-0"><i class="fas fa-id-card me-2"></i>Basic Information</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="mb-3">
+                                            <label class="form-label">User ID</label>
+                                            <input type="text" class="form-control" id="edit-user-id" readonly>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">User Name</label>
+                                            <input type="text" class="form-control" id="edit-user-name">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Account ID</label>
+                                            <input type="text" class="form-control" id="edit-account-id">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Account Name</label>
+                                            <input type="text" class="form-control" id="edit-account-name">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Column 2: Account Details -->
+                            <div class="col-md-6">
+                                <div class="card h-100 border-0 shadow-sm">
+                                    <div class="card-header bg-light-teal">
+                                        <h6 class="mb-0"><i class="fas fa-cog me-2"></i>Account Settings</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="mb-3">
+                                            <label class="form-label">Broker</label>
+                                            <select class="form-select" id="edit-broker">
+                                                <option value="Broker A">Broker A</option>
+                                                <option value="Broker B">Broker B</option>
+                                            </select>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">User Type</label>
+                                            <select class="form-select" id="edit-user-type">
+                                                <option value="Standard">Standard</option>
+                                                <option value="Premium">Premium</option>
+                                            </select>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Expiry Date</label>
+                                            <input type="date" class="form-control" id="edit-expiry-date">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Master Account</label>
+                                            <input type="text" class="form-control" id="edit-master-account">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Full-width Row: API Credentials -->
+                            <div class="col-12">
+                                <div class="card border-0 shadow-sm">
+                                    <div class="card-header bg-light-teal">
+                                        <h6 class="mb-0"><i class="fas fa-key me-2"></i>API Credentials</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-md-6 mb-3">
+                                                <label class="form-label">Multiplier</label>
+                                                <input type="number" class="form-control" id="edit-multiplier">
+                                            </div>
+                                            <div class="col-md-6 mb-3">
+                                                <label class="form-label">API Key</label>
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control" id="edit-api-key">
+                                                    <button class="btn btn-outline-secondary" type="button"
+                                                        id="copyApiKey">
+                                                        <i class="fas fa-copy"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 mb-3">
+                                                <label class="form-label">API Secret</label>
+                                                <div class="input-group">
+                                                    <input type="password" class="form-control" id="edit-api-secret">
+                                                    <button class="btn btn-outline-secondary" type="button"
+                                                        id="toggleSecret">
+                                                        <i class="fas fa-eye"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer bg-light">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                            <i class="fas fa-times me-1"></i> Cancel
+                        </button>
+                        <button type="button" class="btn btn-primary" id="saveChangesBtn">
+                            <i class="fas fa-save me-1"></i> Save Changes
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
+
+        <!-- Add New User Button   addUserModal1    --------------------------------------------- -->
+
+
+        <!-- Modal -->
+        <div class="modal fade" id="addUserModal1" tabindex="-1" aria-labelledby="addUserModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header bg-light-teal text-black">
+                        <h5 class="modal-title" id="addUserModalLabel">Create New User</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form class="needs-validation" novalidate>
+                            <div class="row g-3 mb-4">
+                                <div class="col-md-6">
+                                    <label for="userId" class="form-label">User ID <span
+                                            class="text-danger">*</span></label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="fas fa-id-card"></i></span>
+                                        <input type="text" class="form-control" id="userId"
+                                            placeholder="Enter unique user ID" required>
+                                        <div class="invalid-feedback">Please provide a user ID.</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="userName" class="form-label">User Name <span
+                                            class="text-danger">*</span></label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                        <input type="text" class="form-control" id="userName"
+                                            placeholder="Enter full name" required>
+                                        <div class="invalid-feedback">Please provide a user name.</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row g-3 mb-4">
+                                <div class="col-md-6">
+                                    <label for="accountId" class="form-label">Account ID <span
+                                            class="text-danger">*</span></label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="fas fa-address-card"></i></span>
+                                        <input type="text" class="form-control" id="accountId"
+                                            placeholder="Enter account ID" required>
+                                        <div class="invalid-feedback">Please provide an account ID.</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="accountName" class="form-label">Account Name <span
+                                            class="text-danger">*</span></label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="fas fa-building"></i></span>
+                                        <input type="text" class="form-control" id="accountName"
+                                            placeholder="Enter account name" required>
+                                        <div class="invalid-feedback">Please provide an account name.</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row g-3 mb-4">
+                                <div class="col-md-4">
+                                    <label for="brokerSelect" class="form-label">Broker <span
+                                            class="text-danger">*</span></label>
+                                    <select class="form-select" id="brokerSelect" required>
+                                        <option selected disabled value="">Select Broker</option>
+                                        <option value="1">Delta</option>
+                                        <option value="2">Broker Two</option>
+                                        <option value="3">Broker Three</option>
+                                    </select>
+                                    <div class="invalid-feedback">Please select a broker.</div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <label for="multiplierSelect1" class="form-label">Multiplier <span
+                                            class="text-danger">*</span></label>
+                                    <select class="form-select" id="multiplierSelect1" required>
+                                        <option selected disabled value="">Select Multiplier</option>
+                                        <!-- Options will be added here by JavaScript -->
+                                    </select>
+                                    <div class="invalid-feedback">Please select a multiplier.</div>
+                                </div>
+
+
+
+                                <div class="col-md-4">
+                                    <label for="expiryDate" class="form-label">Expiry Date <span
+                                            class="text-danger">*</span></label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
+                                        <input type="date" class="form-control" id="expiryDate" required>
+                                        <div class="invalid-feedback">Please select expiry date.</div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+
+
+                            <div class="row g-3 mb-4">
+                                <div class="col-md-6">
+                                    <label for="apiKey" class="form-label">API Key <span
+                                            class="text-danger">*</span></label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="fas fa-key"></i></span>
+                                        <input type="password" class="form-control" id="apiKey"
+                                            placeholder="Enter API key" required>
+                                        <button class="btn btn-outline-secondary" type="button" id="toggleApiKey">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                        <div class="invalid-feedback">Please provide API key.</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="apiSecret" class="form-label">API Secret <span
+                                            class="text-danger">*</span></label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                                        <input type="password" class="form-control" id="apiSecret"
+                                            placeholder="Enter API secret" required>
+                                        <button class="btn btn-outline-secondary" type="button" id="toggleApiSecret">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                        <div class="invalid-feedback">Please provide API secret.</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                                    <i class="fas fa-times me-2"></i>Cancel
+                                </button>
+                                <button type="submit" class="btn btn-primary px-4">
+                                    <i class="fas fa-plus-circle me-2"></i>Create User
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <ul class="list-inline mb-0">
+                            <li class="list-inline-item"><a href="#">Privacy Policy</a></li>
+                            <li class="list-inline-item"><a href="#">Terms of Use</a></li>
+                            <li class="list-inline-item float-end">© 2025</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </main>
+
+
+
+    <!-- jQuery and Bootstrap Bundle with Popper -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const multiplierSelect = document.getElementById('multiplierSelect1');
+
+            if (multiplierSelect) {
+                // Create a document fragment for better performance
+                const fragment = document.createDocumentFragment();
+
+                for (let i = 1; i <= 1000; i++) {
+                    const option = document.createElement('option');
+                    option.value = i;
+                    option.textContent = i;
+                    fragment.appendChild(option);
+                }
+
+                // Append all options at once
+                multiplierSelect.appendChild(fragment);
+            }
+        });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        $(document).ready(function () {
+            // Sidebar toggle functionality
+            $('#sidebarToggle').click(function () {
+                $('.sidebar').toggleClass('collapsed');
+                const icon = $(this).find('i');
+                if ($('.sidebar').hasClass('collapsed')) {
+                    icon.removeClass('fa-chevron-left').addClass('fa-chevron-right');
+                } else {
+                    icon.removeClass('fa-chevron-right').addClass('fa-chevron-left');
+                }
+            });
+
+            // Toggle API secret visibility
+            $('#toggleSecret').click(function () {
+                const secretInput = $('#apiSecret');
+                const type = secretInput.attr('type') === 'password' ? 'text' : 'password';
+                secretInput.attr('type', type);
+                $(this).find('i').toggleClass('bi-eye bi-eye-slash');
+            });
+
+            // Initialize tooltips
+            $('[data-bs-toggle="tooltip"]').tooltip();
+
+        });
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const addUserBtn = document.getElementById('addUserBtn');
+            const addUserForm = document.getElementById('addUserForm');
+            const cancelBtn = document.getElementById('cancelBtn');
+            const toggleSecret = document.getElementById('toggleSecret');
+            const apiSecret = document.getElementById('apiSecret');
+
+            // Toggle form visibility
+            addUserBtn.addEventListener('click', function () {
+                if (addUserForm.style.display === 'none') {
+                    addUserForm.style.display = 'block';
+                    // Scroll to form for better UX
+                    addUserForm.scrollIntoView({ behavior: 'smooth' });
+                } else {
+                    addUserForm.style.display = 'none';
+                }
+            });
+
+            // Cancel button hides the form
+            cancelBtn.addEventListener('click', function () {
+                addUserForm.style.display = 'none';
+            });
+
+            // Toggle API secret visibility
+            toggleSecret.addEventListener('click', function () {
+                const icon = this.querySelector('i');
+                if (apiSecret.type === 'password') {
+                    apiSecret.type = 'text';
+                    icon.classList.remove('fa-eye');
+                    icon.classList.add('fa-eye-slash');
+                } else {
+                    apiSecret.type = 'password';
+                    icon.classList.remove('fa-eye-slash');
+                    icon.classList.add('fa-eye');
+                }
+            });
+
+            // Form submission handling
+            document.querySelector('#addUserForm form').addEventListener('submit', function (e) {
+                e.preventDefault();
+                // Here you would typically handle the form submission via AJAX
+                alert('User added successfully!');
+                this.reset();
+                addUserForm.style.display = 'none';
+            });
+        });
+
+
+    </script>
+
+    <script>
+        // Show/hide master and multiplier dropdowns based on user type selection
+        document.getElementById('userTypeSelect').addEventListener('change', function () {
+            const masterContainer = document.getElementById('masterDropdownContainer');
+            const masterSelect = document.getElementById('masterSelect');
+            const multiplierSelect = document.getElementById('multiplierSelect');
+
+            if (this.value === 'user') {
+                masterContainer.style.display = 'flex';
+                masterSelect.required = true;
+                multiplierSelect.required = true;
+            } else {
+                masterContainer.style.display = 'none';
+                masterSelect.required = false;
+                multiplierSelect.required = false;
+            }
+        });
+
+        // Toggle password visibility
+        document.getElementById('toggleSecret').addEventListener('click', function () {
+            const secretInput = document.getElementById('apiSecret');
+            const icon = this.querySelector('i');
+
+            if (secretInput.type === 'password') {
+                secretInput.type = 'text';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                secretInput.type = 'password';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        });
+    </script>
+
+
+    <script>
+        // Form validation
+        (function () {
+            'use strict'
+
+            const forms = document.querySelectorAll('.needs-validation')
+
+            Array.from(forms).forEach(form => {
+                form.addEventListener('submit', event => {
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    }
+
+                    form.classList.add('was-validated')
+                }, false)
+            })
+        })()
+
+        // Show/hide master and multiplier dropdowns based on user type selection
+        document.getElementById('userTypeSelect').addEventListener('change', function () {
+            const masterContainer = document.getElementById('masterDropdownContainer');
+            const masterSelect = document.getElementById('masterSelect');
+            const multiplierSelect = document.getElementById('multiplierSelect');
+
+            if (this.value === 'user') {
+                masterContainer.style.display = 'flex';
+                masterSelect.required = true;
+                multiplierSelect.required = true;
+            } else {
+                masterContainer.style.display = 'none';
+                masterSelect.required = false;
+                multiplierSelect.required = false;
+                masterSelect.value = '';
+                multiplierSelect.value = '';
+            }
+        });
+
+        // Toggle password visibility
+        function setupTogglePassword(buttonId, inputId) {
+            document.getElementById(buttonId).addEventListener('click', function () {
+                const input = document.getElementById(inputId);
+                const icon = this.querySelector('i');
+
+                if (input.type === 'password') {
+                    input.type = 'text';
+                    icon.classList.replace('fa-eye', 'fa-eye-slash');
+                } else {
+                    input.type = 'password';
+                    icon.classList.replace('fa-eye-slash', 'fa-eye');
+                }
+            });
+        }
+
+        setupTogglePassword('toggleApiKey', 'apiKey');
+        setupTogglePassword('toggleApiSecret', 'apiSecret');
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const getCellValue = (tr, idx) => {
+                const cell = tr.children[idx];
+                if (cell.querySelector('select')) {
+                    return cell.querySelector('select').value;
+                }
+                if (cell.querySelector('.badge')) {
+                    return cell.querySelector('.badge').textContent.trim();
+                }
+                return cell.innerText || cell.textContent;
+            };
+
+            const comparer = (idx, asc) => (a, b) => ((v1, v2) => {
+                // Special handling for dates
+                if (idx === 5) { // Expiry Date column
+                    return new Date(v1) - new Date(v2);
+                }
+                // Numeric comparison for User ID (remove #) and Multiplier
+                if (idx === 0 || idx === 4) {
+                    const num1 = parseFloat(v1.replace('#', ''));
+                    const num2 = parseFloat(v2.replace('#', ''));
+                    return num1 - num2;
+                }
+                // Default comparison
+                return v1 !== '' && v2 !== '' && !isNaN(v1) && !isNaN(v2) ?
+                    v1 - v2 : v1.toString().localeCompare(v2);
+            })(getCellValue(asc ? a : b, idx), getCellValue(asc ? b : a, idx));
+
+            document.querySelectorAll('th.sortable').forEach(th => {
+                th.addEventListener('click', function () {
+                    const table = th.closest('table');
+                    const tbody = table.querySelector('tbody');
+                    Array.from(tbody.querySelectorAll('tr'))
+                        .sort(comparer(Array.from(th.parentNode.children).indexOf(th), this.asc = !this.asc))
+                        .forEach(tr => tbody.appendChild(tr));
+
+                    // Update sort icons
+                    table.querySelectorAll('th.sortable i').forEach(icon => {
+                        icon.className = 'fas fa-sort';
+                    });
+                    this.querySelector('i').className = this.asc ? 'fas fa-sort-up' : 'fas fa-sort-down';
+                });
+            });
+        });
+
+
+
+
+        // Function to populate select with numbers from 1 to 1000
+        function populateMultiplierSelect(selectElement, selectedValue = 10) {
+            // Clear existing options
+            selectElement.innerHTML = '';
+
+            // Add options from 1 to 1000
+            for (let i = 0; i <= 1000; i++) {
+                const option = document.createElement('option');
+                option.value = i;
+                option.textContent = i;
+                if (i === selectedValue) {
+                    option.selected = true;
+                }
+                selectElement.appendChild(option);
+            }
+        }
+
+        // Usage: Apply to all multiplier selects in the table
+        document.addEventListener('DOMContentLoaded', function () {
+            const multiplierSelects = document.querySelectorAll('td select.form-select-sm');
+            multiplierSelects.forEach(select => {
+                // Get the currently selected value or default to 10
+                const currentValue = select.querySelector('option[selected]') ?
+                    parseInt(select.querySelector('option[selected]').value) : 10;
+
+                // Repopulate with full range
+                populateMultiplierSelect(select, currentValue);
+            });
+        });
+
+
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const select = document.getElementById('multiplierSelect');
+
+            // Add common options first for better UX
+            const commonMultipliers = [];
+
+            commonMultipliers.forEach(value => {
+                const option = document.createElement('option');
+                option.value = value;
+                option.textContent = `${value}`;
+                select.appendChild(option);
+            });
+
+            // Add separator
+
+
+            // Add all other numbers (1-1000)
+            for (let i = 1; i <= 1000; i++) {
+                if (!commonMultipliers.includes(i)) {
+                    const option = document.createElement('option');
+                    option.value = i;
+                    option.textContent = `${i}`;
+                    select.appendChild(option);
+                }
+            }
+
+            // Add validation
+            select.addEventListener('change', function () {
+                this.setCustomValidity(this.value ? '' : 'Please select a multiplier.');
+            });
+        });
+
+        // ---------------------------------"View" buttons----------------------
+
+
+        document.addEventListener('DOMContentLoaded', function () {
+            // Attach click event to all "View" buttons
+            const viewButtons = document.querySelectorAll('.btn-outline-primary[title="View"]');
+
+            viewButtons.forEach(button => {
+                button.addEventListener('click', function () {
+                    // Get the parent row
+                    const row = this.closest('tr');
+
+                    // Extract data from the row (sample data, replace with real data)
+                    const userId = row.cells[0].textContent;
+                    const userName = row.cells[1].textContent;
+                    const accountName = row.cells[2].textContent;
+                    const expiryDate = row.cells[5].textContent;
+                    const multiplier = row.querySelector('select').value;
+
+                    // Set modal data (you can fetch more details from an API if needed)
+                    document.getElementById('detail-user-id').textContent = userId;
+                    document.getElementById('detail-user-name').textContent = userName;
+                    document.getElementById('detail-account-name').textContent = accountName;
+                    document.getElementById('detail-expiry-date').textContent = expiryDate;
+                    document.getElementById('detail-multiplier').textContent = multiplier;
+
+                    // TODO: Fetch additional details (like Broker, API Key, etc.) from an API
+
+                    // Show the modal
+                    const modal = new bootstrap.Modal(document.getElementById('userDetailsModal'));
+                    modal.show();
+                });
+            });
+        });
+
+        // ----------------------- // Edit Button Click Handler-----------
+
+        document.addEventListener('DOMContentLoaded', function () {
+            // Edit Button Click Handler
+            const editButtons = document.querySelectorAll('.btn-outline-success[title="Edit"]');
+
+            editButtons.forEach(button => {
+                button.addEventListener('click', function () {
+                    const row = this.closest('tr');
+
+                    // Populate form with current data (sample data; replace with real API calls)
+                    document.getElementById('edit-user-id').value = row.cells[0].textContent;
+                    document.getElementById('edit-user-name').value = row.cells[1].textContent;
+                    document.getElementById('edit-account-name').value = row.cells[2].textContent;
+                    document.getElementById('edit-expiry-date').value = row.cells[5].textContent;
+                    document.getElementById('edit-multiplier').value = row.querySelector('select').value;
+
+                    // TODO: Fetch additional fields (Broker, API Key, etc.) from an API
+
+                    // Show the modal
+                    const modal = new bootstrap.Modal(document.getElementById('editUserModal'));
+                    modal.show();
+                });
+            });
+
+            // Save Changes Button
+            document.getElementById('saveChangesBtn').addEventListener('click', function () {
+                // Get edited values
+                const userId = document.getElementById('edit-user-id').value;
+                const newName = document.getElementById('edit-user-name').value;
+                const newMultiplier = document.getElementById('edit-multiplier').value;
+
+                // Update the table (for demo; in reality, send to API)
+                const rows = document.querySelectorAll('tbody tr');
+                rows.forEach(row => {
+                    if (row.cells[0].textContent === userId) {
+                        row.cells[1].textContent = newName;
+                        row.querySelector('select').value = newMultiplier;
+                    }
+                });
+
+                // Close modal
+                bootstrap.Modal.getInstance(document.getElementById('editUserModal')).hide();
+
+                alert('Changes saved! (Demo: Only table updated. Connect to API for real usage.)');
+            });
+        });
+
+
+        // Copy API Key
+        document.getElementById('copyApiKey').addEventListener('click', function () {
+            const apiKey = document.getElementById('edit-api-key');
+            apiKey.select();
+            document.execCommand('copy');
+            alert('API Key copied!');
+        });
+
+        // Toggle API Secret Visibility
+        document.getElementById('toggleSecret').addEventListener('click', function () {
+            const secretInput = document.getElementById('edit-api-secret');
+            const icon = this.querySelector('i');
+            if (secretInput.type === 'password') {
+                secretInput.type = 'text';
+                icon.classList.replace('fa-eye', 'fa-eye-slash');
+            } else {
+                secretInput.type = 'password';
+                icon.classList.replace('fa-eye-slash', 'fa-eye');
+            }
+        });
+
+    </script>
+
+
+
+</body>
+
+</html>

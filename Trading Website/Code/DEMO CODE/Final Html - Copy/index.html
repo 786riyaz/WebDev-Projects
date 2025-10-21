@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard</title>
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    :root {
+      --primary-color: #573BFF;
+      --info-color: #00C3F9;
+      --sidebar-bg: #fff;
+      --content-bg: #f8f9fa;
+      /* --header-bg: linear-gradient(135deg, #0F2027 0%, #203A43 50%, #2C5364 100%); */
+      --header-bg: linear-gradient(135deg, #11998E 0%, #38EF7D 100%);
+      --danger-color: #dc3545;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: var(--content-bg);
+      overflow-x: hidden;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 250px;
+      min-height: 100vh;
+      background: var(--sidebar-bg);
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 1000;
+      transition: all 0.3s;
+    }
+
+    .sidebar.collapsed {
+      width: 70px;
+    }
+
+    .sidebar.collapsed .logo-title,
+    .sidebar.collapsed .item-name {
+      display: none;
+    }
+
+    .sidebar.collapsed .nav-link {
+      text-align: center;
+      padding: 12px 0;
+    }
+
+    .sidebar.collapsed .nav-link i {
+      margin-right: 0;
+    }
+
+    .sidebar-header {
+      padding: 20px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo-title {
+      font-weight: 700;
+      color: var(--primary-color);
+      margin-left: 10px;
+      transition: all 0.3s;
+    }
+
+    .sidebar-body {
+      padding: 20px 0;
+    }
+
+    .nav-item {
+      margin-bottom: 5px;
+    }
+
+    .nav-link {
+      padding: 12px 20px;
+      color: #495057;
+      border-radius: 0 30px 30px 0;
+      transition: all 0.3s;
+      white-space: nowrap;
+    }
+
+    .nav-link-profile {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      color: #fff;
+      padding: 8px 16px;
+      border-radius: 20px;
+      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+      position: relative;
+      overflow: hidden;
+      font-weight: 500;
+    }
+
+    /* Hover & Active States */
+    .nav-link-profile:hover,
+    .nav-link-profile.active {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      transform: translateY(-2px);
+    }
+
+    /* Modern Active Indicator */
+    .nav-link-profile.active::after {
+      content: '';
+      position: absolute;
+      bottom: 2px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 20px;
+      height: 3px;
+      background: #fff;
+      border-radius: 2px;
+    }
+
+    .nav-link:hover,
+    .nav-link.active {
+      background-color: rgba(87, 59, 255, 0.1);
+      color: var(--primary-color);
+    }
+
+    .nav-link i {
+      width: 24px;
+      text-align: center;
+      margin-right: 10px;
+      transition: all 0.3s;
+    }
+
+    /* Main Content */
+    .main-content {
+      margin-left: 250px;
+      transition: all 0.3s;
+    }
+
+    .sidebar.collapsed~.main-content {
+      margin-left: 70px;
+    }
+
+    /* Header */
+    .header {
+      background: var(--header-bg);
+      color: white;
+      padding: 100px 0 50px;
+      position: relative;
+      overflow: hidden;
+      margin-top: 60px;
+    }
+
+    .header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('https://via.placeholder.com/1920x400') center/cover;
+      opacity: 0.1;
+    }
+
+    .header-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Navbar */
+    .iq-navbar {
+      background: var(--header-bg);
+      padding: 15px 20px;
+      position: fixed;
+      top: 0;
+      right: 0;
+      left: 250px;
+      z-index: 100;
+      transition: all 0.3s;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .sidebar.collapsed~.main-content .iq-navbar {
+      left: 70px;
+    }
+
+    .navbar-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .form-control {
+      border-radius: 20px;
+      background: transparent;
+      border: none;
+    }
+
+    .input-group-text {
+      background-color: transparent;
+      border: none;
+      color: white;
+    }
+
+    .navbar-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      align-items: center;
+    }
+
+    .nav-item.dropdown {
+      margin-left: 15px;
+    }
+
+    .dropdown-menu {
+      border: none;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .dots {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      position: absolute;
+      top: 5px;
+      right: 5px;
+    }
+
+    .bg-danger {
+      background-color: var(--danger-color);
+    }
+
+    .bg-primary {
+      background-color: var(--primary-color);
+    }
+
+    /* Footer */
+    .footer {
+      background: #fff;
+      padding: 20px 0;
+      margin-top: 30px;
+      box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.02);
+    }
+
+    /* Toggle Button */
+    .sidebar-toggle {
+      background: none;
+      border: none;
+      color: var(--primary-color);
+      font-size: 1.25rem;
+      cursor: pointer;
+      padding: 5px;
+    }
+
+    /* Search Container */
+    .search-container {
+      position: relative;
+      width: 300px;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 10px 20px 10px 40px;
+      background-color: rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      color: white;
+      border-radius: 25px;
+      font-size: 14px;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(5px);
+    }
+
+    .search-input:focus {
+      outline: none;
+      background-color: rgba(255, 255, 255, 0.25);
+      border-color: rgba(255, 255, 255, 0.5);
+      box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.1);
+    }
+
+    .search-input::placeholder {
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: rgba(224, 232, 235, 0.7);
+      z-index: 1000;
+      pointer-events: none;
+    }
+
+    /* Card Statistics */
+    .card-statistic {
+      border-left: 4px solid transparent;
+      transition: all 0.3s ease;
+    }
+
+    .card-statistic:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .stat-icon {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.25rem;
+    }
+
+    .bg-primary {
+      background-color: #4361ee !important;
+    }
+
+    .bg-success {
+      background-color: #2ecc71 !important;
+    }
+
+    .bg-info {
+      background-color: #00b5d4 !important;
+    }
+
+    .bg-warning {
+      background-color: #f39c12 !important;
+    }
+
+    .table-striped tbody tr:nth-of-type(odd) {
+      background-color: rgba(0, 0, 0, 0.02);
+    }
+
+    .progress-sm {
+      height: 5px;
+    }
+
+    /* Mobile Menu Button */
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      color: white;
+      font-size: 1.5rem;
+    }
+
+    /* Responsive */
+    @media (max-width: 992px) {
+      .sidebar {
+        transform: translateX(-100%);
+      }
+
+      .sidebar.active {
+        transform: translateX(0);
+        width: 250px;
+      }
+
+      .sidebar.collapsed {
+        width: 70px;
+      }
+
+      .main-content {
+        margin-left: 0;
+      }
+
+      .iq-navbar {
+        left: 0;
+      }
+
+      .search-container {
+        width: 200px;
+      }
+
+      .mobile-menu-btn {
+        display: block;
+      }
+    }
+
+    /* Animation for sidebar */
+    @keyframes slideIn {
+      from {
+        transform: translateX(-100%);
+      }
+      to {
+        transform: translateX(0);
+      }
+    }
+
+    .sidebar.active {
+      animation: slideIn 0.3s ease-out;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-header d-flex align-items-center">
+      <div class="d-flex align-items-center">
+        <i class="fa-solid fa-user-tie" style="color: #573BFF;"></i>
+        <h4 class="logo-title">Admin</h4>
+      </div>
+      <button class="sidebar-toggle" id="sidebarToggle">
+        <i class="fas fa-chevron-left"></i>
+      </button>
+    </div>
+    <div class="sidebar-body">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="index.html">
+            <i class="fas fa-th-large"></i>
+            <span class="item-name">Dashboard</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="user.html">
+            <i class="fas fa-users"></i>
+            <span class="item-name">Users</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="trades.html">
+            <i class="fas fa-chart-line"></i>
+            <span class="item-name">Trades</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="Positions.html">
+            <i class="fa-solid fa-crosshairs"></i>
+            <span class="item-name">Positions</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="Balance.html">
+            <i class="fa-solid fa-receipt"></i>
+            <span class="item-name">Balance</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="Settings.html">
+            <i class="fas fa-cog"></i>
+            <span class="item-name">Settings</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light iq-navbar">
+      <div class="container-fluid navbar-inner">
+        <button class="mobile-menu-btn me-2" id="mobileMenuToggle">
+          <i class="fas fa-bars"></i>
+        </button>
+        
+        <div class="search-container">
+          <i class="fas fa-search search-icon"></i>
+          <input type="text" class="search-input" placeholder="Search...">
+        </div>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+          <ul class="navbar-nav align-items-center navbar-list mb-lg-0">
+            <li class="nav-item dropdown">
+              <a class="py-0 nav-link-profile d-flex align-items-center" href="#" id="navbarDropdown" role="button"
+                data-bs-toggle="dropdown">
+                <i class="fa-solid fa-user-tie"></i>
+                <div class="caption ms-3 d-none d-md-block">
+                  <h6 class="mb-0 caption-title">Admin</h6>
+                  <p class="mb-0 caption-sub-title">Administrator</p>
+                </div>
+              </a>
+              <ul class="dropdown-menu dropdown-menu-end">
+                <li><a class="dropdown-item" href="#"><i class="fas fa-user me-2"></i>Profile</a></li>
+                <li><a class="dropdown-item" href="#"><i class="fas fa-cog me-2"></i>Privacy Setting</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="#"><i class="fas fa-sign-out-alt me-2"></i>Logout</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Header -->
+    <div class="header">
+      <div class="container header-content">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="d-flex justify-content-between align-items-center">
+              <div>
+                <h1>Hello Welcome!</h1>
+                <p class="lead">We are on a mission to help developers like you build successful projects for FREE.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="container-fluid content-inner mt-n5 py-4">
+      <!-- Summary Cards Row -->
+      <div class="row">
+        <!-- Total Clients Card -->
+        <div class="col-md-6 col-lg-3 mb-4">
+          <div class="card card-statistic h-100">
+            <div class="card-body">
+              <div class="d-flex align-items-center">
+                <div class="stat-icon bg-primary">
+                  <i class="fas fa-users"></i>
+                </div>
+                <div class="ms-3">
+                  <h6 class="mb-1">Total Clients</h6>
+                  <h3 class="counter">1,254</h3>
+                  <p class="text-success mb-0"><i class="fas fa-arrow-up"></i> 12% from last month</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Active Clients Card -->
+        <div class="col-md-6 col-lg-3 mb-4">
+          <div class="card card-statistic h-100">
+            <div class="card-body">
+              <div class="d-flex align-items-center">
+                <div class="stat-icon bg-success">
+                  <i class="fas fa-user-check"></i>
+                </div>
+                <div class="ms-3">
+                  <h6 class="mb-1">Active Clients</h6>
+                  <h3 class="counter">892</h3>
+                  <p class="text-success mb-0"><i class="fas fa-arrow-up"></i> 8% from last week</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Running Trades Card -->
+        <div class="col-md-6 col-lg-3 mb-4">
+          <div class="card card-statistic h-100">
+            <div class="card-body">
+              <div class="d-flex align-items-center">
+                <div class="stat-icon bg-info">
+                  <i class="fas fa-exchange-alt"></i>
+                </div>
+                <div class="ms-3">
+                  <h6 class="mb-1">Running Trades</h6>
+                  <h3 class="counter">347</h3>
+                  <div class="d-flex">
+                    <span class="badge bg-success me-2">Profit: 214</span>
+                    <span class="badge bg-danger">Loss: 133</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Risk Management Card -->
+        <div class="col-md-6 col-lg-3 mb-4">
+          <div class="card card-statistic h-100">
+            <div class="card-body">
+              <div class="d-flex align-items-center">
+                <div class="stat-icon bg-warning">
+                  <i class="fas fa-shield-alt"></i>
+                </div>
+                <div class="ms-3">
+                  <h6 class="mb-1">SL/Target Status</h6>
+                  <div class="mb-2">
+                    <small>SL Hit Today: <strong>28</strong></small>
+                    <div class="progress progress-sm mt-1">
+                      <div class="progress-bar bg-danger" style="width: 18%"></div>
+                    </div>
+                  </div>
+                  <div>
+                    <small>Target Hit Today: <strong>42</strong></small>
+                    <div class="progress progress-sm mt-1">
+                      <div class="progress-bar bg-success" style="width: 27%"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Running Trades Table -->
+      <div class="row">
+        <div class="col-md-12 mb-4">
+          <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+              <h5 class="mb-0">Running Trades</h5>
+              <div>
+                <button class="btn btn-sm btn-outline-primary me-2">
+                  <i class="fas fa-sync-alt"></i> Refresh
+                </button>
+                <button class="btn btn-sm btn-primary">
+                  <i class="fas fa-plus"></i> New Trade
+                </button>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-hover table-striped">
+                  <thead class="table-light">
+                    <tr>
+                      <th>Trade ID</th>
+                      <th>Symbol</th>
+                      <th>Type</th>
+                      <th>Entry Price</th>
+                      <th>Current Price</th>
+                      <th>SL Price</th>
+                      <th>Target Price</th>
+                      <th>P/L</th>
+                      <th>Client</th>
+                      <th>Time</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>#TRD-1001</td>
+                      <td>AAPL</td>
+                      <td><span class="badge bg-success">Buy</span></td>
+                      <td>145.32</td>
+                      <td>148.76</td>
+                      <td class="text-danger">143.50</td>
+                      <td class="text-success">152.00</td>
+                      <td class="text-success">+$344.00</td>
+                      <td>John Doe</td>
+                      <td>10:45 AM</td>
+                      <td>
+                        <button class="btn btn-sm btn-outline-warning" title="Modify SL/Target">
+                          <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="btn btn-sm btn-outline-danger" title="Close Trade">
+                          <i class="fas fa-times"></i>
+                        </button>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>#TRD-1002</td>
+                      <td>TSLA</td>
+                      <td><span class="badge bg-danger">Sell</span></td>
+                      <td>780.50</td>
+                      <td>775.20</td>
+                      <td class="text-danger">790.00</td>
+                      <td class="text-success">750.00</td>
+                      <td class="text-success">+$530.00</td>
+                      <td>Jane Smith</td>
+                      <td>11:20 AM</td>
+                      <td>
+                        <button class="btn btn-sm btn-outline-warning">
+                          <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="btn btn-sm btn-outline-danger">
+                          <i class="fas fa-times"></i>
+                        </button>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>#TRD-1003</td>
+                      <td>NFLX</td>
+                      <td><span class="badge bg-success">Buy</span></td>
+                      <td>320.75</td>
+                      <td>318.40</td>
+                      <td class="text-danger">315.00</td>
+                      <td class="text-success">335.00</td>
+                      <td class="text-danger">-$235.00</td>
+                      <td>Mike Johnson</td>
+                      <td>02:15 PM</td>
+                      <td>
+                        <button class="btn btn-sm btn-outline-warning">
+                          <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="btn btn-sm btn-outline-danger">
+                          <i class="fas fa-times"></i>
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="d-flex justify-content-between align-items-center mt-3">
+                <div class="text-muted">Showing 1 to 3 of 24 entries</div>
+                <nav aria-label="Page navigation">
+                  <ul class="pagination pagination-sm mb-0">
+                    <li class="page-item disabled">
+                      <a class="page-link" href="#" tabindex="-1">Previous</a>
+                    </li>
+                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                      <a class="page-link" href="#">Next</a>
+                    </li>
+                  </ul>
+                </nav>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Client Activity Section -->
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-header">
+              <h5 class="mb-0">Client Activity</h5>
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-6 mb-4 mb-md-0">
+                  <h6>Recent Client Logins</h6>
+                  <div class="list-group">
+                    <a href="#" class="list-group-item list-group-item-action">
+                      <div class="d-flex w-100 justify-content-between">
+                        <h6 class="mb-1">John Doe</h6>
+                        <small>2 minutes ago</small>
+                      </div>
+                      <small>IP: 192.168.1.1 | Device: Chrome/Windows</small>
+                    </a>
+                    <a href="#" class="list-group-item list-group-item-action">
+                      <div class="d-flex w-100 justify-content-between">
+                        <h6 class="mb-1">Jane Smith</h6>
+                        <small>15 minutes ago</small>
+                      </div>
+                      <small>IP: 203.34.56.78 | Device: Safari/Mac</small>
+                    </a>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <h6>Client Distribution</h6>
+                  <div class="chart-container" style="height: 200px;">
+                    <div class="text-center py-5 text-muted">
+                      <canvas id="clientChart"></canvas>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <ul class="list-inline mb-0">
+              <li class="list-inline-item"><a href="#">Privacy Policy</a></li>
+              <li class="list-inline-item"><a href="#">Terms of Use</a></li>
+              <li class="list-inline-item float-end">© 2025</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </main>
+
+  <!-- jQuery and Bootstrap Bundle with Popper -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Counter Up -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Counter-Up/1.0.0/jquery.counterup.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/jquery.waypoints.min.js"></script>
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <!-- ---------------------------------main css-------------------------------/ -->
+
+  <link rel="stylesheet" href="/Final Css/main.css">
+
+  <script>
+    $(document).ready(function () {
+      // Counter animation
+      $('.counter').counterUp({
+        delay: 10,
+        time: 1000
+      });
+
+      // Sidebar toggle functionality
+      $('#sidebarToggle').click(function () {
+        $('.sidebar').toggleClass('collapsed');
+
+        // Change icon based on state
+        const icon = $(this).find('i');
+        if ($('.sidebar').hasClass('collapsed')) {
+          icon.removeClass('fa-chevron-left').addClass('fa-chevron-right');
+        } else {
+          icon.removeClass('fa-chevron-right').addClass('fa-chevron-left');
+        }
+      });
+
+      // Mobile sidebar toggle
+      $('#mobileMenuToggle').click(function () {
+        $('.sidebar').toggleClass('active');
+      });
+
+ 
+    });
+  </script>
+</body>
+
+</html>

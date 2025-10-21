@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+
+    <!-- ---------------------------------main css----------------------------------------- -->
+     <link rel="stylesheet" href="../Final Css/main.css">
+    <style>
+          /* Card styles */
+        .balance-card {
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s;
+            border: none;
+            margin-bottom: 20px;
+        }
+
+        .balance-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Table styles */
+        .balance-table th {
+            font-weight: 600;
+            background-color: rgba(0, 0, 0, 0.03);
+            border-top: none;
+        }
+
+        .balance-positive {
+            color: #28a745;
+            font-weight: 600;
+        }
+
+        .balance-negative {
+            color: #dc3545;
+            font-weight: 600;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-header d-flex align-items-center">
+            <div class="d-flex align-items-center">
+                <i class="fa-solid fa-user-tie" style="color: #573BFF;"></i>
+                <h4 class="logo-title">Admin</h4>
+            </div>
+            <button class="sidebar-toggle" id="sidebarToggle">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+        </div>
+        <div class="sidebar-body">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="index.html">
+                        <i class="fas fa-th-large"></i>
+                        <span class="item-name">Dashboard</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="user.html">
+                        <i class="fas fa-users"></i>
+                        <span class="item-name">Users</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="trades.html">
+                        <i class="fas fa-chart-line"></i>
+                        <span class="item-name">Trades</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="Positions.html">
+                        <i class="fa-solid fa-crosshairs"></i>
+                        <span class="item-name">Positions</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="Balance.html">
+                        <i class="fa-solid fa-receipt"></i>
+                        <span class="item-name">Balance</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="Settings.html">
+                        <i class="fas fa-cog"></i>
+                        <span class="item-name">Settings</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Navbar -->
+        <nav class="nav navbar navbar-expand-lg navbar-light iq-navbar">
+            <div class="container-fluid navbar-inner">
+                <div class="search-container">
+                    <i class="bi bi-search search-icon"></i>
+                    <input type="text" class="search-input" placeholder="Search...">
+                </div>
+
+                <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+                    <ul class="mb-2 navbar-nav align-items-center navbar-list mb-lg-0">
+                        <li class="nav-item dropdown">
+                            <a class="py-0 nav-link-profile d-flex align-items-center" href="#" id="navbarDropdown"
+                                role="button" data-bs-toggle="dropdown">
+                                <i class="fa-solid fa-user-tie"></i>
+                                <div class="caption ms-3 d-none d-md-block">
+                                    <h6 class="mb-0 caption-title">Admin</h6>
+                                    <p class="mb-0 caption-sub-title">Administrator</p>
+                                </div>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li><a class="dropdown-item" href="profil.html"><i class="fas fa-user me-2"></i>Profile</a></li>
+                                <li><a class="dropdown-item" href="#"><i class="fas fa-cog me-2"></i>Settings</a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li><a class="dropdown-item" href="#"><i class="fas fa-sign-out-alt me-2"></i>Logout</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Header -->
+        <div class="header">
+            <div class="container header-content">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <h1>Balance</h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Content -->
+        <div class="container mt-4">
+            <!-- Filters -->
+            <div class="card mb-4 balance-card">
+                <div class="card-body">
+                    <div class="row g-3">
+                        <div class="col-md-3">
+                            <label for="userSelect" class="form-label">User</label>
+                            <select id="userSelect" class="form-select">
+                                <option selected>All Users</option>
+                                <option>John Doe (ID: 1001)</option>
+                                <option>Jane Smith (ID: 1002)</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="accountSelect" class="form-label">Account</label>
+                            <select id="accountSelect" class="form-select">
+                                <option selected>All Accounts</option>
+                                <option>Main Account</option>
+                                <option>Trading Account</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="brokerSelect" class="form-label">Broker</label>
+                            <select id="brokerSelect" class="form-select">
+                                <option selected>All Brokers</option>
+                                <option>Binance</option>
+                                <option>Kraken</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3 d-flex align-items-end">
+                            <button class="btn btn-primary w-100">
+                                <i class="fas fa-filter me-2"></i> Apply Filters
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Summary Cards -->
+            <div class="row mb-4">
+                <div class="col-md-4">
+                    <div class="card balance-card">
+                        <div class="card-body">
+                            <h6 class="text-muted mb-3">Total Balance</h6>
+                            <h2>$124,568.42</h2>
+                            <small class="text-muted">Across all accounts</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card balance-card">
+                        <div class="card-body">
+                            <h6 class="text-muted mb-3">Wallet Balance</h6>
+                            <h2>$98,765.32</h2>
+                            <small class="text-muted">Available for trading</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card balance-card">
+                        <div class="card-body">
+                            <h6 class="text-muted mb-3">Available Margin</h6>
+                            <h2>$87,654.21</h2>
+                            <small class="text-muted">For new positions</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Balance Table -->
+            <div class="card balance-card">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h5 class="card-title mb-0">Account Balances</h5>
+                        <button class="btn btn-sm btn-outline-secondary">
+                            <i class="fas fa-download me-1"></i> Export
+                        </button>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table balance-table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">User ID</th>
+                                    <th scope="col">User Name</th>
+                                    <th scope="col">Account ID</th>
+                                    <th scope="col">Account Name</th>
+                                    <th scope="col">Broker</th>
+                                    <th scope="col">Balance</th>
+                                    <th scope="col">Wallet</th>
+                                    <th scope="col">Available Margin</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1001</td>
+                                    <td>John Doe</td>
+                                    <td>ACC2001</td>
+                                    <td>Main Account</td>
+                                    <td>Binance</td>
+                                    <td class="balance-positive">$42,156.20</td>
+                                    <td>$32,107.81</td>
+                                    <td>$28,456.22</td>
+                                </tr>
+                                <tr>
+                                    <td>1001</td>
+                                    <td>John Doe</td>
+                                    <td>ACC2002</td>
+                                    <td>Trading Account</td>
+                                    <td>Kraken</td>
+                                    <td class="balance-positive">$35,245.60</td>
+                                    <td>$28,715.76</td>
+                                    <td>$24,843.91</td>
+                                </tr>
+                                <tr>
+                                    <td>1002</td>
+                                    <td>Jane Smith</td>
+                                    <td>ACC2003</td>
+                                    <td>Investment Account</td>
+                                    <td>Binance</td>
+                                    <td class="balance-positive">$58,420.00</td>
+                                    <td>$45,876.30</td>
+                                    <td>$39,654.28</td>
+                                </tr>
+                                <tr>
+                                    <td>1002</td>
+                                    <td>Jane Smith</td>
+                                    <td>ACC2004</td>
+                                    <td>Futures Account</td>
+                                    <td>Kraken</td>
+                                    <td class="balance-negative">$12,340.00</td>
+                                    <td>$8,765.00</td>
+                                    <td>$6,543.00</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <nav aria-label="Page navigation" class="mt-3">
+                        <ul class="pagination justify-content-center">
+                            <li class="page-item disabled">
+                                <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+                            </li>
+                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                            <li class="page-item"><a class="page-link" href="#">2</a></li>
+                            <li class="page-item">
+                                <a class="page-link" href="#">Next</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <ul class="list-inline mb-0">
+                            <li class="list-inline-item"><a href="#">Privacy Policy</a></li>
+                            <li class="list-inline-item"><a href="#">Terms of Use</a></li>
+                            <li class="list-inline-item float-end">© 2025</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </main>
+
+
+
+
+
+    <!-- jQuery and Bootstrap Bundle with Popper -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Sidebar toggle functionality
+            $('#sidebarToggle').click(function () {
+                $('.sidebar').toggleClass('collapsed');
+                const icon = $(this).find('i');
+                if ($('.sidebar').hasClass('collapsed')) {
+                    icon.removeClass('fa-chevron-left').addClass('fa-chevron-right');
+                } else {
+                    icon.removeClass('fa-chevron-right').addClass('fa-chevron-left');
+                }
+            });
+
+            // Toggle API secret visibility
+            $('#toggleSecret').click(function () {
+                const secretInput = $('#apiSecret');
+                const type = secretInput.attr('type') === 'password' ? 'text' : 'password';
+                secretInput.attr('type', type);
+                $(this).find('i').toggleClass('bi-eye bi-eye-slash');
+            });
+
+            // Initialize tooltips
+            $('[data-bs-toggle="tooltip"]').tooltip();
+        });
+    </script>
+</body>
+
+</html>

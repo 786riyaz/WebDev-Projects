@@ -1,0 +1,67 @@
+Balance ko Fund karna he 
+Dashboard === Text field chahiye SL me or Target me fir save karne pe fix hona chahiye 
+warna 0 0 hona chahiye
+
+
+User----------------------------------
+User ID	User Name  search users account remove
+User ID	User Name	Account Name	Login Status	Multiplier	Expiry Date	Status sort---
+Multiplier 1 to 1000
+User Type me user k badle Child
+Multiplier 1 to 1000
+broker -- add 
+--------------------------------------
+
+Trades
+Table mese LTP remove karna he 
+Replace Quantity ===> Master Quantity
+Delta AC ===> Account ID
+Source ===> Web k badle ACP
+Remove Action Button
+
+users from 
+	Status filed
+	
+
+button after table
+date and time se--
+
+risk
+mul
+
+Client Details for Master 1
+user table with button
+
+
+	Type
+	
+	buy 
+	sell
+	buy exit
+	sell exit
+
+
+
+
+
+
+
+
+
+
+
+Master ne kitne trade kiye he 
+or wo trade kitne logo ne copy kiya he wo dikhna chahiye table k format me
+User ID, User name, Trade Price, Status (Success/Reject), 
+remove Symbol, source, profit/loss, LTP, 
+
+================================================
+Positions
+1st Filter for Master Name or Master ID
+2nd filter for Script
+3rd Filter for User ID
+4th Filter for Symbol
+
+Replace :: Delta Account ==> Account ID
+================================================
+Settings

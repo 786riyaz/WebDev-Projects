@@ -1,0 +1,2886 @@
+ <!-- <div id="users" class="page">
+          <h2>Users</h2>
+          <button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#addUserModal">Add User</button>
+        </div> -->
+        <div id="users" class="page">
+          <h2>Users</h2>
+          <button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#addUserModal">Add User</button>
+          <table class="table table-dark table-striped">
+            <thead>
+              <tr>
+                <th>Sr No</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Password</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="userTable"></tbody>
+          </table>
+             <ul class="pagination" id="pagination"></ul>
+        </div>
+
+        <!-- Add User Modal -->
+        <div class="modal fade" id="addUserModal" tabindex="-1">
+          <div class="modal-dialog">
+            <div class="modal-content bg-dark text-white">
+              <div class="modal-header">
+                <h5 class="modal-title">Add User</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+              </div>
+              <div class="modal-body">
+                <input type="text" id="newName" class="form-control mb-2" placeholder="Name">
+                <input type="email" id="newEmail" class="form-control mb-2" placeholder="Email">
+                <input type="text" id="newPassword" class="form-control mb-2" placeholder="Password">
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="addUser()">Save</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+         <!-- Modal -->
+  <div class="modal fade" id="addUserModal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content bg-dark text-white">
+        <div class="modal-header">
+          <h5 class="modal-title">Add User</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <input type="text" class="form-control mb-2" placeholder="Name">
+          <input type="email" class="form-control mb-2" placeholder="Email">
+          <input type="text" class="form-control mb-2" placeholder="Role">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+   function showPage(id) {
+      document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
+      document.getElementById(id).classList.add("active");
+    }
+    window.onload = function () {
+      const remembered = localStorage.getItem("rememberedUser");
+      if (remembered) showPanel(localStorage.getItem("userRole"));
+      if (localStorage.getItem("theme") === "light") toggleTheme();
+    }
+
+
+
+      let users = [
+    { name: "Alice", email: "alice@example.com", password: "****", active: true },
+    { name: "Bob", email: "bob@example.com", password: "****", active: false }
+  ];
+  const orders = [ { id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }, { id: 5 } ];
+
+  function updateDashboard() {
+    document.getElementById("userCount").textContent = users.length;
+    document.getElementById("orderCount").textContent = orders.length;
+  }
+
+  function populateUsers() {
+    const tbody = document.getElementById("userTable");
+    tbody.innerHTML = "";
+    users.forEach((user, index) => {
+      const row = `<tr>
+        <td>${index + 1}</td>
+        <td>${user.name}</td>
+        <td>${user.email}</td>
+        <td>${user.password}</td>
+        <td>${user.active ? 'Active' : 'Inactive'}</td>
+        <td>
+          <button class="btn btn-sm btn-warning me-1" onclick="toggleStatus(${index})">${user.active ? 'Deactivate' : 'Activate'}</button>
+          <button class="btn btn-sm btn-danger" onclick="deleteUser(${index})">Delete</button>
+        </td>
+      </tr>`;
+      tbody.innerHTML += row;
+    });
+  }
+
+  function addUser() {
+    const name = document.getElementById("newName").value.trim();
+    const email = document.getElementById("newEmail").value.trim();
+    const password = document.getElementById("newPassword").value.trim();
+    if (name && email && password) {
+      users.push({ name, email, password, active: true });
+      document.getElementById("newName").value = "";
+      document.getElementById("newEmail").value = "";
+      document.getElementById("newPassword").value = "";
+      populateUsers();
+      const modal = bootstrap.Modal.getInstance(document.getElementById('addUserModal'));
+      modal.hide();
+    }
+  }
+
+  function toggleStatus(index) {
+    users[index].active = !users[index].active;
+    populateUsers();
+  }
+
+  function deleteUser(index) {
+    if (confirm("Are you sure you want to delete this user?")) {
+      users.splice(index, 1);
+      populateUsers();
+    }
+  }
+
+  function showPage(id) {
+    document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
+    document.getElementById(id).classList.add("active");
+    if (id === "dashboard") updateDashboard();
+    if (id === "users") populateUsers();
+  }
+
+    <!-- ------------------------------
+  <div id="loginPage">
+    <div class="card bg-dark text-white p-4" style="min-width: 300px;">
+      <h4 class="mb-3 text-center">Login</h4>
+      <input type="text" id="username" class="form-control mb-3" placeholder="Enter username">
+      <div class="input-group mb-3">
+        <input type="password" id="password" class="form-control" placeholder="Enter password">
+        <button class="btn btn-outline-secondary" type="button" onclick="togglePassword()">
+          <i class="bi bi-eye-slash" id="toggleIcon"></i>
+        </button>
+      </div>
+      <div class="form-check mb-3">
+        <input class="form-check-input" type="checkbox" id="rememberMe">
+        <label class="form-check-label" for="rememberMe">Remember me</label>
+      </div>
+      <button class="btn btn-primary w-100" onclick="login()">Login</button>
+    </div>
+  </div>
+  ------------------------------------------------- -->
+
+
+
+  <!-- Full updated Admin Panel HTML with routing, profile page, modal, and dashboard stats -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Admin Panel</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+  <style>
+    /* body {
+      min-height: 100vh;
+      background-color: #121212;
+      color: #fff;
+    } */
+
+    .sidebar {
+      min-height: 100vh;
+      background-color: #1f1f1f;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .sidebar a {
+      color: #ccc;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .sidebar a:hover {
+      background-color: #333;
+      color: #fff;
+    }
+
+    .content {
+      padding: 20px;
+    }
+
+    .navbar {
+      background-color: #1a1a1a;
+    }
+
+    .logo-wrapper {
+      text-align: center;
+      padding: 20px 10px 10px;
+    }
+
+    .logo-wrapper img {
+      width: 50px;
+      height: 50px;
+    }
+
+    .company-name {
+      text-align: center;
+      font-size: 1.1rem;
+      margin-top: 5px;
+      color: #fff;
+    }
+
+    .user-info {
+      color: #fff;
+    }
+
+    .theme-toggle {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 1050;
+      background: rgba(31, 31, 31, 0.8);
+      padding: 0.5rem;
+      border-radius: 50%;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    }
+
+    #loginPage {
+      display: flex;
+      height: 100vh;
+      align-items: center;
+      justify-content: center;
+      background-color: #121212;
+    }
+
+    #adminPanel {
+      display: none;
+    }
+
+    .page {
+      display: none;
+    }
+
+    .page.active {
+      display: block;
+    }
+
+     body, html {
+      height: 100%;
+      margin: 0;
+      background-color: #f8f9fa;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    #loginContainer {
+      display: flex;
+      height: 100vh;
+    }
+
+    .left-side {
+      flex: 1;
+      background: url('ss.jpg') no-repeat center center;
+      background-size: cover;
+     
+    }
+
+    .right-side {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #fff;
+    }
+
+    .login-card {
+      width: 100%;
+      max-width: 400px;
+      padding: 30px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.1);
+      border-radius: 12px;
+      background-color: #f1f1f1;
+    }
+
+    .login-card .user-icon {
+      font-size: 60px;
+      color: #007bff;
+      text-align: center;
+    }
+
+    .company-name {
+      font-size: 24px;
+      font-weight: bold;
+      text-align: center;
+      margin-bottom: 20px;
+      color: #333;
+    }
+  </style>
+</head>
+
+<body>
+
+
+  <div id="loginContainer">
+  <!-- Left side (Image) -->
+  <div class="left-side">
+ 
+  </div>
+
+  <!-- Right side (Login) -->
+  <div class="right-side">
+    <div class="login-card">
+      <div class="user-icon mb-3">
+        <i class="bi bi-person-circle"></i>
+      </div>
+      <div class="company-name mb-3">Your Company</div>
+
+      <h4 class="text-center mb-3">Login</h4>
+      <input type="text" id="username" class="form-control mb-3" placeholder="Enter username">
+      
+      <div class="input-group mb-3">
+        <input type="password" id="password" class="form-control" placeholder="Enter password">
+        <button class="btn btn-outline-secondary" type="button" onclick="togglePassword()">
+          <i class="bi bi-eye-slash" id="toggleIcon"></i>
+        </button>
+      </div>
+      
+      <div class="form-check mb-3">
+        <input class="form-check-input" type="checkbox" id="rememberMe">
+        <label class="form-check-label" for="rememberMe">Remember me</label>
+      </div>
+
+      <button class="btn btn-primary w-100" onclick="login()">Login</button>
+    </div>
+  </div>
+</div>
+
+  <div id="adminPanel" class="container-fluid">
+    <div class="row">
+      <nav class="col-md-3 col-lg-2 d-md-block sidebar collapse">
+        <div>
+          <div class="logo-wrapper">
+            <img src="https://via.placeholder.com/40" alt="Logo" class="rounded-circle">
+          </div>
+          <div class="company-name">Company Name</div>
+          <hr>
+          <ul class="nav flex-column">
+            <li class="nav-item"><a class="nav-link" href="#" ><i class="bi bi-speedometer2"></i> Dashboard</a></li>
+            <li class="nav-item"><a class="nav-link" href="#" ><i class="bi bi-people"></i>
+                Users</a></li>
+            <li class="nav-item" id="masterUserMenu"><a class="nav-link" href="#" ><i
+                  class="bi bi-person-badge"></i> Master User</a></li>
+            <li class="nav-item"><a class="nav-link" href="#" ><i class="bi bi-cart"></i>
+                Place Order</a></li>
+            <li class="nav-item"><a class="nav-link" href="#" ><i
+                  class="bi bi-clock-history"></i> Trade History</a></li>
+            <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-gear"></i>
+                Setting</a></li>
+          </ul>
+        </div>
+        <div class="theme-toggle">
+          <button class="btn btn-outline-light" onclick="toggleTheme()">
+            <i class="bi bi-moon-stars" id="themeIcon"></i>
+          </button>
+        </div>
+      </nav>
+
+      <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 content">
+        <nav class="navbar navbar-expand-lg navbar-dark">
+          <div class="container-fluid justify-content-end">
+            <div class="user-info dropdown">
+              <a href="#" class="text-white dropdown-toggle" id="userDropdown" data-bs-toggle="dropdown">
+                <span id="userGreeting">Welcome</span>
+              </a>
+              <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end">
+                <li><a class="dropdown-item" href="#" onclick="showPage('profile')">Profile</a></li>
+                <li>
+                  <hr class="dropdown-divider">
+                </li>
+                <li><a class="dropdown-item" href="#" onclick="logout()">Logout</a></li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+
+        <div id="dashboard" class="page active">
+          <h2>Dashboard</h2>
+          <div class="row">
+            <div class="col-md-4">
+              <div class="card bg-dark text-white mb-3">
+                <div class="card-body">
+                  <h5 class="card-title">Users</h5>
+                  <p class="card-text">123</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="card bg-dark text-white mb-3">
+                <div class="card-body">
+                  <h5 class="card-title">Orders</h5>
+                  <p class="card-text">45</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+       
+
+        <div id="master" class="page">
+          <h2>Master User Section</h2>
+        </div>
+
+        <div id="orders" class="page">
+          <h2>Place Order</h2>
+        </div>
+
+        <div id="history" class="page">
+          <h2>Trade History</h2>
+        </div>
+
+        <div id="settings" class="page">
+          <h2>Settings</h2>
+        </div>
+
+        <div id="profile" class="page">
+          <h2>User Profile</h2>
+        </div>
+      </main>
+    </div>
+  </div>
+
+ 
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    function login() {
+      const username = document.getElementById("username").value;
+      const password = document.getElementById("password").value;
+      const rememberMe = document.getElementById("rememberMe").checked;
+      if (username === "masteradmin" && password === "admin123") {
+        if (rememberMe) localStorage.setItem("rememberedUser", username);
+        localStorage.setItem("userRole", "Master Admin");
+        showPanel("Master Admin");
+      } else if (username === "admin" && password === "admin123") {
+        if (rememberMe) localStorage.setItem("rememberedUser", username);
+        localStorage.setItem("userRole", "Admin");
+        showPanel("Admin");
+      } else {
+        alert("Invalid credentials");
+      }
+    }
+    function showPanel(role) {
+      document.getElementById("loginPage").style.display = "none";
+      document.getElementById("adminPanel").style.display = "block";
+      document.getElementById("userGreeting").innerText = `Welcome, ${role}`;
+      document.getElementById("masterUserMenu").style.display = role === "Master Admin" ? "block" : "none";
+    }
+    function logout() {
+      localStorage.clear();
+      location.reload();
+    }
+    function togglePassword() {
+      const field = document.getElementById("password");
+      const icon = document.getElementById("toggleIcon");
+      field.type = field.type === "password" ? "text" : "password";
+      icon.classList.toggle("bi-eye");
+      icon.classList.toggle("bi-eye-slash");
+    }
+    function toggleTheme() {
+      const icon = document.getElementById("themeIcon");
+      document.body.classList.toggle("bg-light");
+      document.body.classList.toggle("text-dark");
+      icon.classList.toggle("bi-sun");
+      icon.classList.toggle("bi-moon-stars");
+      localStorage.setItem("theme", document.body.classList.contains("bg-light") ? "light" : "dark");
+    }
+   
+  </script>
+</body>
+
+</html>
+
+
+ function toggleTheme() {
+      const icon = document.getElementById("themeIcon");
+      document.body.classList.toggle("bg-light");
+      document.body.classList.toggle("text-dark");
+      icon.classList.toggle("bi-sun");
+      icon.classList.toggle("bi-moon-stars");
+    }
+
+       <div class="theme-toggle text-center">
+          <button class="btn btn-outline-light" onclick="toggleTheme()">
+            <i class="bi bi-moon-stars" id="themeIcon"></i>
+          </button>
+
+
+           <div id="dashboard" class="page active">
+          <h2>Dashboard</h2>
+          <div class="row">
+            <div class="col-md-4">
+              <div class="card bg-dark text-white mb-3">
+                <div class="card-body">
+                  <h5 class="card-title">Users</h5>
+                  <p class="card-text">123</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="card bg-dark text-white mb-3">
+                <div class="card-body">
+                  <h5 class="card-title">Orders</h5>
+                  <p class="card-text">45</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <nav class="navbar navbar-expand-lg">
+          <div class="container-fluid justify-content-end">
+            <div class="user-info dropdown">
+              <a href="#" class="text-white dropdown-toggle" id="userDropdown" data-bs-toggle="dropdown">
+                <span id="userGreeting">Welcome, Admin</span>
+              </a>
+              <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end">
+                <li><a class="dropdown-item" href="#" onclick="showPage('profile')">Profile</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="#" onclick="logout()">Logout</a></li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+<nav class="">
+                    <div class="btn-group">
+                        <button class="btn  dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            Admin <i class="bi bi-person-circle"></i>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">Profile</a></li>
+                            <li><a class="dropdown-item" href="#">Log Out</a></li>
+                        </ul>
+                       
+                    </div>
+                   
+                </nav>
+
+
+
+
+
+
+
+                
+/* Theme Classes - Apply these to body to change theme */
+.theme-deep-ocean {
+  --header-bg: linear-gradient(135deg, #0F2027 0%, #203A43 50%, #2C5364 100%);
+  --primary-color: #2C5364;
+  --info-color: #38AECC;
+  --menu-active: #e6f7fc;
+}
+
+.theme-sunset {
+  --header-bg: linear-gradient(135deg, #FF416C 0%, #FF4B2B 100%);
+  --primary-color: #FF416C;
+  --info-color: #FF8E53;
+  --menu-active: #ffecef;
+}
+
+.theme-emerald {
+  --header-bg: linear-gradient(135deg, #11998E 0%, #38EF7D 100%);
+  --primary-color: #11998E;
+  --info-color: #38EF7D;
+  --menu-active: #e6fff1;
+}
+
+.theme-royal {
+  --header-bg: linear-gradient(135deg, #4776E6 0%, #8E54E9 100%);
+  --primary-color: #4776E6;
+  --info-color: #8E54E9;
+  --menu-active: #eceaff;
+}
+
+.theme-fiery {
+  --header-bg: linear-gradient(135deg, #F12711 0%, #F5AF19 100%);
+  --primary-color: #F12711;
+  --info-color: #F5AF19;
+  --menu-active: #ffedea;
+}
+
+.theme-mint {
+  --header-bg: linear-gradient(135deg, #00d2ff 0%, #3a7bd5 100%);
+  --primary-color: #3a7bd5;
+  --info-color: #00d2ff;
+  --menu-active: #e6f7ff;
+}
+
+.theme-dark {
+  --header-bg: linear-gradient(135deg, #434343 0%, #000000 100%);
+  --primary-color: #434343;
+  --info-color: #6b7280;
+  --menu-active: #f1f1f1;
+  --sidebar-bg: #f8f9fa;
+}
+
+.theme-cotton {
+  --header-bg: linear-gradient(135deg, #FC5C7D 0%, #6A82FB 100%);
+  --primary-color: #FC5C7D;
+  --info-color: #6A82FB;
+  --menu-active: #ffecef;
+}
+
+.theme-golden {
+  --header-bg: linear-gradient(135deg, #FFD700 0%, #FF8C00 100%);
+  --primary-color: #FF8C00;
+  --info-color: #FFD700;
+  --menu-active: #fff5e6;
+}
+
+
+
+
+
+
+
+
+
+
+/* Gradient 1: Original Purple-Cyan */
+--header-bg: linear-gradient(135deg, #573BFF 0%, #00C3F9 100%);
+--primary-color: #573BFF;
+--info-color: #00C3F9;
+--sidebar-bg: #ffffff;
+--content-bg: #f8f9fa;
+--text-color: #2d3748;
+--menu-active: #e2e8ff;
+
+/* Gradient 2: Deep Ocean */
+--header-bg: linear-gradient(135deg, #0F2027 0%, #203A43 50%, #2C5364 100%);
+--primary-color: #2C5364;
+--info-color: #38AECC;
+--sidebar-bg: #ffffff;
+--content-bg: #f5f7f9;
+--text-color: #1a202c;
+--menu-active: #e6f7fc;
+
+/* Gradient 3: Sunset Vibes */
+--header-bg: linear-gradient(135deg, #FF416C 0%, #FF4B2B 100%);
+--primary-color: #FF416C;
+--info-color: #FF8E53;
+--sidebar-bg: #ffffff;
+--content-bg: #fff5f5;
+--text-color: #2d3748;
+--menu-active: #ffecef;
+
+/* Gradient 4: Emerald Dream */
+--header-bg: linear-gradient(135deg, #11998E 0%, #38EF7D 100%);
+--primary-color: #11998E;
+--info-color: #38EF7D;
+--sidebar-bg: #ffffff;
+--content-bg: #f0fff4;
+--text-color: #1a202c;
+--menu-active: #e6fff1;
+
+/* Gradient 5: Royal Purple */
+--header-bg: linear-gradient(135deg, #4776E6 0%, #8E54E9 100%);
+--primary-color: #4776E6;
+--info-color: #8E54E9;
+--sidebar-bg: #ffffff;
+--content-bg: #f8f9ff;
+--text-color: #2d3748;
+--menu-active: #eceaff;
+
+/* Gradient 6: Fiery Orange */
+--header-bg: linear-gradient(135deg, #F12711 0%, #F5AF19 100%);
+--primary-color: #F12711;
+--info-color: #F5AF19;
+--sidebar-bg: #ffffff;
+--content-bg: #fff8f0;
+--text-color: #2d3748;
+--menu-active: #ffedea;
+
+/* Gradient 7: Cool Mint */
+--header-bg: linear-gradient(135deg, #00d2ff 0%, #3a7bd5 100%);
+--primary-color: #3a7bd5;
+--info-color: #00d2ff;
+--sidebar-bg: #ffffff;
+--content-bg: #f0f9ff;
+--text-color: #1a202c;
+--menu-active: #e6f7ff;
+
+/* Gradient 8: Dark Luxury */
+--header-bg: linear-gradient(135deg, #434343 0%, #000000 100%);
+--primary-color: #434343;
+--info-color: #6b7280;
+--sidebar-bg: #ffffff;
+--content-bg: #f3f4f6;
+--text-color: #1f2937;
+--menu-active: #f1f1f1;
+
+/* Gradient 9: Cotton Candy */
+--header-bg: linear-gradient(135deg, #FC5C7D 0%, #6A82FB 100%);
+--primary-color: #FC5C7D;
+--info-color: #6A82FB;
+--sidebar-bg: #ffffff;
+--content-bg: #faf8ff;
+--text-color: #2d3748;
+--menu-active: #ffecef;
+
+/* Gradient 10: Golden Hour */
+--header-bg: linear-gradient(135deg, #FFD700 0%, #FF8C00 100%);
+--primary-color: #FF8C00;
+--info-color: #FFD700;
+--sidebar-bg: #ffffff;
+--content-bg: #fffaf0;
+--text-color: #2d3748;
+--menu-active: #fff5e6;
+
+
+
+ <div class="card shadow-sm border-0 mb-4">
+        <div class="card-body">
+            <div class="row g-3 align-items-end">
+                <!-- Filter Section -->
+                <div class="col-lg-9">
+                    <div class="row g-3">
+                        <!-- Broker Select -->
+                        <div class="col-md-4">
+                            <label for="brokerSelect" class="form-label text-muted small mb-1">Broker</label>
+                            <select class="form-select form-select-sm" id="brokerSelect">
+                                <option selected disabled>Select Broker</option>
+                                <option value="1">Broker One</option>
+                                <option value="2">Broker Two</option>
+                            </select>
+                        </div>
+
+                        <!-- Date Range -->
+                        <div class="col-md-4">
+                            <label for="dateFromField" class="form-label text-muted small mb-1">Date Range</label>
+                            <div class="input-group input-group-sm">
+                                <input type="date" class="form-control form-control-sm" id="dateFromField" name="dateFrom">
+                                <span class="input-group-text">to</span>
+                                <input type="date" class="form-control form-control-sm" id="dateToField" name="dateTo">
+                            </div>
+                        </div>
+                        
+                        <!-- Search Button -->
+                        <div class="col-lg-3 d-flex align-items-end">
+                            <button type="button" class="btn btn-primary btn-sm w-100">
+                                <i class="bi bi-funnel me-1"></i> Apply Filters
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="col-lg-3">
+                    <div class="d-flex justify-content-end gap-2">
+                        <button class="btn btn-sm btn-outline-secondary">
+                            <i class="bi bi-download"></i>
+                            <span class="d-none d-lg-inline ms-1">Export</span>
+                        </button>
+                        <button class="btn btn-sm btn-success" type="button" data-bs-toggle="modal" data-bs-target="#addUserModal">
+                            <i class="bi bi-plus-lg"></i>
+                            <span class="d-none d-lg-inline ms-1">Add User</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+    <!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #573BFF;
+            --info-color: #00C3F9;
+            --sidebar-bg: #fff;
+            --content-bg: #f8f9fa;
+            /* --header-bg: linear-gradient(135deg, #573BFF 0%, #00C3F9 100%); */
+            /* --header-bg: linear-gradient(135deg, #0F2027 0%, #203A43 50%, #2C5364 100%); */
+            /* --header-bg: linear-gradient(135deg, #FF416C 0%, #FF4B2B 100%); */
+            --header-bg: linear-gradient(135deg, #11998E 0%, #38EF7D 100%);
+            /* --header-bg: linear-gradient(135deg, #4776E6 0%, #8E54E9 100%); */
+            /* --header-bg: linear-gradient(135deg, #F12711 0%, #F5AF19 100%); */
+            /* --header-bg: linear-gradient(135deg, #00d2ff 0%, #3a7bd5 100%); */
+            /* --header-bg: linear-gradient(135deg, #434343 0%, #000000 100%); */
+            /* --header-bg: linear-gradient(135deg, #FC5C7D 0%, #6A82FB 100%); */
+            /* --header-bg: linear-gradient(135deg, #FFD700 0%, #FF8C00 100%); */
+            /* --header-bg: linear-gradient(135deg, #00F260 0%, #0575E6 100%); */
+            --danger-color: #dc3545;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--content-bg);
+            overflow-x: hidden;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 250px;
+            min-height: 100vh;
+            background: var(--sidebar-bg);
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            transition: all 0.3s;
+        }
+
+        .sidebar.collapsed {
+            width: 70px;
+        }
+
+        .sidebar.collapsed .logo-title,
+        .sidebar.collapsed .item-name {
+            display: none;
+        }
+
+        .sidebar.collapsed .nav-link {
+            text-align: center;
+            padding: 12px 0;
+        }
+
+        .sidebar.collapsed .nav-link i {
+            margin-right: 0;
+        }
+
+        .sidebar-header {
+            padding: 20px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo-title {
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-left: 10px;
+            transition: all 0.3s;
+        }
+
+        .sidebar-body {
+            padding: 20px 0;
+        }
+
+        .nav-item {
+            margin-bottom: 5px;
+        }
+
+        .nav-link {
+            padding: 12px 20px;
+            color: #495057;
+            border-radius: 0 30px 30px 0;
+            transition: all 0.3s;
+            white-space: nowrap;
+        }
+
+        .nav-link-profile {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            color: #fff;
+            padding: 8px 16px;
+            border-radius: 20px;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            position: relative;
+            overflow: hidden;
+            font-weight: 500;
+        }
+
+        /* Hover & Active States */
+        .nav-link-profile:hover,
+        .nav-link-profile.active {
+            color: #fff;
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transform: translateY(-2px);
+        }
+
+        /* Modern Active Indicator */
+        .nav-link-profile.active::after {
+            content: '';
+            position: absolute;
+            bottom: 2px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 3px;
+            background: #fff;
+            border-radius: 2px;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            background-color: rgba(87, 59, 255, 0.1);
+            color: var(--primary-color);
+        }
+
+        .nav-link i {
+            width: 24px;
+            text-align: center;
+            margin-right: 10px;
+            transition: all 0.3s;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: 250px;
+            transition: all 0.3s;
+        }
+
+        .sidebar.collapsed~.main-content {
+            margin-left: 70px;
+        }
+
+        /* Header */
+        .header {
+            background: var(--header-bg);
+            color: white;
+            padding: 100px 0 50px;
+            position: relative;
+            overflow: hidden;
+            margin-top: 60px;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('https://via.placeholder.com/1920x400') center/cover;
+            opacity: 0.1;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Navbar */
+        .iq-navbar {
+            background: var(--header-bg);
+            padding: 15px 20px;
+            position: fixed;
+            top: 0;
+            right: 0;
+            left: 250px;
+            z-index: 100;
+            transition: all 0.3s;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .sidebar.collapsed~.main-content .iq-navbar {
+            left: 70px;
+        }
+
+        .navbar-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+
+
+        .form-control {
+            border-radius: 20px;
+            background: transparent;
+            border: none;
+
+        }
+
+
+        .input-group-text {
+            background-color: transparent;
+            border: none;
+            color: white;
+        }
+
+        .navbar-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-item.dropdown {
+            margin-left: 15px;
+        }
+
+        .dropdown-menu {
+            border: none;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .dots {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            position: absolute;
+            top: 5px;
+            right: 5px;
+        }
+
+        .bg-danger {
+            background-color: var(--danger-color);
+        }
+
+        .bg-primary {
+            background-color: var(--primary-color);
+        }
+
+        /* Cards */
+        .card-slide {
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s;
+            margin: 10px;
+        }
+
+        .card-slide:hover {
+            transform: translateY(-5px);
+        }
+
+        .progress-widget {
+            display: flex;
+            align-items: center;
+        }
+
+        .circle-progress {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 20px;
+            position: relative;
+        }
+
+        .circle-progress-primary {
+            background-color: rgba(87, 59, 255, 0.1);
+            color: var(--primary-color);
+        }
+
+        .circle-progress-info {
+            background-color: rgba(0, 195, 249, 0.1);
+            color: var(--info-color);
+        }
+
+        .circle-progress i {
+            font-size: 24px;
+        }
+
+        .progress-detail h4 {
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .progress-detail p {
+            color: #6c757d;
+            margin-bottom: 0;
+        }
+
+        /* Footer */
+        .footer {
+            background: #fff;
+            padding: 20px 0;
+            margin-top: 30px;
+            box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.02);
+        }
+
+        /* Toggle Button */
+        .sidebar-toggle {
+            background: none;
+            border: none;
+            color: var(--primary-color);
+            font-size: 1.25rem;
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        /* -----------------------------------------------------search btn--------------- */
+        .search-container {
+            position: relative;
+            width: 300px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 10px 20px 10px 40px;
+            background-color: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            border-radius: 25px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+        }
+
+        .search-input:focus {
+            outline: none;
+            background-color: rgba(255, 255, 255, 0.25);
+            border-color: rgba(255, 255, 255, 0.5);
+            box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.1);
+        }
+
+        .search-input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: rgba(224, 232, 235, 0.7);
+            z-index: 1000;
+            pointer-events: none;
+
+        }
+
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+
+            .sidebar.active {
+                transform: translateX(0);
+                width: 250px;
+            }
+
+            .sidebar.collapsed {
+                width: 70px;
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+
+            .iq-navbar {
+                left: 0;
+            }
+
+            .search-input {
+                width: 200px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Loader -->
+
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-header d-flex align-items-center">
+            <div class="d-flex align-items-center">
+                <i class="fa-solid fa-user-tie" style="color: #573BFF;"></i>
+                <h4 class="logo-title"> Admin</h4>
+            </div>
+            <button class="sidebar-toggle" id="sidebarToggle">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+        </div>
+        <div class="sidebar-body">
+            <ul class="navbar-nav">
+
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="#">
+                        <i class="fas fa-th-large"></i>
+                        <span class="item-name">Dashboard</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        <i class="fas fa-users"></i>
+                        <span class="item-name">Users</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        <i class="fas fa-chart-line"></i>
+                        <span class="item-name">Treades</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        <i class="fa-solid fa-crosshairs"></i>
+                        <span class="item-name">Positions</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        <i class="fa-solid fa-receipt"></i>
+                        <span class="item-name">Balance</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        <i class="fas fa-cog"></i>
+                        <span class="item-name">Settings</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Navbar -->
+        <nav class="nav navbar navbar-expand-lg navbar-light iq-navbar">
+            <div class="container-fluid navbar-inner">
+                <div class="search-container">
+                    <i class="bi bi-search search-icon"></i>
+                    <input type="text" class="search-input" placeholder="Search...">
+                </div>
+
+
+                <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+                    <ul class="mb-2 navbar-nav align-items-center navbar-list mb-lg-0">
+
+
+                        <li class="nav-item dropdown">
+                            <a class="py-0 nav-link-profile d-flex align-items-center" href="#" id="navbarDropdown"
+                                role="button" data-bs-toggle="dropdown">
+                                <i class="fa-solid fa-user-tie"></i>
+                                <div class="caption ms-3 d-none d-md-block">
+                                    <h6 class="mb-0 caption-title">Admin</h6>
+                                    <p class="mb-0 caption-sub-title">Administrator</p>
+                                </div>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li><a class="dropdown-item" href="#"><i class="fas fa-user me-2"></i>Profile</a></li>
+                                <li><a class="dropdown-item" href="#"><i class="fas fa-cog me-2"></i>Privacy Setting</a>
+                                </li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li><a class="dropdown-item" href="#"><i class="fas fa-sign-out-alt me-2"></i>Logout</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Header -->
+        <div class="header">
+            <div class="container header-content">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <h1>Hello Welcome!</h1>
+                                <p class="lead">We are on a mission to help developers like you build successful
+                                    projects for FREE.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Content -->
+        <div class="container-fluid content-inner mt-n5 py-4">
+            <div class="row">
+                <!-- Card 1 -->
+                <div class="col-md-4 mb-4">
+                    <div class="card card-slide h-100">
+                        <div class="card-body">
+                            <div class="progress-widget">
+                                <div class="circle-progress circle-progress-primary">
+                                    <i class="fas fa-shopping-cart"></i>
+                                </div>
+                                <div class="progress-detail">
+                                    <p class="mb-2">Total Sales</p>
+                                    <h4 class="counter">1525</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="col-md-4 mb-4">
+                    <div class="card card-slide h-100">
+                        <div class="card-body">
+                            <div class="progress-widget">
+                                <div class="circle-progress circle-progress-info">
+                                    <i class="fas fa-chart-pie"></i>
+                                </div>
+                                <div class="progress-detail">
+                                    <p class="mb-2">Total Profit</p>
+                                    <h4 class="counter">152</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="col-md-4 mb-4">
+                    <div class="card card-slide h-100">
+                        <div class="card-body">
+                            <div class="progress-widget">
+                                <div class="circle-progress circle-progress-success">
+                                    <i class="fas fa-users"></i>
+                                </div>
+                                <div class="progress-detail">
+                                    <p class="mb-2">New Customers</p>
+                                    <h4 class="counter">526</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col-md-12 mt-4">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h5 class="card-title">Admin Details</h5>
+                            <a href="#" class="btn btn-sm btn-link">View All</a>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>User ID</th>
+                                        <th>User Name</th>
+                                        <th>Account ID</th>
+                                        <th>Account Name</th>
+                                        <th>Broker</th>
+                                        <th>API Key</th>
+                                        <th>API Secret</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>#1001</td>
+                                        <td>John Doe</td>
+                                        <td>ACC2001</td>
+                                        <td>John's Trading Account</td>
+                                        <td>BrokerX</td>
+                                        <td>ak_9xYz8qW3eR</td>
+                                        <td>as_5tGv7hN2mK</td>
+                                        <td>
+                                            <a href="#" class="btn btn-sm btn-outline-primary"><i
+                                                    class="fa-solid fa-eye"></i></a>
+                                            <a href="#" class="btn btn-sm btn-outline-success"><i
+                                                    class="fa-solid fa-user-pen"></i></a>
+                                            <a href="#" class="btn btn-sm btn-outline-danger"><i
+                                                    class="fa-solid fa-trash"></i></i></a>
+                                            <a href="#" class="btn btn-sm btn-outline-secondary">Action</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>#1002</td>
+                                        <td>Jane Smith</td>
+                                        <td>ACC2002</td>
+                                        <td>Jane Investment</td>
+                                        <td>TradeMaster</td>
+                                        <td>ak_pLk9jH4gFd</td>
+                                        <td>as_rTq2wN5bVc</td>
+                                        <td>
+                                            <a href="#" class="btn btn-sm btn-outline-primary"><i
+                                                    class="fa-solid fa-eye"></i></a>
+                                            <a href="#" class="btn btn-sm btn-outline-success"><i
+                                                    class="fa-solid fa-user-pen"></i></a>
+                                            <a href="#" class="btn btn-sm btn-outline-danger"><i
+                                                    class="fa-solid fa-trash"></i></i></a>
+                                            <a href="#" class="btn btn-sm btn-outline-secondary">Action</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>#1003</td>
+                                        <td>Mike Johnson</td>
+                                        <td>ACC2003</td>
+                                        <td>Mike's Portfolio</td>
+                                        <td>GlobalBrokers</td>
+                                        <td>ak_mBv6nC7xZq</td>
+                                        <td>as_sK8l3pO9iU</td>
+                                        <td>
+                                            <a href="#" class="btn btn-sm btn-outline-primary"><i
+                                                    class="fa-solid fa-eye"></i></a>
+                                            <a href="#" class="btn btn-sm btn-outline-success"><i
+                                                    class="fa-solid fa-user-pen"></i></a>
+                                            <a href="#" class="btn btn-sm btn-outline-danger"><i
+                                                    class="fa-solid fa-trash"></i></i></a>
+                                            <a href="#" class="btn btn-sm btn-outline-secondary">Action</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>#1004</td>
+                                        <td>Sarah Williams</td>
+                                        <td>ACC2004</td>
+                                        <td>Sarah Trading</td>
+                                        <td>InvestPro</td>
+                                        <td>ak_tR4eW9qYhU</td>
+                                        <td>as_fG5dS2aJ7k</td>
+                                        <td>
+                                            <a href="#" class="btn btn-sm btn-outline-primary"><i
+                                                    class="fa-solid fa-eye"></i></a>
+                                            <a href="#" class="btn btn-sm btn-outline-success"><i
+                                                    class="fa-solid fa-user-pen"></i></a>
+                                            <a href="#" class="btn btn-sm btn-outline-danger"><i
+                                                    class="fa-solid fa-trash"></i></i></a>
+                                            <a href="#" class="btn btn-sm btn-outline-secondary">Action</a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <nav aria-label="Table pagination">
+                            <ul class="pagination justify-content-center mt-3">
+                                <li class="page-item disabled">
+                                    <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+                                </li>
+                                <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                <li class="page-item">
+                                    <a class="page-link" href="#">Next</a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <ul class="list-inline mb-0">
+                            <li class="list-inline-item"><a href="#">Privacy Policy</a></li>
+                            <li class="list-inline-item"><a href="#">Terms of Use</a></li>
+                            <li class="list-inline-item float-end">© 2025</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </main>
+
+    <!-- jQuery and Bootstrap Bundle with Popper -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Counter Up -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Counter-Up/1.0.0/jquery.counterup.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/jquery.waypoints.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            // Hide loader
+            setTimeout(function () {
+                $('#loading').fadeOut();
+            }, 1000);
+
+            // Counter animation
+            $('.counter').counterUp({
+                delay: 10,
+                time: 1000
+            });
+
+            // Sidebar toggle functionality
+            $('#sidebarToggle').click(function () {
+                $('.sidebar').toggleClass('collapsed');
+
+                // Change icon based on state
+                const icon = $(this).find('i');
+                if ($('.sidebar').hasClass('collapsed')) {
+                    icon.removeClass('fa-chevron-left').addClass('fa-chevron-right');
+                } else {
+                    icon.removeClass('fa-chevron-right').addClass('fa-chevron-left');
+                }
+            });
+
+            // Mobile sidebar toggle
+            $('.navbar-toggler').click(function () {
+                $('.sidebar').toggleClass('active');
+            });
+        });
+    </script>
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+user
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #573BFF;
+            --info-color: #00C3F9;
+            --sidebar-bg: #fff;
+            --content-bg: #f8f9fa;
+            /* --header-bg: linear-gradient(135deg, #573BFF 0%, #00C3F9 100%); */
+            /* --header-bg: linear-gradient(135deg, #0F2027 0%, #203A43 50%, #2C5364 100%); */
+            /* --header-bg: linear-gradient(135deg, #FF416C 0%, #FF4B2B 100%); */
+            --header-bg: linear-gradient(135deg, #11998E 0%, #38EF7D 100%);
+            /* --header-bg: linear-gradient(135deg, #4776E6 0%, #8E54E9 100%); */
+            /* --header-bg: linear-gradient(135deg, #F12711 0%, #F5AF19 100%); */
+            /* --header-bg: linear-gradient(135deg, #00d2ff 0%, #3a7bd5 100%); */
+            /* --header-bg: linear-gradient(135deg, #434343 0%, #000000 100%); */
+            /* --header-bg: linear-gradient(135deg, #FC5C7D 0%, #6A82FB 100%); */
+            /* --header-bg: linear-gradient(135deg, #FFD700 0%, #FF8C00 100%); */
+            /* --header-bg: linear-gradient(135deg, #00F260 0%, #0575E6 100%); */
+            --danger-color: #dc3545;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--content-bg);
+            overflow-x: hidden;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 250px;
+            min-height: 100vh;
+            background: var(--sidebar-bg);
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            transition: all 0.3s;
+        }
+
+        .sidebar.collapsed {
+            width: 70px;
+        }
+
+        .sidebar.collapsed .logo-title,
+        .sidebar.collapsed .item-name {
+            display: none;
+        }
+
+        .sidebar.collapsed .nav-link {
+            text-align: center;
+            padding: 12px 0;
+        }
+
+        .sidebar.collapsed .nav-link i {
+            margin-right: 0;
+        }
+
+        .sidebar-header {
+            padding: 20px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo-title {
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-left: 10px;
+            transition: all 0.3s;
+        }
+
+        .sidebar-body {
+            padding: 20px 0;
+        }
+
+        .nav-item {
+            margin-bottom: 5px;
+        }
+
+        .nav-link {
+            padding: 12px 20px;
+            color: #495057;
+            border-radius: 0 30px 30px 0;
+            transition: all 0.3s;
+            white-space: nowrap;
+        }
+
+        .nav-link-profile {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            color: #fff;
+            padding: 8px 16px;
+            border-radius: 20px;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            position: relative;
+            overflow: hidden;
+            font-weight: 500;
+        }
+
+        /* Hover & Active States */
+        .nav-link-profile:hover,
+        .nav-link-profile.active {
+            color: #fff;
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transform: translateY(-2px);
+        }
+
+        /* Modern Active Indicator */
+        .nav-link-profile.active::after {
+            content: '';
+            position: absolute;
+            bottom: 2px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 3px;
+            background: #fff;
+            border-radius: 2px;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            background-color: rgba(87, 59, 255, 0.1);
+            color: var(--primary-color);
+        }
+
+        .nav-link i {
+            width: 24px;
+            text-align: center;
+            margin-right: 10px;
+            transition: all 0.3s;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: 250px;
+            transition: all 0.3s;
+        }
+
+        .sidebar.collapsed~.main-content {
+            margin-left: 70px;
+        }
+
+        /* Header */
+        .header {
+            background: var(--header-bg);
+            color: white;
+            padding: 40px 0 10px;
+            position: relative;
+            overflow: hidden;
+            margin-top: 60px;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('https://via.placeholder.com/1920x400') center/cover;
+            opacity: 0.1;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Navbar */
+        .iq-navbar {
+            background: var(--header-bg);
+            padding: 15px 20px;
+            position: fixed;
+            top: 0;
+            right: 0;
+            left: 250px;
+            z-index: 100;
+            transition: all 0.3s;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .sidebar.collapsed~.main-content .iq-navbar {
+            left: 70px;
+        }
+
+        .navbar-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+
+
+
+
+
+        .input-group-text {
+            background-color: transparent;
+            border: none;
+            color: white;
+        }
+
+        .navbar-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-item.dropdown {
+            margin-left: 15px;
+        }
+
+        .dropdown-menu {
+            border: none;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .dots {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            position: absolute;
+            top: 5px;
+            right: 5px;
+        }
+
+        .bg-danger {
+            background-color: var(--danger-color);
+        }
+
+        .bg-primary {
+            background-color: var(--primary-color);
+        }
+
+        /* Cards */
+        .card-slide {
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s;
+            margin: 10px;
+        }
+
+        .card-slide:hover {
+            transform: translateY(-5px);
+        }
+
+        .progress-widget {
+            display: flex;
+            align-items: center;
+        }
+
+        .circle-progress {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 20px;
+            position: relative;
+        }
+
+        .circle-progress-primary {
+            background-color: rgba(87, 59, 255, 0.1);
+            color: var(--primary-color);
+        }
+
+        .circle-progress-info {
+            background-color: rgba(0, 195, 249, 0.1);
+            color: var(--info-color);
+        }
+
+        .circle-progress i {
+            font-size: 24px;
+        }
+
+        .progress-detail h4 {
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .progress-detail p {
+            color: #6c757d;
+            margin-bottom: 0;
+        }
+
+        /* -------------------search btn--------------- */
+        .search-container {
+            position: relative;
+            width: 300px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 10px 20px 10px 40px;
+            background-color: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            border-radius: 25px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+        }
+
+        .search-input:focus {
+            outline: none;
+            background-color: rgba(255, 255, 255, 0.25);
+            border-color: rgba(255, 255, 255, 0.5);
+            box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.1);
+        }
+
+        .search-input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: rgba(224, 232, 235, 0.7);
+            z-index: 1000;
+            pointer-events: none;
+
+        }
+
+
+        /* Footer */
+        .footer {
+            background: #fff;
+            padding: 20px 0;
+            margin-top: 30px;
+            box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.02);
+        }
+
+        /* Toggle Button */
+        .sidebar-toggle {
+            background: none;
+            border: none;
+            color: var(--primary-color);
+            font-size: 1.25rem;
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+
+            .sidebar.active {
+                transform: translateX(0);
+                width: 250px;
+            }
+
+            .sidebar.collapsed {
+                width: 70px;
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+
+            .iq-navbar {
+                left: 0;
+            }
+
+            .search-input {
+                width: 200px;
+            }
+        }
+
+
+        /* add user Custom CSS */
+        .modal-content {
+            border: none;
+        }
+
+
+
+        .form-control:focus,
+        .form-select:focus {
+            border-color: #573BFF;
+            box-shadow: 0 0 0 3px rgba(87, 59, 255, 0.1);
+        }
+
+        .btn-primary {
+            background-color: #573BFF;
+            border-color: #573BFF;
+            padding: 10px 20px;
+            border-radius: 8px;
+        }
+
+        .input-group button {
+            border-radius: 0 8px 8px 0;
+        }
+    </style>
+</head>
+
+<body>
+
+
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-header d-flex align-items-center">
+            <div class="d-flex align-items-center">
+                <i class="fa-solid fa-user-tie" style="color: #573BFF;"></i>
+                <h4 class="logo-title"> Admin</h4>
+            </div>
+            <button class="sidebar-toggle" id="sidebarToggle">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+        </div>
+        <div class="sidebar-body">
+            <ul class="navbar-nav">
+
+                <li class="nav-item">
+                    <a class="nav-link " aria-current="page" href="#">
+                        <i class="fas fa-th-large"></i>
+                        <span class="item-name">Dashboard</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="#">
+                        <i class="fas fa-users"></i>
+                        <span class="item-name">Users</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        <i class="fas fa-chart-line"></i>
+                        <span class="item-name">Treades</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        <i class="fa-solid fa-crosshairs"></i>
+                        <span class="item-name">Positions</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        <i class="fa-solid fa-receipt"></i>
+                        <span class="item-name">Balance</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        <i class="fas fa-cog"></i>
+                        <span class="item-name">Settings</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Navbar -->
+        <nav class="nav navbar navbar-expand-lg navbar-light iq-navbar">
+            <div class="container-fluid navbar-inner">
+                <div class="search-container">
+                    <i class="bi bi-search search-icon"></i>
+                    <input type="text" class="search-input" placeholder="Search...">
+                </div>
+
+                <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+                    <ul class="mb-2 navbar-nav align-items-center navbar-list mb-lg-0">
+
+
+                        <li class="nav-item dropdown">
+                            <a class="py-0 nav-link-profile d-flex align-items-center" href="#" id="navbarDropdown"
+                                role="button" data-bs-toggle="dropdown">
+                                <i class="fa-solid fa-user-tie"></i>
+                                <div class="caption ms-3 d-none d-md-block">
+                                    <h6 class="mb-0 caption-title">Admin</h6>
+                                    <p class="mb-0 caption-sub-title">Administrator</p>
+                                </div>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li><a class="dropdown-item" href="#"><i class="fas fa-user me-2"></i>Profile</a></li>
+                                <li><a class="dropdown-item" href="#"><i class="fas fa-cog me-2"></i>Privacy Setting</a>
+                                </li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li><a class="dropdown-item" href="#"><i class="fas fa-sign-out-alt me-2"></i>Logout</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Header -->
+        <div class="header">
+            <div class="container header-content">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <h1>Users</h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Content -->
+        <div class="container-fluid content-inner mt-n5 py-4">
+
+            <div class="card shadow-sm border-0 mb-4">
+                <div class="card-body">
+                    <div class="row g-3 align-items-end">
+                        <!-- Filter Section -->
+                        <div class="col-lg-9">
+                            <div class="row g-3">
+                                <!-- Broker Select -->
+                                <div class="col-md-4">
+                                    <label for="brokerSelect" class="form-label text-muted small mb-1">Account
+                                        name</label>
+                                    <select class="form-select form-select-sm" id="brokerSelect">
+                                        <option selected disabled>Select Account name</option>
+                                        <option value="1"> One</option>
+                                        <option value="2"> Two</option>
+                                    </select>
+                                </div>
+
+                                <!-- Date Range -->
+                                <div class="col-md-4">
+                                    <label for="dateFromField" class="form-label text-muted small mb-1">Date
+                                        Range</label>
+                                    <div class="input-group input-group-sm">
+                                        <input type="date" class="form-control form-control-sm" id="dateFromField"
+                                            name="dateFrom">
+                                        <span class="input-group-text" style="color: #030303;">to</span>
+                                        <input type="date" class="form-control form-control-sm" id="dateToField"
+                                            name="dateTo">
+                                    </div>
+                                </div>
+
+                                <!-- Search Button -->
+                                <div class="col-lg-2 d-flex align-items-end">
+                                    <button type="button" class="btn btn-primary btn-sm w-100">
+                                        <i class="bi bi-funnel ms-2"></i> Apply Filters
+                                        <!-- <span class="d-none d-lg-inline ms-1">Export</span>  -->
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div class="col-lg-3">
+                            <div class="d-flex justify-content-end gap-2">
+                                <!-- <button class="btn btn-sm btn-outline-secondary">
+                           <i class="bi bi-funnel me-1"></i>
+                            <span class="d-none d-lg-inline ms-1">Filters</span>
+                        </button> -->
+                                <button class="btn btn-sm btn-outline-secondary">
+                                    <i class="fa-solid fa-upload"></i>
+                                    <span class="d-none d-lg-inline ms-1">Import</span>
+                                </button>
+                                <button class="btn btn-sm btn-outline-secondary">
+                                    <i class="bi bi-download"></i>
+                                    <span class="d-none d-lg-inline ms-1">Export</span>
+                                </button>
+                                <button class="btn btn-sm btn-success" type="button" data-bs-toggle="modal"
+                                    data-bs-target="#addUserModal">
+                                    <i class="bi bi-plus-lg"></i>
+                                    <span class="d-none d-lg-inline ms-1">Add User</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+
+            <!-- ----------------------------------------------------------------------------------------------------     -->
+            <!-- 
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                <button type="button" class="btn btn-outline-secondary me-md-2" data-bs-toggle="tooltip"
+                    title="Search users">
+                    <i class="bi bi-search"></i> Search
+                </button>
+                <button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#addUserModal"
+                    data-bs-toggle="tooltip" title="Add new users">
+                    <i class="bi bi-plus-lg"></i> Add Users
+                </button>
+            </div> -->
+
+            <!-- <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                <button type="button" class="btn btn-light">Light</button>
+                <button class="btn btn-outline-secondary me-md-2" type="button" data-bs-toggle="modal"
+                    data-bs-target="#addUserModal">Add Users</button>
+            </div> -->
+
+            <!-- <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search...">
+                    <button class="btn btn-outline-secondary" type="button">
+                        <i class="bi bi-search"></i>
+                    </button>
+                </div>
+                <div class="btn-group">
+                    <button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#addUserModal">
+                        Add Users
+                    </button>
+                    <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown">
+                        <span class="visually-hidden">Toggle Dropdown</span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">Import Users</a></li>
+                        <li><a class="dropdown-item" href="#">Export Users</a></li>
+                    </ul>
+                </div>
+            </div> -->
+
+            <!-- 
+            <div class="d-flex flex-column flex-md-row justify-content-md-end gap-2">
+                <div class="d-flex">
+                    <input type="text" class="form-control" placeholder="Search...">
+                    <button type="button" class="btn btn-outline-secondary ms-2">
+                        <i class="bi bi-search"></i>
+                    </button>
+                </div>
+                <button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#addUserModal">
+                    <i class="bi bi-plus-lg"></i> <span class="d-none d-md-inline">Add Users</span>
+                </button>
+            </div>
+ -->
+
+            <!-- <hr> -->
+            <!-- -------------------------------------------cerate second from------------------------------------------------------- -->
+            <div class="container">
+                <form>
+                    <div class="row mb-3">
+                        <div class="col-md-4">
+                            <label for="userId" class="form-label">User ID</label>
+                            <input type="text" class="form-control" id="userId" placeholder="User ID">
+                        </div>
+                        <div class="col-md-4">
+                            <label for="userName" class="form-label">User Name</label>
+                            <input type="text" class="form-control" id="userName" placeholder="User Name">
+                        </div>
+                        <div class="col-md-4">
+                            <label for="brokerSelect" class="form-label">Broker</label>
+                            <select class="form-select" id="brokerSelect">
+                                <option selected disabled>Select Broker</option>
+                                <option value="1">Broker One</option>
+                                <option value="2">Broker Two</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-4">
+                            <label for="accountId" class="form-label">Account ID</label>
+                            <input type="text" class="form-control" id="accountId" placeholder="Account ID">
+                        </div>
+                        <div class="col-md-4">
+                            <label for="accountName" class="form-label">Account Name</label>
+                            <input type="text" class="form-control" id="accountName" placeholder="Account Name">
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">User Type</label>
+                            <div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="userType" id="userTypeUser"
+                                        value="user" checked>
+                                    <label class="form-check-label" for="userTypeUser">User</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="userType" id="userTypeAdmin"
+                                        value="admin">
+                                    <label class="form-check-label" for="userTypeAdmin">Admin</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mb-4">
+                        <div class="col-md-4">
+                            <label for="apiKey" class="form-label">API Key</label>
+                            <input type="password" class="form-control" id="apiKey" placeholder="API Key">
+                        </div>
+                        <div class="col-md-4">
+                            <label for="apiSecret" class="form-label">API Secret</label>
+                            <input type="password" class="form-control" id="apiSecret" placeholder="API Secret">
+                        </div>
+                        <div class="col-md-4">
+                            <label for="dateField" class="form-label">Date</label>
+                            <input type="date" class="form-control" id="dateField" name="date">
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-end gap-2">
+                        <button type="button" class="btn btn-outline-secondary">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Add User</button>
+                    </div>
+
+
+                </form>
+            </div>
+
+
+
+            <!-- -------------------------------------------------------------------------------------------------------      -->
+
+            <!-- Add User Modal -->
+            <div class="modal fade" id="addUserModal" tabindex="-1" aria-labelledby="addUserModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog modal-lg modal-dialog-centered">
+                    <div class="modal-content"
+                        style="border-radius: 12px; border: none; box-shadow: 0 5px 20px rgba(0,0,0,0.1);">
+
+                        <!-- Header -->
+                        <div class="modal-header border-0" style="background: #f8f9fa;">
+                            <h5 class="modal-title">Add New User</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+
+                        <!-- Form Body -->
+                        <div class="modal-body">
+                            <form id="addUserForm">
+
+                                <!-- First Row -->
+                                <div class="row mb-4">
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">User ID</label>
+                                        <input type="text" class="form-control" placeholder="Enter unique ID">
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">User Name</label>
+                                        <input type="text" class="form-control" placeholder="Enter full name">
+                                    </div>
+                                </div>
+
+                                <!-- Second Row -->
+                                <div class="row mb-4">
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Account ID</label>
+                                        <input type="text" class="form-control" placeholder="Enter account ID">
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Account Name</label>
+                                        <input type="text" class="form-control" placeholder="Enter account name">
+                                    </div>
+                                </div>
+
+                                <!-- Third Row -->
+                                <div class="row mb-4">
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">User Role</label>
+                                        <select class="form-select">
+                                            <option value="user">User</option>
+                                            <option value="admin">Admin</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Broker</label>
+                                        <select class="form-select">
+                                            <option value="">Select broker</option>
+                                            <option>BrokerX</option>
+                                            <option>TradeMaster</option>
+                                            <option>GlobalBrokers</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <!-- Fourth Row -->
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">API Key</label>
+                                        <input type="text" class="form-control" placeholder="Enter API key">
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">API Secret</label>
+                                        <div class="input-group">
+                                            <input type="password" class="form-control" placeholder="Enter API secret">
+                                            <button class="btn btn-outline-secondary" type="button">
+                                                <i class="bi bi-eye"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+
+                        <!-- Footer -->
+                        <div class="modal-footer border-0">
+                            <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
+                            <button type="button" class="btn btn-primary">Save User</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- -------------------------------------------------------------------------------------------------- -->
+
+
+
+            <!-- user table -->
+
+            <div class="col-md-12 mt-4">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h5 class="card-title">User Details</h5>
+                            <a href="#" class="btn btn-sm btn-link">View All</a>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>User ID</th>
+                                        <th>User Name</th>
+                                        <th>Account ID</th>
+                                        <th>Account Name</th>
+                                        <th>Broker</th>
+                                        <th>API Key</th>
+                                        <th>API Secret</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>#1001</td>
+                                        <td>John Doe</td>
+                                        <td>ACC2001</td>
+                                        <td>John's Trading Account</td>
+                                        <td>BrokerX</td>
+                                        <td>ak_9xYz8qW3eR</td>
+                                        <td>as_5tGv7hN2mK</td>
+                                        <td>
+                                            <a href="#" class="btn btn-sm btn-outline-primary"><i
+                                                    class="fa-solid fa-eye"></i></a>
+                                            <a href="#" class="btn btn-sm btn-outline-success"><i
+                                                    class="fa-solid fa-user-pen"></i></a>
+                                            <a href="#" class="btn btn-sm btn-outline-danger"><i
+                                                    class="fa-solid fa-trash"></i></i></a>
+                                            <a href="#" class="btn btn-sm btn-outline-secondary">Action</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>#1002</td>
+                                        <td>Jane Smith</td>
+                                        <td>ACC2002</td>
+                                        <td>Jane Investment</td>
+                                        <td>TradeMaster</td>
+                                        <td>ak_pLk9jH4gFd</td>
+                                        <td>as_rTq2wN5bVc</td>
+                                        <td>
+                                            <a href="#" class="btn btn-sm btn-outline-primary"><i
+                                                    class="fa-solid fa-eye"></i></a>
+                                            <a href="#" class="btn btn-sm btn-outline-success"><i
+                                                    class="fa-solid fa-user-pen"></i></a>
+                                            <a href="#" class="btn btn-sm btn-outline-danger"><i
+                                                    class="fa-solid fa-trash"></i></i></a>
+                                            <a href="#" class="btn btn-sm btn-outline-secondary">Action</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>#1003</td>
+                                        <td>Mike Johnson</td>
+                                        <td>ACC2003</td>
+                                        <td>Mike's Portfolio</td>
+                                        <td>GlobalBrokers</td>
+                                        <td>ak_mBv6nC7xZq</td>
+                                        <td>as_sK8l3pO9iU</td>
+                                        <td>
+                                            <a href="#" class="btn btn-sm btn-outline-primary"><i
+                                                    class="fa-solid fa-eye"></i></a>
+                                            <a href="#" class="btn btn-sm btn-outline-success"><i
+                                                    class="fa-solid fa-user-pen"></i></a>
+                                            <a href="#" class="btn btn-sm btn-outline-danger"><i
+                                                    class="fa-solid fa-trash"></i></i></a>
+                                            <a href="#" class="btn btn-sm btn-outline-secondary">Action</a>
+
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>#1004</td>
+                                        <td>Sarah Williams</td>
+                                        <td>ACC2004</td>
+                                        <td>Sarah Trading</td>
+                                        <td>InvestPro</td>
+                                        <td>ak_tR4eW9qYhU</td>
+                                        <td>as_fG5dS2aJ7k</td>
+                                        <td>
+                                            <a href="#" class="btn btn-sm btn-outline-primary"><i
+                                                    class="fa-solid fa-eye"></i></a>
+                                            <a href="#" class="btn btn-sm btn-outline-success"><i
+                                                    class="fa-solid fa-user-pen"></i></a>
+                                            <a href="#" class="btn btn-sm btn-outline-danger"><i
+                                                    class="fa-solid fa-trash"></i></i></a>
+                                            <a href="#" class="btn btn-sm btn-outline-secondary">Action</a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <nav aria-label="Table pagination">
+                            <ul class="pagination justify-content-center mt-3">
+                                <li class="page-item disabled">
+                                    <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+                                </li>
+                                <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                <li class="page-item">
+                                    <a class="page-link" href="#">Next</a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+
+
+
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <ul class="list-inline mb-0">
+                            <li class="list-inline-item"><a href="#">Privacy Policy</a></li>
+                            <li class="list-inline-item"><a href="#">Terms of Use</a></li>
+                            <li class="list-inline-item float-end">© 2025</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </main>
+
+    <!-- jQuery and Bootstrap Bundle with Popper -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Counter Up -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Counter-Up/1.0.0/jquery.counterup.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/jquery.waypoints.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+
+    <script>
+
+        $(document).ready(function () {
+            // Hide loader
+            setTimeout(function () {
+                $('#loading').fadeOut();
+            }, 1000);
+
+            // Counter animation
+            $('.counter').counterUp({
+                delay: 10,
+                time: 1000
+            });
+
+            // Sidebar toggle functionality
+            $('#sidebarToggle').click(function () {
+                $('.sidebar').toggleClass('collapsed');
+
+                // Change icon based on state
+                const icon = $(this).find('i');
+                if ($('.sidebar').hasClass('collapsed')) {
+                    icon.removeClass('fa-chevron-left').addClass('fa-chevron-right');
+                } else {
+                    icon.removeClass('fa-chevron-right').addClass('fa-chevron-left');
+                }
+            });
+
+            // Mobile sidebar toggle
+            $('.navbar-toggler').click(function () {
+                $('.sidebar').toggleClass('active');
+            });
+        });
+
+
+
+        // ---------------add users----------------
+        document.getElementById('toggleSecret').addEventListener('click', function () {
+            const secretInput = document.getElementById('apiSecret');
+            const type = secretInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            secretInput.setAttribute('type', type);
+            this.innerHTML = type === 'password' ? '<i class="bi bi-eye"></i>' : '<i class="bi bi-eye-slash"></i>';
+        });
+    </script>
+</body>
+
+</html>
+
+
+      <div class="row mb-4">
+                <div class="col-md-12">
+                    <div class="card border-0 shadow-sm">
+                        <div class="card-body">
+                            <!-- Header with date picker -->
+                            <div class="d-flex justify-content-between align-items-center mb-4">
+                                <div>
+                                    <h5 class="card-title mb-1">Trade Performance</h5>
+                                    <p class="text-muted small mb-0">Profit vs. Trade Volume Analysis</p>
+                                </div>
+                                <div class="dropdown">
+                                    <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button"
+                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                        <i class="fas fa-calendar-alt me-1"></i> Last 30 Days
+                                    </button>
+                                    <ul class="dropdown-menu dropdown-menu-end">
+                                        <li><a class="dropdown-item" href="#">Last 7 Days</a></li>
+                                        <li><a class="dropdown-item active" href="#">Last 30 Days</a></li>
+                                        <li><a class="dropdown-item" href="#">Last 90 Days</a></li>
+                                        <li>
+                                            <hr class="dropdown-divider">
+                                        </li>
+                                        <li><a class="dropdown-item" href="#">Custom Range</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <!-- Dual-axis chart container -->
+                            <div class="chart-container" style="height: 280px; position: relative;">
+                                <!-- Chart canvas (would be replaced with Chart.js in production) -->
+                                <div class="mock-chart">
+                                    <!-- Grid lines -->
+                                    <div class="chart-grid">
+                                        <div class="grid-line"></div>
+                                        <div class="grid-line"></div>
+                                        <div class="grid-line"></div>
+                                        <div class="grid-line"></div>
+                                    </div>
+
+                                    <!-- Left axis (Profit) -->
+                                    <div class="y-axis left">
+                                        <span>$5K</span>
+                                        <span>$3K</span>
+                                        <span>$1K</span>
+                                        <span>$0</span>
+                                    </div>
+
+                                    <!-- Right axis (Volume) -->
+                                    <div class="y-axis right">
+                                        <span>40</span>
+                                        <span>30</span>
+                                        <span>20</span>
+                                        <span>10</span>
+                                    </div>
+
+                                    <!-- Profit line -->
+                                    <div class="line profit-line" style="stroke: #4e54c8;">
+                                        <svg height="100%" width="100%" preserveAspectRatio="none">
+                                            <path d="M0,80 L50,60 L100,40 L150,70 L200,30 L250,90 L300,50 L350,80"
+                                                fill="none" stroke="#4e54c8" stroke-width="3" stroke-linejoin="round" />
+                                        </svg>
+                                    </div>
+
+                                    <!-- Volume bars -->
+                                    <div class="volume-bars">
+                                        <div class="bar" style="height: 30%; left: 5%;"></div>
+                                        <div class="bar" style="height: 45%; left: 15%;"></div>
+                                        <div class="bar" style="height: 25%; left: 25%;"></div>
+                                        <div class="bar" style="height: 60%; left: 35%;"></div>
+                                        <div class="bar" style="height: 40%; left: 45%;"></div>
+                                        <div class="bar" style="height: 75%; left: 55%;"></div>
+                                        <div class="bar" style="height: 50%; left: 65%;"></div>
+                                        <div class="bar" style="height: 35%; left: 75%;"></div>
+                                        <div class="bar" style="height: 65%; left: 85%;"></div>
+                                    </div>
+
+                                    <!-- X-axis labels -->
+                                    <div class="x-axis">
+                                        <span>Week 1</span>
+                                        <span>Week 2</span>
+                                        <span>Week 3</span>
+                                        <span>Week 4</span>
+                                    </div>
+                                </div>
+
+                                <!-- Legend -->
+                                <div class="chart-legend">
+                                    <div class="legend-item">
+                                        <span class="legend-color" style="background-color: #4e54c8;"></span>
+                                        <span>Profit ($)</span>
+                                    </div>
+                                    <div class="legend-item">
+                                        <span class="legend-color" style="background-color: #8f94fb;"></span>
+                                        <span>Trade Volume</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Key metrics -->
+                            <div class="row mt-4">
+                                <div class="col-md-3">
+                                    <div class="metric-card">
+                                        <div class="metric-value text-primary">$12,842</div>
+                                        <div class="metric-label">Total Profit</div>
+                                        <div class="metric-change positive">+8.2% <i class="fas fa-arrow-up"></i></div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="metric-card">
+                                        <div class="metric-value">214</div>
+                                        <div class="metric-label">Total Trades</div>
+                                        <div class="metric-change positive">+12% <i class="fas fa-arrow-up"></i></div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="metric-card">
+                                        <div class="metric-value">3.2:1</div>
+                                        <div class="metric-label">Win Ratio</div>
+                                        <div class="metric-change neutral">±0.0</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="metric-card">
+                                        <div class="metric-value text-danger">$420</div>
+                                        <div class="metric-label">Avg. Loss</div>
+                                        <div class="metric-change negative">-5.1% <i class="fas fa-arrow-down"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Trades Table -->
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card shadow-sm border-0">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h5 class="card-title mb-0">Recent Trades</h5>
+                                <div>
+                                    <button class="btn btn-sm btn-outline-secondary me-2">
+                                        <i class="fas fa-sync-alt"></i>
+                                    </button>
+                                    <div class="btn-group btn-group-sm">
+                                        <button class="btn btn-outline-secondary">Today</button>
+                                        <button class="btn btn-outline-secondary active">Week</button>
+                                        <button class="btn btn-outline-secondary">Month</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table trade-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Trade ID</th>
+                                            <th>Symbol</th>
+                                            <th>Side</th>
+                                            <th>Size</th>
+                                            <th>Price</th>
+                                            <th>Value</th>
+                                            <th>Fee</th>
+                                            <th>P&L</th>
+                                            <th>Status</th>
+                                            <th>Date</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>#TRD-7845</td>
+                                            <td><strong>BTC/USDT</strong></td>
+                                            <td><span class="badge bg-success">Buy</span></td>
+                                            <td>0.05 BTC</td>
+                                            <td>$42,156.20</td>
+                                            <td>$2,107.81</td>
+                                            <td>$4.22</td>
+                                            <td class="trade-profit">+$324.50</td>
+                                            <td><span class="badge badge-completed">Completed</span></td>
+                                            <td>2023-11-15 14:32</td>
+                                            <td>
+                                                <button class="btn btn-sm btn-outline-primary" title="View">
+                                                    <i class="fas fa-eye"></i>
+                                                </button>
+                                                <button class="btn btn-sm btn-outline-secondary" title="Edit">
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>#TRD-7844</td>
+                                            <td><strong>ETH/USDT</strong></td>
+                                            <td><span class="badge bg-danger">Sell</span></td>
+                                            <td>2.1 ETH</td>
+                                            <td>$2,245.60</td>
+                                            <td>$4,715.76</td>
+                                            <td>$9.43</td>
+                                            <td class="trade-loss">-$187.30</td>
+                                            <td><span class="badge badge-completed">Completed</span></td>
+                                            <td>2023-11-15 11:18</td>
+                                            <td>
+                                                <button class="btn btn-sm btn-outline-primary" title="View">
+                                                    <i class="fas fa-eye"></i>
+                                                </button>
+                                                <button class="btn btn-sm btn-outline-secondary" title="Edit">
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>#TRD-7843</td>
+                                            <td><strong>SOL/USDT</strong></td>
+                                            <td><span class="badge bg-success">Buy</span></td>
+                                            <td>15 SOL</td>
+                                            <td>$58.42</td>
+                                            <td>$876.30</td>
+                                            <td>$1.75</td>
+                                            <td class="trade-profit">+$42.80</td>
+                                            <td><span class="badge badge-completed">Completed</span></td>
+                                            <td>2023-11-14 16:45</td>
+                                            <td>
+                                                <button class="btn btn-sm btn-outline-primary" title="View">
+                                                    <i class="fas fa-eye"></i>
+                                                </button>
+                                                <button class="btn btn-sm btn-outline-secondary" title="Edit">
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>#TRD-7842</td>
+                                            <td><strong>XRP/USDT</strong></td>
+                                            <td><span class="badge bg-danger">Sell</span></td>
+                                            <td>500 XRP</td>
+                                            <td>$0.62</td>
+                                            <td>$310.00</td>
+                                            <td>$0.62</td>
+                                            <td class="trade-profit">+$28.50</td>
+                                            <td><span class="badge badge-completed">Completed</span></td>
+                                            <td>2023-11-14 09:27</td>
+                                            <td>
+                                                <button class="btn btn-sm btn-outline-primary" title="View">
+                                                    <i class="fas fa-eye"></i>
+                                                </button>
+                                                <button class="btn btn-sm btn-outline-secondary" title="Edit">
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>#TRD-7841</td>
+                                            <td><strong>BTC/USDT</strong></td>
+                                            <td><span class="badge bg-success">Buy</span></td>
+                                            <td>0.02 BTC</td>
+                                            <td>$41,890.50</td>
+                                            <td>$837.81</td>
+                                            <td>$1.68</td>
+                                            <td class="trade-loss">-$65.20</td>
+                                            <td><span class="badge badge-completed">Completed</span></td>
+                                            <td>2023-11-13 22:15</td>
+                                            <td>
+                                                <button class="btn btn-sm btn-outline-primary" title="View">
+                                                    <i class="fas fa-eye"></i>
+                                                </button>
+                                                <button class="btn btn-sm btn-outline-secondary" title="Edit">
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <nav aria-label="Table pagination" class="mt-3">
+                                <ul class="pagination justify-content-center">
+                                    <li class="page-item disabled">
+                                        <a class="page-link" href="#" tabindex="-1">Previous</a>
+                                    </li>
+                                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                    <li class="page-item">
+                                        <a class="page-link" href="#">Next</a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>

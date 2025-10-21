@@ -1,0 +1,405 @@
+{
+    "result": [
+        {
+            "buyer_role": "taker",
+            "price": "117941.5",
+            "seller_role": "maker",
+            "size": 20,
+            "symbol": "BTCUSD",
+            "timestamp": 1752242696000000
+        },
+        {
+            "buyer_role": "taker",
+            "price": "117941.5",
+            "seller_role": "maker",
+            "size": 3,
+            "symbol": "BTCUSD",
+            "timestamp": 1752242694000000
+        },
+        {
+            "buyer_role": "taker",
+            "price": "117947.5",
+            "seller_role": "maker",
+            "size": 251,
+            "symbol": "BTCUSD",
+            "timestamp": 1752242693000000
+        },
+        {
+            "buyer_role": "maker",
+            "price": "117946.5",
+            "seller_role": "taker",
+            "size": 35,
+            "symbol": "BTCUSD",
+            "timestamp": 1752242692000000
+        },
+        {
+            "buyer_role": "taker",
+            "price": "117954",
+            "seller_role": "maker",
+            "size": 1,
+            "symbol": "BTCUSD",
+            "timestamp": 1752242692000000
+        },
+        {
+            "buyer_role": "taker",
+            "price": "117959.5",
+            "seller_role": "maker",
+            "size": 57,
+            "symbol": "BTCUSD",
+            "timestamp": 1752242691000000
+        },
+        {
+            "buyer_role": "taker",
+            "price": "117959.5",
+            "seller_role": "maker",
+            "size": 1,
+            "symbol": "BTCUSD",
+            "timestamp": 1752242691000000
+        },
+        {
+            "buyer_role": "taker",
+            "price": "117951",
+            "seller_role": "maker",
+            "size": 1,
+            "symbol": "BTCUSD",
+            "timestamp": 1752242691000000
+        },
+        {
+            "buyer_role": "taker",
+            "price": "117951",
+            "seller_role": "maker",
+            "size": 40,
+            "symbol": "BTCUSD",
+            "timestamp": 1752242690000000
+        },
+        {
+            "buyer_role": "taker",
+            "price": "117951",
+            "seller_role": "maker",
+            "size": 200,
+            "symbol": "BTCUSD",
+            "timestamp": 1752242690000000
+        },
+        {
+            "buyer_role": "taker",
+            "price": "117951",
+            "seller_role": "maker",
+            "size": 1,
+            "symbol": "BTCUSD",
+            "timestamp": 1752242690000000
+        },
+        {
+            "buyer_role": "taker",
+            "price": "117951",
+            "seller_role": "maker",
+            "size": 20,
+            "symbol": "BTCUSD",
+            "timestamp": 1752242689000000
+        },
+        {
+            "buyer_role": "taker",
+            "price": "117951",
+            "seller_role": "maker",
+            "size": 2,
+            "symbol": "BTCUSD",
+            "timestamp": 1752242689000000
+        },
+        {
+            "buyer_role": "taker",
+            "price": "117951",
+            "seller_role": "maker",
+            "size": 5,
+            "symbol": "BTCUSD",
+            "timestamp": 1752242689000000
+        },
+        {
+            "buyer_role": "maker",
+            "price": "117954",
+            "seller_role": "taker",
+            "size": 80,
+            "symbol": "BTCUSD",
+            "timestamp": 1752242689000000
+        },
+        {
+            "buyer_role": "taker",
+            "price": "117976.5",
+            "seller_role": "maker",
+            "size": 5,
+            "symbol": "BTCUSD",
+            "timestamp": 1752242688000000
+        },
+        {
+            "buyer_role": "taker",
+            "price": "117976.5",
+            "seller_role": "maker",
+            "size": 1,
+            "symbol": "BTCUSD",
+            "timestamp": 1752242688000000
+        },
+        {
+            "buyer_role": "taker",
+            "price": "117976.5",
+            "seller_role": "maker",
+            "size": 71,
+            "symbol": "BTCUSD",
+            "timestamp": 1752242688000000
+        },
+        {
+            "buyer_role": "taker",
+            "price": "117975",
+            "seller_role": "maker",
+            "size": 40,
+            "symbol": "BTCUSD",
+            "timestamp": 1752242688000000
+        },
+        {
+            "buyer_role": "taker",
+            "price": "117970",
+            "seller_role": "maker",
+            "size": 1,
+            "symbol": "BTCUSD",
+            "timestamp": 1752242688000000
+        },
+        {
+            "buyer_role": "maker",
+            "price": "117961",
+            "seller_role": "taker",
+            "size": 10,
+            "symbol": "BTCUSD",
+            "timestamp": 1752242687000000
+        },
+        {
+            "buyer_role": "taker",
+            "price": "117956.5",
+            "seller_role": "maker",
+            "size": 1,
+            "symbol": "BTCUSD",
+            "timestamp": 1752242686000000
+        },
+        {
+            "buyer_role": "taker",
+            "price": "117956.5",
+            "seller_role": "maker",
+            "size": 1,
+            "symbol": "BTCUSD",
+            "timestamp": 1752242686000000
+        },
+        {
+            "buyer_role": "taker",
+            "price": "117953",
+            "seller_role": "maker",
+            "size": 12,
+            "symbol": "BTCUSD",
+            "timestamp": 1752242685000000
+        },
+        {
+            "buyer_role": "taker",
+            "price": "117953",
+            "seller_role": "maker",
+            "size": 28,
+            "symbol": "BTCUSD",
+            "timestamp": 1752242685000000
+        },
+        {
+            "buyer_role": "taker",
+            "price": "117950",
+            "seller_role": "maker",
+            "size": 50,
+            "symbol": "BTCUSD",
+            "timestamp": 1752242685000000
+        },
+        {
+            "buyer_role": "taker",
+            "price": "117950",
+            "seller_role": "maker",
+            "size": 30,
+            "symbol": "BTCUSD",
+            "timestamp": 1752242685000000
+        },
+        {
+            "buyer_role": "taker",
+            "price": "117947.5",
+            "seller_role": "maker",
+            "size": 1,
+            "symbol": "BTCUSD",
+            "timestamp": 1752242683000000
+        },
+        {
+            "buyer_role": "taker",
+            "price": "117947.5",
+            "seller_role": "maker",
+            "size": 1,
+            "symbol": "BTCUSD",
+            "timestamp": 1752242683000000
+        },
+        {
+            "buyer_role": "maker",
+            "price": "117946.5",
+            "seller_role": "taker",
+            "size": 10,
+            "symbol": "BTCUSD",
+            "timestamp": 1752242683000000
+        },
+        {
+            "buyer_role": "taker",
+            "price": "117947.5",
+            "seller_role": "maker",
+            "size": 9,
+            "symbol": "BTCUSD",
+            "timestamp": 1752242682000000
+        },
+        {
+            "buyer_role": "maker",
+            "price": "117946.5",
+            "seller_role": "taker",
+            "size": 5,
+            "symbol": "BTCUSD",
+            "timestamp": 1752242682000000
+        },
+        {
+            "buyer_role": "taker",
+            "price": "117947.5",
+            "seller_role": "maker",
+            "size": 1,
+            "symbol": "BTCUSD",
+            "timestamp": 1752242682000000
+        },
+        {
+            "buyer_role": "taker",
+            "price": "117947.5",
+            "seller_role": "maker",
+            "size": 454,
+            "symbol": "BTCUSD",
+            "timestamp": 1752242681000000
+        },
+        {
+            "buyer_role": "taker",
+            "price": "117947.5",
+            "seller_role": "maker",
+            "size": 230,
+            "symbol": "BTCUSD",
+            "timestamp": 1752242681000000
+        },
+        {
+            "buyer_role": "taker",
+            "price": "117945",
+            "seller_role": "maker",
+            "size": 9,
+            "symbol": "BTCUSD",
+            "timestamp": 1752242681000000
+        },
+        {
+            "buyer_role": "taker",
+            "price": "117941.5",
+            "seller_role": "maker",
+            "size": 10,
+            "symbol": "BTCUSD",
+            "timestamp": 1752242681000000
+        },
+        {
+            "buyer_role": "taker",
+            "price": "117941.5",
+            "seller_role": "maker",
+            "size": 36,
+            "symbol": "BTCUSD",
+            "timestamp": 1752242681000000
+        },
+        {
+            "buyer_role": "taker",
+            "price": "117936",
+            "seller_role": "maker",
+            "size": 2,
+            "symbol": "BTCUSD",
+            "timestamp": 1752242680000000
+        },
+        {
+            "buyer_role": "taker",
+            "price": "117936",
+            "seller_role": "maker",
+            "size": 2,
+            "symbol": "BTCUSD",
+            "timestamp": 1752242680000000
+        },
+        {
+            "buyer_role": "taker",
+            "price": "117908.5",
+            "seller_role": "maker",
+            "size": 7,
+            "symbol": "BTCUSD",
+            "timestamp": 1752242679000000
+        },
+        {
+            "buyer_role": "maker",
+            "price": "117907.5",
+            "seller_role": "taker",
+            "size": 21,
+            "symbol": "BTCUSD",
+            "timestamp": 1752242679000000
+        },
+        {
+            "buyer_role": "taker",
+            "price": "117900",
+            "seller_role": "maker",
+            "size": 8,
+            "symbol": "BTCUSD",
+            "timestamp": 1752242678000000
+        },
+        {
+            "buyer_role": "taker",
+            "price": "117886",
+            "seller_role": "maker",
+            "size": 5,
+            "symbol": "BTCUSD",
+            "timestamp": 1752242677000000
+        },
+        {
+            "buyer_role": "taker",
+            "price": "117886",
+            "seller_role": "maker",
+            "size": 1,
+            "symbol": "BTCUSD",
+            "timestamp": 1752242677000000
+        },
+        {
+            "buyer_role": "maker",
+            "price": "117885",
+            "seller_role": "taker",
+            "size": 19,
+            "symbol": "BTCUSD",
+            "timestamp": 1752242677000000
+        },
+        {
+            "buyer_role": "maker",
+            "price": "117885",
+            "seller_role": "taker",
+            "size": 10,
+            "symbol": "BTCUSD",
+            "timestamp": 1752242676000000
+        },
+        {
+            "buyer_role": "maker",
+            "price": "117885",
+            "seller_role": "taker",
+            "size": 30,
+            "symbol": "BTCUSD",
+            "timestamp": 1752242676000000
+        },
+        {
+            "buyer_role": "taker",
+            "price": "117886",
+            "seller_role": "maker",
+            "size": 4,
+            "symbol": "BTCUSD",
+            "timestamp": 1752242675000000
+        },
+        {
+            "buyer_role": "maker",
+            "price": "117885",
+            "seller_role": "taker",
+            "size": 28,
+            "symbol": "BTCUSD",
+            "timestamp": 1752242674000000
+        }
+    ],
+    "success": true
+}

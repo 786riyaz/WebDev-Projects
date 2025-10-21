@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+
+
+    <!-- ---------------------------------main css----------------------------------------- -->
+  <link rel="stylesheet" href="../Final Css/main1.css">
+
+    <style>
+        .trade-card {
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s;
+            margin-bottom: 20px;
+            border: none;
+        }
+
+        .trade-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .trade-card .card-header {
+            border-bottom: none;
+            background-color: rgba(0, 0, 0, 0.03);
+            font-weight: 600;
+        }
+
+        .trade-buy {
+            border-left: 4px solid var(--success-color);
+        }
+
+        .trade-sell {
+            border-left: 4px solid var(--danger-color);
+        }
+
+        .trade-pending {
+            border-left: 4px solid var(--warning-color);
+        }
+
+        /* Trade Status Badges */
+        .badge-completed {
+            background-color: var(--success-color);
+        }
+
+        .badge-open {
+            background-color: var(--info-color);
+        }
+
+        .badge-cancelled {
+            background-color: var(--danger-color);
+        }
+
+        .badge-pending {
+            background-color: var(--warning-color);
+        }
+
+        /* Trade Table */
+        .trade-table th {
+            font-weight: 600;
+            background-color: rgba(0, 0, 0, 0.03);
+            border-top: none;
+        }
+
+        .trade-table td {
+            vertical-align: middle;
+        }
+
+        .trade-profit {
+            color: var(--success-color);
+            font-weight: 600;
+        }
+
+        .trade-loss {
+            color: var(--danger-color);
+            font-weight: 600;
+        }
+
+        /* Chart Container */
+        .admin-details {
+            border-left: 4px solid #4e73df;
+        }
+
+        .trade-profit {
+            color: #1cc88a;
+            font-weight: 600;
+        }
+
+        .trade-loss {
+            color: #e74a3b;
+            font-weight: 600;
+        }
+
+        .badge-completed {
+            background-color: #1cc88a;
+            color: white;
+        }
+
+        .trade-table th {
+            white-space: nowrap;
+        }
+
+        #usersList {
+            transition: all 0.3s ease;
+        }
+
+        /* table two --------------------------- */
+        .user-details-btn {
+            transition: all 0.3s ease;
+            border-radius: 20px;
+            padding: 3px 12px;
+        }
+
+        .user-details-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 123, 255, 0.2);
+        }
+
+        .modal-content {
+            border-radius: 12px;
+            border: none;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            color: white;
+            border-radius: 10px 10px 0 0 !important;
+        }
+
+        .modal-title {
+            font-weight: 600;
+        }
+
+        .detail-table tr {
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .detail-table tr:last-child {
+            border-bottom: none;
+        }
+
+        .detail-table th {
+            font-weight: 500;
+            color: #6c757d;
+            width: 40%;
+        }
+
+        .status-badge {
+            padding: 5px 10px;
+            border-radius: 10px;
+            font-size: 0.8rem;
+        }
+
+        .price-change {
+            font-weight: 600;
+        }
+
+        .positive {
+            color: #28a745;
+        }
+
+        .negative {
+            color: #dc3545;
+        }
+
+        .action-btn {
+            border-radius: 20px;
+            min-width: 80px;
+        }
+
+        .floating-badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            font-size: 0.6rem;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-header d-flex align-items-center">
+            <div class="d-flex align-items-center">
+                <i class="fa-solid fa-user-tie" style="color: #573BFF;"></i>
+                <h4 class="logo-title">Admin</h4>
+            </div>
+            <button class="sidebar-toggle" id="sidebarToggle">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+        </div>
+        <div class="sidebar-body">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="index.html">
+                        <i class="fas fa-th-large"></i>
+                        <span class="item-name">Dashboard</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="user.html">
+                        <i class="fas fa-users"></i>
+                        <span class="item-name">Users</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="trades.html">
+                        <i class="fas fa-chart-line"></i>
+                        <span class="item-name">Trades</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="Positions.html">
+                        <i class="fa-solid fa-crosshairs"></i>
+                        <span class="item-name">Positions</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="Balance.html">
+                        <i class="fa-solid fa-receipt"></i>
+                        <span class="item-name">Balance</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="Settings.html">
+                        <i class="fas fa-cog"></i>
+                        <span class="item-name">Settings</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Navbar -->
+        <nav class="nav navbar navbar-expand-lg navbar-light iq-navbar">
+            <div class="container-fluid navbar-inner">
+                <div class="search-container">
+                    <i class="bi bi-search search-icon"></i>
+                    <input type="text" class="search-input" placeholder="Search...">
+                </div>
+
+                <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+                    <ul class="mb-2 navbar-nav align-items-center navbar-list mb-lg-0">
+                        <li class="nav-item dropdown">
+                            <a class="py-0 nav-link-profile d-flex align-items-center" href="#" id="navbarDropdown"
+                                role="button" data-bs-toggle="dropdown">
+                                <i class="fa-solid fa-user-tie"></i>
+                                <div class="caption ms-3 d-none d-md-block">
+                                    <h6 class="mb-0 caption-title">Admin</h6>
+                                    <p class="mb-0 caption-sub-title">Administrator</p>
+                                </div>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li><a class="dropdown-item" href="profil.html"><i
+                                            class="fas fa-user me-2"></i>Profile</a></li>
+                                <li><a class="dropdown-item" href="#"><i class="fas fa-cog me-2"></i>Settings</a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li><a class="dropdown-item" href="#"><i class="fas fa-sign-out-alt me-2"></i>Logout</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Header -->
+        <div class="header">
+            <div class="container-fluid px-3">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <h1>Trades</h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Content -->
+        <div class="container-fluid content-inner mt-n5 py-4">
+            <!-- Summary Cards -->
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="card trade-card">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <h6 class="text-muted mb-2">Total Trades</h6>
+                                    <h3 class="mb-0">1,248</h3>
+                                </div>
+                                <div class="bg-primary bg-opacity-10 p-3 rounded">
+                                    <i class="fas fa-exchange-alt text-primary"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card trade-card">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <h6 class="text-muted mb-2">Profit Trades</h6>
+                                    <h3 class="mb-0">842</h3>
+                                </div>
+                                <div class="bg-success bg-opacity-10 p-3 rounded">
+                                    <i class="fas fa-chart-line text-success"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card trade-card">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <h6 class="text-muted mb-2">Loss Trades</h6>
+                                    <h3 class="mb-0">406</h3>
+                                </div>
+                                <div class="bg-danger bg-opacity-10 p-3 rounded">
+                                    <i class="fas fa-chart-line text-danger"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card trade-card">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <h6 class="text-muted mb-2">Win Rate</h6>
+                                    <h3 class="mb-0">67.5%</h3>
+                                </div>
+                                <div class="bg-info bg-opacity-10 p-3 rounded">
+                                    <i class="fas fa-percent text-info"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Filters and Actions -->
+            <div class="card shadow-sm border-0 mb-4">
+                <div class="card-body">
+                    <div class="row g-3 align-items-end">
+                        <div class="col-lg-12">
+                            <div class="row g-3 align-items-end mb-4">
+                                <!-- Account Name -->
+                                <div class="col-md-4">
+                                    <label class="form-label text-muted small mb-1">Account Name</label>
+                                    <select class="form-select form-select-sm">
+                                        <option selected>All Accounts</option>
+                                        <option>Primary Trading</option>
+                                        <option>Arbitrage Bot</option>
+                                        <option>Long-Term Holdings</option>
+                                        <option>Margin Account</option>
+                                    </select>
+                                </div>
+
+                                <!-- Date Range -->
+                                <div class="col-md-5">
+                                    <label class="form-label text-muted small mb-1">Date Range</label>
+                                    <div class="input-group input-group-sm">
+                                        <input type="date" class="form-control form-control-sm"
+                                            placeholder="Start date">
+                                        <span
+                                            class="input-group-text bg-transparent border-start-0 border-end-0 px-2">to</span>
+                                        <input type="date" class="form-control form-control-sm" placeholder="End date">
+                                    </div>
+                                </div>
+
+                                <!-- Search Button -->
+                                <div class="col-md-3">
+                                    <button class="btn btn-primary btn-sm w-100 py-2">
+                                        <i class="fas fa-search me-2"></i>Search
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                       
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card shadow-sm border-0">
+                        <div class="card-body">
+
+
+                            <div class="table-responsive">
+
+
+
+
+
+                                <!-- Main Table -->
+                                <table class="table table-sm table-hover align-middle">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th>User</th>
+                                            <th>Type</th>
+                                            <th>Symbol</th>
+                                            <th>Master Price</th>
+                                            <th>LTP</th>
+                                            <th>Qty</th>
+                                            <th>Delta AC</th>
+                                            <th>Date & Time</th>
+                                            <th>Source</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <div class="position-relative d-inline-block">
+                                                    <button class="btn btn-sm btn-outline-info user-details-btn"
+                                                        data-bs-toggle="modal" data-bs-target="#userDetailsModal"
+                                                        data-user-id="DEL-USR-1001" data-user-name="Michael Johnson"
+                                                        data-trade-date="2023-06-15 10:30:50" data-status="Executed"
+                                                        data-price="148.20" data-profit="+2.90">
+                                                        <i class="fas fa-user me-1"></i> Michael Johnson
+                                                    </button>
+                                                    <span class="badge bg-primary floating-badge">VIP</span>
+                                                </div>
+                                            </td>
+                                            <td><span
+                                                    class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25">BUY</span>
+                                            </td>
+                                            <td><span class="fw-bold">AAPL</span></td>
+                                            <td>145.50</td>
+                                            <td>
+                                                <span class="fw-bold">148.25</span>
+                                                <span class="price-change positive">+2.75</span>
+                                            </td>
+                                            <td>100</td>
+                                            <td><span class="badge bg-light text-dark">DEL-AC-001</span></td>
+                                            <td><small>Today 10:30 AM</small></td>
+                                            <td><span class="badge bg-info bg-opacity-10 text-info">Web</span></td>
+                                            <td>
+                                                <button class="btn btn-sm btn-outline-primary action-btn">
+                                                    <i class="fas fa-cog"></i> Act
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        <!-- Additional rows would follow the same pattern -->
+                                    </tbody>
+                                </table>
+
+                                <!-- Enhanced User Details Modal -->
+                                <div class="modal fade" id="userDetailsModal" tabindex="-1" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title"><i class="fas fa-user-tie me-2"></i>Trade
+                                                    Details</h5>
+                                                <button type="button" class="btn-close btn-close-white"
+                                                    data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="d-flex align-items-center mb-4">
+                                                    <div class="flex-shrink-0">
+                                                        <div
+                                                            class="avatar avatar-lg bg-primary bg-opacity-10 text-primary rounded-circle d-flex align-items-center justify-content-center">
+                                                            <i class="fas fa-user fs-4"></i>
+                                                        </div>
+                                                    </div>
+                                                    <div class="flex-grow-1 ms-3">
+                                                        <h5 id="modal-user-name" class="mb-0">Michael Johnson</h5>
+                                                        <span class="text-muted" id="modal-user-id">DEL-USR-1001</span>
+                                                    </div>
+                                                    <div class="flex-shrink-0">
+                                                        <span
+                                                            class="badge bg-success bg-opacity-10 text-success px-3 py-2"
+                                                            id="modal-status-badge">
+                                                            <i class="fas fa-check-circle me-1"></i> Executed
+                                                        </span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="card border-0 shadow-sm mb-3">
+                                                    <div class="card-body">
+                                                        <div class="row">
+                                                            <div class="col-6 border-end">
+                                                                <h6 class="text-muted mb-1">Trade Price</h6>
+                                                                <h4 class="text-primary fw-bold" id="modal-price">148.20
+                                                                </h4>
+                                                            </div>
+                                                            <div class="col-6">
+                                                                <h6 class="text-muted mb-1">Profit/Loss</h6>
+                                                                <h4 class="text-success fw-bold" id="modal-profit">+2.90
+                                                                </h4>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <table class="table table-borderless detail-table">
+                                                    <tbody>
+                                                        <tr>
+                                                            <th><i class="fa-solid fa-handshake me-2 text-muted"></i>Broker
+                                                            </th>
+                                                            <td >Delta</td>
+                                                        </tr>
+                                                              <tr>
+
+                                                            <th><i class="fa-solid fa-spinner me-2 text-muted"></i>Status
+                                                            </th>
+                                                            <td>Success</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th><i class="fas fa-exchange-alt me-2 text-muted"></i>Type
+                                                            </th>
+                                                            <td><span
+                                                                    class="badge bg-success bg-opacity-10 text-success">BUY</span>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th><i class="fas fa-chart-line me-2 text-muted"></i>Symbol
+                                                            </th>
+                                                            <td>AAPL</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th><i class="fas fa-calendar-alt me-2 text-muted"></i>Executed
+                                                            </th>
+                                                            <td id="modal-trade-date">Jun 15, 2023 10:30:50</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th><i class="fas fa-desktop me-2 text-muted"></i>Source
+                                                            </th>
+                                                            <td>Web Platform</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="modal-footer border-0">
+                                                <button type="button" class="btn btn-outline-secondary"
+                                                    data-bs-dismiss="modal">
+                                                    <i class="fas fa-times me-1"></i> Close
+                                                </button>
+                                                <button type="button" class="btn btn-primary">
+                                                    <i class="fas fa-file-alt me-1"></i> View Full Report
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <nav aria-label="Table pagination" class="mt-3">
+                                <ul class="pagination justify-content-center">
+                                    <li class="page-item disabled">
+                                        <a class="page-link" href="#" tabindex="-1">Previous</a>
+                                    </li>
+                                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                    <li class="page-item">
+                                        <a class="page-link" href="#">Next</a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <ul class="list-inline mb-0">
+                            <li class="list-inline-item"><a href="#">Privacy Policy</a></li>
+                            <li class="list-inline-item"><a href="#">Terms of Use</a></li>
+                            <li class="list-inline-item float-end">© 2025</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </main>
+
+
+
+    <!-- jQuery and Bootstrap Bundle with Popper -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Sidebar toggle functionality
+            $('#sidebarToggle').click(function () {
+                $('.sidebar').toggleClass('collapsed');
+                const icon = $(this).find('i');
+                if ($('.sidebar').hasClass('collapsed')) {
+                    icon.removeClass('fa-chevron-left').addClass('fa-chevron-right');
+                } else {
+                    icon.removeClass('fa-chevron-right').addClass('fa-chevron-left');
+                }
+            });
+
+            // Toggle API secret visibility
+            $('#toggleSecret').click(function () {
+                const secretInput = $('#apiSecret');
+                const type = secretInput.attr('type') === 'password' ? 'text' : 'password';
+                secretInput.attr('type', type);
+                $(this).find('i').toggleClass('bi-eye bi-eye-slash');
+            });
+
+            // Initialize tooltips
+            $('[data-bs-toggle="tooltip"]').tooltip();
+        });
+
+
+
+    </script>
+
+
+    <!-- JavaScript with Animation two -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const modal = document.getElementById('userDetailsModal');
+
+            modal.addEventListener('show.bs.modal', function (event) {
+                const button = event.relatedTarget;
+                const status = button.getAttribute('data-status');
+
+                // Set basic info
+                document.getElementById('modal-user-id').textContent = button.getAttribute('data-user-id');
+                document.getElementById('modal-user-name').textContent = button.getAttribute('data-user-name');
+                document.getElementById('modal-trade-date').textContent =
+                    new Date(button.getAttribute('data-trade-date')).toLocaleString();
+                document.getElementById('modal-price').textContent = button.getAttribute('data-price');
+                document.getElementById('modal-profit').textContent = button.getAttribute('data-profit');
+
+                // Set status badge
+                const statusBadge = document.getElementById('modal-status-badge');
+                if (status === 'Executed') {
+                    statusBadge.className = 'badge bg-success bg-opacity-10 text-success px-3 py-2';
+                    statusBadge.innerHTML = '<i class="fas fa-check-circle me-1"></i> Executed';
+                } else {
+                    statusBadge.className = 'badge bg-danger bg-opacity-10 text-danger px-3 py-2';
+                    statusBadge.innerHTML = '<i class="fas fa-times-circle me-1"></i> Rejected';
+                }
+
+                // Animate modal appearance
+                const modalContent = modal.querySelector('.modal-content');
+                modalContent.style.transform = 'translateY(20px)';
+                modalContent.style.opacity = '0';
+                setTimeout(() => {
+                    modalContent.style.transform = 'translateY(0)';
+                    modalContent.style.opacity = '1';
+                    modalContent.style.transition = 'all 0.3s ease-out';
+                }, 50);
+            });
+        });
+    </script>
+
+</body>
+
+</html>
