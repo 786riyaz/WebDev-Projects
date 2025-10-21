@@ -1,0 +1,201 @@
+<section class="stone-shapes">
+    <div class="container">
+        <h2 class="stone-title">Shop Diamonds by Shape</h2>
+        <p class="stone-description">
+            Discover our extraordinary collection of diamonds categorized by shape. Find your ideal cut, from round to oval, to suit your style.
+        </p>
+        <ul class="stone-list">
+            <li class="stone-item">
+                <a href="{{ routes.collection_url | append: '/round-diamonds' }}" class="stone-link">
+                    <img src="https://cdn.shopify.com/s/files/1/0913/2808/6311/files/round_new.png?v=1737271608" alt="Round" class="stone-image">
+                    Round
+                </a>
+            </li>
+            <li class="stone-item">
+                <a href="{{ routes.collection_url | append: '/emerald-diamonds' }}" class="stone-link">
+                    <img src="https://cdn.shopify.com/s/files/1/0913/2808/6311/files/emerald_new.png?v=1737271608" alt="Emerald" class="stone-image">
+                    Emerald
+                </a>
+            </li>
+            <li class="stone-item">
+                <a href="{{ routes.collection_url | append: '/radiant-diamonds' }}" class="stone-link">
+                    <img src="https://cdn.shopify.com/s/files/1/0913/2808/6311/files/radiant_new.png?v=1737271608" alt="Radiant" class="stone-image">
+                    Radiant
+                </a>
+            </li>
+            <li class="stone-item">
+                <a href="{{ routes.collection_url | append: '/cushion-diamonds' }}" class="stone-link">
+                    <img src="https://cdn.shopify.com/s/files/1/0913/2808/6311/files/cushion_new.png?v=1737271382" alt="Cushion" class="stone-image">
+                    Cushion
+                </a>
+            </li>
+            <li class="stone-item">
+                <a href="{{ routes.collection_url | append: '/oval-diamonds' }}" class="stone-link">
+                    <img src="https://cdn.shopify.com/s/files/1/0913/2808/6311/files/oval_new.png?v=1737271608" alt="Oval" class="stone-image">
+                    Oval
+                </a>
+            </li>
+            <li class="stone-item">
+                <a href="{{ routes.collection_url | append: '/pear-diamonds' }}" class="stone-link">
+                    <img src="https://cdn.shopify.com/s/files/1/0913/2808/6311/files/pear_new.png?v=1737271608" alt="Pear" class="stone-image">
+                    Pear
+                </a>
+            </li>
+            <li class="stone-item">
+                <a href="{{ routes.collection_url | append: '/princess-diamonds' }}" class="stone-link">
+                    <img src="https://cdn.shopify.com/s/files/1/0913/2808/6311/files/princess_new.png?v=1737271608" alt="Princess" class="stone-image">
+                    Princess
+                </a>
+            </li>
+        </ul>
+    </div>
+</section>
+
+<style>
+
+</style>
+
+
+
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+}
+
+.stone-shapes {
+    padding: 20px;
+  
+}
+.stone-description {
+    text-align: center; /* Centers the text */
+    font-size: 1.2rem; /* Adjust font size */
+    color: #555; /* Lighter color for the description */
+    margin-bottom: 20px; /* Space between description and list */
+    max-width: 800px; /* Ensures the text doesn't stretch too wide */
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.6; /* Improves readability */
+}
+
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.stone-title {
+    text-align: center;
+    font-size: 3rem; /* Larger font size */
+    margin-bottom: 20px;
+    font-weight: 500; 
+}
+
+
+/* Stone List Styles */
+.stone-list {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around; /* Adjusted to better space items in a row */
+    gap: 20px;
+}
+.stone-item a {
+    text-decoration: none; /* Removes underline or other text decorations */
+    color: inherit; /* Inherit the color of the parent element (so text color stays as it is) */
+}
+.stone-item a:hover {
+    color: #8d5f3e; /* Change the link color on hover, if desired */
+}
+.stone-item {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    text-align: center;
+    width: 140px;
+    transition: transform 0.3s ease;
+    margin-bottom: 20px; /* Added space between rows */
+}
+
+.stone-item img {
+    width: 80%; /* Adjusted for smaller images */
+    height: auto;
+    margin-bottom: 10px; /* Space between image and text */
+}
+
+.stone-item:hover {
+    transform: scale(1.05); /* Slightly smaller hover effect */
+}
+
+.stone-item p {
+    font-size: 1rem;
+    margin-top: 10px;
+}
+
+.stone-item .hover-btn {
+    display: none;
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.stone-item:hover .hover-btn {
+    display: inline-block;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 1024px) {
+    .stone-list {
+        justify-content: center;
+        gap: 15px; /* Adjust the gap for medium screens */
+    }
+
+    .stone-item {
+        width: 180px; /* A bit larger than on smaller screens */
+    }
+
+    .stone-item img {
+        width: 70%; /* Slightly larger on medium screens */
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .stone-list {
+        flex-direction: column; /* Stack items vertically on smaller screens */
+        align-items: center;
+    }
+
+    .stone-item {
+        width: 100%;
+        max-width: 250px; /* Ensure it's wider on smaller screens */
+    }
+
+    .stone-item img {
+        width: 60%; /* Images are smaller on smaller screens */
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .stone-item {
+        width: 100%; /* Full width for very small screens */
+    }
+
+    .stone-item img {
+        width: 50%; /* Even smaller images on very small screens */
+    }
+}
+
+
+
+</style>

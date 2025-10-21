@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Responsive Images with Names</title>
+  <style>
+    /* Basic Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* Container for images */
+    .image-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    /* Each individual image block */
+    .image-block {
+      position: relative;
+      width: calc(25% - 16px); /* 4 images in a row with gap */
+      min-width: 200px; /* Ensure the image size stays reasonable */
+      height: 200px; /* Fixed height for images */
+      overflow: hidden;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Image styling */
+    .image-block img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover; /* Makes sure the image fills the block */
+    }
+
+    /* Text inside the image */
+    .image-block .name {
+      position: absolute;
+      bottom: 10px;
+      left: 10px;
+      right: 10px;
+      font-size: 18px;
+      color: white;
+      font-weight: bold;
+      text-shadow: black;
+    }
+
+    /* Responsiveness */
+    @media (max-width: 768px) {
+      .image-block {
+        width: calc(50% - 16px); /* 2 images per row on medium screens */
+      }
+    }
+
+    @media (max-width: 480px) {
+      .image-block {
+        width: 100%; /* 1 image per row on small screens */
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="image-container">
+    <div class="image-block">
+      <img src="https://cdn.shopify.com/s/files/1/0913/2808/6311/files/AlternatingFashionBand_RoseGold.jpg?v=1736279623" alt="Image 1">
+      <div class="name">Rings</div>
+    </div>
+    <div class="image-block">
+      <img src="https://cdn.shopify.com/s/files/1/0913/2808/6311/files/FourProngTennisBracelet7Inches2.jpg?v=1736355669" alt="Image 2">
+      <div class="name">Bracelet</div>
+    </div>
+    <div class="image-block">
+      <img src="https://cdn.shopify.com/s/files/1/0913/2808/6311/files/Earrings.png?v=1737723494" alt="Imag3">
+      <div class="name">Earrings</div>
+    </div>
+    <div class="image-block">
+      <img src="https://cdn.shopify.com/s/files/1/0913/2808/6311/files/Pendant.png?v=1737723575" alt="Image 4">
+      <div class="name">Pandant</div>
+    </div>
+  </div>
+
+</body>
+</html>

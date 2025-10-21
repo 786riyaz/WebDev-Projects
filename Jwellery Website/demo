@@ -1,0 +1,131 @@
+<section class="stone-shapes">
+    <div class="container">
+        <h2 class="stone-title">Shape of Stone</h2>
+        <ul class="stone-list">
+            <li class="stone-item">
+                <img src="https://cdn.shopify.com/s/files/1/0913/2808/6311/files/round_new.png?v=1737271608" alt="Round" class="stone-image">
+                Round
+            </li>
+            <li class="stone-item">
+                <img src="https://cdn.shopify.com/s/files/1/0913/2808/6311/files/emerald_new.png?v=1737271608" alt="Emerald" class="stone-image">
+                Emerald
+            </li>
+            <li class="stone-item">
+                <img src="https://cdn.shopify.com/s/files/1/0913/2808/6311/files/radiant_new.png?v=1737271608" alt="Radiant" class="stone-image">
+                Radiant
+            </li>
+            <li class="stone-item">
+                <img src="https://cdn.shopify.com/s/files/1/0913/2808/6311/files/cushion_new.png?v=1737271382" alt="Cushion" class="stone-image">
+                Cushion
+            </li>
+            <li class="stone-item">
+                <img src="https://cdn.shopify.com/s/files/1/0913/2808/6311/files/oval_new.png?v=1737271608" alt="Oval" class="stone-image">
+                Oval
+            </li>
+            <li class="stone-item">
+                <img src="https://cdn.shopify.com/s/files/1/0913/2808/6311/files/pear_new.png?v=1737271608" alt="Pear" class="stone-image">
+                Pear
+            </li>
+            <li class="stone-item">
+                <img src="https://cdn.shopify.com/s/files/1/0913/2808/6311/files/princess_new.png?v=1737271608" alt="Princess" class="stone-image">
+                Princess
+            </li>
+        </ul>
+    </div>
+</section>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+}
+
+.stone-shapes {
+    padding: 20px;
+    background-color: #f8f8f8;
+}
+
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.stone-title {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 30px;
+}
+
+/* Stone List Styles */
+.stone-list {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+}
+
+.stone-item {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    text-align: center;
+    width: 150px;
+    transition: transform 0.3s ease;
+}
+
+.stone-item img {
+    width: 100%;
+    max-width: 100px;
+    height: auto;
+}
+
+.stone-item:hover {
+    transform: scale(1.1);
+}
+
+.stone-item p {
+    font-size: 1rem;
+    margin-top: 10px;
+}
+
+.stone-item .hover-btn {
+    display: none;
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.stone-item:hover .hover-btn {
+    display: inline-block;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+    .stone-list {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .stone-item {
+        width: 100%;
+        max-width: 300px;
+    }
+
+    .stone-item img {
+        max-width: 80%;
+    }
+}
+
+</style>
