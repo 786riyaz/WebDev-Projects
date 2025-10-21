@@ -1,0 +1,409 @@
+ /* Yoga Figure Animation */
+    .yoga-figure-container {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1;
+    }
+
+    .yoga-figure {
+      position: relative;
+      width: 300px;
+      height: 300px;
+      z-index: 1;
+      animation: float 8s ease-in-out infinite;
+    }
+
+    /* Yoga pose parts */
+    .head {
+      position: absolute;
+      top: 30%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 50px;
+      height: 50px;
+      background-color: var(--primary-color);
+      border-radius: 50%;
+      z-index: 3;
+    }
+
+    .body {
+      position: absolute;
+      top: 40%;
+      left: 50%;
+      transform: translate(-50%, 0);
+      width: 12px;
+      height: 120px;
+      background-color: var(--primary-color);
+      border-radius: 10px;
+      z-index: 2;
+    }
+
+    .arm,
+    .leg {
+      position: absolute;
+      background-color: var(--primary-color);
+      border-radius: 10px;
+      z-index: 1;
+    }
+
+    .arm.left {
+      top: 45%;
+      left: 35%;
+      width: 80px;
+      height: 12px;
+      transform: rotate(45deg);
+      animation: arm-left 8s ease-in-out infinite;
+    }
+
+    .arm.right {
+      top: 45%;
+      right: 35%;
+      width: 80px;
+      height: 12px;
+      transform: rotate(-45deg);
+      animation: arm-right 8s ease-in-out infinite;
+    }
+
+    .leg.left {
+      top: 65%;
+      left: 45%;
+      width: 12px;
+      height: 80px;
+      transform: rotate(20deg);
+      animation: leg-left 10s ease-in-out infinite;
+    }
+
+    .leg.right {
+      top: 65%;
+      right: 45%;
+      width: 12px;
+      height: 100px;
+      transform: rotate(-10deg);
+      animation: leg-right 10s ease-in-out infinite;
+    }
+
+    .circle {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 220px;
+      height: 220px;
+      border: 3px solid var(--primary-light);
+      border-radius: 50%;
+      animation: rotate 30s linear infinite;
+      z-index: -1;
+    }
+
+    .circle:nth-child(2) {
+      width: 260px;
+      height: 260px;
+      animation-direction: reverse;
+      animation-duration: 40s;
+    }
+
+    .circle:nth-child(3) {
+      width: 180px;
+      height: 180px;
+      border: 2px dashed var(--primary-color);
+      animation: rotate-reverse 25s linear infinite;
+    }
+
+    /* Animations */
+    @keyframes float {
+
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-20px);
+      }
+    }
+
+    @keyframes rotate {
+      0% {
+        transform: translate(-50%, -50%) rotate(0deg);
+      }
+
+      100% {
+        transform: translate(-50%, -50%) rotate(360deg);
+      }
+    }
+
+    @keyframes rotate-reverse {
+      0% {
+        transform: translate(-50%, -50%) rotate(0deg);
+      }
+
+      100% {
+        transform: translate(-50%, -50%) rotate(-360deg);
+      }
+    }
+
+    @keyframes arm-left {
+
+      0%,
+      100% {
+        transform: rotate(45deg);
+      }
+
+      50% {
+        transform: rotate(60deg);
+      }
+    }
+
+    @keyframes arm-right {
+
+      0%,
+      100% {
+        transform: rotate(-45deg);
+      }
+
+      50% {
+        transform: rotate(-30deg);
+      }
+    }
+
+    @keyframes leg-left {
+
+      0%,
+      100% {
+        transform: rotate(20deg);
+      }
+
+      50% {
+        transform: rotate(35deg);
+      }
+    }
+
+    @keyframes leg-right {
+
+      0%,
+      100% {
+        transform: rotate(-10deg);
+      }
+
+      50% {
+        transform: rotate(5deg);
+      }
+    }
+
+    /* Leaves Animation */
+    .leaf {
+      position: absolute;
+      background-color: var(--primary-color);
+      opacity: 0.3;
+      border-radius: 50% 0 50% 50%;
+      animation: leaf-fall linear infinite;
+      z-index: 0;
+    }
+
+    @keyframes leaf-fall {
+      0% {
+        transform: translateY(-100px) rotate(0deg);
+      }
+
+      100% {
+        transform: translateY(100vh) rotate(360deg);
+      }
+    }
+
+    /* Create leaves */
+    .leaf:nth-child(1) {
+      width: 30px;
+      height: 30px;
+      left: 10%;
+      animation-duration: 15s;
+    }
+
+    .leaf:nth-child(2) {
+      width: 25px;
+      height: 25px;
+      left: 25%;
+      animation-duration: 20s;
+      animation-delay: 3s;
+    }
+
+    .leaf:nth-child(3) {
+      width: 35px;
+      height: 35px;
+      left: 75%;
+      animation-duration: 18s;
+      animation-delay: 5s;
+    }
+
+    .leaf:nth-child(4) {
+      width: 20px;
+      height: 20px;
+      left: 90%;
+      animation-duration: 12s;
+      animation-delay: 2s;
+    }
+
+    .leaf:nth-child(5) {
+      width: 28px;
+      height: 28px;
+      left: 60%;
+      animation-duration: 25s;
+      animation-delay: 7s;
+    }
+
+    
+        
+    /* Hero Section */
+    .hero-section {
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      background-color: var(--primary-light);
+      margin-top: 70px;
+      /* To account for fixed navbar */
+    }
+
+    .background-pattern {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background:
+        radial-gradient(circle at 20% 30%, var(--primary-light) 0%, transparent 20%),
+        radial-gradient(circle at 80% 70%, var(--primary-light) 0%, transparent 20%);
+      opacity: 0.6;
+      z-index: 0;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 10;
+      text-align: center;
+      padding: 2rem;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .hero-title {
+      color: var(--primary-color);
+      font-size: 3.5rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      line-height: 1.2;
+    }
+
+    .hero-subtitle {
+      color: var(--text-dark);
+      font-size: 1.3rem;
+      margin-bottom: 2rem;
+      line-height: 1.6;
+    }
+
+    .hero-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-top: 2rem;
+    }
+
+    /* -------------------about-container-------------------- */
+     .about-container {
+            
+            margin: 0 auto;
+            padding: 40px 20px;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 40px;
+        }
+        
+        .founders-image {
+            flex: 1;
+            min-width: 300px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(107, 142, 122, 0.1);
+        }
+        
+        .founders-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+        
+        .founders-image:hover img {
+            transform: scale(1.02);
+        }
+        
+        .founders-content {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .archive-badge {
+            background-color: var(--primary);
+            color: white;
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+        
+        .founders-names {
+            margin-bottom: 30px;
+        }
+        
+        .founder {
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--secondary);
+        }
+        
+        .founder:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        
+        .founder-name {
+            font-size: 1.3rem;
+            color: var(--primary);
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .founder-qualification {
+            font-size: 0.95rem;
+            color: #666;
+            font-style: italic;
+        }
+        
+        .mission-statement {
+            margin: 30px 0;
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+        
+        .signature {
+            font-style: italic;
+            margin-top: 30px;
+            color: var(--primary);
+            font-weight: bold;
+        }
+        
+        @media (max-width: 768px) {
+            .about-container {
+                flex-direction: column;
+            }
+            
+            .founders-image {
+                max-width: 100%;
+            }
+        }

@@ -1,0 +1,1063 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced 3D Cube Slider</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #667eea;
+            --secondary-color: #764ba2;
+            --accent-color: #ff6b6b;
+            --text-light: #ffffff;
+            --shadow-color: rgba(0, 0, 0, 0.3);
+            --glass-bg: rgba(255, 255, 255, 0.1);
+            --transition-smooth: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 50%, #667eea 100%);
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Animated Background Particles */
+        .bg-particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .particle {
+            position: absolute;
+            background: var(--glass-bg);
+            border-radius: 50%;
+            animation: floatParticle 8s ease-in-out infinite;
+        }
+
+        @keyframes floatParticle {
+            0%, 100% { transform: translateY(0px) rotate(0deg) scale(1); opacity: 0.3; }
+            25% { transform: translateY(-30px) rotate(90deg) scale(1.2); opacity: 0.6; }
+            50% { transform: translateY(-10px) rotate(180deg) scale(0.8); opacity: 0.9; }
+            75% { transform: translateY(-40px) rotate(270deg) scale(1.1); opacity: 0.4; }
+        }
+
+        /* Main Container */
+        .slider-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            z-index: 1;
+            perspective: 1200px;
+            padding: 20px;
+        }
+
+        .slider-wrapper {
+            position: relative;
+            width: 500px;
+            height: 500px;
+            transform-style: preserve-3d;
+            transition: transform 1s var(--transition-smooth);
+        }
+
+        /* 3D Cube Structure */
+        .cube {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+            transition: transform 1s var(--transition-smooth);
+        }
+
+        .cube-face {
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 30px 60px var(--shadow-color);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .cube-face img {
+            width: 100%;
+            height: 70%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+
+        .cube-face:hover img {
+            transform: scale(1.1);
+        }
+
+        .cube-content {
+            height: 30%;
+            padding: 25px;
+            background: linear-gradient(135deg, var(--accent-color), #4ecdc4);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            text-align: center;
+            color: var(--text-light);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cube-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .cube-face:hover .cube-content::before {
+            left: 100%;
+        }
+
+        .cube-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            animation: slideInUp 0.6s ease-out;
+        }
+
+        .cube-description {
+            font-size: 1rem;
+            opacity: 0.95;
+            line-height: 1.4;
+            animation: slideInUp 0.6s ease-out 0.2s both;
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Cube Face Positioning */
+        .cube-front { transform: rotateY(0deg) translateZ(250px); }
+        .cube-right { transform: rotateY(90deg) translateZ(250px); }
+        .cube-back { transform: rotateY(180deg) translateZ(250px); }
+        .cube-left { transform: rotateY(-90deg) translateZ(250px); }
+        .cube-top { transform: rotateX(90deg) translateZ(250px); }
+        .cube-bottom { transform: rotateX(-90deg) translateZ(250px); }
+
+        /* Interactive Controls */
+        .controls-panel {
+            position: fixed;
+            top: 50%;
+            left: 50px;
+            transform: translateY(-50%);
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .control-btn {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            color: var(--text-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s var(--transition-smooth);
+            font-size: 1.2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .control-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            transition: all 0.3s ease;
+            transform: translate(-50%, -50%);
+        }
+
+        .control-btn:hover::before {
+            width: 100%;
+            height: 100%;
+        }
+
+        .control-btn:hover {
+            transform: scale(1.1);
+            border-color: rgba(255, 255, 255, 0.6);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .control-btn:active {
+            transform: scale(0.95);
+        }
+
+        /* Navigation Indicators */
+        .nav-indicators {
+            position: fixed;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 15px;
+            z-index: 100;
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            padding: 15px 25px;
+            border-radius: 50px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .nav-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.4);
+            cursor: pointer;
+            transition: all 0.3s var(--transition-smooth);
+            position: relative;
+        }
+
+        .nav-dot.active {
+            background: var(--text-light);
+            transform: scale(1.4);
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.6);
+        }
+
+        .nav-dot::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            transition: all 0.3s ease;
+            transform: translate(-50%, -50%);
+        }
+
+        .nav-dot:hover::after {
+            width: 200%;
+            height: 200%;
+        }
+
+        /* Settings Panel */
+        .settings-panel {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            z-index: 100;
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            border-radius: 15px;
+            padding: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            color: var(--text-light);
+            min-width: 200px;
+        }
+
+        .setting-item {
+            margin-bottom: 15px;
+        }
+
+        .setting-label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .setting-control {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 8px;
+            padding: 8px 12px;
+            color: var(--text-light);
+            transition: all 0.3s ease;
+        }
+
+        .setting-control:focus {
+            outline: none;
+            border-color: rgba(255, 255, 255, 0.6);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .toggle-switch {
+            position: relative;
+            width: 50px;
+            height: 25px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .toggle-switch.active {
+            background: var(--accent-color);
+        }
+
+        .toggle-knob {
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 21px;
+            height: 21px;
+            background: var(--text-light);
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .toggle-switch.active .toggle-knob {
+            transform: translateX(25px);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .controls-panel {
+                left: 20px;
+            }
+            .settings-panel {
+                right: 20px;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .slider-wrapper {
+                width: 400px;
+                height: 400px;
+            }
+            .cube-face {
+                width: 400px;
+                height: 400px;
+            }
+            .cube-front, .cube-right, .cube-back, .cube-left, .cube-top, .cube-bottom {
+                transform: rotateY(0deg) translateZ(200px);
+            }
+            .cube-right { transform: rotateY(90deg) translateZ(200px); }
+            .cube-back { transform: rotateY(180deg) translateZ(200px); }
+            .cube-left { transform: rotateY(-90deg) translateZ(200px); }
+            .cube-top { transform: rotateX(90deg) translateZ(200px); }
+            .cube-bottom { transform: rotateX(-90deg) translateZ(200px); }
+        }
+
+        @media (max-width: 768px) {
+            .slider-wrapper {
+                width: 320px;
+                height: 320px;
+            }
+            .cube-face {
+                width: 320px;
+                height: 320px;
+            }
+            .cube-front, .cube-right, .cube-back, .cube-left, .cube-top, .cube-bottom {
+                transform: rotateY(0deg) translateZ(160px);
+            }
+            .cube-right { transform: rotateY(90deg) translateZ(160px); }
+            .cube-back { transform: rotateY(180deg) translateZ(160px); }
+            .cube-left { transform: rotateY(-90deg) translateZ(160px); }
+            .cube-top { transform: rotateX(90deg) translateZ(160px); }
+            .cube-bottom { transform: rotateX(-90deg) translateZ(160px); }
+            
+            .controls-panel {
+                flex-direction: row;
+                bottom: 100px;
+                left: 50%;
+                transform: translateX(-50%);
+                top: auto;
+                background: var(--glass-bg);
+                backdrop-filter: blur(15px);
+                padding: 10px;
+                border-radius: 50px;
+                border: 2px solid rgba(255, 255, 255, 0.2);
+            }
+            
+            .control-btn {
+                width: 50px;
+                height: 50px;
+            }
+            
+            .settings-panel {
+                top: 20px;
+                right: 20px;
+                left: 20px;
+                min-width: auto;
+            }
+            
+            .cube-title {
+                font-size: 1.4rem;
+            }
+            
+            .cube-description {
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .slider-wrapper {
+                width: 280px;
+                height: 280px;
+            }
+            .cube-face {
+                width: 280px;
+                height: 280px;
+            }
+            .cube-front, .cube-right, .cube-back, .cube-left, .cube-top, .cube-bottom {
+                transform: rotateY(0deg) translateZ(140px);
+            }
+            .cube-right { transform: rotateY(90deg) translateZ(140px); }
+            .cube-back { transform: rotateY(180deg) translateZ(140px); }
+            .cube-left { transform: rotateY(-90deg) translateZ(140px); }
+            .cube-top { transform: rotateX(90deg) translateZ(140px); }
+            .cube-bottom { transform: rotateX(-90deg) translateZ(140px); }
+            
+            .cube-content {
+                padding: 15px;
+            }
+        }
+
+        /* Custom Animations */
+        @keyframes pulseGlow {
+            0%, 100% { box-shadow: 0 0 20px rgba(255, 255, 255, 0.3); }
+            50% { box-shadow: 0 0 40px rgba(255, 255, 255, 0.6); }
+        }
+
+        .glow-effect {
+            animation: pulseGlow 2s ease-in-out infinite;
+        }
+
+        /* Smooth Loading Animation */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.5s ease;
+        }
+
+        .loading-spinner {
+            width: 60px;
+            height: 60px;
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top: 4px solid var(--text-light);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner"></div>
+    </div>
+
+    <!-- Background Particles -->
+    <div class="bg-particles" id="bgParticles"></div>
+
+    <!-- Main Slider Container -->
+    <div class="slider-container">
+        <div class="slider-wrapper">
+            <div class="cube" id="cube">
+                <!-- Front Face -->
+                <div class="cube-face cube-front">
+                    <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=600&fit=crop" alt="Mountain Lake">
+                    <div class="cube-content">
+                        <div class="cube-title">Mountain Serenity</div>
+                        <div class="cube-description">Breathtaking alpine lakes surrounded by majestic peaks</div>
+                    </div>
+                </div>
+                
+                <!-- Right Face -->
+                <div class="cube-face cube-right">
+                    <img src="https://images.unsplash.com/photo-1501594907352-04cda38ebc29?w=800&h=600&fit=crop" alt="Ocean Sunset">
+                    <div class="cube-content">
+                        <div class="cube-title">Ocean Dreams</div>
+                        <div class="cube-description">Golden sunsets painting endless ocean horizons</div>
+                    </div>
+                </div>
+                
+                <!-- Back Face -->
+                <div class="cube-face cube-back">
+                    <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=800&h=600&fit=crop" alt="Forest Path">
+                    <div class="cube-content">
+                        <div class="cube-title">Forest Adventure</div>
+                        <div class="cube-description">Mysterious woodland paths through ancient trees</div>
+                    </div>
+                </div>
+                
+                <!-- Left Face -->
+                <div class="cube-face cube-left">
+                    <img src="https://images.unsplash.com/photo-1518837695005-2083093ee35b?w=800&h=600&fit=crop" alt="Desert Dunes">
+                    <div class="cube-content">
+                        <div class="cube-title">Desert Majesty</div>
+                        <div class="cube-description">Endless golden dunes under starlit desert skies</div>
+                    </div>
+                </div>
+                
+                <!-- Top Face -->
+                <div class="cube-face cube-top">
+                    <img src="https://images.unsplash.com/photo-1519904981063-b0cf448d479e?w=800&h=600&fit=crop" alt="City Lights">
+                    <div class="cube-content">
+                        <div class="cube-title">Urban Energy</div>
+                        <div class="cube-description">Vibrant city lights creating electric atmospheres</div>
+                    </div>
+                </div>
+                
+                <!-- Bottom Face -->
+                <div class="cube-face cube-bottom">
+                    <img src="https://images.unsplash.com/photo-1464822759844-d150675acf65?w=800&h=600&fit=crop" alt="Space Galaxy">
+                    <div class="cube-content">
+                        <div class="cube-title">Cosmic Wonder</div>
+                        <div class="cube-description">Infinite galaxies sparkling in deep space</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Interactive Controls -->
+    <div class="controls-panel">
+        <div class="control-btn" onclick="rotateCube('left')" title="Rotate Left">
+            <i class="fas fa-chevron-left"></i>
+        </div>
+        <div class="control-btn" onclick="rotateCube('right')" title="Rotate Right">
+            <i class="fas fa-chevron-right"></i>
+        </div>
+        <div class="control-btn" onclick="rotateCube('up')" title="Rotate Up">
+            <i class="fas fa-chevron-up"></i>
+        </div>
+        <div class="control-btn" onclick="rotateCube('down')" title="Rotate Down">
+            <i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="control-btn" onclick="toggleAutoRotate()" title="Auto Rotate" id="autoBtn">
+            <i class="fas fa-play"></i>
+        </div>
+        <div class="control-btn" onclick="resetCube()" title="Reset Position">
+            <i class="fas fa-home"></i>
+        </div>
+    </div>
+
+    <!-- Navigation Indicators -->
+    <div class="nav-indicators">
+        <div class="nav-dot active" onclick="goToFace(0)"></div>
+        <div class="nav-dot" onclick="goToFace(1)"></div>
+        <div class="nav-dot" onclick="goToFace(2)"></div>
+        <div class="nav-dot" onclick="goToFace(3)"></div>
+        <div class="nav-dot" onclick="goToFace(4)"></div>
+        <div class="nav-dot" onclick="goToFace(5)"></div>
+    </div>
+
+    <!-- Settings Panel -->
+    <div class="settings-panel">
+        <h6 class="mb-3"><i class="fas fa-cog"></i> Settings</h6>
+        
+        <div class="setting-item">
+            <label class="setting-label">Animation Speed</label>
+            <input type="range" class="setting-control" min="0.5" max="3" step="0.1" value="1" id="speedControl">
+        </div>
+        
+        <div class="setting-item">
+            <label class="setting-label">Auto-Rotate Speed</label>
+            <input type="range" class="setting-control" min="1000" max="5000" step="500" value="3000" id="autoSpeedControl">
+        </div>
+        
+        <div class="setting-item d-flex justify-content-between align-items-center">
+            <label class="setting-label mb-0">Particles</label>
+            <div class="toggle-switch active" id="particleToggle" onclick="toggleParticles()">
+                <div class="toggle-knob"></div>
+            </div>
+        </div>
+        
+        <div class="setting-item d-flex justify-content-between align-items-center">
+            <label class="setting-label mb-0">Glow Effect</label>
+            <div class="toggle-switch" id="glowToggle" onclick="toggleGlow()">
+                <div class="toggle-knob"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Global variables
+        let currentX = 0;
+        let currentY = 0;
+        let currentFace = 0;
+        let isAutoRotating = false;
+        let autoRotateInterval;
+        let animationSpeed = 1;
+        let autoSpeed = 3000;
+
+        const cube = document.getElementById('cube');
+        const navDots = document.querySelectorAll('.nav-dot');
+        const speedControl = document.getElementById('speedControl');
+        const autoSpeedControl = document.getElementById('autoSpeedControl');
+        const autoBtn = document.getElementById('autoBtn');
+
+        // Face rotation mappings
+        const faceRotations = [
+            { x: 0, y: 0 },     // Front
+            { x: 0, y: -90 },   // Right  
+            { x: 0, y: -180 },  // Back
+            { x: 0, y: -270 },  // Left
+            { x: -90, y: 0 },   // Top
+            { x: 90, y: 0 }     // Bottom
+        ];
+
+        // Initialize
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('loadingOverlay').style.opacity = '0';
+                setTimeout(() => {
+                    document.getElementById('loadingOverlay').style.display = 'none';
+                }, 500);
+            }, 1000);
+            
+            createParticles();
+            updateCubeTransform();
+        });
+
+        // Create background particles
+        function createParticles() {
+            const particlesContainer = document.getElementById('bgParticles');
+            const particleCount = 50;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                particle.style.width = (Math.random() * 20 + 10) + 'px';
+                particle.style.height = particle.style.width;
+                particle.style.animationDelay = Math.random() * 8 + 's';
+                particle.style.animationDuration = (Math.random() * 4 + 6) + 's';
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // Update cube transform
+        function updateCubeTransform() {
+            cube.style.transitionDuration = animationSpeed + 's';
+            cube.style.transform = `rotateX(${currentX}deg) rotateY(${currentY}deg)`;
+            updateNavIndicators();
+        }
+
+        // Rotate cube functions
+        function rotateCube(direction) {
+            switch(direction) {
+                case 'left':
+                    currentY += 90;
+                    currentFace = (currentFace + 1) % 4;
+                    break;
+                case 'right':
+                    currentY -= 90;
+                    currentFace = (currentFace - 1 + 4) % 4;
+                    break;
+                case 'up':
+                    currentX += 90;
+                    currentFace = currentX === -90 ? 4 : (currentX === 90 ? 5 : currentFace);
+                    break;
+                case 'down':
+                    currentX -= 90;
+                    currentFace = currentX === -90 ? 4 : (currentX === 90 ? 5 : currentFace);
+                    break;
+            }
+            updateCubeTransform();
+        }
+
+        // Go to specific face
+        function goToFace(faceIndex) {
+            currentFace = faceIndex;
+            currentX = faceRotations[faceIndex].x;
+            currentY = faceRotations[faceIndex].y;
+            updateCubeTransform();
+        }
+
+        // Reset cube position
+        function resetCube() {
+            currentX = 0;
+            currentY = 0;
+            currentFace = 0;
+            updateCubeTransform();
+        }
+
+        // Toggle auto rotation
+        function toggleAutoRotate() {
+            if (isAutoRotating) {
+                clearInterval(autoRotateInterval);
+                autoBtn.innerHTML = '<i class="fas fa-play"></i>';
+                isAutoRotating = false;
+            } else {
+                autoRotateInterval = setInterval(() => {
+                    rotateCube('left');
+                }, autoSpeed);
+                autoBtn.innerHTML = '<i class="fas fa-pause"></i>';
+                isAutoRotating = true;
+            }
+        }
+
+        // Update navigation indicators
+        function updateNavIndicators() {
+            navDots.forEach((dot, index) => {
+                dot.classList.toggle('active', index === currentFace);
+            });
+        }
+
+        // Settings controls
+        speedControl.addEventListener('input', (e) => {
+            animationSpeed = parseFloat(e.target.value);
+        });
+
+        autoSpeedControl.addEventListener('input', (e) => {
+            autoSpeed = parseInt(e.target.value);
+            if (isAutoRotating) {
+                clearInterval(autoRotateInterval);
+                autoRotateInterval = setInterval(() => {
+                    rotateCube('left');
+                }, autoSpeed);
+            }
+        });
+
+        // Toggle particles
+        function toggleParticles() {
+            const toggle = document.getElementById('particleToggle');
+            const particles = document.getElementById('bgParticles');
+            toggle.classList.toggle('active');
+            particles.style.display = toggle.classList.contains('active') ? 'block' : 'none';
+        }
+
+        // Toggle glow effect
+        function toggleGlow() {
+            const toggle = document.getElementById('glowToggle');
+            const cubefaces = document.querySelectorAll('.cube-face');
+            toggle.classList.toggle('active');
+            
+            cubefaces.forEach(face => {
+                if (toggle.classList.contains('active')) {
+                    face.classList.add('glow-effect');
+                } else {
+                    face.classList.remove('glow-effect');
+                }
+            });
+        }
+
+        // Keyboard controls
+        document.addEventListener('keydown', (e) => {
+            switch(e.key) {
+                case 'ArrowLeft':
+                    e.preventDefault();
+                    rotateCube('left');
+                    break;
+                case 'ArrowRight':
+                    e.preventDefault();
+                    rotateCube('right');
+                    break;
+                case 'ArrowUp':
+                    e.preventDefault();
+                    rotateCube('up');
+                    break;
+                case 'ArrowDown':
+                    e.preventDefault();
+                    rotateCube('down');
+                    break;
+                case ' ':
+                    e.preventDefault();
+                    toggleAutoRotate();
+                    break;
+                case 'r':
+                case 'R':
+                    e.preventDefault();
+                    resetCube();
+                    break;
+            }
+        });
+
+        // Touch/Swipe support
+        let startX = 0;
+        let startY = 0;
+        let endX = 0;
+        let endY = 0;
+
+        cube.addEventListener('touchstart', (e) => {
+            startX = e.touches[0].clientX;
+            startY = e.touches[0].clientY;
+        });
+
+        cube.addEventListener('touchmove', (e) => {
+            e.preventDefault();
+        });
+
+        cube.addEventListener('touchend', (e) => {
+            endX = e.changedTouches[0].clientX;
+            endY = e.changedTouches[0].clientY;
+            
+            const deltaX = startX - endX;
+            const deltaY = startY - endY;
+            
+            if (Math.abs(deltaX) > Math.abs(deltaY)) {
+                // Horizontal swipe
+                if (Math.abs(deltaX) > 50) {
+                    if (deltaX > 0) {
+                        rotateCube('right');
+                    } else {
+                        rotateCube('left');
+                    }
+                }
+            } else {
+                // Vertical swipe
+                if (Math.abs(deltaY) > 50) {
+                    if (deltaY > 0) {
+                        rotateCube('down');
+                    } else {
+                        rotateCube('up');
+                    }
+                }
+            }
+        });
+
+        // Mouse drag support for desktop
+        let isMouseDown = false;
+        let mouseStartX = 0;
+        let mouseStartY = 0;
+
+        cube.addEventListener('mousedown', (e) => {
+            isMouseDown = true;
+            mouseStartX = e.clientX;
+            mouseStartY = e.clientY;
+            cube.style.cursor = 'grabbing';
+        });
+
+        document.addEventListener('mousemove', (e) => {
+            if (!isMouseDown) return;
+            
+            const deltaX = e.clientX - mouseStartX;
+            const deltaY = e.clientY - mouseStartY;
+            
+            // Visual feedback during drag
+            const tempX = currentX + deltaY * 0.2;
+            const tempY = currentY - deltaX * 0.2;
+            cube.style.transform = `rotateX(${tempX}deg) rotateY(${tempY}deg)`;
+        });
+
+        document.addEventListener('mouseup', (e) => {
+            if (!isMouseDown) return;
+            
+            isMouseDown = false;
+            cube.style.cursor = 'grab';
+            
+            const deltaX = e.clientX - mouseStartX;
+            const deltaY = e.clientY - mouseStartY;
+            
+            // Determine rotation direction based on drag distance
+            if (Math.abs(deltaX) > Math.abs(deltaY)) {
+                if (Math.abs(deltaX) > 100) {
+                    if (deltaX > 0) {
+                        rotateCube('left');
+                    } else {
+                        rotateCube('right');
+                    }
+                } else {
+                    updateCubeTransform(); // Reset to current position
+                }
+            } else {
+                if (Math.abs(deltaY) > 100) {
+                    if (deltaY > 0) {
+                        rotateCube('up');
+                    } else {
+                        rotateCube('down');
+                    }
+                } else {
+                    updateCubeTransform(); // Reset to current position
+                }
+            }
+        });
+
+        // Prevent context menu on long press
+        cube.addEventListener('contextmenu', (e) => {
+            e.preventDefault();
+        });
+
+        // Wheel/scroll support
+        cube.addEventListener('wheel', (e) => {
+            e.preventDefault();
+            
+            if (e.deltaY > 0) {
+                rotateCube('right');
+            } else {
+                rotateCube('left');
+            }
+        });
+
+        // Pause auto-rotation on hover/focus
+        cube.addEventListener('mouseenter', () => {
+            if (isAutoRotating) {
+                clearInterval(autoRotateInterval);
+            }
+        });
+
+        cube.addEventListener('mouseleave', () => {
+            if (isAutoRotating) {
+                autoRotateInterval = setInterval(() => {
+                    rotateCube('left');
+                }, autoSpeed);
+            }
+        });
+
+        // Performance optimization: Reduce motion for users who prefer it
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            document.documentElement.style.setProperty('--transition-smooth', 'cubic-bezier(0.25, 0.46, 0.45, 0.94)');
+            animationSpeed = 0.3;
+            speedControl.value = 0.3;
+        }
+
+        // Intersection Observer for performance
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    // Resume animations when visible
+                    if (document.hidden === false && isAutoRotating) {
+                        if (!autoRotateInterval) {
+                            autoRotateInterval = setInterval(() => {
+                                rotateCube('left');
+                            }, autoSpeed);
+                        }
+                    }
+                } else {
+                    // Pause animations when not visible
+                    if (autoRotateInterval) {
+                        clearInterval(autoRotateInterval);
+                        autoRotateInterval = null;
+                    }
+                }
+            });
+        });
+
+        observer.observe(cube);
+
+        // Page visibility API for better performance
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) {
+                if (autoRotateInterval) {
+                    clearInterval(autoRotateInterval);
+                    autoRotateInterval = null;
+                }
+            } else {
+                if (isAutoRotating && !autoRotateInterval) {
+                    autoRotateInterval = setInterval(() => {
+                        rotateCube('left');
+                    }, autoSpeed);
+                }
+            }
+        });
+
+        // Add ripple effect to control buttons
+        document.querySelectorAll('.control-btn').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                const ripple = document.createElement('div');
+                const rect = this.getBoundingClientRect();
+                const size = Math.max(rect.width, rect.height);
+                const x = e.clientX - rect.left - size / 2;
+                const y = e.clientY - rect.top - size / 2;
+                
+                ripple.style.width = ripple.style.height = size + 'px';
+                ripple.style.left = x + 'px';
+                ripple.style.top = y + 'px';
+                ripple.classList.add('ripple');
+                
+                this.appendChild(ripple);
+                
+                setTimeout(() => {
+                    ripple.remove();
+                }, 600);
+            });
+        });
+
+        // Add CSS for ripple effect
+        const rippleCSS = `
+            .control-btn {
+                position: relative;
+                overflow: hidden;
+            }
+            .ripple {
+                position: absolute;
+                border-radius: 50%;
+                background: rgba(255, 255, 255, 0.4);
+                transform: scale(0);
+                animation: ripple-animation 0.6s linear;
+                pointer-events: none;
+            }
+            @keyframes ripple-animation {
+                to {
+                    transform: scale(4);
+                    opacity: 0;
+                }
+            }
+        `;
+        
+        const style = document.createElement('style');
+        style.textContent = rippleCSS;
+        document.head.appendChild(style);
+
+        // Initialize cursor style
+        cube.style.cursor = 'grab';
+        
+        // Add smooth scroll behavior
+        document.documentElement.style.scrollBehavior = 'smooth';
+        
+        console.log('🎮 Advanced 3D Cube Slider Loaded!');
+        console.log('⌨️  Keyboard Controls:');
+        console.log('   Arrow Keys: Navigate cube');
+        console.log('   Spacebar: Toggle auto-rotation');
+        console.log('   R: Reset position');
+        console.log('🖱️  Mouse: Click and drag to rotate');
+        console.log('📱 Touch: Swipe to navigate');
+        console.log('🖲️  Scroll: Rotate left/right');
+    </script>
+</body>
+</html>

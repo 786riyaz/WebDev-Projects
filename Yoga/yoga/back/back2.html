@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Serene Yoga Background</title>
+    <style>
+        :root {
+            --primary: #6B8E7A;
+            --bg: #FFFFFF;
+            --secondary: #E8ECEF;
+        }
+        
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: var(--bg);
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Subtle wave pattern */
+        .wave-bg {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 30%;
+            background: linear-gradient(180deg, transparent 0%, var(--secondary) 100%);
+            opacity: 0.4;
+            z-index: 0;
+        }
+
+        /* Yoga figure container */
+        .yoga-container {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 2;
+        }
+
+        /* Meditation dots */
+        .meditation-dots {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        .dot {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background-color: var(--primary);
+            border-radius: 50%;
+            opacity: 0.3;
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.2; }
+            50% { transform: scale(1.3); opacity: 0.4; }
+        }
+
+        /* Yoga figure */
+        .yoga-figure {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        /* Yoga pose parts */
+        .head {
+            position: absolute;
+            top: 30%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 50px;
+            height: 50px;
+            background-color: var(--primary);
+            border-radius: 50%;
+            z-index: 3;
+        }
+
+        .body {
+            position: absolute;
+            top: 40%;
+            left: 50%;
+            transform: translate(-50%, 0);
+            width: 12px;
+            height: 120px;
+            background-color: var(--primary);
+            border-radius: 10px;
+            z-index: 2;
+        }
+
+        .limb {
+            position: absolute;
+            background-color: var(--primary);
+            border-radius: 10px;
+            z-index: 1;
+        }
+
+        .arm.left {
+            top: 45%;
+            left: 35%;
+            width: 80px;
+            height: 12px;
+            transform: rotate(45deg);
+            animation: arm-left 8s ease-in-out infinite;
+        }
+
+        .arm.right {
+            top: 45%;
+            right: 35%;
+            width: 80px;
+            height: 12px;
+            transform: rotate(-45deg);
+            animation: arm-right 8s ease-in-out infinite;
+        }
+
+        .leg.left {
+            top: 65%;
+            left: 45%;
+            width: 12px;
+            height: 80px;
+            transform: rotate(20deg);
+            animation: leg-left 10s ease-in-out infinite;
+        }
+
+        .leg.right {
+            top: 65%;
+            right: 45%;
+            width: 12px;
+            height: 100px;
+            transform: rotate(-10deg);
+            animation: leg-right 10s ease-in-out infinite;
+        }
+
+        /* Animations */
+        @keyframes float {
+            0%, 100% { transform: translate(-50%, -50%) translateY(0); }
+            50% { transform: translate(-50%, -50%) translateY(-15px); }
+        }
+
+        @keyframes arm-left {
+            0%, 100% { transform: rotate(45deg); }
+            50% { transform: rotate(60deg); }
+        }
+
+        @keyframes arm-right {
+            0%, 100% { transform: rotate(-45deg); }
+            50% { transform: rotate(-30deg); }
+        }
+
+        @keyframes leg-left {
+            0%, 100% { transform: rotate(20deg); }
+            50% { transform: rotate(35deg); }
+        }
+
+        @keyframes leg-right {
+            0%, 100% { transform: rotate(-10deg); }
+            50% { transform: rotate(5deg); }
+        }
+
+        /* Floating leaves */
+        .leaf {
+            position: absolute;
+            background-color: var(--primary);
+            opacity: 0.15;
+            border-radius: 50% 0 50% 50%;
+            animation: leaf-float linear infinite;
+            z-index: 0;
+        }
+
+        @keyframes leaf-float {
+            0% { transform: translateY(0) rotate(0deg); }
+            100% { transform: translateY(-100vh) rotate(360deg); }
+        }
+
+        /* Content overlay */
+        .content-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+        }
+
+        .content-box {
+            background-color: rgba(255, 255, 255, 0.85);
+            padding: 2rem;
+            border-radius: 12px;
+            max-width: 600px;
+            box-shadow: 0 5px 20px rgba(107, 142, 122, 0.1);
+            text-align: center;
+        }
+
+        h1 {
+            color: var(--primary);
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            font-weight: 300;
+        }
+
+        p {
+            color: #5a5a5a;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+    <!-- Background elements -->
+    <div class="wave-bg"></div>
+    
+    <!-- Meditation dots -->
+    <div class="meditation-dots" id="dots-container"></div>
+    
+    <!-- Floating leaves -->
+    <div class="leaf" style="width: 30px; height: 30px; left: 10%; animation-duration: 25s;"></div>
+    <div class="leaf" style="width: 25px; height: 25px; left: 25%; animation-duration: 30s; animation-delay: 5s;"></div>
+    <div class="leaf" style="width: 35px; height: 35px; left: 75%; animation-duration: 35s; animation-delay: 10s;"></div>
+    <div class="leaf" style="width: 20px; height: 20px; left: 90%; animation-duration: 20s; animation-delay: 3s;"></div>
+    
+    <!-- Yoga figure -->
+    <div class="yoga-container">
+        <div class="yoga-figure">
+            <div class="head"></div>
+            <div class="body"></div>
+            <div class="limb arm left"></div>
+            <div class="limb arm right"></div>
+            <div class="limb leg left"></div>
+            <div class="limb leg right"></div>
+        </div>
+    </div>
+    
+    <!-- Content area (can be replaced with your actual content) -->
+    <div class="content-overlay">
+        <div class="content-box">
+            <h1>Find Your Balance</h1>
+            <p>Begin your journey to inner peace with our guided yoga practices designed for all levels.</p>
+        </div>
+    </div>
+
+    <script>
+        // Create meditation dots
+        const dotsContainer = document.getElementById('dots-container');
+        for (let i = 0; i < 20; i++) {
+            const dot = document.createElement('div');
+            dot.classList.add('dot');
+            
+            // Random positioning
+            dot.style.left = `${Math.random() * 100}%`;
+            dot.style.top = `${Math.random() * 100}%`;
+            
+            // Random animation delay
+            dot.style.animationDelay = `${Math.random() * 4}s`;
+            
+            dotsContainer.appendChild(dot);
+        }
+    </script>
+</body>
+</html>

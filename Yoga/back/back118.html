@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Scroll 3D Video Background</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <style>
+
+    .bg-video-container video {
+      min-width: 100%;
+      min-height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s ease, filter 0.3s ease;
+    }
+
+    .content {
+      position: relative;
+      z-index: 1;
+      min-height: 200vh; /* Extended for scrolling */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.7);
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-video-container">
+    <video autoplay muted loop playsinline id="bg-video">
+      <source src="demo4.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+  </div>
+
+  <div class="container content text-center">
+    <div>
+      <h1>Welcome</h1>
+      <p>Scroll to experience a 3D zoom and blur effect on the video background</p>
+      <a href="#" class="btn btn-light mt-3">Get Started</a>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    window.addEventListener('scroll', () => {
+      const video = document.getElementById('bg-video');
+      const scrollPosition = window.scrollY / window.innerHeight;
+      
+      // Calculate scale and blur based on scroll
+      const maxScale = 1.2;
+      const maxBlur = 3; // Pixels
+      const scale = 1 + scrollPosition * 0.2;
+      const blur = scrollPosition * maxBlur;
+      
+      // Apply transform and filter
+      video.style.transform = `scale(${Math.min(scale, maxScale)})`;
+      video.style.filter = `blur(${blur}px)`;
+    });
+  </script>
+</body>
+</html>

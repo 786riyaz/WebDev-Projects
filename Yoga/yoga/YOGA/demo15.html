@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kiaya Haus - Holistic Healing</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <!-- Google Fonts for modern typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #81c784;
+            --primary-dark: #43a047;
+            --primary-darker: #1b5e20;
+            --background-light: #e8f5e9;
+            --background-medium: #c8e6c9;
+            --background-dark: #a5d6a7;
+            --primary: #10b981;
+            --secondary: #f59e0b;
+            --accent: #8b5cf6;
+            --white: #ffffff;
+        }
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--background-light);
+            color: var(--primary-darker);
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+        .navbar {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            margin: 10px auto;
+            max-width: 1200px;
+            border-radius: 10px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 10px 15px;
+            position: fixed;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: calc(100% - 40px);
+            z-index: 1000;
+        }
+        .navbar-brand img {
+            width: 40px;
+            height: 40px;
+        }
+        .navbar-nav .nav-link {
+            color: var(--primary-darker);
+            font-size: clamp(0.9rem, 2vw, 1rem);
+            padding: 8px 12px;
+        }
+        .navbar-nav .nav-link:hover {
+            color: var(--primary-dark);
+        }
+        .dropdown-menu {
+            background: rgba(200, 230, 201, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        .dropdown-item {
+            color: var(--primary-darker);
+            font-size: 0.9rem;
+        }
+        .dropdown-item:hover {
+            background-color: var(--background-dark);
+            color: var(--primary-darker);
+        }
+        .hero-section {
+            width: 100%;
+            min-height: 100vh;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: clamp(80px, 15vh, 120px) 20px 20px;
+        }
+        .vanta-canvas {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 0;
+        }
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+        }
+        .hero-container {
+            background: rgba(232, 245, 233, 0.85);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: clamp(20px, 5vw, 40px);
+            display: flex;
+            align-items: center;
+            gap: clamp(20px, 3vw, 30px);
+        }
+        .hero-text {
+            flex: 1;
+            color: var(--primary-darker);
+        }
+        .slogan {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.2rem, 3vw, 1.5rem);
+            margin-bottom: 15px;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        .slogan-word {
+            opacity: 0;
+            transform: translateY(15px);
+            animation: fadeInUp 0.5s ease forwards;
+        }
+        .slogan-word:nth-child(1) { animation-delay: 0.2s; }
+        .slogan-word:nth-child(3) { animation-delay: 0.4s; }
+        .slogan-word:nth-child(5) { animation-delay: 0.6s; }
+        .slogan-separator {
+            color: var(--primary-color);
+        }
+        .hero-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 700;
+            margin-bottom: 15px;
+            line-height: 1.2;
+        }
+        .hero-title-highlight {
+            color: var(--primary-color);
+        }
+        .hero-subtitle {
+            font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        .philosophy-pills {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        .philosophy-pill {
+            background: var(--background-dark);
+            color: var(--primary-darker);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: clamp(0.8rem, 2vw, 0.9rem);
+            transition: transform 0.3s ease;
+        }
+        .philosophy-pill:hover {
+            transform: translateY(-3px);
+        }
+        .hero-buttons .btn {
+            background: var(--primary-dark);
+            border: none;
+            color: white;
+            padding: clamp(8px, 2vw, 10px) clamp(15px, 3vw, 20px);
+            font-size: clamp(0.9rem, 2.5vw, 1rem);
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        .hero-buttons .btn:hover {
+            background: var(--primary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(67, 160, 71, 0.3);
+        }
+        .hero-visual {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+        .yoga-scene {
+            width: clamp(250px, 30vw, 400px);
+            height: clamp(250px, 30vw, 400px);
+            position: relative;
+            transform-style: preserve-3d;
+            animation: sceneRotate 20s linear infinite;
+        }
+        @keyframes sceneRotate {
+            from { transform: rotateY(0deg); }
+            to { transform: rotateY(360deg); }
+        }
+        .yoga-rings {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 2px solid;
+            opacity: 0.6;
+            animation: ringPulse 4s ease-in-out infinite;
+        }
+        .ring-1 {
+            border-color: var(--primary);
+            animation-delay: 0s;
+            transform: rotateX(0deg);
+        }
+        .ring-2 {
+            border-color: var(--secondary);
+            width: 80%;
+            height: 80%;
+            top: 10%;
+            left: 10%;
+            animation-delay: 1s;
+            transform: rotateX(60deg);
+        }
+        .ring-3 {
+            border-color: var(--accent);
+            width: 60%;
+            height: 60%;
+            top: 20%;
+            left: 20%;
+            animation-delay: 2s;
+            transform: rotateX(120deg);
+        }
+        @keyframes ringPulse {
+            0%, 100% { 
+                transform: scale(1) rotateX(var(--rotation, 0deg)); 
+                opacity: 0.6; 
+            }
+            50% { 
+                transform: scale(1.1) rotateX(var(--rotation, 0deg)); 
+                opacity: 1; 
+            }
+        }
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* About Section */
+        .about-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: clamp(40px, 6vw, 80px) clamp(15px, 2vw, 20px);
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            gap: clamp(20px, 4vw, 40px);
+        }
+        .founders-image {
+            flex: 1;
+            min-width: clamp(250px, 40vw, 400px);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(107, 142, 112, 0.2);
+            transition: transform 0.5s ease;
+        }
+        .founders-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+        .founders-image:hover {
+            transform: translateY(-10px);
+        }
+        .founders-image:hover img {
+            transform: scale(1.03);
+        }
+        .founders-content {
+            flex: 1;
+            min-width: clamp(250px, 40vw, 500px);
+            background: rgba(255, 255, 255, 0.9);
+            padding: clamp(20px, 4vw, 40px);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(107, 142, 112, 0.1);
+            backdrop-filter: blur(5px);
+        }
+        .archive-badge {
+            background: linear-gradient(135deg, var(--primary-color), var(--accent));
+            color: var(--white);
+            display: inline-block;
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-size: clamp(0.85rem, 1.5vw, 0.95rem);
+            margin-bottom: 25px;
+            font-weight: 600;
+        }
+        .founders-names {
+            margin-bottom: 25px;
+        }
+        .founder {
+            margin-bottom: 20px;
+            padding: 20px;
+            border-radius: 10px;
+            background: rgba(200, 230, 201, 0.3);
+            transition: all 0.3s ease;
+        }
+        .founder:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(107, 142, 112, 0.1);
+            background: rgba(200, 230, 201, 0.5);
+        }
+        .founder-name {
+            font-size: clamp(1.2rem, 2vw, 1.4rem);
+            color: var(--primary-dark);
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        .founder-qualification {
+            font-size: clamp(0.9rem, 1.5vw, 1rem);
+            color: var(--primary-darker);
+            font-style: italic;
+        }
+        .mission-statement {
+            margin: 25px 0;
+            font-size: clamp(1rem, 1.8vw, 1.15rem);
+            line-height: 1.8;
+            color: var(--primary-darker);
+        }
+        .signature {
+            font-style: italic;
+            margin-top: 25px;
+            color: var(--primary-dark);
+            font-weight: 600;
+            font-size: clamp(1rem, 1.8vw, 1.1rem);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .hero-container {
+                flex-direction: column;
+                text-align: center;
+            }
+            .slogan {
+                justify-content: center;
+            }
+            .philosophy-pills {
+                justify-content: center;
+            }
+            .hero-buttons {
+                display: flex;
+                justify-content: center;
+            }
+            .navbar {
+                width: calc(100% - 20px);
+            }
+        }
+        @media (max-width: 768px) {
+            .navbar-nav {
+                background: rgba(255, 255, 255, 0.9);
+                backdrop-filter: blur(20px);
+                border-radius: 15px;
+                padding: 15px;
+                margin-top: 10px;
+            }
+            .hero-section {
+                padding-top: 100px;
+            }
+            .yoga-scene {
+                width: 250px;
+                height: 250px;
+            }
+        }
+        @media (max-width: 576px) {
+            .hero-title {
+                font-size: 2.2rem;
+            }
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+            .slogan {
+                flex-direction: column;
+                align-items: center;
+                gap: 0.5rem;
+            }
+            .slogan-separator {
+                display: none;
+            }
+            .founders-image, .founders-content {
+                min-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="#">
+                <img src="../YOGA/image/logo.jpg" alt="Kiaya Haus" class="me-2">
+                Kiaya Haus
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#" aria-current="page">Home</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="physioDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Physiotherapy
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="physioDropdown">
+                            <li><a class="dropdown-item" href="#ortho"><i class="fas fa-bone me-2"></i>Ortho & Sports</a></li>
+                            <li><a class="dropdown-item" href="#cardio"><i class="fas fa-heartbeat me-2"></i>Cardio-Respiratory</a></li>
+                            <li><a class="dropdown-item" href="#neuro"><i class="fas fa-brain me-2"></i>Neuro & Pediatric</a></li>
+                            <li><a class="dropdown-item" href="#womens"><i class="fas fa-female me-2"></i>Women's Health</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="yogaDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Yoga Services
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="yogaDropdown">
+                            <li><a class="dropdown-item" href="#power-yoga"><i class="fas fa-fire me-2"></i>Power Yoga</a></li>
+                            <li><a class="dropdown-item" href="#kids-yoga"><i class="fas fa-child me-2"></i>Kids Yoga</a></li>
+                            <li><a class="dropdown-item" href="#aerial-yoga"><i class="fas fa-parachute-box me-2"></i>Aerial Yoga</a></li>
+                            <li><a class="dropdown-item" href="#prenatal-yoga"><i class="fas fa-baby me-2"></i>Pre & Post Natal Yoga</a></li>
+                            <li><a class="dropdown-item" href="#fitness-yoga"><i class="fas fa-dumbbell me-2"></i>Fitness Yoga</a></li>
+                            <li><a class="dropdown-item" href="#personal-yoga"><i class="fas fa-user me-2"></i>Personal Training</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="therapyDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Special Therapies
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="therapyDropdown">
+                            <li><a class="dropdown-item" href="#tapping"><i class="fas fa-hand-paper me-2"></i>Tapping</a></li>
+                            <li><a class="dropdown-item" href="#dry-cupping"><i class="fas fa-circle-notch me-2"></i>Dry Cupping</a></li>
+                            <li><a class="dropdown-item" href="#wet-cupping"><i class="fas fa-tint me-2"></i>Wet Cupping</a></li>
+                            <li><a class="dropdown-item" href="#dry-needling"><i class="fas fa-syringe me-2"></i>Dry Needling</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero-section" id="clouds">
+        <div class="vanta-canvas"></div>
+        <div class="hero-content">
+            <div class="hero-container">
+                <div class="hero-text">
+                    <div class="slogan-wrapper">
+                        <div class="slogan">
+                            <span class="slogan-word" data-word="breathe">Breathe</span>
+                            <span class="slogan-separator">•</span>
+                            <span class="slogan-word" data-word="balance">Balance</span>
+                            <span class="slogan-separator">•</span>
+                            <span class="slogan-word" data-word="become">Become</span>
+                        </div>
+                    </div>
+                    <h1 class="hero-title">
+                        Holistic <span class="hero-title-highlight">Healing</span><br>
+                        Through Yoga & Physiotherapy
+                    </h1>
+                    <p class="hero-subtitle">
+                        Experience personalized care that nurtures your mind, body, and soul. Our expert team combines traditional wisdom with modern techniques to help you achieve optimal wellness and discover your true potential.
+                    </p>
+                    <div class="philosophy-pills">
+                        <span class="philosophy-pill">Mind</span>
+                        <span class="philosophy-pill">Body</span>
+                        <span class="philosophy-pill">Soul</span>
+                    </div>
+                    <div class="hero-buttons">
+                        <a href="#services" class="btn" aria-label="Explore our yoga and physiotherapy services">Book Now</a>
+                    </div>
+                </div>
+                <div class="hero-visual">
+                    <div class="yoga-scene">
+                        <div class="yoga-rings ring-1" style="--rotation: 0deg;"></div>
+                        <div class="yoga-rings ring-2" style="--rotation: 60deg;"></div>
+                        <div class="yoga-rings ring-3" style="--rotation: 120deg;"></div>
+                        <div class="yoga-figure">
+                            <svg class="yoga-svg" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                                <defs>
+                                    <linearGradient id="yogaGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" style="stop-color:#10b981"/>
+                                        <stop offset="50%" style="stop-color:#f59e0b"/>
+                                        <stop offset="100%" style="stop-color:#8b5cf6"/>
+                                    </linearGradient>
+                                    <filter id="glow">
+                                        <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+                                        <feMerge> 
+                                            <feMergeNode in="coloredBlur"/>
+                                            <feMergeNode in="SourceGraphic"/>
+                                        </feMerge>
+                                    </filter>
+                                </defs>
+                                <circle cx="100" cy="100" r="80" fill="none" stroke="url(#yogaGradient)" stroke-width="2" opacity="0.5" stroke-dasharray="5,5">
+                                    <animate attributeName="r" values="80;90;80" dur="4s" repeatCount="indefinite"/>
+                                    <animateTransform attributeName="transform" type="rotate" values="0 100 100;360 100 100" dur="10s" repeatCount="indefinite"/>
+                                </circle>
+                                <circle cx="100" cy="60" r="15" fill="url(#yogaGradient)" filter="url(#glow)"/>
+                                <line x1="100" y1="75" x2="100" y2="140" stroke="url(#yogaGradient)" stroke-width="8" stroke-linecap="round" filter="url(#glow)"/>
+                                <path d="M100 90 Q80 85 65 95 Q70 105 85 100" stroke="url(#yogaGradient)" stroke-width="6" fill="none" stroke-linecap="round" filter="url(#glow)"/>
+                                <path d="M100 90 Q120 85 135 95 Q130 105 115 100" stroke="url(#yogaGradient)" stroke-width="6" fill="none" stroke-linecap="round" filter="url(#glow)"/>
+                                <path d="M100 140 Q85 155 70 150 Q75 165 90 160" stroke="url(#yogaGradient)" stroke-width="6" fill="none" stroke-linecap="round" filter="url(#glow)"/>
+                                <path d="M100 140 Q115 155 130 150 Q125 165 110 160" stroke="url(#yogaGradient)" stroke-width="6" fill="none" stroke-linecap="round" filter="url(#glow)"/>
+                                <circle cx="100" cy="80" r="3" fill="#f59e0b" opacity="0.8">
+                                    <animate attributeName="opacity" values="0.8;1;0.8" dur="2s" repeatCount="indefinite"/>
+                                </circle>
+                                <circle cx="100" cy="100" r="3" fill="#10b981" opacity="0.8">
+                                    <animate attributeName="opacity" values="0.8;1;0.8" dur="2s" repeatCount="indefinite" begin="0.5s"/>
+                                </circle>
+                                <circle cx="100" cy="120" r="3" fill="#8b5cf6" opacity="0.8">
+                                    <animate attributeName="opacity" values="0.8;1;0.8" dur="2s" repeatCount="indefinite" begin="1s"/>
+                                </circle>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Dr. Section -->
+    <section class="about-container" id="about">
+        <div class="founders-image">
+            <img src="../YOGA/image/photo.jpg" alt="Dr. Mayanta Kalathiya and Dr. Heena Khatri">
+        </div>
+        <div class="founders-content">
+            <div class="archive-badge">ARCHIVE 2025/6</div>
+            <div class="founders-names">
+                <div class="founder">
+                    <div class="founder-name">DR. MAYANTA KALATHIYA</div>
+                    <div class="founder-qualification">Master's in Sports Physiology</div>
+                </div>
+                <div class="founder">
+                    <div class="founder-name">DR. HEENA KHATRI</div>
+                    <div class="founder-qualification">Master's in Cardiopulmonary Physiotherapy</div>
+                </div>
+            </div>
+            <div class="mission-statement">
+                <p>At Kiaya Haus, we walk beside you on your journey to lasting health and wellness. As founders, our mission is rooted in compassion and personalized care—empowering you to feel your best, naturally. With our shared expertise in physiotherapy, yoga, and nutrition, we treat the whole person: mind, body, and soul.</p>
+                <p>Whether you're healing, growing, or simply seeking balance, we're honored to be part of your path forward.</p>
+            </div>
+            <div class="signature">
+                — DR. MAYANTA KALATHIYA & DR. HEENA KHATRI
+            </div>
+        </div>
+    </section>
+
+    <!-- Load Three.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+    <!-- Load Vanta.js clouds effect -->
+    <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.clouds.min.js"></script>
+    <!-- Load Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Initialize Vanta.js effect
+            VANTA.CLOUDS({
+                el: "#clouds",
+                mouseControls: true,
+                touchControls: true,
+                gyroControls: false,
+                minHeight: 200.00,
+                minWidth: 200.00,
+                skyColor: 0xe8f5e9,
+                cloudColor: 0xa5d6a7,
+                sunColor: 0x81c784,
+                sunlightColor: 0x43a047,
+                speed: 1.00
+            });
+
+            // Animate slogan words
+            const sloganWords = document.querySelectorAll('.slogan-word');
+            sloganWords.forEach(word => {
+                word.style.animation = `fadeInUp 0.5s ease forwards ${word.dataset.word === 'breathe' ? '0.2s' : 
+                                       word.dataset.word === 'balance' ? '0.4s' : '0.6s'}`;
+            });
+        });
+    </script>
+</body>
+</html>

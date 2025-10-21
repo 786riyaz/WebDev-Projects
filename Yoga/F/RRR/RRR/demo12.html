@@ -1,0 +1,1418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kiaya Haus - 3D Experience</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-green: #43a047;
+            --light-green: #81c784;
+            --dark-green: #1b5e20;
+            --lightest-green: #e8f5e9;
+            --medium-light-green: #c8e6c9;
+            --medium-green: #a5d6a7;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            overflow-x: hidden;
+            background: linear-gradient(135deg, var(--lightest-green) 0%, var(--medium-green) 50%, var(--light-green) 100%);
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            position: relative;
+        }
+
+        /* Animated Background */
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            background: linear-gradient(-45deg, var(--lightest-green), var(--medium-light-green), var(--medium-green), var(--light-green));
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Particle Canvas */
+        canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* Enhanced Navbar */
+        .navbar {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            margin: 20px auto;
+            max-width: 1200px;
+            border-radius: 30px;
+            box-shadow: 
+                0 15px 35px rgba(27, 94, 32, 0.1),
+                0 0 25px rgba(129, 199, 132, 0.15),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .navbar::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.8s;
+        }
+
+        .navbar:hover::before {
+            left: 100%;
+        }
+
+        .navbar:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 
+                0 25px 50px rgba(27, 94, 32, 0.15),
+                0 0 40px rgba(129, 199, 132, 0.25),
+                inset 0 1px 0 rgba(255, 255, 255, 0.5);
+        }
+
+        .navbar-brand {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            font-size: 1.8rem;
+            color: var(--dark-green) !important;
+            transition: all 0.4s ease;
+            text-shadow: 0 0 10px rgba(67, 160, 71, 0.3);
+        }
+
+        .navbar-brand:hover {
+            color: var(--primary-green) !important;
+            text-shadow: 0 0 20px rgba(129, 199, 132, 0.5);
+            transform: scale(1.05);
+        }
+
+        .navbar-brand img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 3px solid var(--medium-green);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 0 15px rgba(129, 199, 132, 0.3);
+        }
+
+        .navbar-brand:hover img {
+            transform: scale(1.2) rotate(360deg);
+            border-color: var(--primary-green);
+            box-shadow: 0 0 25px rgba(129, 199, 132, 0.6);
+        }
+
+        .navbar-nav .nav-link {
+            color: var(--dark-green);
+            font-weight: 600;
+            position: relative;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            margin: 0 8px;
+            padding: 12px 20px !important;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .navbar-nav .nav-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--medium-green), var(--light-green));
+            transition: left 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: -1;
+        }
+
+        .navbar-nav .nav-link:hover::before {
+            left: 0;
+        }
+
+        .navbar-nav .nav-link:hover {
+            color: var(--dark-green);
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 10px 25px rgba(165, 214, 167, 0.4);
+        }
+
+        .dropdown-menu {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 25px;
+            box-shadow: 0 15px 35px rgba(27, 94, 32, 0.1);
+            animation: dropdownFadeIn 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            padding: 15px;
+            margin-top: 10px;
+        }
+
+        .dropdown-item {
+            color: var(--dark-green);
+            border-radius: 15px;
+            margin: 3px 0;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            font-weight: 500;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .dropdown-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--medium-light-green), var(--medium-green));
+            transition: left 0.3s ease;
+            z-index: -1;
+        }
+
+        .dropdown-item:hover::before {
+            left: 0;
+        }
+
+        .dropdown-item:hover {
+            color: var(--dark-green);
+            transform: translateX(10px) scale(1.02);
+            box-shadow: 0 5px 15px rgba(165, 214, 167, 0.3);
+        }
+
+        /* Hero Section */
+        .hero-section {
+            position: relative;
+            z-index: 1;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 120px 0 60px;
+            overflow: hidden;
+        }
+
+        .hero-container {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            gap: 60px;
+        }
+
+        /* Enhanced Hero Text */
+        .hero-text {
+            flex: 1;
+            max-width: 600px;
+            text-align: left;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(25px);
+            padding: 50px;
+            border-radius: 30px;
+            box-shadow: 
+                0 25px 80px rgba(27, 94, 32, 0.1),
+                0 0 40px rgba(129, 199, 132, 0.15),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            animation: slideInLeft 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-text::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(from 0deg, transparent, rgba(129, 199, 132, 0.03), transparent);
+            animation: rotate 25s linear infinite;
+        }
+
+        .hero-text > * {
+            position: relative;
+            z-index: 2;
+        }
+
+        .slogan-wrapper {
+            margin-bottom: 30px;
+        }
+
+        .slogan {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            font-size: 1.8rem;
+            font-weight: 700;
+            font-family: 'Playfair Display', serif;
+            flex-wrap: wrap;
+        }
+
+        .slogan-word {
+            opacity: 0;
+            transform: translateY(40px) rotateX(90deg);
+            animation: wordReveal 1s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+            position: relative;
+            display: inline-block;
+            perspective: 1000px;
+        }
+
+        .slogan-word::after {
+            content: attr(data-word);
+            position: absolute;
+            top: 0;
+            left: 0;
+            background: linear-gradient(135deg, var(--primary-green), var(--light-green));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            opacity: 0;
+            animation: textGradient 1s ease forwards;
+            animation-delay: inherit;
+        }
+
+        .slogan-word:nth-child(1) { 
+            animation-delay: 0.5s;
+            color: var(--primary-green);
+        }
+        .slogan-word:nth-child(3) { 
+            animation-delay: 0.8s;
+            color: var(--light-green);
+        }
+        .slogan-word:nth-child(5) { 
+            animation-delay: 1.1s;
+            color: var(--dark-green);
+        }
+
+        .slogan-separator {
+            color: var(--primary-green);
+            font-size: 2rem;
+            animation: pulse 2s ease-in-out infinite;
+            text-shadow: 0 0 15px rgba(129, 199, 132, 0.5);
+        }
+
+        .hero-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 4rem;
+            font-weight: 800;
+            margin-bottom: 2rem;
+            background: linear-gradient(135deg, var(--dark-green), var(--primary-green), var(--light-green));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: slideInLeft 1.8s cubic-bezier(0.4, 0, 0.2, 1);
+            line-height: 1.1;
+            text-shadow: 0 0 30px rgba(67, 160, 71, 0.3);
+            position: relative;
+        }
+
+        .hero-title::before {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-green), var(--light-green));
+            animation: underlineExpand 1.5s ease forwards 2s;
+            transform: scaleX(0);
+            transform-origin: left;
+        }
+
+        .hero-subtitle {
+            font-size: 1.4rem;
+            line-height: 1.8;
+            color: var(--dark-green);
+            opacity: 0.9;
+            margin-bottom: 35px;
+            animation: slideInLeft 2.2s cubic-bezier(0.4, 0, 0.2, 1);
+            text-shadow: 0 0 10px rgba(27, 94, 32, 0.2);
+        }
+
+        .philosophy-pills {
+            display: flex;
+            gap: 20px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+
+        .philosophy-pill {
+            background: linear-gradient(135deg, var(--medium-green), var(--light-green));
+            color: var(--dark-green);
+            padding: 15px 25px;
+            border-radius: 30px;
+            font-size: 1rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            box-shadow: 
+                0 10px 30px rgba(165, 214, 167, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.5);
+            animation: pillFloat 0.8s ease forwards;
+            opacity: 0;
+            transform: translateY(30px) scale(0.8);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .philosophy-pill::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transition: left 0.6s;
+        }
+
+        .philosophy-pill:hover::before {
+            left: 100%;
+        }
+
+        .philosophy-pill:hover {
+            transform: translateY(-8px) scale(1.1) rotateY(10deg);
+            box-shadow: 
+                0 20px 40px rgba(165, 214, 167, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.8);
+        }
+
+        .philosophy-pill:nth-child(1) { animation-delay: 0.3s; }
+        .philosophy-pill:nth-child(2) { animation-delay: 0.6s; }
+        .philosophy-pill:nth-child(3) { animation-delay: 0.9s; }
+
+        .hero-buttons {
+            margin-top: 40px;
+        }
+
+        .hero-buttons .btn {
+            background: linear-gradient(135deg, var(--primary-green), var(--light-green));
+            border: none;
+            color: white;
+            padding: 18px 40px;
+            font-size: 1.3rem;
+            font-weight: 700;
+            border-radius: 50px;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 
+                0 15px 40px rgba(67, 160, 71, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            position: relative;
+            overflow: hidden;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .hero-buttons .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.6s;
+        }
+
+        .hero-buttons .btn:hover::before {
+            left: 100%;
+        }
+
+        .hero-buttons .btn:hover {
+            transform: translateY(-8px) scale(1.1) rotateX(5deg);
+            box-shadow: 
+                0 25px 60px rgba(67, 160, 71, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.5);
+            background: linear-gradient(135deg, var(--light-green), var(--primary-green));
+        }
+
+        /* 3D Image Slider */
+        .slider-3d {
+            flex: 1;
+            max-width: 650px;
+            height: 500px;
+            perspective: 1200px;
+            position: relative;
+            animation: slideInRight 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .slider-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+            animation: rotate3D 20s linear infinite;
+        }
+
+        .slider-container:hover {
+            animation-play-state: paused;
+        }
+
+        .slide {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 25px;
+            overflow: hidden;
+            box-shadow: 
+                0 25px 80px rgba(27, 94, 32, 0.2),
+                0 0 40px rgba(129, 199, 132, 0.3);
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+        }
+
+        .slide img,
+        .slide video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 25px;
+            transition: all 0.6s ease;
+        }
+
+        .slide::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, 
+                rgba(129, 199, 132, 0.1) 0%, 
+                transparent 50%, 
+                rgba(67, 160, 71, 0.1) 100%);
+            z-index: 1;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            border-radius: 25px;
+        }
+
+        .slide:hover::before {
+            opacity: 1;
+        }
+
+        .slide:hover {
+            transform: scale(1.05) rotateY(5deg);
+            box-shadow: 
+                0 35px 100px rgba(27, 94, 32, 0.3),
+                0 0 60px rgba(129, 199, 132, 0.4);
+        }
+
+        .slide:hover img,
+        .slide:hover video {
+            transform: scale(1.1);
+        }
+
+        /* 3D Carousel positioning */
+        .slide:nth-child(1) { transform: rotateY(0deg) translateZ(300px); }
+        .slide:nth-child(2) { transform: rotateY(60deg) translateZ(300px); }
+        .slide:nth-child(3) { transform: rotateY(120deg) translateZ(300px); }
+        .slide:nth-child(4) { transform: rotateY(180deg) translateZ(300px); }
+        .slide:nth-child(5) { transform: rotateY(240deg) translateZ(300px); }
+        .slide:nth-child(6) { transform: rotateY(300deg) translateZ(300px); }
+
+        /* Slide Content Overlay */
+        .slide-content {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0,0,0,0.7));
+            color: white;
+            padding: 30px;
+            z-index: 2;
+            transform: translateY(100%);
+            transition: transform 0.4s ease;
+            border-radius: 0 0 25px 25px;
+        }
+
+        .slide:hover .slide-content {
+            transform: translateY(0);
+        }
+
+        .slide-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--lightest-green);
+        }
+
+        .slide-description {
+            font-size: 1rem;
+            opacity: 0.9;
+            line-height: 1.5;
+        }
+
+        /* Navigation Dots */
+        .slider-nav {
+            position: absolute;
+            bottom: -60px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 15px;
+            z-index: 10;
+        }
+
+        .nav-dot {
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background: var(--medium-green);
+            cursor: pointer;
+            transition: all 0.4s ease;
+            box-shadow: 0 5px 15px rgba(165, 214, 167, 0.3);
+        }
+
+        .nav-dot:hover,
+        .nav-dot.active {
+            background: var(--primary-green);
+            transform: scale(1.3);
+            box-shadow: 0 8px 25px rgba(67, 160, 71, 0.5);
+        }
+
+        /* Floating Elements */
+        .floating-elements {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .floating-shape {
+            position: absolute;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--medium-green), var(--light-green));
+            opacity: 0.1;
+            animation: floatUpDown 8s ease-in-out infinite;
+        }
+
+        .floating-shape:nth-child(1) {
+            width: 100px;
+            height: 100px;
+            top: 20%;
+            left: 10%;
+            animation-delay: 0s;
+            animation-duration: 6s;
+        }
+        .floating-shape:nth-child(2) {
+            width: 150px;
+            height: 150px;
+            top: 60%;
+            right: 15%;
+            animation-delay: 2s;
+            animation-duration: 8s;
+        }
+        .floating-shape:nth-child(3) {
+            width: 80px;
+            height: 80px;
+            top: 40%;
+            right: 25%;
+            animation-delay: 4s;
+            animation-duration: 7s;
+        }
+        .floating-shape:nth-child(4) {
+            width: 120px;
+            height: 120px;
+            top: 80%;
+            left: 20%;
+            animation-delay: 1s;
+            animation-duration: 9s;
+        }
+
+        /* Animations */
+        @keyframes slideInLeft {
+            from { 
+                opacity: 0; 
+                transform: translateX(-150px) scale(0.8) rotateY(-30deg); 
+            }
+            to { 
+                opacity: 1; 
+                transform: translateX(0) scale(1) rotateY(0deg); 
+            }
+        }
+
+        @keyframes slideInRight {
+            from { 
+                opacity: 0; 
+                transform: translateX(150px) scale(0.8) rotateY(30deg); 
+            }
+            to { 
+                opacity: 1; 
+                transform: translateX(0) scale(1) rotateY(0deg); 
+            }
+        }
+
+        @keyframes wordReveal {
+            from { 
+                opacity: 0; 
+                transform: translateY(40px) rotateX(90deg); 
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0) rotateX(0deg); 
+            }
+        }
+
+        @keyframes textGradient {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes pillFloat {
+            from { 
+                opacity: 0; 
+                transform: translateY(30px) scale(0.8) rotateX(45deg); 
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0) scale(1) rotateX(0deg); 
+            }
+        }
+
+        @keyframes underlineExpand {
+            from { transform: scaleX(0); }
+            to { transform: scaleX(1); }
+        }
+
+        @keyframes dropdownFadeIn {
+            from { 
+                opacity: 0; 
+                transform: translateY(-30px) scale(0.8) rotateX(-15deg); 
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0) scale(1) rotateX(0deg); 
+            }
+        }
+
+        @keyframes rotate3D {
+            from { transform: rotateY(0deg); }
+            to { transform: rotateY(360deg); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { 
+                opacity: 1; 
+                transform: scale(1) rotate(0deg); 
+            }
+            50% { 
+                opacity: 0.7; 
+                transform: scale(1.2) rotate(180deg); 
+            }
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes floatUpDown {
+            0%, 100% { 
+                transform: translateY(0px) rotate(0deg) scale(1); 
+            }
+            33% { 
+                transform: translateY(-30px) rotate(120deg) scale(1.1); 
+            }
+            66% { 
+                transform: translateY(-15px) rotate(240deg) scale(0.9); 
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .hero-container {
+                gap: 40px;
+            }
+            
+            .slider-3d {
+                height: 400px;
+            }
+        }
+
+        @media (max-width: 968px) {
+            .hero-container {
+                flex-direction: column;
+                gap: 50px;
+            }
+            
+            .hero-video, .hero-text {
+                max-width: 100%;
+            }
+            
+            .hero-title {
+                font-size: 3rem;
+            }
+            
+            .slider-3d {
+                height: 350px;
+                max-width: 100%;
+            }
+            
+            .philosophy-pills {
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                margin: 15px;
+                border-radius: 25px;
+            }
+            
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .slogan {
+                font-size: 1.4rem;
+                justify-content: center;
+                text-align: center;
+            }
+            
+            .hero-text {
+                padding: 30px;
+            }
+            
+            .slider-3d {
+                height: 300px;
+            }
+            
+            .slide:nth-child(n) { 
+                transform: rotateY(0deg) translateZ(200px); 
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="animated-bg"></div>
+
+    <!-- Particle Canvas -->
+    <canvas id="particle-canvas"></canvas>
+
+    <!-- Floating Elements -->
+    <div class="floating-elements">
+        <div class="floating-shape"></div>
+        <div class="floating-shape"></div>
+        <div class="floating-shape"></div>
+        <div class="floating-shape"></div>
+    </div>
+
+    <!-- Enhanced Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+        <div class="container" style="max-width: 1200px;">
+            <a class="navbar-brand d-flex align-items-center" href="#">
+                <img src="https://via.placeholder.com/50x50/43a047/ffffff?text=K" alt="Kiaya Haus" class="me-3">
+                Kiaya Haus
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#" aria-current="page">Home</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="physioDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Physiotherapy
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="physioDropdown">
+                            <li><a class="dropdown-item" href="#ortho"><i class="fas fa-bone me-2"></i>Ortho & Sports</a></li>
+                            <li><a class="dropdown-item" href="#cardio"><i class="fas fa-heartbeat me-2"></i>Cardio-Respiratory</a></li>
+                            <li><a class="dropdown-item" href="#neuro"><i class="fas fa-brain me-2"></i>Neuro & Pediatric</a></li>
+                            <li><a class="dropdown-item" href="#womens"><i class="fas fa-female me-2"></i>Women's Health</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="yogaDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Yoga Services
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="yogaDropdown">
+                            <li><a class="dropdown-item" href="#power-yoga"><i class="fas fa-fire me-2"></i>Power Yoga</a></li>
+                            <li><a class="dropdown-item" href="#kids-yoga"><i class="fas fa-child me-2"></i>Kids Yoga</a></li>
+                            <li><a class="dropdown-item" href="#aerial-yoga"><i class="fas fa-parachute-box me-2"></i>Aerial Yoga</a></li>
+                            <li><a class="dropdown-item" href="#prenatal-yoga"><i class="fas fa-baby me-2"></i>Pre & Post Natal Yoga</a></li>
+                            <li><a class="dropdown-item" href="#fitness-yoga"><i class="fas fa-dumbbell me-2"></i>Fitness Yoga</a></li>
+                            <li><a class="dropdown-item" href="#personal-yoga"><i class="fas fa-user me-2"></i>Personal Training</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="therapyDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Special Therapies
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="therapyDropdown">
+                            <li><a class="dropdown-item" href="#tapping"><i class="fas fa-hand-paper me-2"></i>Tapping</a></li>
+                            <li><a class="dropdown-item" href="#dry-cupping"><i class="fas fa-circle-notch me-2"></i>Dry Cupping</a></li>
+                            <li><a class="dropdown-item" href="#wet-cupping"><i class="fas fa-tint me-2"></i>Wet Cupping</a></li>
+                            <li><a class="dropdown-item" href="#dry-needling"><i class="fas fa-syringe me-2"></i>Dry Needling</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Enhanced Hero Section -->
+    <section class="hero-section">
+        <div class="container" style="max-width: 1200px;">
+            <div class="hero-container">
+                <div class="hero-text">
+                    <div class="slogan-wrapper">
+                        <div class="slogan">
+                            <span class="slogan-word" data-word="breathe">Breathe</span>
+                            <span class="slogan-separator">•</span>
+                            <span class="slogan-word" data-word="balance">Balance</span>
+                            <span class="slogan-separator">•</span>
+                            <span class="slogan-word" data-word="become">Become</span>
+                        </div>
+                    </div>
+                    <h1 class="hero-title">
+                        Holistic <span class="hero-title-highlight">Healing</span><br>
+                        Through Yoga & Physiotherapy
+                    </h1>
+                    <p class="hero-subtitle">
+                        Experience personalized care that nurtures your mind, body, and soul. Our expert team combines traditional wisdom with modern techniques to help you achieve optimal wellness and discover your true potential.
+                    </p>
+                    <div class="philosophy-pills">
+                        <span class="philosophy-pill">Mind</span>
+                        <span class="philosophy-pill">Body</span>
+                        <span class="philosophy-pill">Soul</span>
+                    </div>
+                    <div class="hero-buttons">
+                        <a href="#services" class="btn" aria-label="Book your wellness journey">Book Now</a>
+                    </div>
+                </div>
+
+                <!-- 3D Image Slider -->
+                <div class="slider-3d">
+                    <div class="slider-container" id="sliderContainer">
+                        <div class="slide">
+                            <img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Yoga Practice">
+                            <div class="slide-content">
+                                <div class="slide-title">Yoga Therapy</div>
+                                <div class="slide-description">Transform your body and mind through ancient yoga practices</div>
+                            </div>
+                        </div>
+                        <div class="slide">
+                            <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Physiotherapy">
+                            <div class="slide-content">
+                                <div class="slide-title">Physiotherapy</div>
+                                <div class="slide-description">Expert physical rehabilitation and pain management</div>
+                            </div>
+                        </div>
+                        <div class="slide">
+                            <img src="https://images.unsplash.com/photo-1506126613408-eca07ce68773?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Meditation">
+                            <div class="slide-content">
+                                <div class="slide-title">Meditation</div>
+                                <div class="slide-description">Find inner peace and mental clarity through guided meditation</div>
+                            </div>
+                        </div>
+                        <div class="slide">
+                            <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Wellness">
+                            <div class="slide-content">
+                                <div class="slide-title">Holistic Wellness</div>
+                                <div class="slide-description">Complete mind-body wellness solutions</div>
+                            </div>
+                        </div>
+                        <div class="slide">
+                            <img src="https://images.unsplash.com/photo-1599901860904-17e6ed7083a0?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Therapy">
+                            <div class="slide-content">
+                                <div class="slide-title">Special Therapies</div>
+                                <div class="slide-description">Advanced therapeutic treatments for optimal health</div>
+                            </div>
+                        </div>
+                        <div class="slide">
+                            <video autoplay muted loop playsinline>
+                                <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                            <div class="slide-content">
+                                <div class="slide-title">Our Journey</div>
+                                <div class="slide-description">Discover the Kiaya Haus experience</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Navigation Dots -->
+                    <div class="slider-nav">
+                        <div class="nav-dot active" data-slide="0"></div>
+                        <div class="nav-dot" data-slide="1"></div>
+                        <div class="nav-dot" data-slide="2"></div>
+                        <div class="nav-dot" data-slide="3"></div>
+                        <div class="nav-dot" data-slide="4"></div>
+                        <div class="nav-dot" data-slide="5"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Advanced Particle System & 3D Controls -->
+    <script>
+        // Particle System
+        const canvas = document.getElementById('particle-canvas');
+        const ctx = canvas.getContext('2d', { alpha: false });
+        
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const colors = [
+            { r: 129, g: 199, b: 132, name: 'light-green' },
+            { r: 67, g: 160, b: 71, name: 'primary-green' },
+            { r: 27, g: 94, b: 32, name: 'dark-green' },
+            { r: 165, g: 214, b: 167, name: 'medium-green' },
+            { r: 200, g: 230, b: 201, name: 'medium-light-green' },
+            { r: 232, g: 245, b: 233, name: 'lightest-green' }
+        ];
+
+        const particles = [];
+        const particleCount = Math.min(200, Math.floor(window.innerWidth * window.innerHeight / 2000));
+        const connectionDistance = 150;
+        const mouseEffectRadius = 200;
+
+        const mouse = {
+            x: null,
+            y: null,
+            isPressed: false,
+            trail: []
+        };
+
+        class EnhancedParticle {
+            constructor() {
+                this.reset();
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.life = Math.random() * 100 + 100;
+                this.maxLife = this.life;
+            }
+
+            reset() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.vx = (Math.random() - 0.5) * 1.2;
+                this.vy = (Math.random() - 0.5) * 1.2;
+                this.radius = Math.random() * 4 + 1;
+                this.originalRadius = this.radius;
+                this.color = colors[Math.floor(Math.random() * colors.length)];
+                this.alpha = Math.random() * 0.6 + 0.2;
+                this.originalAlpha = this.alpha;
+                this.pulseSpeed = Math.random() * 0.03 + 0.01;
+                this.phase = Math.random() * Math.PI * 2;
+                this.magnetism = Math.random() * 0.5 + 0.5;
+            }
+
+            update() {
+                this.phase += this.pulseSpeed;
+                
+                // Pulsing effect
+                this.alpha = this.originalAlpha + Math.sin(this.phase) * 0.3;
+                this.radius = this.originalRadius + Math.sin(this.phase * 2) * 1;
+
+                // Mouse interaction with advanced physics
+                if (mouse.x && mouse.y) {
+                    const dx = mouse.x - this.x;
+                    const dy = mouse.y - this.y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+
+                    if (distance < mouseEffectRadius) {
+                        const force = (mouseEffectRadius - distance) / mouseEffectRadius;
+                        const attraction = mouse.isPressed ? 1 : -0.5;
+                        
+                        this.vx += (dx / distance) * force * 0.2 * attraction * this.magnetism;
+                        this.vy += (dy / distance) * force * 0.2 * attraction * this.magnetism;
+                        
+                        this.alpha = Math.min(1, this.originalAlpha + force * 0.8);
+                        this.radius = this.originalRadius + force * 3;
+                        
+                        // Color intensity change
+                        const intensity = Math.floor(force * 255);
+                        this.currentColor = `rgba(${this.color.r + intensity/4}, ${this.color.g + intensity/4}, ${this.color.b + intensity/4}, ${this.alpha})`;
+                    } else {
+                        this.currentColor = `rgba(${this.color.r}, ${this.color.g}, ${this.color.b}, ${this.alpha})`;
+                    }
+                } else {
+                    this.currentColor = `rgba(${this.color.r}, ${this.color.g}, ${this.color.b}, ${this.alpha})`;
+                }
+
+                // Natural movement
+                this.x += this.vx;
+                this.y += this.vy;
+
+                // Boundary collision with energy preservation
+                if (this.x < 0 || this.x > canvas.width) {
+                    this.vx *= -0.9;
+                    this.x = Math.max(0, Math.min(this.x, canvas.width));
+                }
+                if (this.y < 0 || this.y > canvas.height) {
+                    this.vy *= -0.9;
+                    this.y = Math.max(0, Math.min(this.y, canvas.height));
+                }
+
+                // Velocity damping
+                this.vx *= 0.995;
+                this.vy *= 0.995;
+
+                // Life cycle
+                this.life--;
+                if (this.life <= 0) {
+                    this.reset();
+                    this.life = this.maxLife;
+                }
+            }
+
+            draw() {
+                ctx.save();
+                ctx.globalAlpha = this.alpha;
+
+                // Create advanced gradient
+                const gradient = ctx.createRadialGradient(
+                    this.x, this.y, 0,
+                    this.x, this.y, this.radius * 3
+                );
+                gradient.addColorStop(0, this.currentColor || `rgba(${this.color.r}, ${this.color.g}, ${this.color.b}, 1)`);
+                gradient.addColorStop(0.4, this.currentColor || `rgba(${this.color.r}, ${this.color.g}, ${this.color.b}, 0.6)`);
+                gradient.addColorStop(1, 'transparent');
+
+                // Main particle
+                ctx.fillStyle = gradient;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fill();
+
+                // Inner glow
+                ctx.shadowColor = `rgba(${this.color.r}, ${this.color.g}, ${this.color.b}, 0.8)`;
+                ctx.shadowBlur = 15;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius * 0.3, 0, Math.PI * 2);
+                ctx.fill();
+
+                ctx.restore();
+            }
+        }
+
+        // Initialize particles
+        for (let i = 0; i < particleCount; i++) {
+            particles.push(new EnhancedParticle());
+        }
+
+        function updateMouseTrail() {
+            if (mouse.x && mouse.y) {
+                mouse.trail.push({ 
+                    x: mouse.x, 
+                    y: mouse.y, 
+                    life: 40,
+                    size: mouse.isPressed ? 12 : 8
+                });
+                if (mouse.trail.length > 30) {
+                    mouse.trail.shift();
+                }
+            }
+
+            mouse.trail.forEach((point, index) => {
+                point.life--;
+                if (point.life <= 0) {
+                    mouse.trail.splice(index, 1);
+                }
+            });
+        }
+
+        function drawMouseTrail() {
+            mouse.trail.forEach((point, index) => {
+                const alpha = point.life / 40;
+                const radius = alpha * point.size;
+                
+                ctx.save();
+                ctx.globalAlpha = alpha * 0.8;
+                
+                const gradient = ctx.createRadialGradient(
+                    point.x, point.y, 0,
+                    point.x, point.y, radius * 2
+                );
+                gradient.addColorStop(0, 'rgba(67, 160, 71, 1)');
+                gradient.addColorStop(0.5, 'rgba(129, 199, 132, 0.6)');
+                gradient.addColorStop(1, 'transparent');
+                
+                ctx.fillStyle = gradient;
+                ctx.beginPath();
+                ctx.arc(point.x, point.y, radius, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.restore();
+            });
+        }
+
+        function drawConnections() {
+            for (let i = 0; i < particles.length; i++) {
+                for (let j = i + 1; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+
+                    if (distance < connectionDistance) {
+                        const alpha = (1 - distance / connectionDistance) * 0.4;
+                        
+                        ctx.save();
+                        ctx.globalAlpha = alpha;
+                        ctx.strokeStyle = `rgba(67, 160, 71, ${alpha})`;
+                        ctx.lineWidth = 1;
+                        ctx.beginPath();
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.stroke();
+                        ctx.restore();
+                    }
+                }
+            }
+        }
+
+        function animate() {
+            // Create dynamic background
+            const time = Date.now() * 0.001;
+            const gradient = ctx.createLinearGradient(
+                0, 0, 
+                canvas.width, canvas.height
+            );
+            gradient.addColorStop(0, `rgba(232, 245, 233, ${0.02 + Math.sin(time) * 0.01})`);
+            gradient.addColorStop(0.5, `rgba(200, 230, 201, ${0.01 + Math.cos(time * 0.7) * 0.005})`);
+            gradient.addColorStop(1, `rgba(165, 214, 167, ${0.02 + Math.sin(time * 0.5) * 0.01})`);
+            
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Update and draw particles
+            particles.forEach(particle => {
+                particle.update();
+                particle.draw();
+            });
+
+            // Draw connections
+            drawConnections();
+
+            // Update and draw mouse trail
+            updateMouseTrail();
+            drawMouseTrail();
+
+            requestAnimationFrame(animate);
+        }
+
+        // Enhanced event listeners
+        canvas.addEventListener('mousemove', (e) => {
+            mouse.x = e.clientX;
+            mouse.y = e.clientY;
+        });
+
+        canvas.addEventListener('mousedown', (e) => {
+            mouse.isPressed = true;
+            // Create explosion effect
+            for (let i = 0; i < 15; i++) {
+                const particle = new EnhancedParticle();
+                particle.x = e.clientX;
+                particle.y = e.clientY;
+                particle.vx = (Math.random() - 0.5) * 12;
+                particle.vy = (Math.random() - 0.5) * 12;
+                particle.radius = Math.random() * 6 + 2;
+                particle.life = 60;
+                particles.push(particle);
+            }
+        });
+
+        canvas.addEventListener('mouseup', () => {
+            mouse.isPressed = false;
+        });
+
+        canvas.addEventListener('mouseleave', () => {
+            mouse.x = null;
+            mouse.y = null;
+            mouse.isPressed = false;
+            mouse.trail = [];
+        });
+
+        // Touch events
+        canvas.addEventListener('touchmove', (e) => {
+            e.preventDefault();
+            const touch = e.touches[0];
+            mouse.x = touch.clientX;
+            mouse.y = touch.clientY;
+        });
+
+        canvas.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            mouse.isPressed = true;
+            const touch = e.touches[0];
+            mouse.x = touch.clientX;
+            mouse.y = touch.clientY;
+        });
+
+        canvas.addEventListener('touchend', () => {
+            mouse.isPressed = false;
+            mouse.x = null;
+            mouse.y = null;
+            mouse.trail = [];
+        });
+
+        // Resize handler
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+
+        // 3D Slider Controls
+        const sliderContainer = document.getElementById('sliderContainer');
+        const navDots = document.querySelectorAll('.nav-dot');
+        let currentSlide = 0;
+        let isAutoRotating = true;
+        let autoRotateInterval;
+
+        function updateSlider(slideIndex) {
+            currentSlide = slideIndex;
+            const rotation = slideIndex * 60;
+            sliderContainer.style.transform = `rotateY(-${rotation}deg)`;
+            
+            navDots.forEach((dot, index) => {
+                dot.classList.toggle('active', index === slideIndex);
+            });
+        }
+
+        function startAutoRotate() {
+            if (autoRotateInterval) clearInterval(autoRotateInterval);
+            autoRotateInterval = setInterval(() => {
+                if (isAutoRotating) {
+                    currentSlide = (currentSlide + 1) % 6;
+                    updateSlider(currentSlide);
+                }
+            }, 4000);
+        }
+
+        // Navigation dot controls
+        navDots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                isAutoRotating = false;
+                updateSlider(index);
+                setTimeout(() => {
+                    isAutoRotating = true;
+                    startAutoRotate();
+                }, 8000);
+            });
+        });
+
+        // Slider hover controls
+        sliderContainer.addEventListener('mouseenter', () => {
+            isAutoRotating = false;
+        });
+
+        sliderContainer.addEventListener('mouseleave', () => {
+            isAutoRotating = true;
+            startAutoRotate();
+        });
+
+        // Keyboard controls
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') {
+                currentSlide = (currentSlide - 1 + 6) % 6;
+                updateSlider(currentSlide);
+                isAutoRotating = false;
+                setTimeout(() => isAutoRotating = true, 5000);
+            } else if (e.key === 'ArrowRight') {
+                currentSlide = (currentSlide + 1) % 6;
+                updateSlider(currentSlide);
+                isAutoRotating = false;
+                setTimeout(() => isAutoRotating = true, 5000);
+            }
+        });
+
+        // Start animations
+        animate();
+        startAutoRotate();
+
+        // Enhanced scroll effects
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const rate = scrolled * -0.3;
+            
+            const heroSection = document.querySelector('.hero-section');
+            if (heroSection) {
+                heroSection.style.transform = `translateY(${rate}px)`;
+            }
+        });
+
+        // Performance optimization
+        let ticking = false;
+        function updateParticles() {
+            if (!ticking) {
+                requestAnimationFrame(() => {
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        }
+
+        // Intersection Observer for enhanced animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animationPlayState = 'running';
+                    entry.target.classList.add('animate-in');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all animated elements
+        document.querySelectorAll('[class*="slide"], [class*="fade"], .philosophy-pill, .hero-title').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

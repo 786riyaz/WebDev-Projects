@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yoga Services - Kiaya Haus</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <style>
+        :root {
+            --primary-color: #6B8E70;
+            --primary-light: rgba(107, 142, 112, 0.1);
+            --secondary-color: #FFFFFF;
+            --text-dark: #333333;
+            --text-light: #777777;
+            --accent-color: #6B8E70;
+            --gradient-1: #6B8E70;
+            --gradient-2: #A8C7A7;
+            --success-color: #2E7D32;
+            --glass-effect: rgba(107, 142, 112, 0.15);
+            --shadow-light: rgba(107, 142, 112, 0.2);
+            --shadow-medium: rgba(107, 142, 112, 0.3);
+            --transition-smooth: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            height: 100vh;
+            overflow: hidden;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            background: linear-gradient(135deg, #f8fffe 0%, #e8f5e8 50%, #d4ebda 100%);
+        }
+
+        .main-container {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        /* Full-Screen Video Background */
+        #background-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            /* z-index: -1; */
+        }
+
+        #background-video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .zoom-animation {
+            animation: zoomIn 0.5s ease;
+        }
+
+        @keyframes zoomIn {
+            from {
+                transform: scale(0.5);
+                opacity: 0.4;
+            }
+
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        /* Main Header Styles */
+        .Yoga-main-header {
+            text-align: center;
+            padding: 20px 10px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .Yoga-main-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--text-dark);
+            display: inline-block;
+            background: var(--glass-effect);
+            backdrop-filter: blur(10px);
+            padding: 10px 20px;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px var(--shadow-light);
+            position: relative;
+            opacity: 0;
+            transform: translateY(50px) scale(0.9);
+        }
+
+        .Yoga-main-title::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--gradient-1), var(--gradient-2));
+            border-radius: 2px;
+            animation: expandMainLine 1s ease-out 1.5s forwards;
+        }
+
+        @keyframes expandMainLine {
+            to {
+                width: 80px;
+            }
+        }
+
+        .Yoga-main-title.animate {
+            animation: mainTitleSlide 1.2s var(--transition-smooth) forwards;
+        }
+
+        @keyframes mainTitleSlide {
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .Yoga-section {
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .Yoga-content-layout {
+            text-align: center;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--text-dark);
+            margin-bottom: 10px;
+            position: relative;
+            opacity: 0;
+            transform: translateY(-30px);
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--gradient-1), var(--gradient-2));
+            border-radius: 2px;
+            animation: expandLine 0.8s ease-out 1s both;
+        }
+
+        @keyframes expandLine {
+            from {
+                width: 0;
+            }
+
+            to {
+                width: 60px;
+            }
+        }
+
+        .section-title.animate {
+            animation: titleSlideUp 1s var(--transition-smooth) forwards;
+        }
+
+        @keyframes titleSlideUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section-subtitle {
+            font-size: 1rem;
+            color: var(--text-light);
+            max-width: 500px;
+            margin: 0 auto;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .section-subtitle.animate {
+            animation: subtitleFade 0.8s ease-out 0.3s forwards;
+        }
+
+        @keyframes subtitleFade {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .video-thumbnails {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            background: var(--glass-effect);
+            backdrop-filter: blur(10px);
+            padding: 12px;
+            border-radius: 12px;
+            max-width: auto;
+            margin: 20px auto;
+            justify-content: center;
+            z-index: 10;
+        }
+
+        .video-card {
+            display: flex;
+            flex-direction: column;
+            width: 200px;
+            background: var(--glass-effect);
+            backdrop-filter: blur(10px);
+            color: var(--secondary-color);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 12px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.2s ease, border-color 0.2s ease;
+        }
+
+        .video-card:hover {
+            border-color: var(--accent-color);
+            transform: scale(1.05);
+        }
+
+        .thumb {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+        }
+
+        .video-info {
+            padding: 10px;
+        }
+
+        .video-title {
+            font-size: 14px;
+            font-weight: bold;
+            margin: 0 0 5px;
+            color: var(--text-dark);
+        }
+
+        .video-desc {
+            font-size: 11px;
+            color: var(--text-light);
+            margin: 0;
+        }
+
+        .btn-primary-custom {
+            background: linear-gradient(135deg, var(--gradient-1), var(--gradient-2));
+            color: var(--secondary-color);
+            border: none;
+            padding: 6px 12px;
+            border-radius: 15px;
+            font-weight: 600;
+            font-size: 0.75rem;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.3s var(--transition-smooth);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary-custom::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn-primary-custom:hover::before {
+            left: 100%;
+        }
+
+        .btn-primary-custom:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px var(--shadow-medium);
+        }
+
+        @media (max-width: 992px) {
+            .Yoga-main-title {
+                font-size: 2rem;
+                padding: 8px 15px;
+            }
+
+            .Yoga-content-layout {
+                padding: 0 15px;
+            }
+
+            .video-thumbnails {
+                max-width: calc(100% - 30px);
+            }
+
+            .video-card {
+                width: 180px;
+            }
+
+            .thumb {
+                height: 90px;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .section-subtitle {
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .Yoga-main-title {
+                font-size: 1.5rem;
+                padding: 6px 12px;
+            }
+
+            .Yoga-section {
+                padding: 15px;
+            }
+
+            .video-card {
+                width: 150px;
+            }
+
+            .thumb {
+                height: 80px;
+            }
+
+            .video-title {
+                font-size: 12px;
+            }
+
+            .video-desc {
+                font-size: 10px;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+
+            .section-subtitle {
+                font-size: 0.85rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+ 
+
+  
+
+    <div class="main-container">
+        <!-- Full-Screen Video Background -->
+        <div id="background-container">
+            <video id="background-video" autoplay muted loop playsinline>
+                <source src="../YOGA/image/6.mp4" type="video/mp4">
+                Your browser does not support HTML5 video.
+            </video>
+        </div>
+
+         <!-- Main Header -->
+        <header class="Yoga-main-header">
+            <h2 class="Yoga-main-title">Yoga Services</h2>
+        </header>
+
+
+
+        <section class="Yoga-section" id="Yoga">
+            <div class="container">
+                <!-- Centered Video Details -->
+                <div class="Yoga-content-layout">
+                    <div class="content-section">
+                        <div class="section-header">
+                            <h2 class="section-title" id="dynamic-title">Power Yoga</h2>
+                            <p class="section-subtitle" id="dynamic-subtitle">Specialized Yoga for
+                                musculoskeletal injuries and sports performance enhancement.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Centered Video Thumbnails -->
+        <div class="video-thumbnails" id="thumbnails"></div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+
+        const videoList = [
+            {
+                src: "../YOGA/image/0.mp4",
+                thumb: "../YOGA/image/logo.jpg",
+                title: "Power Yoga",
+                desc: "Specialized Yoga for musculoskeletal injuries and sports performance enhancement."
+            },
+            {
+                src: "../YOGA/image/1.mp4",
+                thumb: "../YOGA/image/logo.jpg",
+                title: "Kids Yoga",
+                desc: "Therapies to improve heart and lung function through targeted exercises."
+            },
+            {
+                src: "../YOGA/image/2.mp4",
+                thumb: "../YOGA/image/logo.jpg",
+                title: "Aerial Yoga",
+                desc: "Neurological and pediatric Yoga for developmental and neurological conditions."
+            },
+            {
+                src: "../YOGA/image/3.mp4",
+                thumb: "../YOGA/image/logo.jpg",
+                title: "Pre & Post Natal Yoga",
+                desc: "Specialized Yoga for women’s health issues, including prenatal and postpartum care."
+            },
+            {
+                src: "../YOGA/image/4.mp4",
+                thumb: "../YOGA/image/logo.jpg",
+                title: "Fitness Yoga",
+                desc: "Combines Yoga with fitness training for overall health and mobility."
+            },
+            {
+                src: "../YOGA/image/4.mp4",
+                thumb: "../YOGA/image/logo.jpg",
+                title: "Fitness Yoga",
+                desc: "Combines Yoga with fitness training for overall health and mobility."
+            }
+     
+        ];
+
+        let currentVideoIndex = 0;
+        const backgroundVideo = document.getElementById("background-video");
+        const thumbnailsDiv = document.getElementById("thumbnails");
+        const dynamicTitle1 = document.getElementById("dynamic-title");
+        const dynamicSubtitle1 = document.getElementById("dynamic-subtitle");
+
+        function createThumbnails() {
+            thumbnailsDiv.innerHTML = '';
+
+            videoList.forEach((video, index) => {
+                if (index !== currentVideoIndex) {
+                    const card = document.createElement("div");
+                    card.className = "video-card";
+
+                    const thumb = document.createElement("img");
+                    thumb.src = video.thumb;
+                    thumb.className = "thumb";
+                    thumb.alt = video.title;
+
+                    const infoDiv = document.createElement("div");
+                    infoDiv.className = "video-info";
+
+                    const title = document.createElement("p");
+                    title.className = "video-title";
+                    title.textContent = video.title;
+
+                    const desc = document.createElement("p");
+                    desc.className = "video-desc";
+                    desc.textContent = video.desc;
+
+                    infoDiv.appendChild(title);
+                    infoDiv.appendChild(desc);
+                    card.appendChild(thumb);
+                    card.appendChild(infoDiv);
+
+                    card.addEventListener("click", () => switchVideo(index));
+                    thumbnailsDiv.appendChild(card);
+                }
+            });
+        }
+
+        function switchVideo(newIndex) {
+            if (newIndex === currentVideoIndex) return;
+
+            currentVideoIndex = newIndex;
+
+            backgroundVideo.classList.remove('zoom-animation');
+            void backgroundVideo.offsetWidth;
+            backgroundVideo.classList.add('zoom-animation');
+
+            backgroundVideo.src = videoList[newIndex].src;
+            backgroundVideo.load();
+            backgroundVideo.play();
+
+            gsap.to(dynamicTitle1, {
+                opacity: 0,
+                y: -20,
+                duration: 0.3,
+                onComplete: () => {
+                    dynamicTitle1.textContent = videoList[newIndex].title;
+                    gsap.to(dynamicTitle1, {
+                        opacity: 1,
+                        y: 0,
+                        duration: 0.3
+                    });
+                }
+            });
+
+            gsap.to(dynamicSubtitle1, {
+                opacity: 0,
+                y: 20,
+                duration: 0.3,
+                onComplete: () => {
+                    dynamicSubtitle1.textContent = videoList[newIndex].desc;
+                    gsap.to(dynamicSubtitle1, {
+                        opacity: 1,
+                        y: 0,
+                        duration: 0.3
+                    });
+                }
+            });
+
+            createThumbnails();
+        }
+
+        window.addEventListener("DOMContentLoaded", () => {
+            backgroundVideo.src = videoList[currentVideoIndex].src;
+            backgroundVideo.load();
+            backgroundVideo.play();
+            dynamicTitle1.textContent = videoList[currentVideoIndex].title;
+            dynamicSubtitle1.textContent = videoList[currentVideoIndex].desc;
+            createThumbnails();
+        });
+
+        // GSAP animations for initial load
+        gsap.from(".Yoga-main-title", {
+            opacity: 0,
+            y: 50,
+            scale: 0.9,
+            duration: 1.5,
+            ease: "power2.out",
+            onComplete: () => {
+                document.querySelector(".Yoga-main-title").classList.add("animate");
+            }
+        });
+
+        gsap.from(".section-title", {
+            scrollTrigger: {
+                trigger: ".Yoga-section",
+                start: "top 80%",
+                toggleActions: "play none none none"
+            },
+            opacity: 0,
+            y: -50,
+            duration: 1.2,
+            onComplete: () => {
+                document.querySelector(".section-title").classList.add("animate");
+            }
+        });
+
+        gsap.from(".section-subtitle", {
+            scrollTrigger: {
+                trigger: ".Yoga-section",
+                start: "top 80%",
+                toggleActions: "play none none none"
+            },
+            opacity: 0,
+            y: 30,
+            duration: 1,
+            delay: 0.5,
+            onComplete: () => {
+                document.querySelector(".section-subtitle").classList.add("animate");
+            }
+        });
+
+        gsap.from(".video-card", {
+            scrollTrigger: {
+                trigger: ".video-thumbnails",
+                start: "top 80%",
+                toggleActions: "play none none none"
+            },
+            opacity: 0,
+            y: 30,
+            stagger: 0.1,
+            duration: 0.5,
+            ease: "power2.out"
+        });
+
+        gsap.from(".service-detail-item", {
+            scrollTrigger: {
+                trigger: ".service-details",
+                start: "top 80%",
+                toggleActions: "play none none none"
+            },
+            opacity: 0,
+            y: 30,
+            stagger: 0.1,
+            duration: 0.5,
+            ease: "power2.out",
+            onComplete: function () {
+                document.querySelectorAll(".service-detail-item").forEach(item => item.classList.add("animate"));
+            }
+        });
+
+        // Button click animations
+        document.querySelectorAll('.btn-primary-custom').forEach(button => {
+            button.addEventListener('click', function (e) {
+                e.preventDefault();
+                const ripple = document.createElement('span');
+                ripple.style.position = 'absolute';
+                ripple.style.borderRadius = '50%';
+                ripple.style.background = 'rgba(255,255,255,0.3)';
+                ripple.style.transform = 'scale(0)';
+                ripple.style.animation = 'ripple 0.6s linear';
+                ripple.style.left = '50%';
+                ripple.style.top = '50%';
+                ripple.style.pointerEvents = 'none';
+                ripple.style.width = '10px';
+                ripple.style.height = '10px';
+
+                this.appendChild(ripple);
+
+                setTimeout(() => {
+                    ripple.remove();
+                }, 600);
+            });
+        });
+
+        // Add ripple animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes ripple {
+                to {
+                    transform: scale(20);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kiaya Haus - Holistic Healing Through Yoga & Physiotherapy</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- GSAP for animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container-fluid" style="max-width: 1200px;">
+            <a class="navbar-brand d-flex align-items-center" href="#">
+                <img src="../YOGA/logo.jpg" alt="Kiaya Haus" class="me-2">
+                Kiaya Haus
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" aria-current="page">Home</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="physioDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Physiotherapy
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="physioDropdown">
+                            <li><a class="dropdown-item" href="#ortho"><i class="fas fa-bone me-2"></i>Ortho & Sports</a></li>
+                            <li><a class="dropdown-item" href="#cardio"><i class="fas fa-heartbeat me-2"></i>Cardio-Respiratory</a></li>
+                            <li><a class="dropdown-item" href="#neuro"><i class="fas fa-brain me-2"></i>Neuro & Pediatric</a></li>
+                            <li><a class="dropdown-item" href="#womens"><i class="fas fa-female me-2"></i>Women's Health</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="yogaDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Yoga Services
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="yogaDropdown">
+                            <li><a class="dropdown-item" href="#power-yoga"><i class="fas fa-fire me-2"></i>Power Yoga</a></li>
+                            <li><a class="dropdown-item" href="#kids-yoga"><i class="fas fa-child me-2"></i>Kids Yoga</a></li>
+                            <li><a class="dropdown-item" href="#aerial-yoga"><i class="fas fa-parachute-box me-2"></i>Aerial Yoga</a></li>
+                            <li><a class="dropdown-item" href="#prenatal-yoga"><i class="fas fa-baby me-2"></i>Pre & Post Natal Yoga</a></li>
+                            <li><a class="dropdown-item" href="#fitness-yoga"><i class="fas fa-dumbbell me-2"></i>Fitness Yoga</a></li>
+                            <li><a class="dropdown-item" href="#personal-yoga"><i class="fas fa-user me-2"></i>Personal Training</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="therapyDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Special Therapies
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="therapyDropdown">
+                            <li><a class="dropdown-item" href="#tapping"><i class="fas fa-hand-paper me-2"></i>Tapping</a></li>
+                            <li><a class="dropdown-item" href="#dry-cupping"><i class="fas fa-circle-notch me-2"></i>Dry Cupping</a></li>
+                            <li><a class="dropdown-item" href="#wet-cupping"><i class="fas fa-tint me-2"></i>Wet Cupping</a></li>
+                            <li><a class="dropdown-item" href="#dry-needling"><i class="fas fa-syringe me-2"></i>Dry Needling</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section with Vanta.js Clouds -->
+    <section class="hero-section" id="clouds">
+        <div id="vanta-bg"></div>
+        <div class="hero-content">
+            <div class="hero-container">
+                <div class="hero-text">
+                    <div class="slogan">
+                        <span class="slogan-word" data-word="breathe">Breathe</span>
+                        <span class="slogan-separator">•</span>
+                        <span class="slogan-word" data-word="balance">Balance</span>
+                        <span class="slogan-separator">•</span>
+                        <span class="slogan-word" data-word="become">Become</span>
+                    </div>
+                    <h1 class="hero-title">
+                        Holistic <span class="hero-title-highlight">Healing RRR</span><br>
+                        Through Yoga & Physiotherapy
+                    </h1>
+                    <p class="hero-subtitle">
+                        Experience personalized care that nurtures your mind, body, and soul. Our expert team combines traditional wisdom with modern techniques to help you achieve optimal wellness and discover your true potential.
+                    </p>
+                    <div class="philosophy-pills">
+                        <span class="philosophy-pill">Mind</span>
+                        <span class="philosophy-pill">Body</span>
+                        <span class="philosophy-pill">Soul</span>
+                    </div>
+                    <div class="hero-buttons">
+                        <a href="#services" class="btn" aria-label="Explore our yoga and physiotherapy services">Book Now</a>
+                    </div>
+                </div>
+                <div class="hero-video col-lg-6 col-12">
+                    <div class="video-container animate-video">
+                        <video autoplay muted loop playsinline>
+                            <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section with Particle Canvas -->
+    <section class="about-section" id="about">
+        <canvas id="particle-canvas"></canvas>
+        <div class="about-container">
+            <div class="founders-content">
+                <div class="archive-badge">ARCHIVE 2025/6</div>
+                <div class="founders-names">
+                    <div class="founder">
+                        <div class="founder-name">DR. MAYANTA KALATHIYA</div>
+                        <div class="founder-qualification">Master's in Sports Physiology</div>
+                    </div>
+                    <div class="founder">
+                        <div class="founder-name">DR. HEENA KHATRI</div>
+                        <div class="founder-qualification">Master's in Cardiopulmonary Physiotherapy</div>
+                    </div>
+                </div>
+                <div class="mission-statement">
+                    <p>At Kiaya Haus, we walk beside you on your journey to lasting health and wellness. As founders, our mission is rooted in compassion and personalized care—empowering you to feel your best, naturally. With our shared expertise in physiotherapy, yoga, and nutrition, we treat the whole person: mind, body, and soul.</p>
+                    <p>Whether you're healing, growing, or simply seeking balance, we're honored to be part of your path forward.</p>
+                </div>
+                <div class="signature">
+                    — DR. MAYANTA KALATHIYA & DR. HEENA KHATRI
+                </div>
+            </div>
+            <div class="founders-image">
+                <img src="../YOGA/photo.jpg" alt="Dr. Mayanta Kalathiya and Dr. Heena Khatri">
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features-section">
+        <div class="center-divider"></div>
+        <div class="container">
+            <div class="content-layout">
+                <!-- Left Side - Title -->
+                <div class="title-section">
+                    <div class="section-number">01</div>
+                    <h2 class="section-title">
+                        Why Choose<br>
+                        <span>Serene Yoga</span>
+                    </h2>
+                    <p class="section-description">
+                        Embark on a transformative journey that nurtures your mind, strengthens your body, and elevates your spirit through ancient wisdom and modern practice.
+                    </p>
+                    <div class="decorative-line"></div>
+                </div>
+                <!-- Right Side - Features -->
+                <div class="features-grid">
+                    <div class="feature-item">
+                        <div class="icon-hexagon">
+                            <div class="hexagon-shape"></div>
+                            <div class="hexagon-inner"></div>
+                            <i class="fas fa-heart feature-icon"></i>
+                        </div>
+                        <h3 class="feature-title">Mindfulness</h3>
+                        <p class="feature-text">Cultivate inner peace through guided meditation and conscious breathing techniques.</p>
+                    </div>
+                    <div class="feature-item">
+                        <div class="icon-hexagon">
+                            <div class="hexagon-shape"></div>
+                            <div class="hexagon-inner"></div>
+                            <i class="fas fa-user-friends feature-icon"></i>
+                        </div>
+                        <h3 class="feature-title">Expert Instructors</h3>
+                        <p class="feature-text">Learn from certified masters with years of experience in various yoga disciplines.</p>
+                    </div>
+                    <div class="feature-item">
+                        <div class="icon-hexagon">
+                            <div class="hexagon-shape"></div>
+                            <div class="hexagon-inner"></div>
+                            <i class="fas fa-leaf feature-icon"></i>
+                        </div>
+                        <h3 class="feature-title">Natural Environment</h3>
+                        <p class="feature-text">Practice in our serene studio designed with nature-inspired elements.</p>
+                    </div>
+                    <div class="feature-item">
+                        <div class="icon-hexagon">
+                            <div class="hexagon-shape"></div>
+                            <div class="hexagon-inner"></div>
+                            <i class="fas fa-spa feature-icon"></i>
+                        </div>
+                        <h3 class="feature-title">Holistic Approach</h3>
+                        <p class="feature-text">Integrate physical postures with spiritual growth for complete wellness.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Physiotherapy Section Header -->
+    <header class="main-header">
+        <h2 class="main-title">Physiotherapy Services</h2>
+    </header>
+
+    <!-- Physiotherapy Section with Particle Canvas -->
+    <section class="Physiotherapy-section" id="yoga">
+        <canvas id="physio-particle-canvas"></canvas>
+        <div class="container">
+            <div class="Physiotherapy-content-layout">
+                <!-- Left Side: Section Header -->
+                <div class="content-section">
+                    <div class="section-header">
+                        <h2 class="section-title" id="dynamic-title">Power Yoga</h2>
+                        <p class="section-subtitle" id="dynamic-subtitle">A dynamic, fitness-based approach to vinyasa-style yoga that builds strength, flexibility, and mental resilience through challenging sequences.</p>
+                    </div>
+                </div>
+                <!-- Right Side: 3D Cube Slider and Service Details -->
+                <div class="slider-and-details">
+                    <div class="slider-container">
+                        <div class="cube" id="cube">
+                            <div class="cube-face cube-front" data-service="Ortho & Sports">
+                                <video autoplay muted loop playsinline>
+                                    <source src="https://assets.mixkit.co/videos/preview/mixkit-woman-doing-yoga-on-a-yoga-mat-45666-large.mp4" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                            </div>
+                            <div class="cube-face cube-right" data-service="Cardio-Respiratory">
+                                <video autoplay muted loop playsinline>
+                                    <source src="https://assets.mixkit.co/videos/preview/mixkit-young-girl-doing-yoga-in-the-garden-45669-large.mp4" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                            </div>
+                            <div class="cube-face cube-back" data-service="Neuro & Pediatric">
+                                <video autoplay muted loop playsinline>
+                                    <source src="../YOGA/image/0.mp4" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                            </div>
+                            <div class="cube-face cube-left" data-service="Women Health">
+                                <video autoplay muted loop playsinline>
+                                    <source src="https://assets.mixkit.co/videos/preview/mixkit-pregnant-woman-doing-yoga-45668-large.mp4" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                            </div>
+                            <div class="cube-face cube-top" data-service="fitness-yoga">
+                                <video autoplay muted loop playsinline>
+                                    <source src="https://assets.mixkit.co/videos/preview/mixkit-woman-doing-yoga-on-a-yoga-mat-45666-large.mp4" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                            </div>
+                            <div class="cube-face cube-bottom" data-service="personal-yoga-training">
+                                <video autoplay muted loop playsinline>
+                                    <source src="https://assets.mixkit.co/videos/preview/mixkit-woman-doing-yoga-outdoors-45670-large.mp4" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                            </div>
+                        </div>
+                        <div class="controls-panel">
+                            <div class="control-btn" onclick="rotateCubeLeft()" title="Rotate Left">
+                                <i class="fas fa-arrow-left"></i>
+                            </div>
+                            <div class="control-btn" onclick="rotateCubeRight()" title="Rotate Right">
+                                <i class="fas fa-arrow-right"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanta@0.5.24/dist/vanta.clouds.min.js"></script>
+    <script src="index.js"></script>
+</body>
+</html>

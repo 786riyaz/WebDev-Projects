@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Holistic Healing - Yoga & Physiotherapy</title>
+    <style>
+        :root {
+            --primary-color: #6B8E70;
+            --primary-light: #8FAD94;
+            --primary-dark: #527856;
+            --accent-color: #A8C2AB;
+            --text-dark: #2C3E30;
+            --text-light: #7F8C8D;
+            --white: #FFFFFF;
+            --background-light: #F8FAF9;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            overflow-x: hidden;
+        }
+
+        .hero-section {
+            min-height: calc(100vh - 20px);
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, rgba(255,255,255,0.95), rgba(107,142,112,0.25));
+        }
+
+        .hero-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            opacity: 0.1;
+            background-image: 
+                radial-gradient(circle at 25% 25%, var(--primary-color) 0%, transparent 25%),
+                radial-gradient(circle at 75% 75%, var(--accent-color) 0%, transparent 25%),
+                radial-gradient(circle at 50% 50%, var(--primary-light) 0%, transparent 15%);
+            animation: pulse 10s ease-in-out infinite alternate;
+            will-change: transform, opacity;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 0.1; transform: scale(1); }
+            100% { opacity: 0.2; transform: scale(1.03); }
+        }
+
+        /* Floating Elements */
+        .floating-leaf {
+            position: absolute;
+            opacity: 0.6;
+            z-index: 1;
+            animation: floatLeaf 15s ease-in-out infinite;
+            will-change: transform, opacity;
+        }
+
+        .leaf-1 {
+            width: clamp(30px, 5vw, 40px);
+            top: clamp(10%, 15vw, 15%);
+            left: clamp(5%, 8vw, 8%);
+            animation-delay: 0s;
+        }
+
+        .leaf-2 {
+            width: clamp(25px, 4vw, 35px);
+            top: clamp(60%, 65vw, 65%);
+            left: clamp(8%, 12vw, 12%);
+            animation-delay: 3s;
+        }
+
+        .leaf-3 {
+            width: clamp(28px, 4.5vw, 38px);
+            top: clamp(30%, 35vw, 35%);
+            right: clamp(5%, 8vw, 8%);
+            animation-delay: 1.5s;
+        }
+
+        .leaf-4 {
+            width: clamp(20px, 3.5vw, 28px);
+            top: clamp(70%, 75vw, 75%);
+            right: clamp(8%, 12vw, 12%);
+            animation-delay: 4s;
+        }
+
+        @keyframes floatLeaf {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg) scale(1);
+                opacity: 0.6;
+            }
+            50% {
+                transform: translateY(-20px) rotate(180deg) scale(1.1);
+                opacity: 0.8;
+            }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            width: 100%;
+            padding: clamp(1.5rem, 4vw, 3rem) clamp(1rem, 2vw, 2rem);
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .hero-container {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+            gap: clamp(20px, 5vw, 40px);
+            align-items: center;
+            min-height: calc(80vh - clamp(3rem, 8vw, 6rem));
+            place-items: center;
+        }
+
+        .hero-text {
+            animation: fadeInLeft 1s ease-out;
+        }
+
+        .hero-image {
+            animation: fadeInRight 1s ease-out;
+        }
+
+        /* Slogan Section */
+        .slogan-wrapper {
+            margin-bottom: clamp(1rem, 3vw, 2rem);
+            position: relative;
+        }
+
+        .slogan {
+            display: flex;
+            gap: clamp(1rem, 2vw, 1.5rem);
+            margin-bottom: clamp(0.8rem, 2vw, 1.2rem);
+            flex-wrap: wrap;
+            justify-content: flex-start;
+        }
+
+        .slogan-word {
+            font-size: clamp(1rem, 2.5vw, 1.5rem);
+            font-weight: 600;
+            color: var(--primary-color);
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+
+        .slogan-word:hover {
+            transform: translateY(-3px);
+            color: var(--primary-dark);
+        }
+
+        .slogan-word::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+            transition: width 0.3s ease;
+        }
+
+        .slogan-word:hover::after {
+            width: 100%;
+        }
+
+        .slogan-separator {
+            font-size: clamp(0.9rem, 2vw, 1.2rem);
+            color: var(--accent-color);
+            font-weight: 300;
+        }
+
+        .hero-title {
+            color: var(--text-dark);
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 700;
+            margin-bottom: clamp(1rem, 2.5vw, 1.5rem);
+            line-height: 1.2;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .hero-title-highlight {
+            color: var(--primary-color);
+            position: relative;
+        }
+
+        .hero-subtitle {
+            color: var(--text-light);
+            font-size: clamp(0.9rem, 2vw, 1.2rem);
+            margin-bottom: clamp(1.5rem, 3vw, 2rem);
+            line-height: 1.7;
+            max-width: 90%;
+            font-style: italic;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: clamp(10px, 2vw, 15px);
+            margin-top: clamp(1.5rem, 3vw, 2rem);
+            flex-wrap: wrap;
+            justify-content: flex-start;
+        }
+
+        .btn {
+            padding: clamp(0.6rem, 1.5vw, 0.9rem) clamp(1rem, 2vw, 1.5rem);
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: clamp(0.9rem, 1.8vw, 1rem);
+            transition: all 0.3s ease;
+            border: 2px solid;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: var(--white);
+            border-color: var(--primary-color);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(107, 142, 112, 0.3);
+        }
+
+        .btn-outline-primary {
+            color: var(--primary-color);
+            border-color: var(--primary-color);
+            background-color: transparent;
+        }
+
+        .btn-outline-primary:hover {
+            background-color: var(--primary-color);
+            color: var(--white);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(107, 142, 112, 0.3);
+        }
+
+        /* Enhanced Yoga Figure */
+        .yoga-figure-container {
+            position: relative;
+            width: 100%;
+            height: clamp(250px, 40vw, 400px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .yoga-circles-wrapper {
+            position: relative;
+            width: clamp(200px, 35vw, 300px);
+            height: clamp(200px, 35vw, 300px);
+            animation: float 5s ease-in-out infinite;
+            will-change: transform;
+        }
+
+        .yoga-circle {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            border: 2px solid var(--primary-light);
+            animation: rotate 40s linear infinite;
+            transition: all 0.3s ease;
+        }
+
+        .yoga-circle:hover {
+            box-shadow: 0 0 15px rgba(107, 142, 112, 0.4);
+            border-color: var(--primary-color);
+        }
+
+        .yoga-circle:nth-child(1) {
+            width: clamp(150px, 25vw, 200px);
+            height: clamp(150px, 25vw, 200px);
+            border-width: 3px;
+            border-color: var(--primary-color);
+            animation-duration: 50s;
+            animation-direction: reverse;
+        }
+
+        .yoga-circle:nth-child(2) {
+            width: clamp(200px, 30vw, 250px);
+            height: clamp(200px, 30vw, 250px);
+            border-style: dashed;
+            border-color: var(--accent-color);
+            animation-duration: 60s;
+        }
+
+        .yoga-circle:nth-child(3) {
+            width: clamp(100px, 20vw, 150px);
+            height: clamp(100px, 20vw, 150px);
+            border-width: 1px;
+            border-color: var(--primary-light);
+            animation-duration: 30s;
+            animation-direction: reverse;
+        }
+
+        .yoga-pose {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: clamp(80px, 15vw, 120px);
+            height: clamp(80px, 15vw, 120px);
+            z-index: 5;
+            animation: pulsePose 2.5s ease-in-out infinite alternate;
+            transition: filter 0.3s ease;
+        }
+
+        .yoga-pose:hover {
+            filter: drop-shadow(0 0 10px rgba(107, 142, 112, 0.5));
+        }
+
+        @keyframes pulsePose {
+            0% { transform: translate(-50%, -50%) scale(1) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) scale(1.08) rotate(2deg); }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(3deg); }
+        }
+
+        @keyframes rotate {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        @keyframes fadeInLeft {
+            from { opacity: 0; transform: translateX(-40px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes fadeInRight {
+            from { opacity: 0; transform: translateX(40px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 968px) {
+            .hero-container {
+                grid-template-columns: 1fr;
+                gap: 30px;
+                text-align: center;
+                place-items: center;
+            }
+
+            .slogan {
+                justify-content: center;
+            }
+
+            .hero-buttons {
+                justify-content: center;
+            }
+
+            .hero-subtitle {
+                max-width: 100%;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero-content {
+                padding: clamp(1rem, 3vw, 1.5rem) clamp(0.5rem, 2vw, 1rem);
+            }
+
+            .hero-container {
+                min-height: calc(70vh - clamp(2rem, 6vw, 3rem));
+            }
+
+            .slogan {
+                gap: 0.8rem;
+            }
+
+            .slogan-word {
+                font-size: clamp(0.9rem, 2vw, 1.2rem);
+            }
+
+            .btn {
+                padding: clamp(0.5rem, 1.2vw, 0.7rem) clamp(0.8rem, 1.5vw, 1.2rem);
+                font-size: clamp(0.8rem, 1.5vw, 0.9rem);
+            }
+
+            .yoga-figure-container {
+                height: clamp(200px, 35vw, 300px);
+            }
+
+            .floating-leaf {
+                animation-duration: 12s; /* Faster animation on small screens */
+            }
+        }
+
+        @media (max-width: 400px) {
+            .hero-title {
+                font-size: clamp(1.8rem, 4.5vw, 2.2rem);
+            }
+
+            .hero-subtitle {
+                font-size: clamp(0.8rem, 1.8vw, 1rem);
+            }
+
+            .slogan {
+                flex-direction: column;
+                align-items: center;
+                gap: 0.5rem;
+            }
+
+            .slogan-separator {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <section class="hero-section">
+        <div class="hero-background"></div>
+        
+        <!-- Floating Leaves -->
+        <svg class="floating-leaf leaf-1" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Decorative leaf">
+            <path d="M12 2L8 6V8L12 4L16 8V6L12 2Z" fill="#6B8E70"/>
+            <path d="M12 4L8 8V16C8 18.2 9.8 20 12 20C14.2 20 16 18.2 16 16V8L12 4Z" fill="#8FAD94"/>
+        </svg>
+        <svg class="floating-leaf leaf-2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Decorative leaf">
+            <path d="M12 2L8 6V8L12 4L16 8V6L12 2Z" fill="#6B8E70"/>
+            <path d="M12 4L8 8V16C8 18.2 9.8 20 12 20C14.2 20 16 18.2 16 16V8L12 4Z" fill="#8FAD94"/>
+        </svg>
+        <svg class="floating-leaf leaf-3" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Decorative leaf">
+            <path d="M12 2L8 6V8L12 4L16 8V6L12 2Z" fill="#6B8E70"/>
+            <path d="M12 4L8 8V16C8 18.2 9.8 20 12 20C14.2 20 16 18.2 16 16V8L12 4Z" fill="#8FAD94"/>
+        </svg>
+        <svg class="floating-leaf leaf-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Decorative leaf">
+            <path d="M12 2L8 6V8L12 4L16 8V6L12 2Z" fill="#6B8E70"/>
+            <path d="M12 4L8 8V16C8 18.2 9.8 20 12 20C14.2 20 16 18.2 16 16V8L12 4Z" fill="#8FAD94"/>
+        </svg>
+        
+        <div class="hero-content">
+            <div class="hero-container">
+                <div class="hero-text">
+                    <div class="slogan-wrapper">
+                        <div class="slogan">
+                            <span class="slogan-word" data-word="breathe">Breathe</span>
+                            <span class="slogan-separator">•</span>
+                            <span class="slogan-word" data-word="balance">Balance</span>
+                            <span class="slogan-separator">•</span>
+                            <span class="slogan-word" data-word="become">Become</span>
+                        </div>
+                    </div>
+                    
+                    <h1 class="hero-title">
+                        Holistic <span class="hero-title-highlight">Healing</span><br>
+                        Through Yoga & Physiotherapy
+                    </h1>
+                    
+                    <p class="hero-subtitle">
+                        Experience personalized care that nurtures your mind, body, and soul. Our expert team combines traditional wisdom with modern techniques to help you achieve optimal wellness and discover your true potential.
+                    </p>
+                    
+                    <div class="hero-buttons">
+                        <a href="#appointment" class="btn btn-primary" aria-label="Book your yoga or physiotherapy session">
+                            📅 Book Your Session
+                        </a>
+                        <a href="#services" class="btn btn-outline-primary" aria-label="Explore our yoga and physiotherapy services">
+                            🔍 Explore Services
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="hero-image">
+                    <div class="yoga-figure-container">
+                        <div class="yoga-circles-wrapper">
+                            <div class="yoga-circle"></div>
+                            <div class="yoga-circle"></div>
+                            <div class="yoga-circle"></div>
+                            
+                            <svg class="yoga-pose" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-label="Yoga pose illustration">
+                                <circle cx="50" cy="20" r="8" fill="var(--primary-color)" stroke="var(--primary-dark)" stroke-width="1"/>
+                                <line x1="50" y1="28" x2="50" y2="60" stroke="var(--primary-color)" stroke-width="4" stroke-linecap="round"/>
+                                <path d="M50 40 Q35 35 25 45 Q30 50 45 45" stroke="var(--primary-color)" stroke-width="3" fill="none" stroke-linecap="round"/>
+                                <path d="M50 40 Q65 35 75 45 Q70 50 55 45" stroke="var(--primary-color)" stroke-width="3" fill="none" stroke-linecap="round"/>
+                                <path d="M50 60 Q40 70 30 75 Q35 80 45 75" stroke="var(--primary-color)" stroke-width="3" fill="none" stroke-linecap="round"/>
+                                <path d="M50 60 Q60 70 70 75 Q65 80 55 75" stroke="var(--primary-color)" stroke-width="3" fill="none" stroke-linecap="round"/>
+                                <circle cx="50" cy="50" r="35" fill="none" stroke="var(--accent-color)" stroke-width="1" opacity="0.6" stroke-dasharray="3 3">
+                                    <animate attributeName="r" values="35;45;35" dur="4s" repeatCount="indefinite"/>
+                                    <animate attributeName="opacity" values="0.6;0.2;0.6" dur="4s" repeatCount="indefinite"/>
+                                </circle>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Debounced scroll event for parallax effect
+        function debounce(func, wait) {
+            let timeout;
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
+        }
+
+        // Add interactive hover effects to slogan words
+        document.querySelectorAll('.slogan-word').forEach(word => {
+            word.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-3px) scale(1.05)';
+            });
+            
+            word.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+
+        // Add parallax effect to floating leaves
+        window.addEventListener('scroll', debounce(() => {
+            const scrolled = window.pageYOffset;
+            const leaves = document.querySelectorAll('.floating-leaf');
+            
+            leaves.forEach((leaf, index) => {
+                const speed = window.innerWidth < 576 ? 0.2 + (index * 0.05) : 0.4 + (index * 0.1);
+                leaf.style.transform = `translateY(${scrolled * speed}px)`;
+            });
+        }, 50));
+
+        // Add breathing animation to yoga pose on hover
+        const yogaPose = document.querySelector('.yoga-pose');
+        const yogaContainer = document.querySelector('.yoga-figure-container');
+        
+        yogaContainer.addEventListener('mouseenter', () => {
+            yogaPose.style.animation = 'pulsePose 1.5s ease-in-out infinite alternate';
+        });
+        
+        yogaContainer.addEventListener('mouseleave', () => {
+            yogaPose.style.animation = 'pulsePose 2.5s ease-in-out infinite alternate';
+        });
+    </script>
+</body>
+</html>

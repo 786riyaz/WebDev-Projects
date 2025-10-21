@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Video Switcher</title>
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      overflow: hidden;
+      font-family: sans-serif;
+    }
+
+    #background-video {
+      position: fixed;
+      right: 0;
+      bottom: 0;
+      min-width: 100%;
+      min-height: 100%;
+      object-fit: cover;
+      z-index: -1;
+    }
+
+    .video-thumbnails {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      display: flex;
+      flex-direction: row;
+      gap: 12px;
+      z-index: 10;
+      background-color: rgba(0, 0, 0, 0.2);
+      padding: 10px;
+      border-radius: 10px;
+    }
+
+    .video-card {
+      display: flex;
+      flex-direction: column;
+      width: 200px;
+      background-color: rgba(0, 0, 0, 0.7);
+      color: white;
+      border: 2px solid white;
+      border-radius: 8px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+
+    .video-card:hover {
+      border-color: yellow;
+      transform: scale(1.05);
+    }
+
+    .thumb {
+      width: 100%;
+      height: 120px;
+      object-fit: cover;
+    }
+
+    .video-info {
+      padding: 8px;
+    }
+
+    .video-title {
+      font-size: 14px;
+      font-weight: bold;
+      margin: 0 0 4px;
+    }
+
+    .video-desc {
+      font-size: 12px;
+      color: #ccc;
+      margin: 0;
+    }
+  </style>
+</head>
+<body>
+
+<video id="background-video" autoplay muted loop>
+  <source src="Videos1.mkv" type="video/mp4">
+  Your browser does not support HTML5 video.
+</video>
+
+<div class="video-thumbnails" id="thumbnails">
+  <!-- Video cards will be added here -->
+</div>
+
+<script>
+  const videoList = [
+    { src: "Videos5.mkv", title: "Video 5", desc: "Test Description" },
+    { src: "Videos4.mkv", title: "Video 4", desc: "Test Description" },
+    { src: "Videos3.mkv", title: "Video 3", desc: "Test Description" },
+    { src: "Videos2.mkv", title: "Video 2", desc: "Test Description" },
+    { src: "Videos1.mkv", title: "Video 1", desc: "Test Description" }
+  ];
+
+  let currentVideoIndex = 0;
+  const backgroundVideo = document.getElementById("background-video");
+  const thumbnailsDiv = document.getElementById("thumbnails");
+
+  function createThumbnails() {
+    thumbnailsDiv.innerHTML = '';
+    videoList.forEach((video, index) => {
+      if (index !== currentVideoIndex) {
+        const card = document.createElement("div");
+        card.className = "video-card";
+
+        const thumb = document.createElement("video");
+        thumb.src = video.src;
+        thumb.className = "thumb";
+        thumb.muted = true;
+        thumb.loop = true;
+        thumb.autoplay = true;
+        thumb.playsInline = true;
+
+        const infoDiv = document.createElement("div");
+        infoDiv.className = "video-info";
+
+        const title = document.createElement("p");
+        title.className = "video-title";
+        title.textContent = video.title;
+
+        const desc = document.createElement("p");
+        desc.className = "video-desc";
+        desc.textContent = video.desc;
+
+        infoDiv.appendChild(title);
+        infoDiv.appendChild(desc);
+        card.appendChild(thumb);
+        card.appendChild(infoDiv);
+
+        card.addEventListener("click", () => switchVideo(index));
+        thumbnailsDiv.appendChild(card);
+      }
+    });
+  }
+
+  function switchVideo(newIndex) {
+    currentVideoIndex = newIndex;
+    backgroundVideo.src = videoList[newIndex].src;
+    backgroundVideo.play();
+    createThumbnails();
+  }
+
+  // Initial setup
+  createThumbnails();
+</script>
+
+</body>
+</html>

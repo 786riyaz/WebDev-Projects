@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kiaya Haus - Yoga & Physiotherapy</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Bootstrap CSS CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap JS and Popper.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <!-- Spline Viewer Script -->
+    <script type="module" src="https://unpkg.com/@splinetool/viewer@1.10.39/build/spline-viewer.js"></script>
+    <style>
+        /* Custom Styles */
+        body {
+            background: transparent;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        spline-viewer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            z-index: -1; /* Place behind all content */
+        }
+        .navbar {
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .navbar-brand img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+        }
+        .hero-container {
+            position: relative;
+            z-index: 1;
+            padding: 4rem 1rem;
+            text-align: center;
+            color: #1f2937;
+            background: rgba(255, 255, 255, 0.8); /* Semi-transparent overlay for readability */
+            border-radius: 1rem;
+            margin-top: 5rem;
+        }
+        .hero-text {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .slogan {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        .slogan-word {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #6b8e70;
+            animation: fadeInUp 1s ease-out forwards;
+            animation-delay: calc(0.2s * var(--i));
+        }
+        .slogan-separator {
+            color: #6b8e70;
+            font-size: 1.5rem;
+        }
+        .hero-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            animation: fadeInUp 1s ease-out forwards;
+            animation-delay: 0.6s;
+        }
+        .hero-title-highlight {
+            color: #6b8e70;
+        }
+        .hero-subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+            animation: fadeInUp 1s ease-out forwards;
+            animation-delay: 0.8s;
+        }
+        .philosophy-pills {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        .philosophy-pill {
+            background: #6b8e70;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 1rem;
+            font-size: 0.9rem;
+            animation: fadeInUp 1s ease-out forwards;
+            animation-delay: calc(1s + 0.2s * var(--i));
+        }
+        .btn-outline-primary {
+            border-color: #6b8e70;
+            color: #6b8e70;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            animation: fadeInUp 1s ease-out forwards;
+            animation-delay: 1.4s;
+        }
+        .btn-outline-primary:hover {
+            background: #6b8e70;
+            color: white;
+        }
+        /* Animations */
+        @keyframes fadeInUp {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        /* Assign animation delays to slogan words and pills */
+        .slogan-word:nth-child(1) { --i: 1; }
+        .slogan-word:nth-child(3) { --i: 2; }
+        .slogan-word:nth-child(5) { --i: 3; }
+        .philosophy-pill:nth-child(1) { --i: 1; }
+        .philosophy-pill:nth-child(2) { --i: 2; }
+        .philosophy-pill:nth-child(3) { --i: 3; }
+    </style>
+</head>
+<body>
+    <!-- Spline Viewer as Background -->
+    <spline-viewer url="https://prod.spline.design/80NAJak7s8624Gje/scene.splinecode"></spline-viewer>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="#">
+                <img src="https://via.placeholder.com/40" alt="Kiaya Haus" class="me-2">
+                Kiaya Haus
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#" aria-current="page">Home</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="physioDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Physiotherapy
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="physioDropdown">
+                            <li><a class="dropdown-item" href="#ortho"><i class="fas fa-bone me-2"></i>Ortho & Sports</a></li>
+                            <li><a class="dropdown-item" href="#cardio"><i class="fas fa-heartbeat me-2"></i>Cardio-Respiratory</a></li>
+                            <li><a class="dropdown-item" href="#neuro"><i class="fas fa-brain me-2"></i>Neuro & Pediatric</a></li>
+                            <li><a class="dropdown-item" href="#womens"><i class="fas fa-female me-2"></i>Women's Health</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="yogaDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Yoga Services
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="yogaDropdown">
+                            <li><a class="dropdown-item" href="#power-yoga"><i class="fas fa-fire me-2"></i>Power Yoga</a></li>
+                            <li><a class="dropdown-item" href="#kids-yoga"><i class="fas fa-child me-2"></i>Kids Yoga</a></li>
+                            <li><a class="dropdown-item" href="#aerial-yoga"><i class="fas fa-parachute-box me-2"></i>Aerial Yoga</a></li>
+                            <li><a class="dropdown-item" href="#prenatal-yoga"><i class="fas fa-baby me-2"></i>Pre & Post Natal Yoga</a></li>
+                            <li><a class="dropdown-item" href="#fitness-yoga"><i class="fas fa-dumbbell me-2"></i>Fitness Yoga</a></li>
+                            <li><a class="dropdown-item" href="#personal-yoga"><i class="fas fa-user me-2"></i>Personal Training</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="therapyDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Special Therapies
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="therapyDropdown">
+                            <li><a class="dropdown-item" href="#tapping"><i class="fas fa-hand-paper me-2"></i>Tapping</a></li>
+                            <li><a class="dropdown-item" href="#dry-cupping"><i class="fas fa-circle-notch me-2"></i>Dry Cupping</a></li>
+                            <li><a class="dropdown-item" href="#wet-cupping"><i class="fas fa-tint me-2"></i>Wet Cupping</a></li>
+                            <li><a class="dropdown-item" href="#dry-needling"><i class="fas fa-syringe me-2"></i>Dry Needling</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="hero-content">
+        <div class="hero-container">
+            <div class="hero-text">
+                <div class="slogan-wrapper">
+                    <div class="slogan">
+                        <span class="slogan-word" data-word="breathe">Breathe</span>
+                        <span class="slogan-separator">•</span>
+                        <span class="slogan-word" data-word="balance">Balance</span>
+                        <span class="slogan-separator">•</span>
+                        <span class="slogan-word" data-word="become">Become</span>
+                    </div>
+                </div>
+                <h1 class="hero-title">
+                    Holistic <span class="hero-title-highlight">Healing</span><br>
+                    Through Yoga & Physiotherapy
+                </h1>
+                <p class="hero-subtitle">
+                    Experience personalized care that nurtures your mind, body, and soul. Our expert team combines traditional wisdom with modern techniques to help you achieve optimal wellness and discover your true potential.
+                </p>
+                <div class="philosophy-pills">
+                    <span class="philosophy-pill">Mind</span>
+                    <span class="philosophy-pill">Body</span>
+                    <span class="philosophy-pill">Soul</span>
+                </div>
+                <div class="hero-buttons">
+                    <a href="#services" class="btn btn-outline-primary" aria-label="Explore our yoga and physiotherapy services">
+                        Book Now
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="w-full text-center py-6 mt-12 bg-white/80 relative z-10">
+        <p class="text-sm text-gray-600">© 2025 Kiaya Haus. All rights reserved.</p>
+    </footer>
+</body>
+</html>

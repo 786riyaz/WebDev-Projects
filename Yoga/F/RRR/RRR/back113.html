@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enhanced Particle Background</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            font-family: 'Arial', sans-serif;
+        }
+        canvas {
+            display: block;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+        .content {
+            position: relative;
+            z-index: 1;
+            color: white;
+            padding: 40px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+        .content h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 0 0 10px rgba(255,255,255,0.3);
+            animation: fadeIn 2s ease-in;
+        }
+        .content p {
+            max-width: 600px;
+            font-size: 1.2rem;
+            line-height: 1.6;
+            opacity: 0.9;
+            animation: fadeIn 3s ease-in;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .fps-counter {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            color: white;
+            font-size: 14px;
+            opacity: 0.5;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="particle-canvas"></canvas>
+    <div class="content">
+        <h1>Particle Universe</h1>
+        <p>Experience an interactive cosmic dance of particles. Move your mouse or touch the screen to influence their motion, creating mesmerizing patterns in this digital universe.</p>
+    </div>
+    <div class="fps-counter" id="fps-counter">FPS: 0</div>
+
+    <script>
+        const canvas = document.getElementById('particle-canvas');
+        const ctx = canvas.getContext('2d', { alpha: false });
+        const fpsCounter = document.getElementById('fps-counter');
+
+        // Optimize canvas for better performance
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        // Particle settings
+        const particles = [];
+        const baseParticleCount = Math.floor(window.innerWidth * window.innerHeight / 5000);
+        const performanceFactor = Math.min(1, window.devicePixelRatio || 1);
+        const particleCount = Math.max(50, baseParticleCount * performanceFactor);
+        const maxRadius = 3;
+        const minRadius = 1;
+        const mouseEffectDistance = 120;
+        const colors = [
+            '255,255,255', // White
+            '147,197,253', // Blue
+            '251,191,251', // Pink
+            '147,253,213'  // Cyan
+        ];
+
+        // Mouse/touch position
+        const pointer = {
+            x: null,
+            y: null,
+            active: false
+        };
+
+        // Performance tracking
+        let lastTime = performance.now();
+        let frameCount = 0;
+        let fps = 60;
+
+        // Create particles
+        for (let i = 0; i < particleCount; i++) {
+            const colorIndex = Math.floor(Math.random() * colors.length);
+            particles.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                radius: Math.random() * (maxRadius - minRadius) + minRadius,
+                color: `rgba(${colors[colorIndex]}, ${Math.random() * 0.5 + 0.2})`,
+                speedX: Math.random() * 0.5 - 0.25,
+                speedY: Math.random() * 0.5 - 0.25,
+                originalSpeedX: Math.random() * 0.5 - 0.25,
+                originalSpeedY: Math.random() * 0.5 - 0.25,
+                lastX: 0,
+                lastY: 0
+            });
+        }
+
+        // Animation loop with performance optimization
+        function animate(currentTime) {
+            requestAnimationFrame(animate);
+            
+            // FPS calculation
+            frameCount++;
+            if (currentTime - lastTime >= 1000) {
+                fps = frameCount;
+                frameCount = 0;
+                lastTime = currentTime;
+                fpsCounter.textContent = `FPS: ${fps}`;
+            }
+
+            // Optimize by only clearing changed areas
+            ctx.fillStyle = 'rgba(26,26,46,0.1)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Update and draw particles
+            particles.forEach(particle => {
+                // Smooth movement with easing
+                particle.lastX = particle.x;
+                particle.lastY = particle.y;
+
+                // Pointer interaction
+                if (pointer.active && pointer.x && pointer.y) {
+                    const dx = pointer.x - particle.x;
+                    const dy = pointer.y - particle.y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+
+                    if (distance < mouseEffectDistance) {
+                        const force = (mouseEffectDistance - distance) / mouseEffectDistance;
+                        const angle = Math.atan2(dy, dx);
+                        const easing = 1 - Math.pow(1 - force, 3); // Cubic easing
+
+                        particle.speedX = particle.originalSpeedX - Math.cos(angle) * easing * 4;
+                        particle.speedY = particle.originalSpeedY - Math.sin(angle) * easing * 4;
+                    } else {
+                        particle.speedX += (particle.originalSpeedX - particle.speedX) * 0.1;
+                        particle.speedY += (particle.originalSpeedY - particle.speedY) * 0.1;
+                    }
+                } else {
+                    particle.speedX += (particle.originalSpeedX - particle.speedX) * 0.1;
+                    particle.speedY += (particle.originalSpeedY - particle.speedY) * 0.1;
+                }
+
+                // Update position
+                particle.x += particle.speedX;
+                particle.y += particle.speedY;
+
+                // Bounce off walls with slight randomization
+                if (particle.x < 0 || particle.x > canvas.width) {
+                    particle.speedX = -particle.speedX * (0.9 + Math.random() * 0.2);
+                    particle.x = Math.max(0, Math.min(particle.x, canvas.width));
+                }
+                if (particle.y < 0 || particle.y > canvas.height) {
+                    particle.speedY = -particle.speedY * (0.9 + Math.random() * 0.2);
+                    particle.y = Math.max(0, Math.min(particle.y, canvas.height));
+                }
+
+                // Draw particle
+                ctx.beginPath();
+                ctx.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
+                ctx.fillStyle = particle.color;
+                ctx.fill();
+
+                // Draw connections with optimization
+                for (let j = particles.indexOf(particle) + 1; j < particles.length; j++) {
+                    const other = particles[j];
+                    const dx = particle.x - other.x;
+                    const dy = particle.y - other.y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+
+                    if (distance < 100) {
+                        ctx.beginPath();
+                        ctx.strokeStyle = `rgba(255,255,255,${1 - distance/100})`;
+                        ctx.lineWidth = 0.5;
+                        ctx.moveTo(particle.x, particle.y);
+                        ctx.lineTo(other.x, other.y);
+                        ctx.stroke();
+                    }
+                }
+            });
+        }
+
+        // Event listeners
+        function updatePointer(e, active) {
+            pointer.x = e.clientX || (e.touches && e.touches[0].clientX);
+            pointer.y = e.clientY || (e.touches && e.touches[0].clientY);
+            pointer.active = active;
+        }
+
+        window.addEventListener('mousemove', e => updatePointer(e, true));
+        window.addEventListener('touchmove', e => {
+            e.preventDefault();
+            updatePointer(e, true);
+        }, { passive: false });
+        window.addEventListener('mouseout', () => updatePointer({}, false));
+        window.addEventListener('touchend', () => updatePointer({}, false));
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            // Adjust particle positions
+            particles.forEach(p => {
+                p.x = Math.min(p.x, canvas.width);
+                p.y = Math.min(p.y, canvas.height);
+            });
+        });
+
+        // Start animation
+        requestAnimationFrame(animate);
+    </script>
+</body>
+</html>

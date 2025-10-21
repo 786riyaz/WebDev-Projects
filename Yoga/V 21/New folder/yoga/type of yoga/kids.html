@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kids Yoga - Harmony Yoga Studio</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #6B8E70;
+            --primary-light: rgba(107, 142, 112, 0.1);
+            --secondary-color: #FFFFFF;
+            --text-dark: #333333;
+            --text-light: #777777;
+            --accent-color: #6B8E70;
+            --gradient-1: #6B8E70;
+            --gradient-2: #A8C7A7;
+            --success-color: #2E7D32;
+            --glass-effect: rgba(107, 142, 112, 0.15);
+            --shadow-light: rgba(107, 142, 112, 0.2);
+            --shadow-medium: rgba(107, 142, 112, 0.3);
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background-color: var(--primary-light);
+            color: var(--text-dark);
+        }
+
+        .navbar {
+            background: linear-gradient(to right, var(--gradient-1), var(--gradient-2));
+            box-shadow: 0 4px 6px var(--shadow-light);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar-brand, .nav-link {
+            color: var(--secondary-color) !important;
+        }
+
+        .hero-section {
+            background: url('https://images.unsplash.com/photo-1507038732509-8b1f2c0db9a6') no-repeat center center/cover;
+            height: 60vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: var(--secondary-color);
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+
+        .dropdown-container {
+            text-align: center;
+            margin: 2rem 0;
+        }
+
+        .dropdown-menu {
+            background-color: var(--secondary-color);
+            border: 1px solid var(--primary-color);
+        }
+
+        .dropdown-item:hover {
+            background-color: var(--primary-light);
+        }
+
+        .content-card {
+            background-color: var(--secondary-color);
+            border-radius: 10px;
+            box-shadow: 0 4px 8px var(--shadow-medium);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            transition: transform 0.3s ease;
+        }
+
+        .content-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .download-btn {
+            background-color: var(--success-color);
+            color: var(--secondary-color);
+            padding: 0.75rem 1.5rem;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .download-btn:hover {
+            background-color: darken(var(--success-color), 10%);
+        }
+
+        footer {
+            background: var(--primary-color);
+            color: var(--secondary-color);
+            padding: 1rem 0;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="#">Harmony Yoga Studio</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Classes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section" data-aos="fade-up">
+        <div>
+            <h1>Kids Yoga</h1>
+            <p>Fun, engaging, and healthy yoga practices for children!</p>
+        </div>
+    </section>
+
+    <!-- Dropdown Section -->
+    <div class="container dropdown-container">
+        <label for="kids-yoga-topics" class="form-label">Explore Kids Yoga Topics:</label>
+        <select id="kids-yoga-topics" class="form-select w-50 mx-auto" onchange="showContent()">
+            <option value="" disabled selected>Select a topic</option>
+            <option value="benefits">Benefits of Kids Yoga</option>
+            <option value="poses">Fun Yoga Poses</option>
+            <option value="activities">Yoga Activities</option>
+        </select>
+    </div>
+
+    <!-- Content Sections -->
+    <div class="container">
+        <div id="benefits" class="content-card" data-aos="zoom-in">
+            <h2>Benefits of Kids Yoga</h2>
+            <p>Kids Yoga promotes physical strength, flexibility, and mental well-being. It helps children develop focus, reduce stress, and build confidence through playful and engaging practices.</p>
+            <img src="https://images.unsplash.com/photo-1599058917212-d750089bc07d" alt="Kids Yoga Benefits" class="img-fluid rounded my-3">
+        </div>
+        <div id="poses" class="content-card" style="display: none;" data-aos="zoom-in">
+            <h2>Fun Yoga Poses for Kids</h2>
+            <p>Introduce children to poses like Tree Pose, Cat-Cow, and Downward Dog, designed to be fun and accessible. These poses encourage creativity and body awareness.</p>
+            <div class="video-container my-3">
+                <iframe src="https://www.youtube.com/embed/sample-video" frameborder="0" allowfullscreen></iframe>
+            </div>
+        </div>
+        <div id="activities" class="content-card" style="display: none;" data-aos="zoom-in">
+            <h2>Yoga Activities for Kids</h2>
+            <p>Engage kids with yoga games, storytelling, and partner poses that make learning fun. Activities are designed to spark imagination and teamwork.</p>
+            <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c" alt="Kids Yoga Activities" class="img-fluid rounded my-3">
+        </div>
+    </div>
+
+    <!-- Download Form Section -->
+    <div class="container text-center my-5" data-aos="fade-up">
+        <h3>Download Our Kids Yoga Registration Form</h3>
+        <p>Join our Kids Yoga classes by downloading and filling out the form below.</p>
+        <a href="/path/to/kids-yoga-registration-form.pdf" class="download-btn">Download Form</a>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 Harmony Yoga Studio. All rights reserved.</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+    <script>
+        AOS.init({ duration: 1000 });
+
+        function showContent() {
+            const select = document.getElementById('kids-yoga-topics');
+            const contents = document.querySelectorAll('.content-card');
+            contents.forEach(content => content.style.display = 'none');
+            
+            const selectedValue = select.value;
+            if (selectedValue) {
+                const selectedContent = document.getElementById(selectedValue);
+                if (selectedContent) {
+                    selectedContent.style.display = 'block';
+                }
+            }
+        }
+    </script>
+</body>
+</html>

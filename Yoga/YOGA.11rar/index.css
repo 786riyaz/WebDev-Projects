@@ -1,0 +1,142 @@
+/* Optimized CSS */
+
+/* :root {
+    --primary-color: #6B8E70;
+    --primary-light: rgba(107, 142, 112, 0.1);
+    --secondary-color: #FFFFFF;
+    --text-dark: #333333;
+    --text-light: #777777;
+    --accent-color: #A8C7A7;
+    --white: #FFFFFF;
+    --background-light: #F8FAF9;
+} */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Georgia', 'Times New Roman', serif;
+    line-height: 1.6;
+    color: var(--text-dark);
+    overflow-x: hidden;
+}
+
+/* Navbar Styling */
+.navbar {
+    background-color: var(--secondary-color);
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+    padding: clamp(0.5rem, 1vw, 0.8rem) 0;
+    transition: all 0.3s ease;
+    opacity: 0;
+    animation: fadeIn 1s ease-out forwards;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+}
+
+.navbar.scrolled {
+    padding: clamp(0.3rem, 0.8vw, 0.5rem) 0;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+/* Hero Section */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* General Typography and Colors */
+h1, h2, h3, h4, h5, h6 {
+    color: var(--text-dark);
+}
+
+p {
+    color: var(--text-light);
+}
+
+a {
+    color: var(--primary-color);
+    transition: color 0.3s ease;
+}
+
+a:hover, a:focus {
+    color: var(--primary-dark);
+}
+
+/* Button Styles */
+.btn-primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    padding: clamp(0.4rem, 1vw, 0.6rem) clamp(1rem, 2vw, 1.5rem);
+    border-radius: 50px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-dark);
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(107, 142, 112, 0.3);
+}
+
+/* Footer Styles */
+.footer {
+    background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+    color: var(--secondary-color);
+    padding: 3rem 0 1.5rem;
+    position: relative;
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+    .navbar-collapse {
+        background-color: var(--secondary-color);
+        padding: 1rem;
+        border-radius: 0.5rem;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        margin-top: 0.5rem;
+    }
+}
+
+/* Hero Section Animations */
+@keyframes fadeInLeft {
+    from { opacity: 0; transform: translateX(-40px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes fadeInRight {
+    from { opacity: 0; transform: translateX(40px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+/* General Animations */
+@keyframes slideInFromBottom {
+    from { opacity: 0; transform: translateY(50px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Contact Form Styles */
+.contact-card {
+    background: var(--secondary-color);
+    border-radius: 20px;
+    padding: 3rem;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+    height: 100%;
+}
+
+/* Additional Optimizations */
+.section-title {
+    font-size: 3.5rem;
+    margin-bottom: 20px;
+}
+
+.service-card {
+    width: 280px;
+    height: 360px;
+}
+
+/* ... (and so on for other sections) */

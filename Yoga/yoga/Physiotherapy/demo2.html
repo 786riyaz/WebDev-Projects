@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Physiotherapy Services</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #6B8E70;
+            --primary-light: rgba(107, 142, 112, 0.1);
+            --secondary-color: #FFFFFF;
+            --text-dark: #333333;
+            --text-light: #777777;
+            --accent-color: #6B8E70;
+            --gradient-1: #6B8E70;
+            --gradient-2: #A8C7A7;
+            --success-color: #2E7D32;
+            --glass-effect: #ffffffc9;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: var(--text-dark);
+            background-color: #f9f9f9;
+        }
+        
+        .service-section {
+            padding: 80px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .section-title {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 50px;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+        
+        .section-title:after {
+            content: '';
+            position: absolute;
+            width: 50%;
+            height: 3px;
+            background: linear-gradient(to right, var(--primary-color), var(--gradient-2));
+            bottom: -10px;
+            left: 25%;
+        }
+        
+        .service-card {
+            border: none;
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+            background: var(--secondary-color);
+            height: 100%;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+        
+        .service-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .service-card:hover img {
+            transform: scale(1.05);
+        }
+        
+        .card-body {
+            padding: 25px;
+        }
+        
+        .card-title {
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+        
+        .card-text {
+            color: var(--text-light);
+            margin-bottom: 20px;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--gradient-2);
+            border-color: var(--gradient-2);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(107, 142, 112, 0.3);
+        }
+        
+        /* Animation styles */
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+        
+        .animate-on-scroll.animated {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 767.98px) {
+            .service-card {
+                margin-bottom: 20px;
+            }
+            
+            .section-title {
+                margin-bottom: 30px;
+                font-size: 1.8rem;
+            }
+        }
+        
+        /* Decorative elements */
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(to right, var(--primary-color), var(--gradient-2));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .service-card:hover::before {
+            opacity: 1;
+        }
+        
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+        
+        @keyframes floating {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Services Section -->
+    <section id="services" class="service-section py-5">
+        <div class="container">
+            <h2 class="section-title text-center">Our Specialized Services</h2>
+            <p class="text-center text-muted mb-5">Advanced therapeutic solutions for comprehensive rehabilitation</p>
+            
+            <div class="row g-4">
+                <!-- Service 1 -->
+                <div class="col-md-6 col-lg-3">
+                    <div class="service-card animate-on-scroll" data-delay="0.1s">
+                        <div class="position-relative overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" class="img-fluid" alt="Ortho & Sports Machine">
+                            <div class="position-absolute top-0 end-0 bg-primary text-white px-2 py-1 small">
+                                <i class="fas fa-star me-1"></i> Featured
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Ortho & Sports</h5>
+                            <p class="card-text">Advanced machines for sports injuries and orthopedic rehabilitation with cutting-edge technology.</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <a href="#" class="btn btn-primary">Learn More</a>
+                                <div class="text-primary">
+                                    <i class="fas fa-arrow-right"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Service 2 -->
+                <div class="col-md-6 col-lg-3">
+                    <div class="service-card animate-on-scroll" data-delay="0.2s">
+                        <img src="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" class="img-fluid" alt="Cardio-Respiratory Machine">
+                        <div class="card-body">
+                            <h5 class="card-title">Cardio-Respiratory</h5>
+                            <p class="card-text">Specialized equipment to boost heart and lung health with monitored progress tracking.</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <a href="#" class="btn btn-primary">Learn More</a>
+                                <div class="text-primary">
+                                    <i class="fas fa-arrow-right"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Service 3 -->
+                <div class="col-md-6 col-lg-3">
+                    <div class="service-card animate-on-scroll" data-delay="0.3s">
+                        <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" class="img-fluid" alt="Neuro & Pediatric Machine">
+                        <div class="card-body">
+                            <h5 class="card-title">Neuro & Pediatric</h5>
+                            <p class="card-text">Cutting-edge machines for neurological and pediatric therapy with adaptive interfaces.</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <a href="#" class="btn btn-primary">Learn More</a>
+                                <div class="text-primary">
+                                    <i class="fas fa-arrow-right"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Service 4 -->
+                <div class="col-md-6 col-lg-3">
+                    <div class="service-card animate-on-scroll" data-delay="0.4s">
+                        <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" class="img-fluid" alt="Women's Health Machine">
+                        <div class="card-body">
+                            <h5 class="card-title">Women's Health</h5>
+                            <p class="card-text">Tailored equipment for women's unique health needs with personalized settings.</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <a href="#" class="btn btn-primary">Learn More</a>
+                                <div class="text-primary">
+                                    <i class="fas fa-arrow-right"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Additional decorative element -->
+            <div class="text-center mt-5">
+                <a href="#contact" class="btn btn-outline-primary px-4 py-2">
+                    <i class="fas fa-calendar-alt me-2"></i> Book All Services
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Animation on scroll functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const animateElements = document.querySelectorAll('.animate-on-scroll');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const delay = entry.target.getAttribute('data-delay') || '0s';
+                        entry.target.style.transitionDelay = delay;
+                        entry.target.classList.add('animated');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            });
+            
+            animateElements.forEach(element => {
+                observer.observe(element);
+            });
+            
+            // Add hover effect to service cards
+            const serviceCards = document.querySelectorAll('.service-card');
+            serviceCards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.querySelector('.fa-arrow-right').classList.add('fa-bounce');
+                });
+                card.addEventListener('mouseleave', function() {
+                    this.querySelector('.fa-arrow-right').classList.remove('fa-bounce');
+                });
+            });
+        });
+    </script>
+</body>
+</html>

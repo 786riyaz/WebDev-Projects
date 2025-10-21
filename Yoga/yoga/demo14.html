@@ -1,0 +1,1027 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kiaya Haus - Holistic Healing Through Yoga & Physiotherapy</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-green: #43a047;
+            --light-green: #81c784;
+            --dark-green: #1b5e20;
+            --lightest-green: #e8f5e9;
+            --medium-light-green: #c8e6c9;
+            --medium-green: #a5d6a7;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            overflow-x: hidden;
+            background: linear-gradient(135deg, var(--lightest-green) 0%, var(--medium-green) 50%, var(--light-green) 100%);
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            position: relative;
+        }
+
+        /* Animated Background */
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            background: linear-gradient(-45deg, var(--lightest-green), var(--medium-light-green), var(--medium-green));
+            background-size: 300% 300%;
+            animation: gradientShift 20s ease infinite;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Particle Canvas */
+        canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: auto;
+        }
+
+        /* Enhanced Navbar */
+        .navbar {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            margin: 10px auto;
+            max-width: 1200px;
+            border-radius: 20px;
+            box-shadow: 
+                0 10px 30px rgba(27, 94, 32, 0.1),
+                0 0 20px rgba(129, 199, 132, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: fixed;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: calc(100% - 20px);
+            z-index: 1000;
+        }
+
+        .navbar:hover {
+            transform: translateX(-50%) translateY(-3px);
+            box-shadow: 
+                0 15px 40px rgba(27, 94, 32, 0.15),
+                0 0 30px rgba(129, 199, 132, 0.25);
+        }
+
+        .navbar-brand {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            font-size: 1.6rem;
+            color: var(--dark-green) !important;
+            transition: all 0.3s ease;
+        }
+
+        .navbar-brand:hover {
+            color: var(--primary-green) !important;
+        }
+
+        .navbar-brand img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 2px solid var(--medium-green);
+            transition: all 0.3s ease;
+            margin-right: 10px;
+        }
+
+        .navbar-brand:hover img {
+            transform: scale(1.1) rotate(5deg);
+            border-color: var(--primary-green);
+        }
+
+        .navbar-nav .nav-link {
+            color: var(--dark-green);
+            font-weight: 500;
+            padding: 10px 15px !important;
+            border-radius: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .navbar-nav .nav-link:hover {
+            color: var(--primary-green);
+            background: var(--lightest-green);
+            transform: translateY(-2px);
+        }
+
+        .dropdown-menu {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(27, 94, 32, 0.1);
+            animation: dropdownFadeIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            margin-top: 5px;
+        }
+
+        .dropdown-item {
+            color: var(--dark-green);
+            border-radius: 10px;
+            padding: 8px 15px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .dropdown-item:hover {
+            background: var(--medium-green);
+            color: var(--dark-green);
+            transform: translateX(5px);
+        }
+
+        .navbar-toggler {
+            border: none;
+            padding: 8px;
+        }
+
+        .navbar-toggler:focus {
+            outline: none;
+            box-shadow: 0 0 10px rgba(67, 160, 71, 0.3);
+        }
+
+        /* Hero Section */
+        .hero-section {
+            position: relative;
+            z-index: 1;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 80px 0 40px;
+        }
+
+        .hero-container {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            gap: 40px;
+        }
+
+        .hero-text {
+            flex: 1;
+            max-width: 600px;
+            text-align: left;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 
+                0 15px 50px rgba(27, 94, 32, 0.1),
+                0 0 30px rgba(129, 199, 132, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            animation: slideInLeft 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .hero-text::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, transparent, rgba(129, 199, 132, 0.05), transparent);
+            animation: none;
+        }
+
+        .slogan {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 1.6rem;
+            font-weight: 700;
+            font-family: 'Playfair Display', serif;
+            flex-wrap: wrap;
+        }
+
+        .slogan-word {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: wordReveal 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+            color: var(--dark-green);
+        }
+
+        .slogan-word:nth-child(1) { animation-delay: 0.3s; }
+        .slogan-word:nth-child(3) { animation-delay: 0.6s; }
+        .slogan-word:nth-child(5) { animation-delay: 0.9s; }
+
+        .slogan-separator {
+            color: var(--primary-green);
+            font-size: 1.5rem;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .hero-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--dark-green), var(--primary-green));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-fill-color: transparent;
+            animation: slideInLeft 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+            line-height: 1.2;
+            color: var(--dark-green); /* Fallback */
+        }
+
+        .hero-title::before {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 50%;
+            height: 3px;
+            background: var(--primary-green);
+            animation: underlineExpand 1s ease forwards 1.5s;
+            transform: scaleX(0);
+            transform-origin: left;
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+            color: var(--dark-green);
+            opacity: 0.9;
+            animation: slideInLeft 1.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .philosophy-pills {
+            display: flex;
+            gap: 15px;
+            margin: 25px 0;
+            flex-wrap: wrap;
+        }
+
+        .philosophy-pill {
+            background: var(--medium-green);
+            color: var(--dark-green);
+            padding: 12px 20px;
+            border-radius: 25px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            box-shadow: 0 5px 15px rgba(165, 214, 167, 0.3);
+            animation: pillFloat 0.6s ease forwards;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .philosophy-pill:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(165, 214, 167, 0.4);
+        }
+
+        .philosophy-pill:nth-child(1) { animation-delay: 0.2s; }
+        .philosophy-pill:nth-child(2) { animation-delay: 0.4s; }
+        .philosophy-pill:nth-child(3) { animation-delay: 0.6s; }
+
+        .hero-buttons .btn {
+            background: linear-gradient(135deg, var(--primary-green), var(--light-green));
+            border: none;
+            color: white;
+            padding: 15px 35px;
+            font-size: 1.2rem;
+            border-radius: 50px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 10px 30px rgba(67, 160, 71, 0.3);
+        }
+
+        .hero-buttons .btn:hover {
+            transform: translateY(-5px);
+            background: linear-gradient(135deg, var(--light-green), var(--primary-green));
+            box-shadow: 0 15px 40px rgba(67, 160, 71, 0.4);
+        }
+
+        /* 3D Image Slider */
+        .slider-3d {
+            flex: 1;
+            max-width: 600px;
+            height: 400px;
+            perspective: 1000px;
+            position: relative;
+            animation: slideInRight 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .slider-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+            transition: transform 0.8s ease;
+        }
+
+        .slide {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 50px rgba(27, 94, 32, 0.2);
+            transition: all 0.5s ease;
+        }
+
+        .slide img,
+        .slide video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 20px;
+        }
+
+        .slide:hover {
+            transform: scale(1.05);
+            box-shadow: 0 20px 60px rgba(27, 94, 32, 0.3);
+        }
+
+        .slide-content {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0,0,0,0.7));
+            color: #fff;
+            padding: 20px;
+            transform: translateY(100%);
+            transition: transform 0.4s ease;
+            border-radius: 0 0 20px 20px;
+        }
+
+        .slide:hover .slide-content {
+            transform: translateY(0);
+        }
+
+        .slide-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--lightest-green);
+        }
+
+        .slide-description {
+            font-size: 0.9rem;
+            line-height: 1.4;
+            color: #f0f0f0; /* Improved contrast */
+        }
+
+        .slider-nav {
+            position: absolute;
+            bottom: -40px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            z-index: 10;
+        }
+
+        .nav-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--medium-green);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 10px rgba(165, 214, 167, 0.3);
+        }
+
+        .nav-dot:hover,
+        .nav-dot.active {
+            background: var(--primary-green);
+            transform: scale(1.2);
+            box-shadow: 0 5px 15px rgba(67, 160, 71, 0.5);
+        }
+
+        /* Floating Elements */
+        .floating-elements {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .floating-shape {
+            position: absolute;
+            border-radius: 50%;
+            background: radial-gradient(circle, var(--medium-green), transparent);
+            opacity: 0.15;
+            animation: floatUpDown 6s ease-in-out infinite;
+        }
+
+        .floating-shape:nth-child(1) {
+            width: 80px;
+            height: 80px;
+            top: 20%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+        .floating-shape:nth-child(2) {
+            width: 120px;
+            height: 120px;
+            top: 60%;
+            right: 15%;
+            animation-delay: 2s;
+        }
+        .floating-shape:nth-child(3) {
+            width: 60px;
+            height: 60px;
+            top: 40%;
+            right: 25%;
+            animation-delay: 4s;
+        }
+        .floating-shape:nth-child(4) {
+            width: 100px;
+            height: 100px;
+            top: 80%;
+            left: 20%;
+            animation-delay: 1s;
+        }
+
+        /* Animations */
+        @keyframes slideInLeft {
+            from { opacity: 0; transform: translateX(-100px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes slideInRight {
+            from { opacity: 0; transform: translateX(100px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes wordReveal {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes pillFloat {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes underlineExpand {
+            from { transform: scaleX(0); }
+            to { transform: scaleX(1); }
+        }
+
+        @keyframes dropdownFadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(1.1); }
+        }
+
+        @keyframes floatUpDown {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .hero-container {
+                gap: 30px;
+            }
+            .slider-3d {
+                height: 350px;
+                max-width: 500px;
+            }
+            .hero-title {
+                font-size: 3rem;
+            }
+        }
+
+        @media (max-width: 968px) {
+            .hero-container {
+                flex-direction: column;
+                gap: 40px;
+            }
+            .hero-text, .slider-3d {
+                max-width: 100%;
+            }
+            .slider-3d {
+                height: 300px;
+            }
+            .slide:nth-child(n) {
+                transform: rotateY(0deg) translateZ(150px);
+            }
+            .hero-text {
+                padding: 30px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                margin: 5px;
+                width: calc(100% - 10px);
+                border-radius: 15px;
+                padding: 8px;
+            }
+            .navbar-brand {
+                font-size: 1.4rem;
+            }
+            .navbar-brand img {
+                width: 35px;
+                height: 35px;
+            }
+            .navbar-nav {
+                padding: 10px 0;
+            }
+            .navbar-nav .nav-link {
+                padding: 8px 15px !important;
+                font-size: 0.9rem;
+            }
+            .dropdown-menu {
+                background: rgba(255, 255, 255, 0.1);
+                width: 100%;
+                border-radius: 10px;
+                margin: 0;
+            }
+            .dropdown-item {
+                font-size: 0.85rem;
+                padding: 8px 20px;
+            }
+            .hero-section {
+                padding: 70px 0 30px;
+            }
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            .slogan {
+                font-size: 1.3rem;
+                justify-content: center;
+                text-align: center;
+                gap: 10px;
+            }
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+            .slider-3d {
+                height: 250px;
+            }
+            .slide {
+                transform: none !important; /* 2D layout for mobile */
+            }
+            .slider-container {
+                transform: none !important;
+                display: flex;
+                flex-direction: row;
+                overflow-x: auto;
+                scroll-snap-type: x mandatory;
+            }
+            .slide {
+                flex: 0 0 100%;
+                scroll-snap-align: center;
+            }
+            .floating-shape {
+                width: 50px !important;
+                height: 50px !important;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .navbar {
+                margin: 5px;
+                border-radius: 10px;
+            }
+            .navbar-brand {
+                font-size: 1.2rem;
+            }
+            .navbar-brand img {
+                width: 30px;
+                height: 30px;
+            }
+            .navbar-nav .nav-link {
+                font-size: 0.8rem;
+                padding: 6px 12px !important;
+            }
+            .dropdown-item {
+                font-size: 0.8rem;
+            }
+            .hero-title {
+                font-size: 2rem;
+            }
+            .slogan {
+                font-size: 1.1rem;
+            }
+            .hero-text {
+                padding: 20px;
+            }
+            .slider-3d {
+                height: 200px;
+            }
+            .slide-title {
+                font-size: 1rem;
+            }
+            .slide-description {
+                font-size: 0.8rem;
+            }
+            .nav-dot {
+                width: 10px;
+                height: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="animated-bg"></div>
+
+    <!-- Particle Canvas -->
+    <canvas id="particle-canvas"></canvas>
+
+    <!-- Floating Elements -->
+    <div class="floating-elements">
+        <div class="floating-shape"></div>
+        <div class="floating-shape"></div>
+        <div class="floating-shape"></div>
+        <div class="floating-shape"></div>
+    </div>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+        <div class="container" style="max-width: 1200px;">
+            <a class="navbar-brand d-flex align-items-center" href="#">
+                <img src="https://via.placeholder.com/40x40/43a047/ffffff?text=K" alt="Kiaya Haus" class="me-2">
+                Kiaya Haus
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#" aria-current="page">Home</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="physioDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Physiotherapy
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="physioDropdown">
+                            <li><a class="dropdown-item" href="#ortho"><i class="fas fa-bone me-2"></i>Ortho & Sports</a></li>
+                            <li><a class="dropdown-item" href="#cardio"><i class="fas fa-heartbeat me-2"></i>Cardio-Respiratory</a></li>
+                            <li><a class="dropdown-item" href="#neuro"><i class="fas fa-brain me-2"></i>Neuro & Pediatric</a></li>
+                            <li><a class="dropdown-item" href="#womens"><i class="fas fa-female me-2"></i>Women's Health</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="yogaDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Yoga Services
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="yogaDropdown">
+                            <li><a class="dropdown-item" href="#power-yoga"><i class="fas fa-fire me-2"></i>Power Yoga</a></li>
+                            <li><a class="dropdown-item" href="#kids-yoga"><i class="fas fa-child me-2"></i>Kids Yoga</a></li>
+                            <li><a class="dropdown-item" href="#aerial-yoga"><i class="fas fa-parachute-box me-2"></i>Aerial Yoga</a></li>
+                            <li><a class="dropdown-item" href="#prenatal-yoga"><i class="fas fa-baby me-2"></i>Pre & Post Natal Yoga</a></li>
+                            <li><a class="dropdown-item" href="#fitness-yoga"><i class="fas fa-dumbbell me-2"></i>Fitness Yoga</a></li>
+                            <li><a class="dropdown-item" href="#personal-yoga"><i class="fas fa-user me-2"></i>Personal Training</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="therapyDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Special Therapies
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="therapyDropdown">
+                            <li><a class="dropdown-item" href="#tapping"><i class="fas fa-hand-paper me-2"></i>Tapping</a></li>
+                            <li><a class="dropdown-item" href="#dry-cupping"><i class="fas fa-circle-notch me-2"></i>Dry Cupping</a></li>
+                            <li><a class="dropdown-item" href="#wet-cupping"><i class="fas fa-tint me-2"></i>Wet Cupping</a></li>
+                            <li><a class="dropdown-item" href="#dry-needling"><i class="fas fa-syringe me-2"></i>Dry Needling</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container" style="max-width: 1200px;">
+            <div class="hero-container">
+                <div class="hero-text">
+                    <div class="slogan-wrapper">
+                        <div class="slogan">
+                            <span class="slogan-word" data-word="breathe">Breathe</span>
+                            <span class="slogan-separator">•</span>
+                            <span class="slogan-word" data-word="balance">Balance</span>
+                            <span class="slogan-separator">•</span>
+                            <span class="slogan-word" data-word="become">Become</span>
+                        </div>
+                    </div>
+                    <h1 class="hero-title">
+                        Holistic <span class="hero-title-highlight">Healing</span><br>
+                        Through Yoga & Physiotherapy
+                    </h1>
+                    <p class="hero-subtitle">
+                        Experience personalized care that nurtures your mind, body, and soul. Our expert team combines traditional wisdom with modern techniques to help you achieve optimal wellness.
+                    </p>
+                    <div class="philosophy-pills">
+                        <span class="philosophy-pill">Mind</span>
+                        <span class="philosophy-pill">Body</span>
+                        <span class="philosophy-pill">Soul</span>
+                    </div>
+                    <div class="hero-buttons">
+                        <a href="#services" class="btn" aria-label="Book your wellness journey">Book Now</a>
+                    </div>
+                </div>
+
+                <!-- 3D Image Slider -->
+                <div class="slider-3d">
+                    <div class="slider-container" id="sliderContainer">
+                        <div class="slide">
+                            <img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Yoga Practice">
+                            <div class="slide-content">
+                                <div class="slide-title">Yoga Therapy</div>
+                                <div class="slide-description">Transform your body and mind through ancient yoga practices.</div>
+                            </div>
+                        </div>
+                        <div class="slide">
+                            <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Physiotherapy">
+                            <div class="slide-content">
+                                <div class="slide-title">Physiotherapy</div>
+                                <div class="slide-description">Expert physical rehabilitation and pain management.</div>
+                            </div>
+                        </div>
+                        <div class="slide">
+                            <img src="https://images.unsplash.com/photo-1506126613408-eca07ce68773?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Meditation">
+                            <div class="slide-content">
+                                <div class="slide-title">Meditation</div>
+                                <div class="slide-description">Find inner peace and mental clarity through guided meditation.</div>
+                            </div>
+                        </div>
+                        <div class="slide">
+                            <img src="https://images.unsplash.com/photo-1599901860904-17e6ed7083a0?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Therapy">
+                            <div class="slide-content">
+                                <div class="slide-title">Special Therapies</div>
+                                <div class="slide-description">Advanced therapeutic treatments for optimal health.</div>
+                            </div>
+                        </div>
+                        <div class="slide">
+                            <video autoplay muted loop playsinline>
+                                <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                            <div class="slide-content">
+                                <div class="slide-title">Our Journey</div>
+                                <div class="slide-description">Discover the Kiaya Haus experience.</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slider-nav">
+                        <div class="nav-dot active" data-slide="0" role="button" aria-label="Go to slide 1"></div>
+                        <div class="nav-dot" data-slide="1" role="button" aria-label="Go to slide 2"></div>
+                        <div class="nav-dot" data-slide="2" role="button" aria-label="Go to slide 3"></div>
+                        <div class="nav-dot" data-slide="3" role="button" aria-label="Go to slide 4"></div>
+                        <div class="nav-dot" data-slide="4" role="button" aria-label="Go to slide 5"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- JavaScript -->
+    <script>
+        // Particle System
+        const canvas = document.getElementById('particle-canvas');
+        const ctx = canvas.getContext('2d', { alpha: false });
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const colors = [
+            { r: 129, g: 199, b: 132 },
+            { r: 67, g: 160, b: 71 },
+            { r: 27, g: 94, b: 32 },
+            { r: 165, g: 214, b: 167 }
+        ];
+
+        const particles = [];
+        const particleCount = Math.min(100, Math.floor(window.innerWidth * window.innerHeight / 5000));
+        const mouse = { x: null, y: null, isMoving: false };
+
+        class Particle {
+            constructor() {
+                this.reset();
+            }
+
+            reset() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.vx = (Math.random() - 0.5) * 0.8;
+                this.vy = (Math.random() - 0.5) * 0.8;
+                this.radius = Math.random() * 2 + 1;
+                this.baseRadius = this.radius;
+                this.color = colors[Math.floor(Math.random() * colors.length)];
+                this.alpha = Math.random() * 0.4 + 0.3;
+                this.pulse = Math.random() * 0.02 + 0.01;
+                this.phase = Math.random() * Math.PI * 2;
+            }
+
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+                this.phase += this.pulse;
+                this.alpha = Math.max(0.3, Math.min(0.7, this.alpha + Math.sin(this.phase) * 0.1));
+                this.radius = this.baseRadius + Math.sin(this.phase * 2) * 0.3;
+
+                if (mouse.x && mouse.y) {
+                    const dx = mouse.x - this.x;
+                    const dy = mouse.y - this.y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+                    if (distance < 120) {
+                        const force = (120 - distance) / 120;
+                        this.vx += (dx / distance) * force * 0.1 * (mouse.isMoving ? -1 : 0.5);
+                        this.vy += (dy / distance) * force * 0.1 * (mouse.isMoving ? -1 : 0.5);
+                        this.alpha = Math.min(1, this.alpha + force * 0.3);
+                        this.radius = this.baseRadius + force * 1.5;
+                    }
+                }
+
+                if (this.x < 0 || this.x > canvas.width) {
+                    this.vx *= -0.9;
+                    this.x = Math.max(0, Math.min(this.x, canvas.width));
+                }
+                if (this.y < 0 || this.y > canvas.height) {
+                    this.vy *= -0.9;
+                    this.y = Math.max(0, Math.min(this.y, canvas.height));
+                }
+            }
+
+            draw() {
+                ctx.save();
+                ctx.globalAlpha = this.alpha;
+                const gradient = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.radius * 2);
+                gradient.addColorStop(0, `rgba(${this.color.r}, ${this.color.g}, ${this.color.b}, 1)`);
+                gradient.addColorStop(1, `rgba(${this.color.r}, ${this.color.g}, ${this.color.b}, 0)`);
+                ctx.fillStyle = gradient;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.restore();
+            }
+        }
+
+        for (let i = 0; i < particleCount; i++) {
+            particles.push(new Particle());
+        }
+
+        function drawConnections() {
+            ctx.strokeStyle = 'rgba(67, 160, 71, 0.15)';
+            ctx.lineWidth = 0.5;
+            for (let i = 0; i < particles.length; i++) {
+                for (let j = i + 1; j < Math.min(i + 5, particles.length); j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+                    if (distance < 100) {
+                        ctx.globalAlpha = (1 - distance / 100) * 0.3;
+                        ctx.beginPath();
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+            ctx.globalAlpha = 1;
+        }
+
+        function animate() {
+            ctx.fillStyle = 'rgba(232, 245, 233, 0.03)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            particles.forEach(particle => {
+                particle.update();
+                particle.draw();
+            });
+
+            drawConnections();
+            requestAnimationFrame(animate);
+        }
+
+        canvas.addEventListener('mousemove', e => {
+            mouse.x = e.clientX;
+            mouse.y = e.clientY;
+            mouse.isMoving = true;
+            setTimeout(() => mouse.isMoving = false, 100);
+        });
+
+        canvas.addEventListener('mouseleave', () => {
+            mouse.x = null;
+            mouse.y = null;
+            mouse.isMoving = false;
+        });
+
+        canvas.addEventListener('touchmove', e => {
+            e.preventDefault();
+            mouse.x = e.touches[0].clientX;
+            mouse.y = e.touches[0].clientY;
+            mouse.isMoving = true;
+        }, { passive: false });
+
+        canvas.addEventListener('touchend', () => {
+            mouse.x = null;
+            mouse.y = null;
+            mouse.isMoving = false;
+        });
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            particles.forEach(p => {
+                p.x = Math.min(p.x, canvas.width);
+                p.y = Math.min(p.y, canvas.height);
+            });
+        });
+
+        // Slider Controls
+        const sliderContainer = document.getElementById('sliderContainer');
+        const navDots = document.querySelectorAll('.nav-dot');
+        let currentSlide = 0;
+
+        function updateSlider(slideIndex) {
+            currentSlide = slideIndex;
+            const rotation = slideIndex * 72; // 360 / 5 slides
+            sliderContainer.style.transform = `rotateY(-${rotation}deg)`;
+            navDots.forEach((dot, index) => {
+                dot.classList.toggle('active', index === slideIndex);
+            });
+        }
+
+        navDots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                updateSlider(index);
+            });
+        });
+
+        // Auto-rotate
+        let autoRotateInterval = setInterval(() => {
+            currentSlide = (currentSlide + 1) % 5;
+            updateSlider(currentSlide);
+        }, 4000);
+
+        sliderContainer.addEventListener('mouseenter', () => {
+            clearInterval(autoRotateInterval);
+        });
+
+        sliderContainer.addEventListener('mouseleave', () => {
+            autoRotateInterval = setInterval(() => {
+                currentSlide = (currentSlide + 1) % 5;
+                updateSlider(currentSlide);
+            }, 4000);
+        });
+
+        // Keyboard controls
+        document.addEventListener('keydown', e => {
+            if (e.key === 'ArrowLeft') {
+                currentSlide = (currentSlide - 1 + 5) % 5;
+                updateSlider(currentSlide);
+            } else if (e.key === 'ArrowRight') {
+                currentSlide = (currentSlide + 1) % 5;
+                updateSlider(currentSlide);
+            }
+        });
+
+        // Start animation
+        animate();
+    </script>
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

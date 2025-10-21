@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Our Founders - Kiaya Haus</title>
+    <style>
+        :root {
+            --primary: #6B8E7A;
+            --bg: #FFFFFF;
+            --secondary: #E8ECEF;
+            --text: #333333;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .about-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 40px;
+        }
+        
+        .founders-image {
+            flex: 1;
+            min-width: 300px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(107, 142, 122, 0.1);
+        }
+        
+        .founders-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+        
+        .founders-image:hover img {
+            transform: scale(1.02);
+        }
+        
+        .founders-content {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .archive-badge {
+            background-color: var(--primary);
+            color: white;
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+        
+        .founders-names {
+            margin-bottom: 30px;
+        }
+        
+        .founder {
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--secondary);
+        }
+        
+        .founder:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        
+        .founder-name {
+            font-size: 1.3rem;
+            color: var(--primary);
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .founder-qualification {
+            font-size: 0.95rem;
+            color: #666;
+            font-style: italic;
+        }
+        
+        .mission-statement {
+            margin: 30px 0;
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+        
+        .signature {
+            font-style: italic;
+            margin-top: 30px;
+            color: var(--primary);
+            font-weight: bold;
+        }
+        
+        @media (max-width: 768px) {
+            .about-container {
+                flex-direction: column;
+            }
+            
+            .founders-image {
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <section class="about-container">
+        <div class="founders-image">
+            <!-- Replace with your actual image path -->
+            <img src="photo.jpg" alt="Dr. Mayanta Kalathiya and Dr. Heena Khatri">
+        </div>
+        
+        <div class="founders-content">
+            <div class="archive-badge">ARCHIVE 2025/6</div>
+            
+            <div class="founders-names">
+                <div class="founder">
+                    <div class="founder-name">DR. MAYANTA KALATHIYA</div>
+                    <div class="founder-qualification">Master's in Sports Physiology</div>
+                </div>
+                
+                <div class="founder">
+                    <div class="founder-name">DR. HEENA KHATRI</div>
+                    <div class="founder-qualification">Master's in Cardiopulmonary Physiotherapy</div>
+                </div>
+            </div>
+            
+            <div class="mission-statement">
+                <p>At Kiaya Haus, we walk beside you on your journey to lasting health and wellness. As founders, our mission is rooted in compassion and personalized care—empowering you to feel your best, naturally. With our shared expertise in physiotherapy, yoga, and nutrition, we treat the whole person: mind, body, and soul.</p>
+                
+                <p>Whether you're healing, growing, or simply seeking balance, we're honored to be part of your path forward.</p>
+            </div>
+            
+            <div class="signature">
+                — DR. MAYANTA KALATHIYA & DR. HEENA KHATRI
+            </div>
+        </div>
+    </section>
+</body>
+</html>

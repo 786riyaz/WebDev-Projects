@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Physiotherapy Services - Serene Wellness</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #6B8E70;
+            --primary-light: rgba(107, 142, 112, 0.1);
+            --secondary-color: #FFFFFF;
+            --text-dark: #333333;
+            --text-light: #777777;
+            --accent-color: #6B8E70;
+            --gradient-1: #6B8E70;
+            --gradient-2: #A8C7A7;
+            --success-color: #2E7D32;
+            --glass-effect: rgba(107, 142, 112, 0.15);
+            --shadow-light: rgba(107, 142, 112, 0.2);
+            --shadow-medium: rgba(107, 142, 112, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            background: linear-gradient(135deg, #f8fffe 0%, #e8f5e8 50%, #d4ebda 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .service-section {
+            padding: 80px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .bg-decoration {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1;
+        }
+
+        .bg-decoration::before {
+            content: '';
+            position: absolute;
+            width: 350px;
+            height: 350px;
+            background: radial-gradient(circle, var(--primary-light), transparent);
+            border-radius: 50%;
+            top: -150px;
+            right: -150px;
+            animation: float 18s ease-in-out infinite;
+        }
+
+        .bg-decoration::after {
+            content: '';
+            position: absolute;
+            width: 250px;
+            height: 250px;
+            background: radial-gradient(circle, var(--shadow-light), transparent);
+            border-radius: 50%;
+            bottom: -100px;
+            left: -100px;
+            animation: float 22s ease-in-out infinite reverse;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            33% { transform: translate(25px, -25px) rotate(100deg); }
+            66% { transform: translate(-15px, 15px) rotate(200deg); }
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 50px;
+            position: relative;
+            z-index: 3;
+        }
+
+        .section-title {
+            font-size: 3.2rem;
+            font-weight: 800;
+            color: var(--text-dark);
+            margin-bottom: 15px;
+            position: relative;
+            opacity: 0;
+            transform: translateY(-50px);
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--gradient-1), var(--gradient-2));
+            border-radius: 2px;
+            animation: expandLine 1s ease-out 1.5s both;
+        }
+
+        @keyframes expandLine {
+            from { width: 0; }
+            to { width: 80px; }
+        }
+
+        .section-title.animate {
+            animation: titleSlideUp 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+        }
+
+        @keyframes titleSlideUp {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section-subtitle {
+            font-size: 1.1rem;
+            color: var(--text-light);
+            max-width: 600px;
+            margin: 0 auto;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .section-subtitle.animate {
+            animation: subtitleFade 1s ease-out 0.5s forwards;
+        }
+
+        @keyframes subtitleFade {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .services-slider-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+            overflow: hidden;
+        }
+
+        .services-slider {
+            display: flex;
+            gap: 20px;
+            position: relative;
+            height: 420px;
+        }
+
+        .service-card {
+            background: var(--glass-effect);
+            backdrop-filter: blur(12px);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 6px 20px var(--shadow-light);
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            width: 280px;
+            flex-shrink: 0;
+            height: 420px;
+            position: absolute;
+            opacity: 0;
+            transform: translateX(100px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .service-card.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .service-card:nth-child(1) { animation: fadeSlide 16s infinite; }
+        .service-card:nth-child(2) { animation: fadeSlide 16s infinite 4s; }
+        .service-card:nth-child(3) { animation: fadeSlide 16s infinite 8s; }
+        .service-card:nth-child(4) { animation: fadeSlide 16s infinite 12s; }
+
+        @keyframes fadeSlide {
+            0%, 20% { opacity: 1; transform: translateX(0); z-index: 5; }
+            25%, 45% { opacity: 0; transform: translateX(100px); z-index: 4; }
+            50%, 70% { opacity: 0; transform: translateX(100px); z-index: 3; }
+            75%, 95% { opacity: 0; transform: translateX(100px); z-index: 2; }
+            100% { opacity: 1; transform: translateX(0); z-index: 5; }
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 15px 30px var(--shadow-medium);
+        }
+
+        .service-image-container {
+            position: relative;
+            height: 180px;
+            overflow: hidden;
+        }
+
+        .service-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+            opacity: 0.9;
+        }
+
+        .service-card:hover .service-image {
+            transform: scale(1.08);
+            opacity: 0.8;
+        }
+
+        .service-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, var(--gradient-1) 0%, var(--gradient-2) 80%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .service-card:hover .service-overlay {
+            opacity: 0.85;
+        }
+
+        .service-icon-main {
+            width: 60px;
+            height: 60px;
+            background: var(--secondary-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+            transform: scale(0.9);
+            transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        .service-card:hover .service-icon-main {
+            transform: scale(1.1);
+        }
+
+        .service-icon-main i {
+            font-size: 1.6rem;
+            color: var(--accent-color);
+        }
+
+        .service-content {
+            padding: 20px;
+            background: transparent;
+            height: calc(100% - 180px);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .service-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: linear-gradient(135deg, var(--gradient-1), var(--gradient-2));
+            color: var(--secondary-color);
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.65rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            box-shadow: 0 2px 8px var(--shadow-light);
+        }
+
+        .service-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .service-description {
+            color: var(--text-light);
+            font-size: 0.85rem;
+            line-height: 1.5;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .service-actions {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-primary-custom {
+            background: linear-gradient(135deg, var(--gradient-1), var(--gradient-2));
+            color: var(--secondary-color);
+            border: none;
+            padding: 8px 16px;
+            border-radius: 15px;
+            font-weight: 600;
+            font-size: 0.8rem;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary-custom:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px var(--shadow-medium);
+        }
+
+        .btn-secondary-custom {
+            color: var(--accent-color);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.8rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.3s ease;
+            border-bottom: 2px solid transparent;
+        }
+
+        .btn-secondary-custom:hover {
+            color: var(--success-color);
+            border-bottom-color: var(--success-color);
+        }
+
+        .modal-content {
+            background: var(--glass-effect);
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--primary-light);
+            border-radius: 15px;
+            color: var(--text-dark);
+        }
+
+        .modal-header {
+            border-bottom: none;
+            padding: 15px 25px;
+        }
+
+        .modal-title {
+            font-size: 1.6rem;
+            font-weight: 700;
+        }
+
+        .modal-body {
+            padding: 15px 25px;
+        }
+
+        .modal-body ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .modal-body ul li {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+
+        .modal-body ul li i {
+            color: var(--success-color);
+            margin-right: 8px;
+        }
+
+        .modal-footer {
+            border-top: none;
+            padding: 15px 25px;
+        }
+
+        .btn-close {
+            background: var(--primary-light);
+            border-radius: 50%;
+            opacity: 1;
+            transition: all 0.3s ease;
+        }
+
+        .btn-close:hover {
+            background: var(--accent-color);
+        }
+
+        .floating-shapes {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .shape {
+            position: absolute;
+            background: var(--primary-light);
+            border-radius: 50%;
+            animation: shapeFloat 12s ease-in-out infinite;
+        }
+
+        .shape:nth-child(1) {
+            width: 40px;
+            height: 40px;
+            top: 20%;
+            left: 15%;
+            animation-delay: 0s;
+        }
+
+        .shape:nth-child(2) {
+            width: 30px;
+            height: 30px;
+            top: 60%;
+            right: 15%;
+            animation-delay: 4s;
+        }
+
+        .shape:nth-child(3) {
+            width: 60px;
+            height: 60px;
+            bottom: 20%;
+            left: 10%;
+            animation-delay: 8s;
+        }
+
+        @keyframes shapeFloat {
+            0%, 100% { transform: translateY(0px) translateX(0px) rotate(0deg); opacity: 0.4; }
+            50% { transform: translateY(-15px) translateX(10px) rotate(160deg); opacity: 0.7; }
+        }
+
+        @media (max-width: 1200px) {
+            .services-slider-container { max-width: 900px; }
+            .service-card { width: 260px; }
+        }
+
+        @media (max-width: 992px) {
+            .services-slider-container { max-width: 600px; }
+            .service-card { width: 240px; height: 400px; }
+            .service-image-container { height: 160px; }
+        }
+
+        @media (max-width: 768px) {
+            .service-section { padding: 50px 0; }
+            .section-title { font-size: 2.3rem; }
+            .section-title::after { width: 60px; }
+            .services-slider-container { max-width: 300px; }
+            .service-card { width: 260px; height: 380px; }
+            .service-image-container { height: 150px; }
+            .service-actions { flex-direction: column; gap: 6px; }
+            .btn-primary-custom, .btn-secondary-custom { width: 100%; justify-content: center; }
+        }
+
+        @media (max-width: 576px) {
+            .section-title { font-size: 1.8rem; }
+            .section-subtitle { font-size: 0.95rem; }
+            .service-card { width: 240px; height: 360px; }
+            .service-image-container { height: 140px; }
+            .service-title { font-size: 1.1rem; }
+            .service-description { font-size: 0.8rem; }
+            .modal-title { font-size: 1.4rem; }
+        }
+    </style>
+</head>
+
+<body>
+    <section class="service-section" id="physiotherapy">
+        <div class="bg-decoration"></div>
+        <div class="floating-shapes">
+            <div class="shape"></div>
+            <div class="shape"></div>
+            <div class="shape"></div>
+        </div>
+
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Physiotherapy Services</h2>
+                <p class="section-subtitle">Discover our specialized physiotherapy programs designed to enhance recovery, mobility, and overall well-being.</p>
+            </div>
+
+            <div class="services-slider-container">
+                <div class="services-slider">
+                    <div class="service-card">
+                        <div class="service-image-container">
+                            <div class="service-badge">Specialized</div>
+                            <img src="https://images.unsplash.com/photo-1584464491033-06628f3a6b7b?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Ortho & Sports" class="service-image">
+                            <div class="service-overlay">
+                                <div class="service-icon-main">
+                                    <i class="fas fa-running"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="service-content">
+                            <h3 class="service-title">Ortho & Sports</h3>
+                            <p class="service-description">Targeted therapy for musculoskeletal injuries and sports performance enhancement.</p>
+                            <div class="service-actions">
+                                <a href="#" class="btn-primary-custom">
+                                    <i class="fas fa-calendar-plus"></i> Book Session
+                                </a>
+                                <a href="#" class="btn-secondary-custom" data-bs-toggle="modal" data-bs-target="#orthoSportsModal">
+                                    Learn More <i class="fas fa-arrow-right"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="service-card">
+                        <div class="service-image-container">
+                            <div class="service-badge">Respiratory</div>
+                            <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Cardio-Respiratory" class="service-image">
+                            <div class="service-overlay">
+                                <div class="service-icon-main">
+                                    <i class="fas fa-lungs"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="service-content">
+                            <h3 class="service-title">Cardio-Respiratory</h3>
+                            <p class="service-description">Specialized care to improve heart and lung function through tailored exercises.</p>
+                            <div class="service-actions">
+                                <a href="#" class="btn-primary-custom">
+                                    <i class="fas fa-calendar-plus"></i> Book Session
+                                </a>
+                                <a href="#" class="btn-secondary-custom" data-bs-toggle="modal" data-bs-target="#cardioRespiratoryModal">
+                                    Learn More <i class="fas fa-arrow-right"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="service-card">
+                        <div class="service-image-container">
+                            <div class="service-badge">Neurological</div>
+                            <img src="https://images.unsplash.com/photo-1506126613408-eca07ce68773?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Neuro & Pediatric" class="service-image">
+                            <div class="service-overlay">
+                                <div class="service-icon-main">
+                                    <i class="fas fa-brain"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="service-content">
+                            <h3 class="service-title">Neuro & Pediatric</h3>
+                            <p class="service-description">Therapy for neurological conditions and pediatric developmental support.</p>
+                            <div class="service-actions">
+                                <a href="#" class="btn-primary-custom">
+                                    <i class="fas fa-calendar-plus"></i> Book Session
+                                </a>
+                                <a href="#" class="btn-secondary-custom" data-bs-toggle="modal" data-bs-target="#neuroPediatricModal">
+                                    Learn More <i class="fas fa-arrow-right"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="service-card">
+                        <div class="service-image-container">
+                            <div class="service-badge">Women's Health</div>
+                            <img src="https://images.unsplash.com/photo-1545205597-3d9d02c29597?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Women's Health" class="service-image">
+                            <div class="service-overlay">
+                                <div class="service-icon-main">
+                                    <i class="fas fa-female"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="service-content">
+                            <h3 class="service-title">Women's Health</h3>
+                            <p class="service-description">Specialized physiotherapy for women's unique health needs and recovery.</p>
+                            <div class="service-actions">
+                                <a href="#" class="btn-primary-custom">
+                                    <i class="fas fa-calendar-plus"></i> Book Session
+                                </a>
+                                <a href="#" class="btn-secondary-custom" data-bs-toggle="modal" data-bs-target="#womensHealthModal">
+                                    Learn More <i class="fas fa-arrow-right"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modals -->
+        <div class="modal fade" id="orthoSportsModal" tabindex="-1" aria-labelledby="orthoSportsModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="orthoSportsModalLabel">Ortho & Sports</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Targeted therapy for musculoskeletal injuries and sports performance enhancement, focusing on recovery and strength.</p>
+                        <ul>
+                            <li><i class="fas fa-check"></i> Injury rehabilitation</li>
+                            <li><i class="fas fa-check"></i> Performance optimization</li>
+                            <li><i class="fas fa-check"></i> Pain management</li>
+                        </ul>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn-primary-custom" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="cardioRespiratoryModal" tabindex="-1" aria-labelledby="cardioRespiratoryModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="cardioRespiratoryModalLabel">Cardio-Respiratory</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Specialized care to improve heart and lung function through tailored exercises and breathing techniques.</p>
+                        <ul>
+                            <li><i class="fas fa-check"></i> Enhanced lung capacity</li>
+                            <li><i class="fas fa-check"></i> Cardiovascular health</li>
+                            <li><i class="fas fa-check"></i> Respiratory therapy</li>
+                        </ul>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn-primary-custom" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="neuroPediatricModal" tabindex="-1" aria-labelledby="neuroPediatricModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="neuroPediatricModalLabel">Neuro & Pediatric</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Therapy for neurological conditions and pediatric developmental support, tailored to individual needs.</p>
+                        <ul>
+                            <li><i class="fas fa-check"></i> Neurological rehabilitation</li>
+                            <li><i class="fas fa-check"></i> Pediatric development</li>
+                            <li><i class="fas fa-check"></i> Motor skills enhancement</li>
+                        </ul>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn-primary-custom" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="womensHealthModal" tabindex="-1" aria-labelledby="womensHealthModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="womensHealthModalLabel">Women's Health</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Specialized physiotherapy addressing women's unique health needs, including prenatal and postnatal care.</p>
+                        <ul>
+                            <li><i class="fas fa-check"></i> Prenatal support</li>
+                            <li><i class="fas fa-check"></i> Postnatal recovery</li>
+                            <li><i class="fas fa-check"></i> Pelvic health</li>
+                        </ul>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn-primary-custom" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Intersection Observer for animations
+        const observerOptions = {
+            root: null,
+            rootMargin: '-10%',
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.section-title, .section-subtitle, .service-card').forEach(element => {
+            observer.observe(element);
+        });
+
+        // Card 3D tilt effect
+        const cards = document.querySelectorAll('.service-card');
+        cards.forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left - rect.width / 2;
+                const y = e.clientY - rect.top - rect.height / 2;
+                const rotateX = (y / rect.height) * 8;
+                const rotateY = (x / rect.width) * -8;
+                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(0.95)`;
+            });
+
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale(0.95)';
+            });
+        });
+
+        // Button ripple effect
+        document.querySelectorAll('.btn-primary-custom, .btn-secondary-custom').forEach(button => {
+            button.addEventListener('click', function(e) {
+                if (this.classList.contains('btn-primary-custom')) {
+                    e.preventDefault();
+                    const ripple = document.createElement('span');
+                    ripple.style.position = 'absolute';
+                    ripple.style.borderRadius = '50%';
+                    ripple.style.background = 'rgba(255,255,255,0.3)';
+                    ripple.style.transform = 'scale(0)';
+                    ripple.style.animation = 'ripple 0.6s linear';
+                    ripple.style.left = '50%';
+                    ripple.style.top = '50%';
+                    ripple.style.pointerEvents = 'none';
+                    ripple.style.width = '10px';
+                    ripple.style.height = '10px';
+                    this.appendChild(ripple);
+                    setTimeout(() => ripple.remove(), 600);
+                }
+            });
+        });
+
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes ripple {
+                to { transform: scale(20); opacity: 0; }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+
+</html>

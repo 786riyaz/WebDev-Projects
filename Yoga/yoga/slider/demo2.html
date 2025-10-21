@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>3D Carousel Slider</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #0f0f0f;
+      font-family: sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    .carousel-container {
+      position: relative;
+      width: 90%;
+      max-width: 900px;
+      height: 500px;
+      perspective: 1500px;
+    }
+
+    .carousel {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      transform-style: preserve-3d;
+      transition: transform 1s;
+    }
+
+    .carousel:hover {
+      animation-play-state: paused;
+    }
+
+    .carousel-item {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background-size: cover;
+      background-position: center;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(3px);
+      transition: transform 1s ease-in-out;
+    }
+
+    .carousel-item::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 20px;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.5));
+    }
+
+    .btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 10;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid #fff;
+      color: #fff;
+      padding: 10px 15px;
+      cursor: pointer;
+      border-radius: 50%;
+      font-size: 18px;
+      backdrop-filter: blur(10px);
+      transition: background 0.3s;
+    }
+
+    .btn:hover {
+      background: rgba(255, 255, 255, 0.3);
+    }
+
+    .btn.prev {
+      left: -50px;
+    }
+
+    .btn.next {
+      right: -50px;
+    }
+
+    @media (max-width: 768px) {
+      .carousel-container {
+        height: 300px;
+      }
+
+      .btn.prev {
+        left: 5px;
+      }
+
+      .btn.next {
+        right: 5px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .carousel-container {
+        height: 220px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="carousel-container">
+    <div class="carousel" id="carousel">
+      <div class="carousel-item" style="background-image: url('photo.jpg');"></div>
+      <div class="carousel-item" style="background-image: url('photo.jpg');"></div>
+      <div class="carousel-item" style="background-image: url('photo.jpg');"></div>
+      <div class="carousel-item" style="background-image: url('photo.jpg');"></div>
+      <div class="carousel-item" style="background-image: url('photo.jpg');"></div>
+    </div>
+    <button class="btn prev" onclick="rotateCarousel(-1)">❮</button>
+    <button class="btn next" onclick="rotateCarousel(1)">❯</button>
+  </div>
+
+  <script>
+    const carousel = document.getElementById("carousel");
+    const items = carousel.children;
+    const itemCount = items.length;
+    let angle = 0;
+    const rotateStep = 360 / itemCount;
+
+    function updateCarousel() {
+      for (let i = 0; i < itemCount; i++) {
+        const itemAngle = rotateStep * i + angle;
+        items[i].style.transform = `rotateY(${itemAngle}deg) translateZ(600px)`;
+      }
+    }
+
+    function rotateCarousel(dir) {
+      angle += -rotateStep * dir;
+      updateCarousel();
+    }
+
+    updateCarousel();
+
+    // Auto rotate
+    setInterval(() => {
+      rotateCarousel(1);
+    }, 4000);
+  </script>
+</body>
+</html>

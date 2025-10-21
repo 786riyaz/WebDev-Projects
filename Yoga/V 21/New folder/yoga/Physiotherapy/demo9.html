@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Physiotherapy Center</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #6B8E70;
+            --primary-light: rgba(107, 142, 112, 0.1);
+            --secondary-color: #FFFFFF;
+            --text-dark: #333333;
+            --text-light: #777777;
+            --accent-color: #6B8E70;
+            --gradient-1: #6B8E70;
+            --gradient-2: #A8C7A7;
+            --success-color: #2E7D32;
+            --glass-effect: #ffffffc9;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            color: var(--text-dark);
+            background-color: var(--secondary-color);
+        }
+
+        .navbar {
+            background: linear-gradient(90deg, var(--gradient-1), var(--gradient-2));
+            transition: all 0.3s ease;
+        }
+
+        .navbar-brand, .nav-link {
+            color: var(--secondary-color) !important;
+        }
+
+        .nav-link:hover {
+            color: var(--success-color) !important;
+            transform: translateY(-2px);
+        }
+
+        .hero-section {
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://via.placeholder.com/1920x600?text=Physiotherapy+Hero') center/cover no-repeat;
+            color: var(--secondary-color);
+            padding: 100px 0;
+            text-align: center;
+            animation: fadeIn 1.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .service-card {
+            background: var(--secondary-color);
+            border: 1px solid var(--primary-light);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            margin-bottom: 30px;
+            position: relative;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .service-card:hover {
+            transform: scale(1.05) rotate(1deg);
+            box-shadow: 0 15px 30px var(--primary-light);
+            border-color: var(--primary-color);
+        }
+
+        .service-card img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            transition: transform 0.5s ease, opacity 0.5s ease;
+        }
+
+        .service-card:hover img {
+            transform: scale(1.1);
+            opacity: 0.9;
+        }
+
+        .service-card .card-body {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .service-card .card-title {
+            color: var(--primary-color);
+            font-weight: bold;
+            margin-bottom: 15px;
+            position: relative;
+        }
+
+        .service-card .card-title::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background: var(--success-color);
+            bottom: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            transition: width 0.3s ease;
+        }
+
+        .service-card:hover .card-title::after {
+            width: 50%;
+        }
+
+        .service-card .card-text {
+            color: var(--text-light);
+            margin-bottom: 20px;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            border-radius: 50px;
+            padding: 10px 20px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--success-color);
+            border-color: var(--success-color);
+            transform: translateY(-3px) scale(1.05);
+        }
+
+        .footer {
+            background: var(--gradient-1);
+            color: var(--secondary-color);
+            padding: 40px 0;
+        }
+
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(50px) rotate(0deg);
+            transition: all 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        .animate-on-scroll.visible {
+            opacity: 1;
+            transform: translateY(0) rotate(0deg);
+        }
+
+        @media (max-width: 768px) {
+            .hero-section {
+                padding: 60px 0;
+            }
+            .service-card img {
+                height: 150px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">Physiotherapy Center</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#services">Services</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <section id="home" class="hero-section">
+        <div class="container">
+            <h1 class="display-4 fw-bold">Welcome to Your Path to Recovery</h1>
+            <p class="lead">Expert physiotherapy services tailored to your needs.</p>
+            <a href="#services" class="btn btn-primary btn-lg mt-3">Explore Services</a>
+        </div>
+    </section>
+
+    <section id="services" class="py-5">
+        <div class="container">
+            <h2 class="text-center mb-5">Our Services</h2>
+            <div class="row">
+                <div class="col-md-6 col-lg-3 animate-on-scroll">
+                    <div class="service-card">
+                        <img src="p.png" alt="Ortho & Sports Machine">
+                        <div class="card-body">
+                            <h5 class="card-title">Ortho & Sports</h5>
+                            <p class="card-text">Advanced machines for sports injuries and orthopedic rehabilitation.</p>
+                            <a href="#" class="btn btn-primary">Learn More</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3 animate-on-scroll">
+                    <div class="service-card">
+                        <img src="p1.webp" alt="Cardio-Respiratory Machine">
+                        <div class="card-body">
+                            <h5 class="card-title">Cardio-Respiratory</h5>
+                            <p class="card-text">Specialized equipment to boost heart and lung health.</p>
+                            <a href="#" class="btn btn-primary">Learn More</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3 animate-on-scroll">
+                    <div class="service-card">
+                        <img src="p3.webp" alt="Neuro & Pediatric Machine">
+                        <div class="card-body">
+                            <h5 class="card-title">Neuro & Pediatric</h5>
+                            <p class="card-text">Cutting-edge machines for neurological and pediatric therapy.</p>
+                            <a href="#" class="btn btn-primary">Learn More</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3 animate-on-scroll">
+                    <div class="service-card">
+                        <img src="p4.webp" alt="Women's Health Machine">
+                        <div class="card-body">
+                            <h5 class="card-title">Women's Health</h5>
+                            <p class="card-text">Tailored equipment for women's unique health needs.</p>
+                            <a href="#" class="btn btn-primary">Learn More</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container text-center">
+            <p>© 2025 Physiotherapy Center. All rights reserved.</p>
+            <p>Contact us: info@physiocenter.com | (123) 456-7890</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Scroll animation for service cards
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.2 });
+
+        document.querySelectorAll('.animate-on-scroll').forEach(element => {
+            observer.observe(element);
+        });
+    </script>
+</body>
+</html>

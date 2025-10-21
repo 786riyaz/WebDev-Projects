@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animated Yoga Icon</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #e0f7fa, #bbdefb, #e1bee7);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .container {
+            text-align: center;
+            padding: 2rem;
+            max-width: 800px;
+            z-index: 10;
+        }
+        
+        h1 {
+            color: #5e35b1;
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .subtitle {
+            color: #455a64;
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .yoga-container {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            margin: 0 auto 2rem;
+        }
+        
+        .yoga-icon {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        /* Yoga pose parts */
+        .head {
+            position: absolute;
+            top: 30%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 50px;
+            height: 50px;
+            background-color: #fff;
+            border-radius: 50%;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            z-index: 3;
+        }
+        
+        .body {
+            position: absolute;
+            top: 40%;
+            left: 50%;
+            transform: translate(-50%, 0);
+            width: 12px;
+            height: 120px;
+            background-color: #fff;
+            border-radius: 10px;
+            z-index: 2;
+        }
+        
+        .arm {
+            position: absolute;
+            background-color: #fff;
+            border-radius: 10px;
+            z-index: 1;
+        }
+        
+        .arm.left {
+            top: 45%;
+            left: 35%;
+            width: 80px;
+            height: 12px;
+            transform: rotate(45deg);
+            animation: arm-left 8s ease-in-out infinite;
+        }
+        
+        .arm.right {
+            top: 45%;
+            right: 35%;
+            width: 80px;
+            height: 12px;
+            transform: rotate(-45deg);
+            animation: arm-right 8s ease-in-out infinite;
+        }
+        
+        .leg {
+            position: absolute;
+            background-color: #fff;
+            border-radius: 10px;
+            z-index: 1;
+        }
+        
+        .leg.left {
+            top: 65%;
+            left: 45%;
+            width: 12px;
+            height: 80px;
+            transform: rotate(20deg);
+            animation: leg-left 10s ease-in-out infinite;
+        }
+        
+        .leg.right {
+            top: 65%;
+            right: 45%;
+            width: 12px;
+            height: 100px;
+            transform: rotate(-10deg);
+            animation: leg-right 10s ease-in-out infinite;
+        }
+        
+        .circle {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 220px;
+            height: 220px;
+            border: 4px dashed rgba(255, 255, 255, 0.6);
+            border-radius: 50%;
+            animation: rotate 30s linear infinite;
+        }
+        
+        .circle:nth-child(2) {
+            width: 260px;
+            height: 260px;
+            animation-direction: reverse;
+            animation-duration: 40s;
+        }
+        
+        /* Animations */
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        @keyframes rotate {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+        
+        @keyframes arm-left {
+            0%, 100% { transform: rotate(45deg); }
+            50% { transform: rotate(60deg); }
+        }
+        
+        @keyframes arm-right {
+            0%, 100% { transform: rotate(-45deg); }
+            50% { transform: rotate(-30deg); }
+        }
+        
+        @keyframes leg-left {
+            0%, 100% { transform: rotate(20deg); }
+            50% { transform: rotate(35deg); }
+        }
+        
+        @keyframes leg-right {
+            0%, 100% { transform: rotate(-10deg); }
+            50% { transform: rotate(5deg); }
+        }
+        
+        .features {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .feature {
+            background: rgba(255, 255, 255, 0.7);
+            padding: 1.5rem;
+            border-radius: 15px;
+            width: 180px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .feature:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.9);
+        }
+        
+        .feature h3 {
+            color: #5e35b1;
+            margin-bottom: 0.5rem;
+        }
+        
+        .feature p {
+            color: #455a64;
+            font-size: 0.9rem;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background: #7c4dff;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 1.5rem;
+            box-shadow: 0 4px 8px rgba(124, 77, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .cta-button:hover {
+            background: #5e35b1;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(124, 77, 255, 0.4);
+        }
+        
+        /* Decorative elements */
+        .bubble {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            z-index: 0;
+        }
+        
+        .bubble:nth-child(1) {
+            width: 80px;
+            height: 80px;
+            top: 10%;
+            left: 15%;
+            animation: float 8s ease-in-out infinite;
+        }
+        
+        .bubble:nth-child(2) {
+            width: 50px;
+            height: 50px;
+            bottom: 20%;
+            right: 15%;
+            animation: float 10s ease-in-out infinite;
+        }
+        
+        .bubble:nth-child(3) {
+            width: 30px;
+            height: 30px;
+            top: 40%;
+            right: 25%;
+            animation: float 7s ease-in-out infinite;
+        }
+        
+        /* Responsive design */
+        @media (max-width: 768px) {
+            h1 { font-size: 2.2rem; }
+            .yoga-container { width: 250px; height: 250px; }
+            .features { gap: 1rem; }
+            .feature { width: 160px; padding: 1rem; }
+        }
+        
+        @media (max-width: 480px) {
+            .features { flex-direction: column; align-items: center; }
+            .feature { width: 80%; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Decorative bubbles -->
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    
+    <div class="container">
+      
+        
+        <div class="yoga-container">
+            <div class="yoga-icon">
+                <div class="circle"></div>
+                <div class="circle"></div>
+                <div class="head"></div>
+                <div class="body"></div>
+                <div class="arm left"></div>
+                <div class="arm right"></div>
+                <div class="leg left"></div>
+                <div class="leg right"></div>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>

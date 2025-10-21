@@ -1,0 +1,1451 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Serene Yoga Studio</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="index.css">
+  <style>
+    :root {
+      --primary-color: #6B8E70;
+      --primary-light: rgba(107, 142, 112, 0.1);
+      --secondary-color: #FFFFFF;
+      --text-dark: #333333;
+      --text-light: #777777;
+      --accent-color: #6B8E70;
+      --gradient-1: #6B8E70;
+       --gradient-2: #A8C7A7;
+        --success-color: #2E7D32;
+        --glass-effect:#ffffffc9;
+    }
+
+
+
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+      background-color: var(--secondary-color);
+      color: var(--text-dark);
+      overflow-x: hidden;
+    }
+
+    .navbar {
+            background: var(--glass-effect);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 15px var(--shadow-light);
+            padding: 15px 0;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .navbar.scrolled {
+            padding: 10px 0;
+            background: rgba(107, 142, 112, 0.35);
+            box-shadow: 0 4px 16px var(--shadow-medium);
+        }
+
+        .navbar-brand {
+            color: var(--primary-color);
+            font-weight: 700;
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            transition: color 0.3s ease;
+        }
+
+        .navbar-brand img {
+            height: 40px;
+            margin-right: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .navbar.scrolled .navbar-brand img {
+            height: 32px;
+        }
+
+        .navbar-brand:hover {
+            color: var(--success-color);
+        }
+
+        .nav-link {
+            color: var(--text-dark);
+            font-weight: 600;
+            font-size: 1rem;
+            margin: 0 10px;
+            position: relative;
+            padding: 10px 0;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            color: var(--success-color);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background: linear-gradient(90deg, var(--gradient-1), var(--gradient-2));
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after,
+        .nav-link.active::after {
+            width: 100%;
+        }
+
+        .dropdown-menu {
+            background: var(--glass-effect);
+            backdrop-filter: blur(10px);
+            border: none;
+            box-shadow: 0 5px 15px var(--shadow-light);
+            border-radius: 10px;
+            padding: 10px 0;
+            margin-top: 10px;
+            opacity: 0;
+            transform: translateY(-10px);
+            visibility: hidden;
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .dropdown-menu.show {
+            opacity: 1;
+            transform: translateY(0);
+            visibility: visible;
+        }
+
+        .dropdown-item {
+            padding: 10px 20px;
+            color: var(--text-dark);
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .dropdown-item:hover {
+            background: var(--primary-light);
+            color: var(--success-color);
+            transform: translateX(5px);
+        }
+
+        .dropdown-item i {
+            color: var(--success-color);
+            font-size: 0.9rem;
+        }
+
+        /* Appointment Button */
+        .btn-primary {
+            background: linear-gradient(135deg, var(--gradient-1), var(--gradient-2));
+            border: none;
+            padding: 10px 24px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: var(--secondary-color);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px var(--shadow-medium);
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn-primary:hover::before {
+            left: 100%;
+        }
+
+        .navbar-toggler {
+            border: none;
+            padding: 10px;
+            position: relative;
+        }
+
+        .navbar-toggler-icon {
+            background-image: none;
+            width: 24px;
+            height: 2px;
+            background: var(--text-dark);
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .navbar-toggler-icon::before,
+        .navbar-toggler-icon::after {
+            content: '';
+            position: absolute;
+            width: 24px;
+            height: 2px;
+            background: var(--text-dark);
+            transition: all 0.3s ease;
+        }
+
+        .navbar-toggler-icon::before {
+            top: -8px;
+        }
+
+        .navbar-toggler-icon::after {
+            top: 8px;
+        }
+
+        .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
+            background: transparent;
+        }
+
+        .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon::before {
+            transform: rotate(45deg);
+            top: 0;
+        }
+
+        .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon::after {
+            transform: rotate(-45deg);
+            top: 0;
+        }
+
+        /* Accessibility */
+        .nav-link:focus,
+        .dropdown-item:focus,
+        .btn-primary:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(107, 142, 112, 0.3);
+            border-radius: 5px;
+        }
+
+        .navbar-toggler:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(107, 142, 112, 0.3);
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 991.98px) {
+            .navbar-collapse {
+                padding: 20px;
+                background: var(--glass-effect);
+                backdrop-filter: blur(10px);
+                border-radius: 10px;
+                margin-top: 10px;
+            }
+
+            .nav-item {
+                margin: 8px 0;
+            }
+
+            .dropdown-menu {
+                margin-left: 15px;
+                width: calc(100% - 30px);
+                background: transparent;
+                backdrop-filter: none;
+                box-shadow: none;
+            }
+
+            .btn-primary {
+                width: 100%;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .navbar-brand {
+                font-size: 1.5rem;
+            }
+
+            .navbar-brand img {
+                height: 32px;
+            }
+
+            .navbar.scrolled .navbar-brand img {
+                height: 28px;
+            }
+
+            .nav-link {
+                font-size: 0.95rem;
+            }
+
+            .dropdown-item {
+                font-size: 0.85rem;
+            }
+        }
+
+    /* Hero Section */
+    .hero-section {
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      background-color: var(--primary-light);
+      margin-top: 70px;
+      /* To account for fixed navbar */
+    }
+
+    .background-pattern {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background:
+        radial-gradient(circle at 20% 30%, var(--primary-light) 0%, transparent 20%),
+        radial-gradient(circle at 80% 70%, var(--primary-light) 0%, transparent 20%);
+      opacity: 0.6;
+      z-index: 0;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 10;
+      text-align: center;
+      padding: 2rem;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .hero-title {
+      color: var(--primary-color);
+      font-size: 3.5rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      line-height: 1.2;
+    }
+
+    .hero-subtitle {
+      color: var(--text-dark);
+      font-size: 1.3rem;
+      margin-bottom: 2rem;
+      line-height: 1.6;
+    }
+
+    .hero-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-top: 2rem;
+    }
+
+    /* Yoga Figure Animation */
+    .yoga-figure-container {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1;
+    }
+
+    .yoga-figure {
+      position: relative;
+      width: 300px;
+      height: 300px;
+      z-index: 1;
+      animation: float 8s ease-in-out infinite;
+    }
+
+    /* Yoga pose parts */
+    .head {
+      position: absolute;
+      top: 30%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 50px;
+      height: 50px;
+      background-color: var(--primary-color);
+      border-radius: 50%;
+      z-index: 3;
+    }
+
+    .body {
+      position: absolute;
+      top: 40%;
+      left: 50%;
+      transform: translate(-50%, 0);
+      width: 12px;
+      height: 120px;
+      background-color: var(--primary-color);
+      border-radius: 10px;
+      z-index: 2;
+    }
+
+    .arm,
+    .leg {
+      position: absolute;
+      background-color: var(--primary-color);
+      border-radius: 10px;
+      z-index: 1;
+    }
+
+    .arm.left {
+      top: 45%;
+      left: 35%;
+      width: 80px;
+      height: 12px;
+      transform: rotate(45deg);
+      animation: arm-left 8s ease-in-out infinite;
+    }
+
+    .arm.right {
+      top: 45%;
+      right: 35%;
+      width: 80px;
+      height: 12px;
+      transform: rotate(-45deg);
+      animation: arm-right 8s ease-in-out infinite;
+    }
+
+    .leg.left {
+      top: 65%;
+      left: 45%;
+      width: 12px;
+      height: 80px;
+      transform: rotate(20deg);
+      animation: leg-left 10s ease-in-out infinite;
+    }
+
+    .leg.right {
+      top: 65%;
+      right: 45%;
+      width: 12px;
+      height: 100px;
+      transform: rotate(-10deg);
+      animation: leg-right 10s ease-in-out infinite;
+    }
+
+    .circle {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 220px;
+      height: 220px;
+      border: 3px solid var(--primary-light);
+      border-radius: 50%;
+      animation: rotate 30s linear infinite;
+      z-index: -1;
+    }
+
+    .circle:nth-child(2) {
+      width: 260px;
+      height: 260px;
+      animation-direction: reverse;
+      animation-duration: 40s;
+    }
+
+    .circle:nth-child(3) {
+      width: 180px;
+      height: 180px;
+      border: 2px dashed var(--primary-color);
+      animation: rotate-reverse 25s linear infinite;
+    }
+
+    /* Animations */
+    @keyframes float {
+
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-20px);
+      }
+    }
+
+    @keyframes rotate {
+      0% {
+        transform: translate(-50%, -50%) rotate(0deg);
+      }
+
+      100% {
+        transform: translate(-50%, -50%) rotate(360deg);
+      }
+    }
+
+    @keyframes rotate-reverse {
+      0% {
+        transform: translate(-50%, -50%) rotate(0deg);
+      }
+
+      100% {
+        transform: translate(-50%, -50%) rotate(-360deg);
+      }
+    }
+
+    @keyframes arm-left {
+
+      0%,
+      100% {
+        transform: rotate(45deg);
+      }
+
+      50% {
+        transform: rotate(60deg);
+      }
+    }
+
+    @keyframes arm-right {
+
+      0%,
+      100% {
+        transform: rotate(-45deg);
+      }
+
+      50% {
+        transform: rotate(-30deg);
+      }
+    }
+
+    @keyframes leg-left {
+
+      0%,
+      100% {
+        transform: rotate(20deg);
+      }
+
+      50% {
+        transform: rotate(35deg);
+      }
+    }
+
+    @keyframes leg-right {
+
+      0%,
+      100% {
+        transform: rotate(-10deg);
+      }
+
+      50% {
+        transform: rotate(5deg);
+      }
+    }
+
+    /* Leaves Animation */
+    .leaf {
+      position: absolute;
+      background-color: var(--primary-color);
+      opacity: 0.3;
+      border-radius: 50% 0 50% 50%;
+      animation: leaf-fall linear infinite;
+      z-index: 0;
+    }
+
+    @keyframes leaf-fall {
+      0% {
+        transform: translateY(-100px) rotate(0deg);
+      }
+
+      100% {
+        transform: translateY(100vh) rotate(360deg);
+      }
+    }
+
+    /* Create leaves */
+    .leaf:nth-child(1) {
+      width: 30px;
+      height: 30px;
+      left: 10%;
+      animation-duration: 15s;
+    }
+
+    .leaf:nth-child(2) {
+      width: 25px;
+      height: 25px;
+      left: 25%;
+      animation-duration: 20s;
+      animation-delay: 3s;
+    }
+
+    .leaf:nth-child(3) {
+      width: 35px;
+      height: 35px;
+      left: 75%;
+      animation-duration: 18s;
+      animation-delay: 5s;
+    }
+
+    .leaf:nth-child(4) {
+      width: 20px;
+      height: 20px;
+      left: 90%;
+      animation-duration: 12s;
+      animation-delay: 2s;
+    }
+
+    .leaf:nth-child(5) {
+      width: 28px;
+      height: 28px;
+      left: 60%;
+      animation-duration: 25s;
+      animation-delay: 7s;
+    }
+
+    /* Features Section */
+    .features-section {
+      padding: 100px 0;
+      background-color: var(--secondary-color);
+    }
+
+    .section-title {
+      color: var(--primary-color);
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 3rem;
+      text-align: center;
+    }
+
+    .feature-card {
+      background-color: var(--secondary-color);
+      border-radius: 15px;
+      padding: 30px;
+      margin-bottom: 30px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+      transition: all 0.3s ease;
+      height: 100%;
+      border: 1px solid rgba(107, 142, 112, 0.1);
+    }
+
+    .feature-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 30px rgba(107, 142, 112, 0.1);
+    }
+
+    .feature-icon {
+      font-size: 2.5rem;
+      color: var(--primary-color);
+      margin-bottom: 20px;
+    }
+
+    .feature-title {
+      color: var(--primary-color);
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 15px;
+    }
+
+    .feature-text {
+      color: var(--text-light);
+      line-height: 1.6;
+    }
+
+    /* Classes Section */
+    .classes-section {
+      padding: 100px 0;
+      background-color: var(--primary-light);
+    }
+
+    .class-card {
+      background-color: var(--secondary-color);
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+      transition: all 0.3s ease;
+      margin-bottom: 30px;
+    }
+
+    .class-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 30px rgba(107, 142, 112, 0.2);
+    }
+
+    .class-img {
+      height: 200px;
+      object-fit: cover;
+      width: 100%;
+    }
+
+    .class-body {
+      padding: 25px;
+    }
+
+    .class-title {
+      color: var(--primary-color);
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+
+    .class-meta {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 15px;
+      color: var(--text-light);
+    }
+
+    .class-text {
+      color: var(--text-light);
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
+
+    /* Testimonials Section */
+    .testimonials-section {
+      padding: 100px 0;
+      background-color: var(--secondary-color);
+    }
+
+    .testimonial-card {
+      background-color: var(--secondary-color);
+      border-radius: 15px;
+      padding: 30px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+      margin-bottom: 30px;
+      border: 1px solid rgba(107, 142, 112, 0.1);
+    }
+
+    .testimonial-text {
+      color: var(--text-dark);
+      font-style: italic;
+      margin-bottom: 20px;
+      line-height: 1.6;
+      position: relative;
+    }
+
+    .testimonial-text::before,
+    .testimonial-text::after {
+      content: '"';
+      color: var(--primary-color);
+      font-size: 2rem;
+      opacity: 0.3;
+    }
+
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+    }
+
+    .author-img {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-right: 15px;
+      border: 3px solid var(--primary-light);
+    }
+
+    .author-info h5 {
+      color: var(--primary-color);
+      margin-bottom: 5px;
+    }
+
+    .author-info p {
+      color: var(--text-light);
+      margin-bottom: 0;
+    }
+
+    /* CTA Section */
+    .cta-section {
+      padding: 100px 0;
+      background-color: var(--primary-color);
+      color: var(--secondary-color);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-pattern {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background:
+        radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.1) 0%, transparent 20%),
+        radial-gradient(circle at 80% 70%, rgba(255, 255, 255, 0.1) 0%, transparent 20%);
+      opacity: 0.6;
+      z-index: 0;
+    }
+
+    .cta-content {
+      position: relative;
+      z-index: 10;
+      text-align: center;
+    }
+
+    .cta-title {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+    }
+
+    .cta-text {
+      font-size: 1.2rem;
+      margin-bottom: 2rem;
+      opacity: 0.9;
+    }
+
+    /* Footer */
+    .footer {
+      background-color: #2a3e30;
+      color: var(--secondary-color);
+      padding: 70px 0 30px;
+    }
+
+    .footer-logo {
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 20px;
+      color: var(--secondary-color);
+    }
+
+    .footer-text {
+      opacity: 0.7;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+
+    .social-links {
+      display: flex;
+      gap: 15px;
+    }
+
+    .social-link {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      background-color: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      color: var(--secondary-color);
+      transition: all 0.3s ease;
+    }
+
+    .social-link:hover {
+      background-color: var(--primary-color);
+      transform: translateY(-3px);
+    }
+
+    .footer-title {
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin-bottom: 20px;
+      color: var(--secondary-color);
+    }
+
+    .footer-links {
+      list-style: none;
+      padding: 0;
+    }
+
+    .footer-links li {
+      margin-bottom: 10px;
+    }
+
+    .footer-links a {
+      color: rgba(255, 255, 255, 0.7);
+      transition: all 0.3s ease;
+      text-decoration: none;
+    }
+
+    .footer-links a:hover {
+      color: var(--secondary-color);
+      padding-left: 5px;
+    }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding-top: 30px;
+      margin-top: 50px;
+      text-align: center;
+      opacity: 0.7;
+    }
+
+    /* Responsive Adjustments */
+    @media (max-width: 1199.98px) {
+      .hero-title {
+        font-size: 3rem;
+      }
+    }
+
+    @media (max-width: 991.98px) {
+      .hero-title {
+        font-size: 2.5rem;
+      }
+
+      .hero-subtitle {
+        font-size: 1.1rem;
+      }
+
+      .section-title {
+        font-size: 2rem;
+      }
+
+      .navbar-collapse {
+        background-color: var(--primary-color);
+        padding: 20px;
+        border-radius: 10px;
+        margin-top: 15px;
+      }
+
+      .hero-buttons {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .btn-custom,
+      .btn-outline-custom {
+        width: 100%;
+        max-width: 250px;
+      }
+    }
+
+    @media (max-width: 767.98px) {
+      .hero-title {
+        font-size: 2.2rem;
+      }
+
+      .yoga-figure {
+        width: 200px;
+        height: 200px;
+      }
+
+      .circle {
+        width: 150px;
+        height: 150px;
+      }
+
+      .circle:nth-child(2) {
+        width: 180px;
+        height: 180px;
+      }
+
+      .circle:nth-child(3) {
+        width: 120px;
+        height: 120px;
+      }
+
+      .head {
+        width: 40px;
+        height: 40px;
+      }
+
+      .body {
+        width: 10px;
+        height: 100px;
+      }
+
+      .arm.left,
+      .arm.right {
+        width: 60px;
+        height: 10px;
+      }
+
+      .leg.left,
+      .leg.right {
+        width: 10px;
+        height: 60px;
+      }
+    }
+
+    @media (max-width: 575.98px) {
+      .hero-title {
+        font-size: 1.8rem;
+      }
+
+      .hero-subtitle {
+        font-size: 1rem;
+      }
+
+      .section-title {
+        font-size: 1.8rem;
+      }
+
+      .cta-title {
+        font-size: 2rem;
+      }
+
+      .footer {
+        text-align: center;
+      }
+
+      .social-links {
+        justify-content: center;
+      }
+    }
+  </style>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+     <!-- Navigation -->
+   <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+        <div class="container">
+            <!-- Logo and Brand -->
+            <a class="navbar-brand d-flex align-items-center" href="#">
+                <!-- Placeholder logo; replace with actual logo URL -->
+                <img src="https://via.placeholder.com/40x40?text=Logo" alt="" class="me-2">
+                Yoga
+            </a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">Home</a>
+                    </li>
+
+                    <!-- Physiotherapy Dropdown -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="physioDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Physiotherapy
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="physioDropdown">
+                            <li><a class="dropdown-item" href="#ortho"><i class="fas fa-bone me-2"></i>Ortho & Sports</a></li>
+                            <li><a class="dropdown-item" href="#cardio"><i class="fas fa-heartbeat me-2"></i>Cardio-Respiratory</a></li>
+                            <li><a class="dropdown-item" href="#neuro"><i class="fas fa-brain me-2"></i>Neuro & Pediatric</a></li>
+                            <li><a class="dropdown-item" href="#womens"><i class="fas fa-female me-2"></i>Women's Health</a></li>
+                        </ul>
+                    </li>
+
+                    <!-- Yoga Services Dropdown -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="yogaDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Yoga Services
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="yogaDropdown">
+                            <li><a class="dropdown-item" href="#power-yoga"><i class="fas fa-fire me-2"></i>Power Yoga</a></li>
+                            <li><a class="dropdown-item" href="#kids-yoga"><i class="fas fa-child me-2"></i>Kids Yoga</a></li>
+                            <li><a class="dropdown-item" href="#aerial-yoga"><i class="fas fa-parachute-box me-2"></i>Aerial Yoga</a></li>
+                            <li><a class="dropdown-item" href="#prenatal-yoga"><i class="fas fa-baby me-2"></i>Pre & Post Natal Yoga</a></li>
+                            <li><a class="dropdown-item" href="#fitness-yoga"><i class="fas fa-dumbbell me-2"></i>Fitness Yoga</a></li>
+                            <li><a class="dropdown-item" href="#personal-yoga"><i class="fas fa-user me-2"></i>Personal Training</a></li>
+                        </ul>
+                    </li>
+
+                    <!-- Special Therapies Dropdown -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="therapyDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Special Therapies
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="therapyDropdown">
+                            <li><a class="dropdown-item" href="#tapping"><i class="fas fa-hand-paper me-2"></i>Tapping</a></li>
+                            <li><a class="dropdown-item" href="#dry-cupping"><i class="fas fa-circle-notch me-2"></i>Dry Cupping</a></li>
+                            <li><a class="dropdown-item" href="#wet-cupping"><i class="fas fa-tint me-2"></i>Wet Cupping</a></li>
+                            <li><a class="dropdown-item" href="#dry-needling"><i class="fas fa-syringe me-2"></i>Dry Needling</a></li>
+                        </ul>
+                    </li>
+
+                    <!-- Additional Useful Links -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about">About</a>
+                    </li>
+                 
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Contact</a>
+                    </li>
+
+                    <!-- Appointment CTA Button -->
+                    <li class="nav-item ms-lg-3 my-2 my-lg-0">
+                        <a class="btn btn-primary" href="#appointment">Book</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="background-pattern"></div>
+
+    <!-- Animated leaves -->
+    <div class="leaf"></div>
+    <div class="leaf"></div>
+    <div class="leaf"></div>
+    <div class="leaf"></div>
+    <div class="leaf"></div>
+
+    <!-- Yoga figure with animated circles -->
+    <div class="yoga-figure-container">
+      <div class="yoga-figure">
+        <div class="circle"></div>
+        <div class="circle" style="z-index: -2;"></div>
+        <div class="circle" style="z-index: -3;"></div>
+        <div class="head"></div>
+        <div class="body"></div>
+        <div class="arm left"></div>
+        <div class="arm right"></div>
+        <div class="leg left"></div>
+        <div class="leg right"></div>
+      </div>
+    </div>
+
+    <div class="hero-content">
+      <h1 class="hero-title">Find Your Balance, Mind & Body</h1>
+      <p class="hero-subtitle">Discover the transformative power of yoga with our expert instructors in a peaceful,
+        welcoming environment designed for all skill levels.</p>
+      <div class="hero-buttons">
+        <button class="btn btn-custom">Start Free Trial</button>
+        <button class="btn btn-outline-custom">Learn More</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="features-section">
+    <div class="zen-pattern"></div>
+    <div class="center-divider"></div>
+
+    <div class="floating-element"></div>
+    <div class="floating-element"></div>
+    <div class="floating-element"></div>
+
+    <div class="container">
+      <div class="content-layout">
+        <!-- Left Side - Title -->
+        <div class="title-section">
+          <div class="section-number">01</div>
+          <h2 class="section-title">
+            Why Choose<br>
+            <span>Serene Yoga</span>
+          </h2>
+          <p class="section-description">
+            Embark on a transformative journey that nurtures your mind, strengthens your body, and elevates
+            your spirit through ancient wisdom and modern practice.
+          </p>
+          <div class="decorative-line"></div>
+        </div>
+
+        <!-- Right Side - Features -->
+        <div class="features-grid">
+          <div class="feature-item">
+            <div class="icon-hexagon">
+              <div class="hexagon-shape"></div>
+              <div class="hexagon-inner"></div>
+              <i class="fas fa-heart feature-icon"></i>
+            </div>
+            <h3 class="feature-title">Mindfulness</h3>
+            <p class="feature-text">Cultivate inner peace through guided meditation and conscious breathing
+              techniques.</p>
+          </div>
+
+          <div class="feature-item">
+            <div class="icon-hexagon">
+              <div class="hexagon-shape"></div>
+              <div class="hexagon-inner"></div>
+              <i class="fas fa-user-friends feature-icon"></i>
+            </div>
+            <h3 class="feature-title">Expert Instructors</h3>
+            <p class="feature-text">Learn from certified masters with years of experience in various yoga
+              disciplines.</p>
+          </div>
+
+          <div class="feature-item">
+            <div class="icon-hexagon">
+              <div class="hexagon-shape"></div>
+              <div class="hexagon-inner"></div>
+              <i class="fas fa-leaf feature-icon"></i>
+            </div>
+            <h3 class="feature-title">Natural Environment</h3>
+            <p class="feature-text">Practice in our serene studio designed with nature-inspired elements.
+            </p>
+          </div>
+
+          <div class="feature-item">
+            <div class="icon-hexagon">
+              <div class="hexagon-shape"></div>
+              <div class="hexagon-inner"></div>
+              <i class="fas fa-spa feature-icon"></i>
+            </div>
+            <h3 class="feature-title">Holistic Approach</h3>
+            <p class="feature-text">Integrate physical postures with spiritual growth for complete wellness.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Classes Section -->
+  <section class="classes-section">
+    <div class="container">
+      <h2 class="section-title">Our Yoga Classes</h2>
+      <div class="row">
+        <div class="col-lg-4 col-md-6">
+          <div class="class-card">
+            <img
+              src="https://images.unsplash.com/photo-1545205597-3d9d02c29597?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
+              alt="Hatha Yoga" class="class-img">
+            <div class="class-body">
+              <h3 class="class-title">Hatha Yoga</h3>
+              <div class="class-meta">
+                <span><i class="far fa-clock"></i> 60 mins</span>
+                <span><i class="fas fa-user"></i> All Levels</span>
+              </div>
+              <p class="class-text">A gentle introduction to basic yoga postures, perfect for beginners.</p>
+              <button class="btn btn-custom">Join Class</button>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-6">
+          <div class="class-card">
+            <img
+              src="https://images.unsplash.com/photo-1545389336-cf090694435e?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
+              alt="Vinyasa Flow" class="class-img">
+            <div class="class-body">
+              <h3 class="class-title">Vinyasa Flow</h3>
+              <div class="class-meta">
+                <span><i class="far fa-clock"></i> 75 mins</span>
+                <span><i class="fas fa-user"></i> Intermediate</span>
+              </div>
+              <p class="class-text">A dynamic practice that links breath with movement in a flowing sequence.</p>
+              <button class="btn btn-custom">Join Class</button>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-6">
+          <div class="class-card">
+            <img
+              src="https://images.unsplash.com/photo-1518611012118-696072aa579a?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
+              alt="Yin Yoga" class="class-img">
+            <div class="class-body">
+              <h3 class="class-title">Yin Yoga</h3>
+              <div class="class-meta">
+                <span><i class="far fa-clock"></i> 45 mins</span>
+                <span><i class="fas fa-user"></i> All Levels</span>
+              </div>
+              <p class="class-text">A slow-paced style with poses held for longer periods to target deep connective
+                tissues.</p>
+              <button class="btn btn-custom">Join Class</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials Section -->
+  <section class="testimonials-section">
+    <div class="container">
+      <h2 class="section-title">What Our Students Say</h2>
+      <div class="row">
+        <div class="col-md-4">
+          <div class="testimonial-card">
+            <p class="testimonial-text">Serene Yoga has transformed my life. The instructors are knowledgeable and
+              create such a welcoming environment. I've never felt better!</p>
+            <div class="testimonial-author">
+              <img src="https://randomuser.me/api/portraits/women/32.jpg" alt="Sarah J." class="author-img">
+              <div class="author-info">
+                <h5>Sarah J.</h5>
+                <p>Student for 2 years</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="testimonial-card">
+            <p class="testimonial-text">As a beginner, I was nervous to start yoga, but the teachers at Serene made me
+              feel comfortable and supported. Highly recommend!</p>
+            <div class="testimonial-author">
+              <img src="https://randomuser.me/api/portraits/men/45.jpg" alt="Michael T." class="author-img">
+              <div class="author-info">
+                <h5>Michael T.</h5>
+                <p>New Student</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="testimonial-card">
+            <p class="testimonial-text">The perfect balance of challenge and relaxation. I leave every class feeling
+              refreshed and centered. The studio space is beautiful too.</p>
+            <div class="testimonial-author">
+              <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Priya K." class="author-img">
+              <div class="author-info">
+                <h5>Priya K.</h5>
+                <p>Student for 1 year</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="cta-section">
+    <div class="cta-pattern"></div>
+    <div class="container">
+      <div class="cta-content">
+        <h2 class="cta-title">Ready to Begin Your Yoga Journey?</h2>
+        <p class="cta-text">Join our community today and experience the benefits of yoga for yourself.</p>
+        <button class="btn btn-custom">Start Your Free Trial</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-4 mb-5 mb-lg-0">
+          <h3 class="footer-logo"><i class="fas fa-spa"></i> Serene</h3>
+          <p class="footer-text">Our mission is to provide a peaceful space for yoga practice that nurtures both body
+            and mind, helping our students find balance in their busy lives.</p>
+          <div class="social-links">
+            <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
+          </div>
+        </div>
+        <div class="col-lg-2 col-md-6 mb-5 mb-md-0">
+          <h4 class="footer-title">Quick Links</h4>
+          <ul class="footer-links">
+            <li><a href="#">Home</a></li>
+            <li><a href="#">About Us</a></li>
+            <li><a href="#">Classes</a></li>
+            <li><a href="#">Schedule</a></li>
+            <li><a href="#">Pricing</a></li>
+          </ul>
+        </div>
+        <div class="col-lg-2 col-md-6 mb-5 mb-md-0">
+          <h4 class="footer-title">Classes</h4>
+          <ul class="footer-links">
+            <li><a href="#">Hatha Yoga</a></li>
+            <li><a href="#">Vinyasa Flow</a></li>
+            <li><a href="#">Yin Yoga</a></li>
+            <li><a href="#">Prenatal Yoga</a></li>
+            <li><a href="#">Meditation</a></li>
+          </ul>
+        </div>
+        <div class="col-lg-4 col-md-6">
+          <h4 class="footer-title">Contact Us</h4>
+          <ul class="footer-links">
+            <li><i class="fas fa-map-marker-alt"></i> 123 Peaceful Lane, Serene City</li>
+            <li><i class="fas fa-phone"></i> (123) 456-7890</li>
+            <li><i class="fas fa-envelope"></i> info@sereneyoga.com</li>
+            <li><i class="fas fa-clock"></i> Mon-Fri: 6am-9pm, Sat-Sun: 8am-6pm</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2023 Serene Yoga Studio. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  
+</body>
+
+  <script>
+        // Add scroll effect to navbar
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Smooth dropdown animation on hover (desktop)
+        document.querySelectorAll('.dropdown').forEach(dropdown => {
+            dropdown.addEventListener('mouseenter', () => {
+                const dropdownMenu = dropdown.querySelector('.dropdown-menu');
+                dropdownMenu.classList.add('show');
+            });
+            dropdown.addEventListener('mouseleave', () => {
+                const dropdownMenu = dropdown.querySelector('.dropdown-menu');
+                dropdownMenu.classList.remove('show');
+            });
+        });
+
+        // Ripple effect on click for nav links and button
+        document.querySelectorAll('.nav-link, .dropdown-item, .btn-primary').forEach(item => {
+            item.addEventListener('click', function(e) {
+                e.preventDefault();
+                const ripple = document.createElement('span');
+                ripple.style.position = 'absolute';
+                ripple.style.borderRadius = '50%';
+                ripple.style.background = 'rgba(107, 142, 112, 0.3)';
+                ripple.style.transform = 'scale(0)';
+                ripple.style.animation = 'ripple 0.6s linear';
+                ripple.style.pointerEvents = 'none';
+                const rect = this.getBoundingClientRect();
+                ripple.style.left = `${e.clientX - rect.left - 10}px`;
+                ripple.style.top = `${e.clientY - rect.top - 10}px`;
+                ripple.style.width = '20px';
+                ripple.style.height = '20px';
+                this.appendChild(ripple);
+                setTimeout(() => {
+                    ripple.remove();
+                }, 600);
+            });
+        });
+
+        // Ripple animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes ripple {
+                to {
+                    transform: scale(10);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+
+
+
+<script>
+
+ // Intersection Observer for scroll-triggered animations
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.2 // Trigger when 20% of the element is visible
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    if (entry.target.classList.contains('title-section')) {
+                        entry.target.querySelector('.section-title').classList.add('animate-title');
+                        entry.target.querySelector('.section-description').classList.add('animate-description');
+                        entry.target.querySelector('.decorative-line').classList.add('animate-line');
+                    } else if (entry.target.classList.contains('feature-item')) {
+                        entry.target.classList.add('animate-item');
+                    }
+                    // Unobserve after animation to improve performance
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        // Observe title section and feature items
+        document.querySelectorAll('.title-section, .feature-item').forEach(element => {
+            observer.observe(element);
+        });
+    </script>
+
+
+</html>

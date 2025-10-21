@@ -1,0 +1,1158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clean Yoga Navbar</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="yoga.css">
+    <style>
+        :root {
+            --yoga-primary: #000;
+            --yoga-secondary: #ff9a76;
+            --yoga-light: #f8f5f2;
+            --navbar-bg: rgba(255, 255, 255, 0.98);
+        }
+
+        /* Navbar Base */
+        .yoga-navbar {
+            background-color: var(--navbar-bg);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            padding: 12px 0;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            transition: all 0.4s ease;
+        }
+
+        /* Scrolled State */
+        .yoga-navbar.scrolled {
+            background-color: rgba(90, 143, 123, 0.98);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            padding: 8px 0;
+        }
+
+        .scrolled .nav-link,
+        .scrolled .navbar-brand,
+        .scrolled .search-btn,
+        .scrolled .notification-icon {
+            color: rgb(20, 19, 19) !important;
+        }
+
+        .scrolled .nav-link:hover {
+            color: var(--yoga-secondary) !important;
+        }
+
+        /* Brand Logo */
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--yoga-primary);
+            display: flex;
+            align-items: center;
+            transition: all 0.4s ease;
+        }
+
+        .navbar-brand i {
+            color: var(--yoga-secondary);
+            font-size: 1.8rem;
+            margin-right: 8px;
+            transition: all 0.4s ease;
+        }
+
+        .scrolled .navbar-brand i {
+            color: white;
+        }
+
+        /* Nav Items */
+        .nav-link {
+            color: #333 !important;
+            font-weight: 500;
+            padding: 8px 15px !important;
+            margin: 0 5px;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--yoga-primary) !important;
+        }
+
+        .nav-link.active {
+            color: var(--yoga-primary) !important;
+        }
+
+        /* Mobile Toggle Button */
+        .navbar-toggler {
+            border: none;
+            padding: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-left: auto; /* Push to the right */
+        }
+
+        .navbar-toggler:focus {
+            box-shadow: none;
+        }
+
+        .navbar-toggler-icon {
+            background-image: none;
+            height: 2px;
+            width: 24px;
+            position: relative;
+            transition: all 0.3s ease;
+            background-color: var(--yoga-primary);
+        }
+
+        .navbar-toggler-icon::before,
+        .navbar-toggler-icon::after {
+            content: '';
+            position: absolute;
+            height: 2px;
+            width: 24px;
+            background-color: var(--yoga-primary);
+            left: 0;
+            transition: all 0.3s ease;
+        }
+
+        .navbar-toggler-icon::before {
+            top: -8px;
+        }
+
+        .navbar-toggler-icon::after {
+            top: 8px;
+        }
+
+        .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
+            background-color: transparent;
+        }
+
+        .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon::before {
+            transform: rotate(45deg);
+            top: 0;
+        }
+
+        .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon::after {
+            transform: rotate(-45deg);
+            top: 0;
+        }
+
+        .scrolled .navbar-toggler-icon,
+        .scrolled .navbar-toggler-icon::before,
+        .scrolled .navbar-toggler-icon::after {
+            background-color: white;
+        }
+
+        /* Notification Badge */
+        .notification-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background-color: var(--yoga-secondary);
+            color: white;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            font-size: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .notification-icon {
+            color: var(--yoga-primary);
+            font-size: 1.2rem;
+        }
+
+        /* Search Bar */
+        .search-container {
+            position: relative;
+            margin-right: 15px;
+        }
+
+        .search-input {
+            width: 0;
+            opacity: 0;
+            border: none;
+            border-radius: 50px;
+            padding: 8px 15px;
+            background-color: var(--yoga-light);
+            transition: all 0.3s ease;
+        }
+
+        .search-input.active {
+            width: 180px;
+            opacity: 1;
+            padding-left: 35px;
+        }
+
+        .search-btn {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: var(--yoga-primary);
+            cursor: pointer;
+        }
+
+        /* Navbar Container Adjustments */
+        .navbar-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+
+        .navbar-right {
+            display: flex;
+            align-items: center;
+        }
+
+        /* Mobile Menu */
+        @media (max-width: 991px) {
+            .navbar-collapse {
+                background-color: white;
+                padding: 20px;
+                border-radius: 0 0 15px 15px;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+                margin-top: 10px;
+            }
+
+            .nav-item {
+                margin: 5px 0;
+            }
+
+            .nav-link {
+                padding: 10px 15px !important;
+                color: #333 !important;
+            }
+
+            .nav-link:hover {
+                color: var(--yoga-primary) !important;
+            }
+
+            .search-container {
+                margin: 15px 0;
+                width: 100%;
+            }
+
+            .search-input.active {
+                width: 100%;
+            }
+
+            .notification-mobile-item {
+                display: flex;
+                align-items: center;
+                padding: 10px 15px;
+                color: #333;
+                text-decoration: none;
+            }
+
+            .notification-mobile-item:hover {
+                color: var(--yoga-primary);
+            }
+        }
+
+        /* Desktop Hover Effect */
+        @media (min-width: 992px) {
+            .nav-link::after {
+                content: '';
+                position: absolute;
+                bottom: 0;
+                left: 15px;
+                width: 0;
+                height: 2px;
+                background-color: var(--yoga-primary);
+                transition: width 0.3s ease;
+            }
+
+            .nav-link:hover::after {
+                width: calc(100% - 30px);
+            }
+
+            .scrolled .nav-link::after {
+                background-color: white;
+            }
+
+            .scrolled .nav-link:hover::after {
+                background-color: var(--yoga-secondary);
+            }
+        }
+
+
+
+
+
+
+
+          :root {
+            --yoga-primary: #5a8f7b;
+            --yoga-secondary: #ff9a76;
+            --yoga-light: #f8f5f2;
+            --text-dark: #333;
+            --text-light: #777;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: var(--text-dark);
+            overflow-x: hidden;
+            padding-top: 70px;
+        }
+        
+        h1, h2, h3, .display-font {
+            font-family: 'Playfair Display', serif;
+            font-weight: 600;
+        }
+        
+        /* ===== Navbar (Your Existing Styles) ===== */
+        .yoga-navbar {
+            background-color: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            padding: 12px 0;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            transition: all 0.4s ease;
+        }
+        
+        /* ... (keep all your existing navbar styles) ... */
+        
+        /* ===== Hero Section ===== */
+        .hero-section {
+            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1545205597-3d9d02c29597');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: white;
+            padding: 150px 0;
+            text-align: center;
+        }
+        
+        .hero-title {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .hero-subtitle {
+            font-size: 1.3rem;
+            margin-bottom: 2.5rem;
+            font-weight: 300;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+        }
+        
+        .btn-hero {
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-weight: 500;
+            font-size: 1.1rem;
+            margin: 0 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-hero-primary {
+            background-color: var(--yoga-secondary);
+            color: white;
+            border: 2px solid var(--yoga-secondary);
+        }
+        
+        .btn-hero-primary:hover {
+            background-color: transparent;
+            color: white;
+            transform: translateY(-3px);
+        }
+        
+        /* ===== Benefits Section ===== */
+        .benefits-section {
+            padding: 80px 0;
+            background-color: white;
+        }
+        
+        .benefit-card {
+            padding: 40px 30px;
+            border-radius: 10px;
+            background-color: white;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            height: 100%;
+            transition: all 0.3s ease;
+            text-align: center;
+            border-bottom: 3px solid transparent;
+        }
+        
+        .benefit-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+            border-bottom-color: var(--yoga-primary);
+        }
+        
+        .benefit-icon {
+            font-size: 2.5rem;
+            color: var(--yoga-primary);
+            margin-bottom: 1.5rem;
+        }
+        
+        /* ===== Classes Section ===== */
+        .classes-section {
+            padding: 80px 0;
+            background-color: var(--yoga-light);
+        }
+        
+        .class-card {
+            border: none;
+            border-radius: 10px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            margin-bottom: 25px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .class-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+        
+        .class-card img {
+            height: 220px;
+            object-fit: cover;
+            width: 100%;
+        }
+        
+        .class-level {
+            display: inline-block;
+            padding: 3px 12px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+        
+        .level-beginner {
+            background-color: rgba(90, 143, 123, 0.1);
+            color: var(--yoga-primary);
+        }
+        
+        /* ===== Testimonials ===== */
+        .testimonials-section {
+            padding: 80px 0;
+            background-color: white;
+        }
+        
+        .testimonial-card {
+            padding: 30px;
+            border-radius: 10px;
+            background-color: white;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            margin: 15px;
+            position: relative;
+        }
+        
+        .testimonial-card:before {
+            content: '"';
+            font-family: 'Playfair Display', serif;
+            font-size: 5rem;
+            color: var(--yoga-light);
+            position: absolute;
+            top: 10px;
+            left: 20px;
+            line-height: 1;
+            z-index: 0;
+        }
+        
+        .testimonial-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            margin-top: 20px;
+        }
+        
+        .testimonial-author img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 15px;
+        }
+        
+        /* ===== CTA Section ===== */
+        .cta-section {
+            padding: 100px 0;
+            background: linear-gradient(135deg, var(--yoga-primary), #3a6b58);
+            color: white;
+            text-align: center;
+        }
+        
+        .cta-title {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        /* ===== Footer ===== */
+        .footer {
+            background-color: #222;
+            color: white;
+            padding: 60px 0 30px;
+        }
+        
+        .footer-logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            display: inline-block;
+        }
+        
+        .footer-links h4 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-links h4:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background-color: var(--yoga-secondary);
+        }
+        
+        .footer-links ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links a {
+            color: #aaa;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: white;
+            padding-left: 5px;
+        }
+        
+        .social-links a {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background-color: #333;
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            margin-right: 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .social-links a:hover {
+            background-color: var(--yoga-secondary);
+            transform: translateY(-3px);
+        }
+        
+        .copyright {
+            border-top: 1px solid #444;
+            padding-top: 20px;
+            margin-top: 40px;
+            color: #777;
+            font-size: 0.9rem;
+        }
+        
+        /* ===== Responsive Adjustments ===== */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .btn-hero {
+                display: block;
+                width: 80%;
+                margin: 0 auto 15px;
+            }
+        }
+    </style>
+</head>
+
+<body style="padding-top: 70px; height: 200vh;"> <!-- Added body padding and height for demo -->
+
+    <!-- Clean Yoga Navbar -->
+    <nav class="navbar navbar-expand-lg yoga-navbar">
+        <div class="container navbar-container">
+            <!-- Brand Logo -->
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-spa"></i>
+                <span>Demo</span>
+            </a>
+
+            <!-- Search Bar (Desktop) -->
+            
+
+            <!-- Right Side Icons and Buttons -->
+            <div class="navbar-right">
+                <!-- Mobile Toggle Button -->
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- CTA Button -->
+               
+            </div>
+
+            <!-- Navbar Content -->
+            <div class="collapse navbar-collapse" id="navbarContent">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Classes</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link" href="#" data-bs-toggle="dropdown">
+                            Programs
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">Beginner Series</a></li>
+                            <li><a class="dropdown-item" href="#">Advanced Flow</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="#">Teacher Training</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Blog</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Testimonials </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Shop</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Contact</a>
+                    </li>
+                </ul>
+                 <a href="#" class="btn btn-primary rounded-pill px-4 ms-3">
+                    <i class="fas fa-calendar-alt me-2"></i>Book Now
+                </a>
+                <!-- Mobile Only Elements -->
+                <div class="d-lg-none">
+                    <div class="search-container mb-3">
+                        <button class="search-btn" id="mobileSearchToggle">
+                            <i class="fas fa-search"></i>
+                        </button>
+                        <input type="text" class="search-input" placeholder="Search classes...">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+
+    <section class="hero-section">
+        <div class="container">
+            <h1 class="hero-title display-font">Find Your Balance</h1>
+            <p class="hero-subtitle">Transform your body and mind with our expert-led yoga classes designed for all levels of practitioners</p>
+            <div class="d-flex flex-wrap justify-content-center">
+                <a href="#" class="btn btn-hero btn-hero-primary">Start Free Trial</a>
+                <a href="#" class="btn btn-hero btn-outline-light">View Schedule</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits Section -->
+    <section class="benefits-section">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="section-title display-font">Why Practice With Us?</h2>
+                <p class="section-subtitle">We're committed to helping you achieve your wellness goals</p>
+            </div>
+            
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="benefit-card">
+                        <div class="benefit-icon">
+                            <i class="fas fa-spa"></i>
+                        </div>
+                        <h3>Holistic Approach</h3>
+                        <p>Our classes integrate physical postures, breathing techniques, and meditation for complete wellness.</p>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="benefit-card">
+                        <div class="benefit-icon">
+                            <i class="fas fa-user-friends"></i>
+                        </div>
+                        <h3>Expert Instructors</h3>
+                        <p>Learn from certified teachers with 10+ years of experience guiding students of all levels.</p>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="benefit-card">
+                        <div class="benefit-icon">
+                            <i class="fas fa-calendar-alt"></i>
+                        </div>
+                        <h3>Flexible Schedule</h3>
+                        <p>With classes throughout the day, you can always find time for your practice.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Classes Section -->
+  <section class="page-header dark-header">
+    <div class="container text-center position-relative">
+        <h1 class="page-title">Our Yoga Classes</h1>
+        <div class="decorative-element"></div>
+    </div>
+</section>
+
+      <section class="page-header zen-header">
+    <div class="container text-center">
+        <h1 class="page-title display-font">Our Yoga Classes</h1>
+        <div class="divider-line"></div>
+        <p class="page-subtitle">Find your perfect practice</p>
+    </div>
+</section>
+
+<section class="class-listing">
+        <div class="container">
+            <div class="row">
+                <!-- Class 1 -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="class-card">
+                        <img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b" class="class-img" alt="Hatha Yoga">
+                        <div class="class-body">
+                            <span class="class-level level-beginner">Beginner</span>
+                            <h3 class="class-title">Hatha Yoga Basics</h3>
+                            <div class="class-meta">
+                                <span><i class="far fa-clock"></i> 60 mins</span>
+                                <span class="ms-3"><i class="fas fa-user"></i> Sarah Johnson</span>
+                            </div>
+                            <p class="class-description">Dynamic movement synchronized with breath to build strength, flexibility and endurance.</p>
+                            <div class="class-price">$15/class or $120/month</div>
+                            <a href="#" class="btn btn-primary">Book Now</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Class 2 -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="class-card">
+                        <img src="https://images.unsplash.com/photo-1518611012118-696072aa579a" class="class-img" alt="Vinyasa Flow">
+                        <div class="class-body">
+                            <span class="class-level level-intermediate">Intermediate</span>
+                            <h3 class="class-title">Vinyasa Flow</h3>
+                            <div class="class-meta">
+                                <span><i class="far fa-clock"></i> 75 mins</span>
+                                <span class="ms-3"><i class="fas fa-user"></i> Michael Chen</span>
+                            </div>
+                            <p class="class-description">Dynamic movement synchronized with breath to build strength, flexibility and endurance.</p>
+                            <div class="class-price">$18/class or $140/month</div>
+                            <a href="#" class="btn btn-primary">Book Now</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Class 3 -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="class-card">
+                        <img src="https://images.unsplash.com/photo-1506126613408-eca07ce68773" class="class-img" alt="Yin Yoga">
+                        <div class="class-body">
+                            <span class="class-level level-all">All Levels</span>
+                            <h3 class="class-title">Yin Yoga</h3>
+                            <div class="class-meta">
+                                <span><i class="far fa-clock"></i> 90 mins</span>
+                                <span class="ms-3"><i class="fas fa-user"></i> Emma Rodriguez</span>
+                            </div>
+                            <p class="class-description">Slow-paced style with poses held for longer periods to increase flexibility and release tension.</p>
+                            <div class="class-price">$20/class or $150/month</div>
+                            <a href="#" class="btn btn-primary">Book Now</a>
+                        </div>
+                    </div>
+                </div>
+                
+               
+            </div>
+            
+            <!-- Pagination -->
+            <nav aria-label="Class pagination" class="mt-5">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item disabled">
+                        <a class="page-link" href="#" tabindex="-1">Previous</a>
+                    </li>
+                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </section>
+
+     <section class="class-schedule py-5 bg-light">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="display-font">Weekly Class Schedule</h2>
+                <p class="lead">Find the perfect time for your practice</p>
+            </div>
+            
+            <div class="table-responsive">
+                <table class="schedule-table">
+                    <thead>
+                        <tr>
+                            <th>Time</th>
+                            <th>Monday</th>
+                            <th>Tuesday</th>
+                            <th>Wednesday</th>
+                            <th>Thursday</th>
+                            <th>Friday</th>
+                            <th>Saturday</th>
+                            <th>Sunday</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>6:00 AM</td>
+                            <td>
+                                <div class="schedule-class">Morning Flow</div>
+                                <div class="schedule-instructor">Sarah</div>
+                                <button class="btn-book">Book</button>
+                            </td>
+                            <td></td>
+                            <td>
+                                <div class="schedule-class">Sunrise Yoga</div>
+                                <div class="schedule-instructor">Michael</div>
+                                <button class="btn-book">Book</button>
+                            </td>
+                            <td></td>
+                            <td>
+                                <div class="schedule-class">Wake Up Flow</div>
+                                <div class="schedule-instructor">Emma</div>
+                                <button class="btn-book">Book</button>
+                            </td>
+                            <td></td>
+                            <td>
+                                <div class="schedule-class">Sunday Sunrise</div>
+                                <div class="schedule-instructor">David</div>
+                                <button class="btn-book">Book</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>9:00 AM</td>
+                            <td>
+                                <div class="schedule-class">Hatha Basics</div>
+                                <div class="schedule-instructor">Jessica</div>
+                                <button class="btn-book">Book</button>
+                            </td>
+                            <td>
+                                <div class="schedule-class">Vinyasa Flow</div>
+                                <div class="schedule-instructor">Ryan</div>
+                                <button class="btn-book">Book</button>
+                            </td>
+                            <td>
+                                <div class="schedule-class">Gentle Yoga</div>
+                                <div class="schedule-instructor">Sarah</div>
+                                <button class="btn-book">Book</button>
+                            </td>
+                            <td>
+                                <div class="schedule-class">Power Yoga</div>
+                                <div class="schedule-instructor">Michael</div>
+                                <button class="btn-book">Book</button>
+                            </td>
+                            <td>
+                                <div class="schedule-class">Yin Yoga</div>
+                                <div class="schedule-instructor">Emma</div>
+                                <button class="btn-book">Book</button>
+                            </td>
+                            <td>
+                                <div class="schedule-class">Weekend Flow</div>
+                                <div class="schedule-instructor">David</div>
+                                <button class="btn-book">Book</button>
+                            </td>
+                            <td>
+                                <div class="schedule-class">Family Yoga</div>
+                                <div class="schedule-instructor">Jessica</div>
+                                <button class="btn-book">Book</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>12:00 PM</td>
+                            <td>
+                                <div class="schedule-class">Lunchtime Flow</div>
+                                <div class="schedule-instructor">Ryan</div>
+                                <button class="btn-book">Book</button>
+                            </td>
+                            <td></td>
+                            <td>
+                                <div class="schedule-class">Midday Reset</div>
+                                <div class="schedule-instructor">Sarah</div>
+                                <button class="btn-book">Book</button>
+                            </td>
+                            <td></td>
+                            <td>
+                                <div class="schedule-class">Office Yoga</div>
+                                <div class="schedule-instructor">Michael</div>
+                                <button class="btn-book">Book</button>
+                            </td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>6:00 PM</td>
+                            <td>
+                                <div class="schedule-class">Evening Flow</div>
+                                <div class="schedule-instructor">Emma</div>
+                                <button class="btn-book">Book</button>
+                            </td>
+                            <td>
+                                <div class="schedule-class">Power Yoga</div>
+                                <div class="schedule-instructor">David</div>
+                                <button class="btn-book">Book</button>
+                            </td>
+                            <td>
+                                <div class="schedule-class">Restorative</div>
+                                <div class="schedule-instructor">Jessica</div>
+                                <button class="btn-book">Book</button>
+                            </td>
+                            <td>
+                                <div class="schedule-class">Vinyasa Flow</div>
+                                <div class="schedule-instructor">Ryan</div>
+                                <button class="btn-book">Book</button>
+                            </td>
+                            <td>
+                                <div class="schedule-class">Friday Wind Down</div>
+                                <div class="schedule-instructor">Sarah</div>
+                                <button class="btn-book">Book</button>
+                            </td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Testimonials Section -->
+    <section class="testimonials-section">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="section-title display-font">What Our Students Say</h2>
+                <p class="section-subtitle">Join our community of satisfied practitioners</p>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="testimonial-card">
+                        <div class="testimonial-content">
+                            <p>The instructors at demoare incredibly knowledgeable and make everyone feel welcome regardless of experience level.</p>
+                            <div class="testimonial-author">
+                                <img src="https://randomuser.me/api/portraits/women/32.jpg" alt="Sarah J.">
+                                <div>
+                                    <h5>Sarah Johnson</h5>
+                                    <p class="text-muted">Student for 2 years</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="testimonial-card">
+                        <div class="testimonial-content">
+                            <p>I've tried many studios but ZenFlow's approach to holistic wellness is truly transformative.</p>
+                            <div class="testimonial-author">
+                                <img src="https://randomuser.me/api/portraits/men/45.jpg" alt="Michael T.">
+                                <div>
+                                    <h5>Michael Thompson</h5>
+                                    <p class="text-muted">Student for 1 year</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="testimonial-card">
+                        <div class="testimonial-content">
+                            <p>The variety of classes keeps me challenged and engaged. My flexibility and strength have improved dramatically.</p>
+                            <div class="testimonial-author">
+                                <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Emma R.">
+                                <div>
+                                    <h5>Emma Rodriguez</h5>
+                                    <p class="text-muted">Student for 6 months</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <h2 class="cta-title display-font">Ready to Begin Your Journey?</h2>
+            <p class="lead mb-4">Join us today and get your first week free</p>
+            <a href="#" class="btn btn-light btn-lg px-5">Sign Up Now</a>
+        </div>
+    </section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <a href="#" class="footer-logo text-white">
+                        <i class="fas fa-spa text-primary"></i> Demo
+                    </a>
+                    <p>Helping you find balance and peace through the practice of yoga since 2015.</p>
+                    <div class="social-links mt-3">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                        <a href="#"><i class="fab fa-pinterest"></i></a>
+                    </div>
+                </div>
+                
+                <div class="col-lg-2 col-md-4 mb-4">
+                    <div class="footer-links">
+                        <h4>Classes</h4>
+                        <ul>
+                            <li><a href="#">Hatha Yoga</a></li>
+                            <li><a href="#">Vinyasa Flow</a></li>
+                            <li><a href="#">Yin Yoga</a></li>
+                            <li><a href="#">Prenatal Yoga</a></li>
+                            <li><a href="#">Meditation</a></li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="col-lg-2 col-md-4 mb-4">
+                    <div class="footer-links">
+                        <h4>About</h4>
+                        <ul>
+                            <li><a href="#">Our Studio</a></li>
+                            <li><a href="#">Teachers</a></li>
+                            <li><a href="#">Testimonials</a></li>
+                            <li><a href="#">Blog</a></li>
+                            <li><a href="#">Careers</a></li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 col-md-4 mb-4">
+                    <div class="footer-links">
+                        <h4>Contact</h4>
+                        <p><i class="fas fa-map-marker-alt me-2"></i> 123 Yoga St, Peaceville</p>
+                        <p><i class="fas fa-phone me-2"></i> (123) 456-7890</p>
+                        <p><i class="fas fa-envelope me-2"></i> hello@zenflow.com</p>
+                        <div class="input-group mt-3">
+                            <input type="email" class="form-control" placeholder="Your Email">
+                            <button class="btn btn-primary" type="button">Subscribe</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="copyright text-center">
+                <p>&copy; 2023 demoYoga. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        // Scroll Effect
+        window.addEventListener('scroll', function () {
+            const navbar = document.querySelector('.yoga-navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+     
+    </script>
+</body>
+
+</html>

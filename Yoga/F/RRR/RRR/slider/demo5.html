@@ -1,0 +1,1197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kiaya Haus - Holistic Healing Through Yoga & Physiotherapy</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-green: #2c5530;
+            --light-green: #7fb069;
+            --accent-gold: #d4af37;
+            --soft-beige: #f5f1eb;
+            --warm-white: #fefcf8;
+            --text-dark: #2c3e50;
+            --text-muted: #6c757d;
+            --shadow-light: rgba(0, 0, 0, 0.1);
+            --shadow-medium: rgba(0, 0, 0, 0.15);
+            --shadow-strong: rgba(0, 0, 0, 0.25);
+            --transition-smooth: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            --transition-fast: all 0.2s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background: var(--warm-white);
+            overflow-x: hidden;
+        }
+
+        /* Particle Canvas */
+        #particle-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.6;
+        }
+
+        /* Floating Shapes */
+        .floating-shapes {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .floating-shape {
+            position: absolute;
+            background: linear-gradient(45deg, var(--light-green), var(--accent-gold));
+            border-radius: 50%;
+            opacity: 0.1;
+            animation: float 8s ease-in-out infinite;
+        }
+
+        .floating-shape:nth-child(1) {
+            width: 150px;
+            height: 150px;
+            top: 10%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .floating-shape:nth-child(2) {
+            width: 100px;
+            height: 100px;
+            top: 60%;
+            right: 15%;
+            animation-delay: 2s;
+        }
+
+        .floating-shape:nth-child(3) {
+            width: 200px;
+            height: 200px;
+            bottom: 10%;
+            left: 5%;
+            animation-delay: 4s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-30px) rotate(180deg); }
+        }
+
+        /* Navbar */
+        .navbar {
+            background: rgba(254, 252, 248, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(44, 85, 48, 0.1);
+            padding: 1rem 0;
+            position: relative;
+            z-index: 1000;
+            transition: var(--transition-smooth);
+        }
+
+        .navbar-brand {
+            font-family: 'Playfair Display', serif;
+            font-weight: 600;
+            font-size: 1.5rem;
+            color: var(--primary-green) !important;
+            text-decoration: none;
+        }
+
+        .navbar-brand img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .nav-link {
+            color: var(--text-dark) !important;
+            font-weight: 500;
+            padding: 0.5rem 1rem !important;
+            border-radius: 8px;
+            transition: var(--transition-fast);
+            position: relative;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            color: var(--primary-green) !important;
+            background: rgba(127, 176, 105, 0.1);
+        }
+
+        .dropdown-menu {
+            border: none;
+            box-shadow: 0 10px 40px var(--shadow-light);
+            border-radius: 12px;
+            background: var(--warm-white);
+            margin-top: 0.5rem;
+        }
+
+        .dropdown-item {
+            padding: 0.7rem 1.2rem;
+            color: var(--text-dark);
+            border-radius: 8px;
+            margin: 0.2rem;
+            transition: var(--transition-fast);
+        }
+
+        .dropdown-item:hover {
+            background: rgba(127, 176, 105, 0.1);
+            color: var(--primary-green);
+        }
+
+        /* Hero Section */
+        .hero-section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+            padding: 6rem 0 4rem;
+            background: linear-gradient(135deg, var(--warm-white) 0%, var(--soft-beige) 100%);
+        }
+
+        .hero-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            min-height: 80vh;
+        }
+
+        .hero-text {
+            z-index: 3;
+        }
+
+        .slogan-wrapper {
+            margin-bottom: 2rem;
+        }
+
+        .slogan {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 1rem;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2rem;
+            color: var(--accent-gold);
+            margin-bottom: 1rem;
+        }
+
+        .slogan-word {
+            font-weight: 500;
+            transition: var(--transition-smooth);
+            cursor: pointer;
+            position: relative;
+        }
+
+        .slogan-word:hover {
+            color: var(--primary-green);
+            transform: translateY(-2px);
+        }
+
+        .slogan-separator {
+            color: var(--light-green);
+            font-size: 0.8rem;
+        }
+
+        .hero-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            font-weight: 700;
+            line-height: 1.2;
+            color: var(--text-dark);
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-title-highlight {
+            color: var(--primary-green);
+            position: relative;
+        }
+
+        .hero-subtitle {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+            line-height: 1.7;
+            max-width: 90%;
+        }
+
+        .philosophy-pills {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .philosophy-pill {
+            background: linear-gradient(135deg, var(--light-green), var(--primary-green));
+            color: white;
+            padding: 0.6rem 1.5rem;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            box-shadow: 0 4px 15px rgba(127, 176, 105, 0.3);
+            transition: var(--transition-smooth);
+            cursor: pointer;
+        }
+
+        .philosophy-pill:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(127, 176, 105, 0.4);
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, var(--primary-green), var(--light-green));
+            color: white;
+            padding: 1rem 2.5rem;
+            border: none;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            text-decoration: none;
+            display: inline-block;
+            transition: var(--transition-smooth);
+            box-shadow: 0 6px 20px rgba(44, 85, 48, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(44, 85, 48, 0.4);
+            color: white;
+            text-decoration: none;
+        }
+
+        /* 3D Slider Styles - Integrated with Kiaya Haus theme */
+        .hero-slider {
+            position: relative;
+            perspective: 1000px;
+            height: 500px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .slider-wrapper-3d {
+            position: relative;
+            width: 100%;
+            max-width: 450px;
+            height: 400px;
+            transform-style: preserve-3d;
+            transition: transform 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .slide-3d {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(44, 85, 48, 0.15);
+            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            cursor: pointer;
+            background: var(--warm-white);
+            border: 2px solid rgba(127, 176, 105, 0.2);
+        }
+
+        .slide-3d img {
+            width: 100%;
+            height: 70%;
+            object-fit: cover;
+            transition: transform 0.8s ease;
+        }
+
+        .slide-3d:hover img {
+            transform: scale(1.05);
+        }
+
+        .slide-content-3d {
+            padding: 20px;
+            height: 30%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            background: linear-gradient(45deg, var(--primary-green), var(--light-green));
+            color: white;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .slide-content-3d::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .slide-3d:hover .slide-content-3d::before {
+            left: 100%;
+        }
+
+        .slide-title-3d {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .slide-description-3d {
+            font-size: 0.9rem;
+            opacity: 0.95;
+            font-weight: 400;
+        }
+
+        /* 3D Positioning */
+        .slide-3d:nth-child(1) {
+            transform: translateZ(0px) rotateY(0deg);
+            z-index: 3;
+        }
+
+        .slide-3d:nth-child(2) {
+            transform: translateZ(-80px) rotateY(35deg) translateX(160px);
+            z-index: 2;
+            opacity: 0.8;
+        }
+
+        .slide-3d:nth-child(3) {
+            transform: translateZ(-160px) rotateY(70deg) translateX(280px);
+            z-index: 1;
+            opacity: 0.6;
+        }
+
+        .slide-3d:nth-child(4) {
+            transform: translateZ(-160px) rotateY(-70deg) translateX(-280px);
+            z-index: 1;
+            opacity: 0.6;
+        }
+
+        .slide-3d:nth-child(5) {
+            transform: translateZ(-80px) rotateY(-35deg) translateX(-160px);
+            z-index: 2;
+            opacity: 0.8;
+        }
+
+        /* Navigation Controls for 3D Slider */
+        .nav-btn-3d {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(254, 252, 248, 0.9);
+            border: 2px solid var(--light-green);
+            color: var(--primary-green);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 10;
+            transition: var(--transition-smooth);
+            backdrop-filter: blur(10px);
+            font-size: 1.1rem;
+        }
+
+        .nav-btn-3d:hover {
+            background: var(--light-green);
+            color: white;
+            transform: translateY(-50%) scale(1.1);
+            box-shadow: 0 8px 25px rgba(127, 176, 105, 0.3);
+        }
+
+        .prev-btn-3d {
+            left: -60px;
+        }
+
+        .next-btn-3d {
+            right: -60px;
+        }
+
+        /* Indicators for 3D Slider */
+        .indicators-3d {
+            position: absolute;
+            bottom: -40px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 12px;
+            z-index: 10;
+        }
+
+        .indicator-3d {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(127, 176, 105, 0.4);
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            border: 2px solid transparent;
+        }
+
+        .indicator-3d.active {
+            background: var(--primary-green);
+            transform: scale(1.2);
+            box-shadow: 0 0 12px rgba(44, 85, 48, 0.5);
+        }
+
+        .indicator-3d:hover {
+            background: var(--light-green);
+            transform: scale(1.1);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .hero-container {
+                gap: 3rem;
+            }
+            
+            .hero-title {
+                font-size: 3rem;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .hero-container {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+                text-align: center;
+            }
+            
+            .hero-text {
+                order: 2;
+            }
+            
+            .hero-slider {
+                order: 1;
+                height: 400px;
+            }
+            
+            .slider-wrapper-3d {
+                max-width: 380px;
+                height: 350px;
+            }
+            
+            .hero-title {
+                font-size: 2.8rem;
+            }
+            
+            .nav-btn-3d {
+                width: 45px;
+                height: 45px;
+            }
+            
+            .prev-btn-3d {
+                left: -50px;
+            }
+            
+            .next-btn-3d {
+                right: -50px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-section {
+                padding: 4rem 0 2rem;
+            }
+            
+            .hero-container {
+                gap: 2rem;
+            }
+            
+            .hero-title {
+                font-size: 2.2rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1rem;
+                max-width: 100%;
+            }
+            
+            .slider-wrapper-3d {
+                max-width: 320px;
+                height: 300px;
+            }
+            
+            .slide-3d:nth-child(2) {
+                transform: translateZ(-60px) rotateY(30deg) translateX(120px);
+            }
+            
+            .slide-3d:nth-child(3) {
+                transform: translateZ(-120px) rotateY(60deg) translateX(200px);
+            }
+            
+            .slide-3d:nth-child(4) {
+                transform: translateZ(-120px) rotateY(-60deg) translateX(-200px);
+            }
+            
+            .slide-3d:nth-child(5) {
+                transform: translateZ(-60px) rotateY(-30deg) translateX(-120px);
+            }
+            
+            .philosophy-pills {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .slogan {
+                justify-content: center;
+                font-size: 1.1rem;
+            }
+            
+            .nav-btn-3d {
+                width: 40px;
+                height: 40px;
+                font-size: 1rem;
+            }
+            
+            .prev-btn-3d {
+                left: -35px;
+            }
+            
+            .next-btn-3d {
+                right: -35px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero-title {
+                font-size: 1.9rem;
+            }
+            
+            .slider-wrapper-3d {
+                max-width: 280px;
+                height: 280px;
+            }
+            
+            .slide-3d:nth-child(2) {
+                transform: translateZ(-50px) rotateY(25deg) translateX(100px);
+            }
+            
+            .slide-3d:nth-child(3) {
+                transform: translateZ(-100px) rotateY(50deg) translateX(160px);
+            }
+            
+            .slide-3d:nth-child(4) {
+                transform: translateZ(-100px) rotateY(-50deg) translateX(-160px);
+            }
+            
+            .slide-3d:nth-child(5) {
+                transform: translateZ(-50px) rotateY(-25deg) translateX(-100px);
+            }
+            
+            .slide-title-3d {
+                font-size: 1.2rem;
+            }
+            
+            .slide-description-3d {
+                font-size: 0.8rem;
+            }
+            
+            .slide-content-3d {
+                padding: 15px;
+            }
+            
+            .prev-btn-3d {
+                left: -25px;
+            }
+            
+            .next-btn-3d {
+                right: -25px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-container {
+                padding: 0 1rem;
+            }
+            
+            .slider-wrapper-3d {
+                max-width: 250px;
+                height: 250px;
+            }
+            
+            .nav-btn-3d {
+                width: 35px;
+                height: 35px;
+                font-size: 0.9rem;
+            }
+            
+            .prev-btn-3d {
+                left: -20px;
+            }
+            
+            .next-btn-3d {
+                right: -20px;
+            }
+            
+            .indicators-3d {
+                bottom: -35px;
+            }
+            
+            .indicator-3d {
+                width: 8px;
+                height: 8px;
+            }
+        }
+
+        /* Loading Animation */
+        .slide-3d {
+            animation: slideIn 0.6s ease-out both;
+        }
+
+        .slide-3d:nth-child(1) { animation-delay: 0.1s; }
+        .slide-3d:nth-child(2) { animation-delay: 0.2s; }
+        .slide-3d:nth-child(3) { animation-delay: 0.3s; }
+        .slide-3d:nth-child(4) { animation-delay: 0.4s; }
+        .slide-3d:nth-child(5) { animation-delay: 0.5s; }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px) scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        /* Smooth scroll behavior */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--soft-beige);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--light-green);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary-green);
+        }
+    </style>
+</head>
+<body>
+    <!-- Particle Canvas -->
+    <canvas id="particle-canvas"></canvas>
+
+    <!-- Floating Shapes -->
+    <div class="floating-shapes">
+        <div class="floating-shape"></div>
+        <div class="floating-shape"></div>
+        <div class="floating-shape"></div>
+    </div>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container" style="max-width: 1200px;">
+            <a class="navbar-brand d-flex align-items-center" href="#">
+                <img src="https://images.unsplash.com/photo-1545389336-cf090694435e?w=80&h=80&fit=crop&crop=center" alt="Kiaya Haus" class="me-2">
+                Kiaya Haus
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#" aria-current="page">Home</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="physioDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Physiotherapy
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="physioDropdown">
+                            <li><a class="dropdown-item" href="#ortho"><i class="fas fa-bone me-2"></i>Ortho & Sports</a></li>
+                            <li><a class="dropdown-item" href="#cardio"><i class="fas fa-heartbeat me-2"></i>Cardio-Respiratory</a></li>
+                            <li><a class="dropdown-item" href="#neuro"><i class="fas fa-brain me-2"></i>Neuro & Pediatric</a></li>
+                            <li><a class="dropdown-item" href="#womens"><i class="fas fa-female me-2"></i>Women's Health</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="yogaDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Yoga Services
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="yogaDropdown">
+                            <li><a class="dropdown-item" href="#power-yoga"><i class="fas fa-fire me-2"></i>Power Yoga</a></li>
+                            <li><a class="dropdown-item" href="#kids-yoga"><i class="fas fa-child me-2"></i>Kids Yoga</a></li>
+                            <li><a class="dropdown-item" href="#aerial-yoga"><i class="fas fa-parachute-box me-2"></i>Aerial Yoga</a></li>
+                            <li><a class="dropdown-item" href="#prenatal-yoga"><i class="fas fa-baby me-2"></i>Pre & Post Natal Yoga</a></li>
+                            <li><a class="dropdown-item" href="#fitness-yoga"><i class="fas fa-dumbbell me-2"></i>Fitness Yoga</a></li>
+                            <li><a class="dropdown-item" href="#personal-yoga"><i class="fas fa-user me-2"></i>Personal Training</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="therapyDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Special Therapies
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="therapyDropdown">
+                            <li><a class="dropdown-item" href="#tapping"><i class="fas fa-hand-paper me-2"></i>Tapping</a></li>
+                            <li><a class="dropdown-item" href="#dry-cupping"><i class="fas fa-circle-notch me-2"></i>Dry Cupping</a></li>
+                            <li><a class="dropdown-item" href="#wet-cupping"><i class="fas fa-tint me-2"></i>Wet Cupping</a></li>
+                            <li><a class="dropdown-item" href="#dry-needling"><i class="fas fa-syringe me-2"></i>Dry Needling</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container" style="max-width: 1200px;">
+            <div class="hero-container">
+                <div class="hero-text">
+                    <div class="slogan-wrapper">
+                        <div class="slogan">
+                            <span class="slogan-word" data-word="breathe">Breathe</span>
+                            <span class="slogan-separator">•</span>
+                            <span class="slogan-word" data-word="balance">Balance</span>
+                            <span class="slogan-separator">•</span>
+                            <span class="slogan-word" data-word="become">Become</span>
+                        </div>
+                    </div>
+                    <h1 class="hero-title">
+                        Holistic <span class="hero-title-highlight">Healing</span><br>
+                        Through Yoga & Physiotherapy
+                    </h1>
+                    <p class="hero-subtitle">
+                        Experience personalized care that nurtures your mind, body, and soul. Our expert team combines traditional wisdom with modern techniques to help you achieve optimal wellness.
+                    </p>
+                    <div class="philosophy-pills">
+                        <span class="philosophy-pill">Mind</span>
+                        <span class="philosophy-pill">Body</span>
+                        <span class="philosophy-pill">Soul</span>
+                    </div>
+                    <div class="hero-buttons">
+                        <a href="#services" class="btn" aria-label="Explore our yoga and physiotherapy services">Book Now</a>
+                    </div>
+                </div>
+                
+                <!-- 3D Image Slider replacing the video -->
+                <div class="hero-slider">
+                    <div class="slider-wrapper-3d" id="slider3D">
+                        <div class="slide-3d">
+                            <img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=600&h=400&fit=crop" alt="Yoga Practice">
+                            <div class="slide-content-3d">
+                                <div class="slide-title-3d">Mindful Yoga</div>
+                                <div class="slide-description-3d">Connect with your inner peace through guided practice</div>
+                            </div>
+                        </div>
+                        
+                        <div class="slide-3d">
+                            <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&h=400&fit=crop" alt="Physiotherapy">
+                            <div class="slide-content-3d">
+                                <div class="slide-title-3d">Expert Physiotherapy</div>
+                                <div class="slide-description-3d">Professional rehabilitation and recovery solutions</div>
+                            </div>
+                        </div>
+                        
+                        <div class="slide-3d">
+                            <img src="https://images.unsplash.com/photo-1506629905730-e6d5511656f4?w=600&h=400&fit=crop" alt="Meditation">
+                            <div class="slide-content-3d">
+                                <div class="slide-title-3d">Healing Meditation</div>
+                                <div class="slide-description-3d">Find balance through deep mindfulness practices</div>
+                            </div>
+                        </div>
+                        
+                        <div class="slide-3d">
+                            <img src="https://images.unsplash.com/photo-1518611012118-696072aa579a?w=600&h=400&fit=crop" alt="Wellness Therapy">
+                            <div class="slide-content-3d">
+                                <div class="slide-title-3d">Wellness Therapy</div>
+                                <div class="slide-description-3d">Holistic treatments for complete well-being</div>
+                            </div>
+                        </div>
+                        
+                        <div class="slide-3d">
+                            <img src="https://images.unsplash.com/photo-1545389336-cf090694435e?w=600&h=400&fit=crop" alt="Healing Environment">
+                            <div class="slide-content-3d">
+                                <div class="slide-title-3d">Healing Space</div>
+                                <div class="slide-description-3d">Serene environment designed for your journey</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Navigation buttons -->
+                    <button class="nav-btn-3d prev-btn-3d" onclick="prevSlide3D()" aria-label="Previous slide">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <button class="nav-btn-3d next-btn-3d" onclick="nextSlide3D()" aria-label="Next slide">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                    
+                    <!-- Indicators -->
+                    <div class="indicators-3d">
+                        <div class="indicator-3d active" onclick="goToSlide3D(0)"></div>
+                        <div class="indicator-3d" onclick="goToSlide3D(1)"></div>
+                        <div class="indicator-3d" onclick="goToSlide3D(2)"></div>
+                        <div class="indicator-3d" onclick="goToSlide3D(3)"></div>
+                        <div class="indicator-3d" onclick="goToSlide3D(4)"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Particle Canvas Animation
+        const canvas = document.getElementById('particle-canvas');
+        const ctx = canvas.getContext('2d');
+        let particlesArray = [];
+
+        // Set canvas size
+        function setCanvasSize() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        setCanvasSize();
+
+        // Particle class
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 3 + 1;
+                this.speedX = Math.random() * 2 - 1;
+                this.speedY = Math.random() * 2 - 1;
+                this.color = `rgba(127, 176, 105, ${Math.random() * 0.3 + 0.1})`;
+            }
+
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+
+                if (this.x > canvas.width) this.x = 0;
+                if (this.x < 0) this.x = canvas.width;
+                if (this.y > canvas.height) this.y = 0;
+                if (this.y < 0) this.y = canvas.height;
+            }
+
+            draw() {
+                ctx.fillStyle = this.color;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        // Initialize particles
+        function initParticles() {
+            particlesArray = [];
+            for (let i = 0; i < 100; i++) {
+                particlesArray.push(new Particle());
+            }
+        }
+
+        // Animate particles
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            for (let i = 0; i < particlesArray.length; i++) {
+                particlesArray[i].update();
+                particlesArray[i].draw();
+            }
+            
+            requestAnimationFrame(animateParticles);
+        }
+
+        // Initialize
+        initParticles();
+        animateParticles();
+
+        // Resize handler
+        window.addEventListener('resize', () => {
+            setCanvasSize();
+            initParticles();
+        });
+
+        // 3D Slider Functionality
+        let currentSlide3D = 0;
+        const totalSlides3D = 5;
+        const slides3D = document.querySelectorAll('.slide-3d');
+        const indicators3D = document.querySelectorAll('.indicator-3d');
+
+        function updateSlider3D() {
+            slides3D.forEach((slide, index) => {
+                const position = (index - currentSlide3D + totalSlides3D) % totalSlides3D;
+                
+                slide.style.transition = 'all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+                
+                switch(position) {
+                    case 0: // Current slide
+                        slide.style.transform = 'translateZ(0px) rotateY(0deg)';
+                        slide.style.zIndex = '3';
+                        slide.style.opacity = '1';
+                        break;
+                    case 1: // Next slide
+                        if (window.innerWidth <= 576) {
+                            slide.style.transform = 'translateZ(-50px) rotateY(25deg) translateX(100px)';
+                        } else if (window.innerWidth <= 768) {
+                            slide.style.transform = 'translateZ(-60px) rotateY(30deg) translateX(120px)';
+                        } else if (window.innerWidth <= 992) {
+                            slide.style.transform = 'translateZ(-80px) rotateY(35deg) translateX(160px)';
+                        } else {
+                            slide.style.transform = 'translateZ(-80px) rotateY(35deg) translateX(160px)';
+                        }
+                        slide.style.zIndex = '2';
+                        slide.style.opacity = '0.8';
+                        break;
+                    case 2: // Far right
+                        if (window.innerWidth <= 576) {
+                            slide.style.transform = 'translateZ(-100px) rotateY(50deg) translateX(160px)';
+                        } else if (window.innerWidth <= 768) {
+                            slide.style.transform = 'translateZ(-120px) rotateY(60deg) translateX(200px)';
+                        } else if (window.innerWidth <= 992) {
+                            slide.style.transform = 'translateZ(-160px) rotateY(70deg) translateX(280px)';
+                        } else {
+                            slide.style.transform = 'translateZ(-160px) rotateY(70deg) translateX(280px)';
+                        }
+                        slide.style.zIndex = '1';
+                        slide.style.opacity = '0.6';
+                        break;
+                    case 3: // Far left
+                        if (window.innerWidth <= 576) {
+                            slide.style.transform = 'translateZ(-100px) rotateY(-50deg) translateX(-160px)';
+                        } else if (window.innerWidth <= 768) {
+                            slide.style.transform = 'translateZ(-120px) rotateY(-60deg) translateX(-200px)';
+                        } else if (window.innerWidth <= 992) {
+                            slide.style.transform = 'translateZ(-160px) rotateY(-70deg) translateX(-280px)';
+                        } else {
+                            slide.style.transform = 'translateZ(-160px) rotateY(-70deg) translateX(-280px)';
+                        }
+                        slide.style.zIndex = '1';
+                        slide.style.opacity = '0.6';
+                        break;
+                    case 4: // Previous slide
+                        if (window.innerWidth <= 576) {
+                            slide.style.transform = 'translateZ(-50px) rotateY(-25deg) translateX(-100px)';
+                        } else if (window.innerWidth <= 768) {
+                            slide.style.transform = 'translateZ(-60px) rotateY(-30deg) translateX(-120px)';
+                        } else if (window.innerWidth <= 992) {
+                            slide.style.transform = 'translateZ(-80px) rotateY(-35deg) translateX(-160px)';
+                        } else {
+                            slide.style.transform = 'translateZ(-80px) rotateY(-35deg) translateX(-160px)';
+                        }
+                        slide.style.zIndex = '2';
+                        slide.style.opacity = '0.8';
+                        break;
+                }
+            });
+
+            // Update indicators
+            indicators3D.forEach((indicator, index) => {
+                indicator.classList.toggle('active', index === currentSlide3D);
+            });
+        }
+
+        function nextSlide3D() {
+            currentSlide3D = (currentSlide3D + 1) % totalSlides3D;
+            updateSlider3D();
+        }
+
+        function prevSlide3D() {
+            currentSlide3D = (currentSlide3D - 1 + totalSlides3D) % totalSlides3D;
+            updateSlider3D();
+        }
+
+        function goToSlide3D(index) {
+            currentSlide3D = index;
+            updateSlider3D();
+        }
+
+        // Auto-slide functionality
+        let autoSlideInterval3D = setInterval(nextSlide3D, 5000);
+
+        // Pause auto-slide on hover
+        const sliderWrapper3D = document.getElementById('slider3D');
+        sliderWrapper3D.addEventListener('mouseenter', () => {
+            clearInterval(autoSlideInterval3D);
+        });
+
+        sliderWrapper3D.addEventListener('mouseleave', () => {
+            autoSlideInterval3D = setInterval(nextSlide3D, 5000);
+        });
+
+        // Touch/swipe support for 3D slider
+        let startX3D = 0;
+        let endX3D = 0;
+
+        sliderWrapper3D.addEventListener('touchstart', (e) => {
+            startX3D = e.touches[0].clientX;
+        });
+
+        sliderWrapper3D.addEventListener('touchend', (e) => {
+            endX3D = e.changedTouches[0].clientX;
+            const diffX = startX3D - endX3D;
+            
+            if (Math.abs(diffX) > 50) {
+                if (diffX > 0) {
+                    nextSlide3D();
+                } else {
+                    prevSlide3D();
+                }
+            }
+        });
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') {
+                e.preventDefault();
+                prevSlide3D();
+            }
+            if (e.key === 'ArrowRight') {
+                e.preventDefault();
+                nextSlide3D();
+            }
+        });
+
+        // Initialize slider
+        updateSlider3D();
+
+        // Update slider on resize
+        window.addEventListener('resize', () => {
+            updateSlider3D();
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 100) {
+                navbar.style.background = 'rgba(254, 252, 248, 0.98)';
+                navbar.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.1)';
+            } else {
+                navbar.style.background = 'rgba(254, 252, 248, 0.95)';
+                navbar.style.boxShadow = 'none';
+            }
+        });
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animationPlayState = 'running';
+                }
+            });
+        }, observerOptions);
+
+        // Observe animated elements
+        document.querySelectorAll('.slide-3d, .philosophy-pill, .slogan-word').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Add loading animation
+        window.addEventListener('load', () => {
+            document.body.style.opacity = '0';
+            document.body.style.transition = 'opacity 0.5s ease';
+            
+            setTimeout(() => {
+                document.body.style.opacity = '1';
+            }, 100);
+        });
+
+        // Performance optimization: Pause animations when page is not visible
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) {
+                clearInterval(autoSlideInterval3D);
+            } else {
+                autoSlideInterval3D = setInterval(nextSlide3D, 5000);
+            }
+        });
+
+        console.log('🧘‍♀️ Kiaya Haus - 3D Slider Loaded Successfully!');
+        console.log('🎮 Controls: Arrow keys, Touch swipe, Click navigation');
+        console.log('✨ Features: Auto-play, Responsive, Smooth animations');
+    </script>
+</body>
+</html>

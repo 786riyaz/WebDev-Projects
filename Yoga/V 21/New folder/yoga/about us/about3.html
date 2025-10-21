@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Special Therapies Center</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Animate.css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <style>
+        :root {
+            --primary-color: #6B8E70;
+            --primary-light: rgba(107, 142, 112, 0.1);
+            --secondary-color: #FFFFFF;
+            --text-dark: #333333;
+            --text-light: #777777;
+            --accent-color: #6B8E70;
+            --gradient-1: #6B8E70;
+            --gradient-2: #A8C7A7;
+            --success-color: #2E7D32;
+            --glass-effect: rgba(107, 142, 112, 0.15);
+            --shadow-light: rgba(107, 142, 112, 0.2);
+            --shadow-medium: rgba(107, 142, 112, 0.3);
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: var(--text-dark);
+            overflow-x: hidden;
+        }
+        
+        .bg-primary-theme {
+            background-color: var(--primary-color);
+        }
+        
+        .text-primary-theme {
+            color: var(--primary-color);
+        }
+        
+        .btn-primary-theme {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+        }
+        
+        .btn-primary-theme:hover {
+            background-color: #5a7a5f;
+            color: white;
+        }
+        
+        .btn-outline-theme {
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+            background: transparent;
+        }
+        
+        .btn-outline-theme:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        /* Hero Section */
+        .hero-section {
+            background: linear-gradient(135deg, var(--gradient-1), var(--gradient-2));
+            color: white;
+            padding: 120px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1506126613408-eca07ce68773?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80') no-repeat center center/cover;
+            opacity: 0.2;
+            z-index: 0;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* Therapy Cards */
+        .therapy-card {
+            border: none;
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 20px var(--shadow-light);
+            margin-bottom: 30px;
+            background: white;
+        }
+        
+        .therapy-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px var(--shadow-medium);
+        }
+        
+        .therapy-card img {
+            height: 220px;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .therapy-card:hover img {
+            transform: scale(1.05);
+        }
+        
+        .therapy-card .card-body {
+            padding: 25px;
+        }
+        
+        /* Features Section */
+        .feature-box {
+            padding: 30px;
+            border-radius: 15px;
+            background: white;
+            box-shadow: 0 5px 15px var(--shadow-light);
+            transition: all 0.3s ease;
+            text-align: center;
+            height: 100%;
+        }
+        
+        .feature-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px var(--shadow-medium);
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+        
+        /* Testimonials */
+        .testimonial-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 5px 15px var(--shadow-light);
+            margin: 15px;
+            position: relative;
+        }
+        
+        .testimonial-card::before {
+            content: '"';
+            font-size: 5rem;
+            color: var(--primary-light);
+            position: absolute;
+            top: 10px;
+            left: 20px;
+            line-height: 1;
+            font-family: Georgia, serif;
+        }
+        
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            margin-top: 20px;
+        }
+        
+        .testimonial-author img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 15px;
+        }
+        
+        /* Video Section */
+        .video-section {
+            position: relative;
+            padding: 100px 0;
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80') no-repeat center center/cover;
+            color: white;
+            background-attachment: fixed;
+        }
+        
+        .video-play-btn {
+            width: 80px;
+            height: 80px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .video-play-btn:hover {
+            transform: scale(1.1);
+            background: #5a7a5f;
+        }
+        
+        /* Contact Form */
+        .contact-form {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px var(--shadow-light);
+        }
+        
+        .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.25rem var(--primary-light);
+        }
+        
+        /* Footer */
+        .footer {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 60px 0 20px;
+        }
+        
+        .footer-links h5 {
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-links h5::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50px;
+            height: 2px;
+            background: white;
+        }
+        
+        .footer-links ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links a {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: white;
+            padding-left: 5px;
+        }
+        
+        .social-icons a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            color: white;
+            margin-right: 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .social-icons a:hover {
+            background: white;
+            color: var(--primary-color);
+            transform: translateY(-5px);
+        }
+        
+        /* Animation Classes */
+        .animate-up {
+            animation: fadeInUp 1s ease;
+        }
+        
+        .animate-delay-1 {
+            animation-delay: 0.2s;
+        }
+        
+        .animate-delay-2 {
+            animation-delay: 0.4s;
+        }
+        
+        .animate-delay-3 {
+            animation-delay: 0.6s;
+        }
+        
+        /* Responsive Adjustments */
+        @media (max-width: 992px) {
+            .hero-section {
+                padding: 80px 0;
+            }
+            
+            .hero-title {
+                font-size: 2.5rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .hero-section {
+                padding: 60px 0;
+            }
+            
+            .hero-title {
+                font-size: 2rem;
+            }
+            
+            .therapy-card {
+                margin-bottom: 20px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .hero-section {
+                padding: 50px 0;
+            }
+            
+            .hero-title {
+                font-size: 1.8rem;
+            }
+            
+            .contact-form {
+                padding: 20px;
+            }
+        }
+
+         /* Add these styles to your existing CSS */
+    .video-container {
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        background: #000;
+    }
+    
+    .video-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.3);
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+    
+    .video-overlay:hover {
+        background: rgba(0,0,0,0.2);
+    }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top shadow-sm">
+        <div class="container">
+            <a class="navbar-brand fw-bold text-primary-theme" href="#">TheraHeal</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#therapies">Therapies</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#testimonials">Testimonials</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Contact</a>
+                    </li>
+                </ul>
+                <a href="#contact" class="btn btn-primary-theme ms-lg-3">Book Session</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6 hero-content animate-up">
+                    <h1 class="hero-title fw-bold mb-4">Specialized Therapies for Holistic Healing</h1>
+                    <p class="lead mb-4">Experience the power of alternative therapies to restore balance and promote natural healing in your body and mind.</p>
+                    <div class="d-flex gap-3">
+                        <a href="#therapies" class="btn btn-light btn-lg">Explore Therapies</a>
+                        <a href="#contact" class="btn btn-outline-light btn-lg">Book Now</a>
+                    </div>
+                </div>
+                <div class="col-lg-6 animate-up animate-delay-1">
+                    <img src="https://images.unsplash.com/photo-1545205597-3d9d02c29597?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="Therapy Session" class="img-fluid rounded-4 shadow">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Therapies Section -->
+    <section id="therapies" class="py-5 bg-light">
+        <div class="container py-5">
+            <div class="row justify-content-center mb-5">
+                <div class="col-lg-8 text-center animate-up">
+                    <h2 class="fw-bold mb-3">Our Special Therapies</h2>
+                    <p class="text-muted">Each therapy is carefully designed to address specific needs and promote natural healing processes in the body.</p>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-lg-3 col-md-6 animate-up">
+                    <div class="therapy-card h-100">
+                        <img src="https://images.unsplash.com/photo-1591348278863-a8fb3887e2aa?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" class="card-img-top" alt="Tapping Therapy">
+                        <div class="card-body">
+                            <h5 class="card-title fw-bold">Tapping (EFT)</h5>
+                            <p class="card-text text-muted">Emotional Freedom Technique that combines ancient Chinese acupressure with modern psychology to reduce stress and anxiety.</p>
+                            <a href="#" class="btn btn-outline-theme">Learn More</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-3 col-md-6 animate-up animate-delay-1">
+                    <div class="therapy-card h-100">
+                        <img src="https://images.unsplash.com/photo-1581595219315-a187dd40c322?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" class="card-img-top" alt="Dry Cupping">
+                        <div class="card-body">
+                            <h5 class="card-title fw-bold">Dry Cupping</h5>
+                            <p class="card-text text-muted">A traditional therapy that uses suction to relieve muscle tension, improve blood flow, and promote healing.</p>
+                            <a href="#" class="btn btn-outline-theme">Learn More</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-3 col-md-6 animate-up animate-delay-2">
+                    <div class="therapy-card h-100">
+                        <img src="https://images.unsplash.com/photo-1581595219315-a187dd40c322?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" class="card-img-top" alt="Wet Cupping">
+                        <div class="card-body">
+                            <h5 class="card-title fw-bold">Wet Cupping</h5>
+                            <p class="card-text text-muted">A form of bloodletting that helps remove toxins and stagnant blood to promote healing and relieve pain.</p>
+                            <a href="#" class="btn btn-outline-theme">Learn More</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-3 col-md-6 animate-up animate-delay-3">
+                    <div class="therapy-card h-100">
+                        <img src="https://images.unsplash.com/photo-1581595219315-a187dd40c322?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" class="card-img-top" alt="Dry Needling">
+                        <div class="card-body">
+                            <h5 class="card-title fw-bold">Dry Needling</h5>
+                            <p class="card-text text-muted">A technique that uses thin needles to target myofascial trigger points for pain relief and improved muscle function.</p>
+                            <a href="#" class="btn btn-outline-theme">Learn More</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="about" class="py-5">
+        <div class="container py-5">
+            <div class="row align-items-center">
+                <div class="col-lg-6 mb-5 mb-lg-0 animate-up">
+                    <img src="https://images.unsplash.com/photo-1505751172876-fa1923c5c528?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="Therapy Benefits" class="img-fluid rounded-4 shadow">
+                </div>
+                <div class="col-lg-6 animate-up animate-delay-1">
+                    <h2 class="fw-bold mb-4">Why Choose Our Therapies?</h2>
+                    <p class="text-muted mb-5">Our specialized therapies are backed by centuries of traditional practice and modern research to provide effective, natural healing solutions.</p>
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-4">
+                            <div class="feature-box">
+                                <div class="feature-icon">
+                                    <i class="fas fa-heartbeat"></i>
+                                </div>
+                                <h5 class="fw-bold">Pain Relief</h5>
+                                <p class="text-muted">Effective solutions for chronic pain and muscle tension without medication.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-4">
+                            <div class="feature-box">
+                                <div class="feature-icon">
+                                    <i class="fas fa-brain"></i>
+                                </div>
+                                <h5 class="fw-bold">Stress Reduction</h5>
+                                <p class="text-muted">Techniques to calm the mind and reduce anxiety and stress levels.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-4">
+                            <div class="feature-box">
+                                <div class="feature-icon">
+                                    <i class="fas fa-leaf"></i>
+                                </div>
+                                <h5 class="fw-bold">Natural Healing</h5>
+                                <p class="text-muted">Harness your body's natural ability to heal and restore balance.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-4">
+                            <div class="feature-box">
+                                <div class="feature-icon">
+                                    <i class="fas fa-user-md"></i>
+                                </div>
+                                <h5 class="fw-bold">Expert Practitioners</h5>
+                                <p class="text-muted">Certified therapists with years of experience in specialized techniques.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Video Section -->
+    <!-- <section class="video-section py-5">
+        <div class="container text-center py-5">
+            <div class="animate-up">
+                <h2 class="fw-bold mb-4 text-white">Experience Our Therapies</h2>
+                <p class="lead mb-5 text-white-50">Watch how our therapies can transform your health and wellbeing</p>
+                
+                <div class="video-play-btn animate-up animate-delay-1">
+                    <i class="fas fa-play text-white fs-4"></i>
+                </div>
+                
+                <p class="text-white-50">See how our therapies work</p>
+            </div>
+        </div>
+    </section> -->
+
+
+    <section class="video-section py-5">
+    <div class="container text-center py-5">
+        <div class="animate-up">
+            <h2 class="fw-bold mb-4 text-white">Experience Our Therapies</h2>
+            <p class="lead mb-5 text-white-50">Watch how our therapies can transform your health and wellbeing</p>
+            
+            <!-- Video Container with Play Button Overlay -->
+            <div class="video-container position-relative mx-auto" style="max-width: 800px;">
+                <!-- Video Embed (initially hidden) -->
+                <div class="ratio ratio-16x9 embed-responsive embed-responsive-16by9">
+                    <iframe id="therapyVideo" class="embed-responsive-item" src="https://www.youtube.com/embed/YOUR_VIDEO_ID?enablejsapi=1" allowfullscreen style="display: none;"></iframe>
+                </div>
+                
+                <!-- Play Button Overlay (shown by default) -->
+                <div class="video-overlay d-flex flex-column align-items-center justify-content-center" id="videoOverlay">
+                    <div class="video-play-btn animate-up animate-delay-1" id="playButton">
+                        <i class="fas fa-play text-white fs-4"></i>
+                    </div>
+                    <p class="text-white mt-3">See how our therapies work</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="py-5 bg-light">
+        <div class="container py-5">
+            <div class="row justify-content-center mb-5">
+                <div class="col-lg-8 text-center animate-up">
+                    <h2 class="fw-bold mb-3">What Our Clients Say</h2>
+                    <p class="text-muted">Hear from people who have experienced the benefits of our special therapies.</p>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-lg-4 mb-4 animate-up">
+                    <div class="testimonial-card h-100">
+                        <p class="mb-4">"After just three sessions of dry needling, my chronic back pain that I've had for years has significantly reduced. I can now play with my kids without discomfort."</p>
+                        <div class="testimonial-author">
+                            <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Client">
+                            <div>
+                                <h6 class="mb-0 fw-bold">Michael Johnson</h6>
+                                <small class="text-muted">Back Pain Patient</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 mb-4 animate-up animate-delay-1">
+                    <div class="testimonial-card h-100">
+                        <p class="mb-4">"The tapping therapy helped me manage my anxiety better than any medication I've tried. I feel more in control of my emotions and sleep much better now."</p>
+                        <div class="testimonial-author">
+                            <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Client">
+                            <div>
+                                <h6 class="mb-0 fw-bold">Sarah Williams</h6>
+                                <small class="text-muted">Anxiety Management</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 mb-4 animate-up animate-delay-2">
+                    <div class="testimonial-card h-100">
+                        <p class="mb-4">"Cupping therapy has been a game-changer for my muscle recovery as an athlete. I recover faster between workouts and perform at my peak consistently."</p>
+                        <div class="testimonial-author">
+                            <img src="https://randomuser.me/api/portraits/men/75.jpg" alt="Client">
+                            <div>
+                                <h6 class="mb-0 fw-bold">David Chen</h6>
+                                <small class="text-muted">Professional Athlete</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-5">
+        <div class="container py-5">
+            <div class="row justify-content-center">
+                <div class="col-lg-8 text-center mb-5 animate-up">
+                    <h2 class="fw-bold mb-3">Book Your Session</h2>
+                    <p class="text-muted">Ready to experience the benefits of our special therapies? Contact us today to schedule your appointment.</p>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-lg-6 mb-5 mb-lg-0 animate-up">
+                    <div class="contact-form">
+                        <form>
+                            <div class="mb-3">
+                                <input type="text" class="form-control" placeholder="Your Name" required>
+                            </div>
+                            <div class="mb-3">
+                                <input type="email" class="form-control" placeholder="Email Address" required>
+                            </div>
+                            <div class="mb-3">
+                                <input type="tel" class="form-control" placeholder="Phone Number">
+                            </div>
+                            <div class="mb-3">
+                                <select class="form-select">
+                                    <option selected disabled>Select Therapy</option>
+                                    <option>Tapping (EFT)</option>
+                                    <option>Dry Cupping</option>
+                                    <option>Wet Cupping</option>
+                                    <option>Dry Needling</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <textarea class="form-control" rows="4" placeholder="Your Message"></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary-theme w-100">Book Now</button>
+                        </form>
+                    </div>
+                </div>
+                
+                <div class="col-lg-6 animate-up animate-delay-1">
+                    <div class="h-100 bg-primary-theme text-white p-5 rounded-4">
+                        <h4 class="fw-bold mb-4">Contact Information</h4>
+                        <div class="d-flex align-items-start mb-4">
+                            <i class="fas fa-map-marker-alt mt-1 me-3"></i>
+                            <div>
+                                <h6 class="fw-bold mb-1">Our Location</h6>
+                                <p class="mb-0">123 Healing Street, Wellness City, WC 12345</p>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-start mb-4">
+                            <i class="fas fa-phone-alt mt-1 me-3"></i>
+                            <div>
+                                <h6 class="fw-bold mb-1">Call Us</h6>
+                                <p class="mb-0">+1 (555) 123-4567</p>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-start mb-4">
+                            <i class="fas fa-envelope mt-1 me-3"></i>
+                            <div>
+                                <h6 class="fw-bold mb-1">Email Us</h6>
+                                <p class="mb-0">info@theraheal.com</p>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-start">
+                            <i class="fas fa-clock mt-1 me-3"></i>
+                            <div>
+                                <h6 class="fw-bold mb-1">Working Hours</h6>
+                                <p class="mb-1">Monday - Friday: 9:00 AM - 7:00 PM</p>
+                                <p class="mb-0">Saturday: 9:00 AM - 3:00 PM</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-5 mb-lg-0 animate-up">
+                    <h4 class="fw-bold mb-4">TheraHeal</h4>
+                    <p class="mb-4">Specialized therapies for holistic healing and wellness. Our mission is to provide natural, effective solutions for your health needs.</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                
+                <div class="col-lg-2 col-md-6 mb-5 mb-md-0 animate-up animate-delay-1">
+                    <div class="footer-links">
+                        <h5>Quick Links</h5>
+                        <ul>
+                            <li><a href="#">Home</a></li>
+                            <li><a href="#therapies">Therapies</a></li>
+                            <li><a href="#about">About</a></li>
+                            <li><a href="#testimonials">Testimonials</a></li>
+                            <li><a href="#contact">Contact</a></li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="col-lg-2 col-md-6 mb-5 mb-md-0 animate-up animate-delay-2">
+                    <div class="footer-links">
+                        <h5>Therapies</h5>
+                        <ul>
+                            <li><a href="#">Tapping</a></li>
+                            <li><a href="#">Dry Cupping</a></li>
+                            <li><a href="#">Wet Cupping</a></li>
+                            <li><a href="#">Dry Needling</a></li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 animate-up animate-delay-3">
+                    <div class="footer-links">
+                        <h5>Newsletter</h5>
+                        <p class="mb-4">Subscribe to our newsletter for health tips and special offers.</p>
+                        <form class="mb-3">
+                            <div class="input-group">
+                                <input type="email" class="form-control" placeholder="Your Email">
+                                <button class="btn btn-light" type="button">Subscribe</button>
+                            </div>
+                        </form>
+                        <p class="small">We respect your privacy. Unsubscribe at any time.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <hr class="my-5 bg-white-10">
+            
+            <div class="row">
+                <div class="col-md-6 text-center text-md-start animate-up">
+                    <p class="small mb-0">&copy; 2023 TheraHeal. All rights reserved.</p>
+                </div>
+                <div class="col-md-6 text-center text-md-end animate-up animate-delay-1">
+                    <p class="small mb-0">Designed with <i class="fas fa-heart text-danger"></i> for your wellness</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Font Awesome -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+    <!-- Custom JS -->
+    <script>
+        // Animation on scroll
+        document.addEventListener('DOMContentLoaded', function() {
+            const animateElements = document.querySelectorAll('.animate-up');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animate__animated', 'animate__fadeInUp');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+            
+            animateElements.forEach(element => {
+                observer.observe(element);
+            });
+            
+            // Video play button functionality
+            const videoPlayBtn = document.querySelector('.video-play-btn');
+            if(videoPlayBtn) {
+                videoPlayBtn.addEventListener('click', function() {
+                    // In a real implementation, this would open a modal with the video
+                    alert('Video playback would start here in a real implementation.');
+                });
+            }
+        });
+    </script>
+
+    <script>
+    // Add this to your existing JavaScript
+    document.addEventListener('DOMContentLoaded', function() {
+        const playButton = document.getElementById('playButton');
+        const videoOverlay = document.getElementById('videoOverlay');
+        const videoIframe = document.getElementById('therapyVideo');
+        
+        if(playButton && videoOverlay && videoIframe) {
+            playButton.addEventListener('click', function() {
+                // Show the video
+                videoIframe.style.display = 'block';
+                
+                // For YouTube videos, you would need to trigger play
+                // This requires the YouTube API to be loaded
+                if(videoIframe.src.includes('youtube.com')) {
+                    videoIframe.src += "&autoplay=1";
+                }
+                
+                // Hide the overlay
+                videoOverlay.style.display = 'none';
+            });
+        }
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crystal Chakra Cave - 3D Yoga Experience</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            height: 100vh;
+            overflow: hidden;
+            background: radial-gradient(ellipse at center, #0a0a0a 0%, #1a0a1a 50%, #2a1a3a 100%);
+            font-family: 'Arial', sans-serif;
+        }
+
+        #container {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+        }
+
+        .content-overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: white;
+            z-index: 10;
+            pointer-events: none;
+        }
+
+        .yoga-title {
+            font-size: 4.5rem;
+            font-weight: 200;
+            margin-bottom: 1rem;
+            text-shadow: 0 0 40px rgba(255,255,255,0.6);
+            animation: chakraGlow 10s ease-in-out infinite;
+            letter-spacing: 0.4em;
+            background: linear-gradient(90deg, 
+                #ff0040 0%, #ff8000 14%, #ffff00 28%, 
+                #00ff00 42%, #0080ff 57%, #4000ff 71%, 
+                #8000ff 85%, #ff0040 100%);
+            background-size: 200% 100%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: chakraFlow 8s linear infinite, chakraGlow 10s ease-in-out infinite;
+        }
+
+        .yoga-subtitle {
+            font-size: 1.8rem;
+            font-weight: 100;
+            opacity: 0.9;
+            text-shadow: 0 0 25px rgba(255,255,255,0.4);
+            animation: crystalPulse 6s ease-in-out infinite;
+            color: #e6e6fa;
+            margin-bottom: 2rem;
+        }
+
+        .chakra-info {
+            position: absolute;
+            bottom: 15%;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 1.1rem;
+            opacity: 0.7;
+            color: #dda0dd;
+            animation: breatheText 8s ease-in-out infinite;
+            text-align: center;
+            line-height: 1.6;
+        }
+
+        @keyframes chakraFlow {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 200% 50%; }
+        }
+
+        @keyframes chakraGlow {
+            0%, 100% {
+                transform: translate(-50%, -50%) scale(1);
+                text-shadow: 0 0 40px rgba(255,255,255,0.6);
+            }
+            50% {
+                transform: translate(-50%, -50%) scale(1.05);
+                text-shadow: 0 0 60px rgba(255,255,255,0.9);
+            }
+        }
+
+        @keyframes crystalPulse {
+            0%, 100% {
+                transform: translateY(0px);
+                opacity: 0.9;
+            }
+            50% {
+                transform: translateY(-8px);
+                opacity: 1;
+            }
+        }
+
+        @keyframes breatheText {
+            0%, 100% { opacity: 0.7; }
+            50% { opacity: 1; }
+        }
+
+        .loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #dda0dd;
+            font-size: 1.5rem;
+            z-index: 5;
+            text-shadow: 0 0 30px rgba(221, 160, 221, 0.7);
+        }
+
+        .chakra-indicators {
+            position: absolute;
+            right: 3%;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            z-index: 8;
+        }
+
+        .chakra-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            opacity: 0.6;
+            animation: chakraPulse 3s ease-in-out infinite;
+        }
+
+        .chakra-dot:nth-child(1) { background: #ff0040; animation-delay: 0s; }
+        .chakra-dot:nth-child(2) { background: #ff8000; animation-delay: 0.3s; }
+        .chakra-dot:nth-child(3) { background: #ffff00; animation-delay: 0.6s; }
+        .chakra-dot:nth-child(4) { background: #00ff00; animation-delay: 0.9s; }
+        .chakra-dot:nth-child(5) { background: #0080ff; animation-delay: 1.2s; }
+        .chakra-dot:nth-child(6) { background: #4000ff; animation-delay: 1.5s; }
+        .chakra-dot:nth-child(7) { background: #8000ff; animation-delay: 1.8s; }
+
+        @keyframes chakraPulse {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 0.6;
+                box-shadow: 0 0 10px currentColor;
+            }
+            50% {
+                transform: scale(1.3);
+                opacity: 1;
+                box-shadow: 0 0 20px currentColor;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <div class="loading">Awakening Crystal Energy...</div>
+        <div class="content-overlay" style="opacity: 0;" id="content">
+            <h1 class="yoga-title">CHAKRAS</h1>
+            <p class="yoga-subtitle">Align Your Energy Centers</p>
+            <div class="chakra-info">
+                Seven sacred wheels of light<br>
+                Spinning in perfect harmony<br>
+                Within your luminous being
+            </div>
+        </div>
+        <div class="chakra-indicators">
+            <div class="chakra-dot" title="Root Chakra"></div>
+            <div class="chakra-dot" title="Sacral Chakra"></div>
+            <div class="chakra-dot" title="Solar Plexus"></div>
+            <div class="chakra-dot" title="Heart Chakra"></div>
+            <div class="chakra-dot" title="Throat Chakra"></div>
+            <div class="chakra-dot" title="Third Eye"></div>
+            <div class="chakra-dot" title="Crown Chakra"></div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+        let scene, camera, renderer;
+        let crystals = [], mandalas = [], energyStreams = [];
+        let chakraColors = [0xff0040, 0xff8000, 0x00ff00, 0x0080ff, 0x4000ff, 0x8000ff];
+        let mouseX = 0, mouseY = 0;
+        let time = 0;
+
+        init();
+        animate();
+
+        function init() {
+            // Scene setup
+            scene = new THREE.Scene();
+            scene.fog = new THREE.FogExp2(0x1a0a1a, 0.0003);
+
+            // Camera setup
+            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 5000);
+            camera.position.set(0, 0, 600);
+
+            // Renderer setup
+            renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setClearColor(0x000000, 0);
+            renderer.shadowMap.enabled = true;
+            renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+            document.getElementById('container').appendChild(renderer.domElement);
+
+            // Setup lighting
+            setupCrystalLighting();
+            
+            // Create 3D elements
+            createCrystalFormations();
+            createFloatingMandalas();
+            createEnergyStreams();
+            createChakraOrbs();
+            createMysticParticles();
+
+            // Event listeners
+            document.addEventListener('mousemove', onMouseMove, false);
+            window.addEventListener('resize', onWindowResize, false);
+
+            // Reveal content
+            setTimeout(() => {
+                document.querySelector('.loading').style.display = 'none';
+                document.getElementById('content').style.opacity = '1';
+                document.getElementById('content').style.transition = 'opacity 3s ease-in-out';
+            }, 3000);
+        }
+
+        function setupCrystalLighting() {
+            // Ambient light
+            const ambientLight = new THREE.AmbientLight(0x2a1a3a, 0.3);
+            scene.add(ambientLight);
+
+            // Chakra point lights
+            chakraColors.forEach((color, index) => {
+                const light = new THREE.PointLight(color, 0.8, 800);
+                const angle = (index / chakraColors.length) * Math.PI * 2;
+                light.position.set(
+                    Math.cos(angle) * 300,
+                    (index - 3) * 80,
+                    Math.sin(angle) * 300
+                );
+                scene.add(light);
+            });
+
+            // Central mystical light
+            const centralLight = new THREE.PointLight(0xffffff, 1.2, 1200);
+            centralLight.position.set(0, 0, 0);
+            scene.add(centralLight);
+        }
+
+        function createCrystalFormations() {
+            for (let i = 0; i < 15; i++) {
+                const height = 40 + Math.random() * 80;
+                const geometry = new THREE.ConeGeometry(8 + Math.random() * 12, height, 6);
+                
+                const material = new THREE.MeshPhongMaterial({
+                    color: chakraColors[Math.floor(Math.random() * chakraColors.length)],
+                    transparent: true,
+                    opacity: 0.7,
+                    emissive: new THREE.Color(chakraColors[Math.floor(Math.random() * chakraColors.length)]),
+                    emissiveIntensity: 0.2,
+                    shininess: 100
+                });
+
+                const crystal = new THREE.Mesh(geometry, material);
+                crystal.position.set(
+                    (Math.random() - 0.5) * 1000,
+                    (Math.random() - 0.5) * 400,
+                    (Math.random() - 0.5) * 1000
+                );
+                
+                crystal.rotation.set(
+                    Math.random() * Math.PI,
+                    Math.random() * Math.PI,
+                    Math.random() * Math.PI
+                );
+
+                crystal.userData = {
+                    rotationSpeed: {
+                        x: (Math.random() - 0.5) * 0.01,
+                        y: (Math.random() - 0.5) * 0.01,
+                        z: (Math.random() - 0.5) * 0.01
+                    },
+                    pulseSpeed: Math.random() * 0.5 + 0.3
+                };
+
+                crystals.push(crystal);
+                scene.add(crystal);
+            }
+        }
+
+        function createFloatingMandalas() {
+            for (let i = 0; i < 7; i++) {
+                const mandalaGroup = new THREE.Group();
+                
+                // Create mandala rings
+                for (let ring = 0; ring < 4; ring++) {
+                    const geometry = new THREE.TorusGeometry(20 + ring * 15, 2, 8, 32);
+                    const material = new THREE.MeshPhongMaterial({
+                        color: chakraColors[i],
+                        transparent: true,
+                        opacity: 0.4 - ring * 0.05,
+                        emissive: new THREE.Color(chakraColors[i]),
+                        emissiveIntensity: 0.3
+                    });
+                    
+                    const torus = new THREE.Mesh(geometry, material);
+                    torus.rotation.x = Math.PI / 2;
+                    mandalaGroup.add(torus);
+                }
+
+                // Position mandalas in chakra formation
+                const angle = (i / 7) * Math.PI * 2;
+                mandalaGroup.position.set(
+                    Math.cos(angle) * 200,
+                    (i - 3) * 60,
+                    Math.sin(angle) * 200
+                );
+
+                mandalaGroup.userData = {
+                    rotationSpeed: 0.003 + i * 0.0005,
+                    floatSpeed: 0.4 + i * 0.1,
+                    chakraIndex: i
+                };
+
+                mandalas.push(mandalaGroup);
+                scene.add(mandalaGroup);
+            }
+        }
+
+        function createEnergyStreams() {
+            for (let i = 0; i < 100; i++) {
+                const geometry = new THREE.SphereGeometry(1 + Math.random() * 2, 8, 8);
+                const material = new THREE.MeshBasicMaterial({
+                    color: chakraColors[Math.floor(Math.random() * chakraColors.length)],
+                    transparent: true,
+                    opacity: 0.8,
+                    emissive: new THREE.Color(chakraColors[Math.floor(Math.random() * chakraColors.length)]),
+                    emissiveIntensity: 0.5
+                });
+
+                const particle = new THREE.Mesh(geometry, material);
+                particle.position.set(
+                    (Math.random() - 0.5) * 1500,
+                    (Math.random() - 0.5) * 800,
+                    (Math.random() - 0.5) * 1500
+                );
+
+                particle.userData = {
+                    velocity: new THREE.Vector3(
+                        (Math.random() - 0.5) * 2,
+                        (Math.random() - 0.5) * 2,
+                        (Math.random() - 0.5) * 2
+                    ),
+                    originalPos: particle.position.clone()
+                };
+
+                energyStreams.push(particle);
+                scene.add(particle);
+            }
+        }
+
+        function createChakraOrbs() {
+            chakraColors.forEach((color, index) => {
+                const geometry = new THREE.SphereGeometry(25, 32, 32);
+                const material = new THREE.MeshPhongMaterial({
+                    color: color,
+                    transparent: true,
+                    opacity: 0.6,
+                    emissive: new THREE.Color(color),
+                    emissiveIntensity: 0.4,
+                    shininess: 100
+                });
+
+                const orb = new THREE.Mesh(geometry, material);
+                orb.position.set(0, (index - 3) * 100, 0);
+                
+                orb.userData = {
+                    originalY: orb.position.y,
+                    pulseSpeed: 0.5 + index * 0.1,
+                    chakraIndex: index
+                };
+
+                crystals.push(orb);
+                scene.add(orb);
+            });
+        }
+
+        function createMysticParticles() {
+            const particleCount = 600;
+            const geometry = new THREE.BufferGeometry();
+            const positions = new Float32Array(particleCount * 3);
+            const colors = new Float32Array(particleCount * 3);
+
+            for (let i = 0; i < particleCount; i++) {
+                const i3 = i * 3;
+                
+                positions[i3] = (Math.random() - 0.5) * 2000;
+                positions[i3 + 1] = (Math.random() - 0.5) * 1000;
+                positions[i3 + 2] = (Math.random() - 0.5) * 2000;
+
+                const color = new THREE.Color(chakraColors[Math.floor(Math.random() * chakraColors.length)]);
+                colors[i3] = color.r;
+                colors[i3 + 1] = color.g;
+                colors[i3 + 2] = color.b;
+            }
+
+            geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+            geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+
+            const material = new THREE.PointsMaterial({
+                size: 4,
+                vertexColors: true,
+                transparent: true,
+                opacity: 0.9,
+                blending: THREE.AdditiveBlending
+            });
+
+            const particles = new THREE.Points(geometry, material);
+            scene.add(particles);
+            this.mysticParticles = particles;
+        }
+
+        function onMouseMove(event) {
+            mouseX = (event.clientX / window.innerWidth) * 2 - 1;
+            mouseY = -(event.clientY / window.innerHeight) * 2 + 1;
+        }
+
+        function onWindowResize() {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+            time += 0.01;
+
+            // Animate crystals
+            crystals.forEach((crystal, index) => {
+                if (crystal.userData.rotationSpeed) {
+                    crystal.rotation.x += crystal.userData.rotationSpeed.x;
+                    crystal.rotation.y += crystal.userData.rotationSpeed.y;
+                    crystal.rotation.z += crystal.userData.rotationSpeed.z;
+                }
+
+                if (crystal.userData.pulseSpeed) {
+                    const pulse = Math.sin(time * crystal.userData.pulseSpeed) * 0.2 + 1;
+                    crystal.scale.set(pulse, pulse, pulse);
+                    crystal.material.emissiveIntensity = 0.2 + Math.sin(time * crystal.userData.pulseSpeed) * 0.3;
+                }
+
+                if (crystal.userData.originalY !== undefined) {
+                    crystal.position.y = crystal.userData.originalY + Math.sin(time * 0.5 + index) * 20;
+                }
+            });
+
+            // Animate mandalas
+            mandalas.forEach((mandala, index) => {
+                mandala.rotation.z += mandala.userData.rotationSpeed;
+                mandala.position.y += Math.sin(time * mandala.userData.floatSpeed + index) * 0.5;
+                
+                mandala.children.forEach((ring, ringIndex) => {
+                    ring.rotation.z += 0.01 * (ringIndex + 1);
+                    const intensity = 0.3 + Math.sin(time + ringIndex) * 0.2;
+                    ring.material.emissiveIntensity = intensity;
+                });
+            });
+
+            // Animate energy streams
+            energyStreams.forEach((particle, index) => {
+                particle.position.add(particle.userData.velocity);
+                
+                // Reset if too far
+                if (particle.position.length() > 1000) {
+                    particle.position.copy(particle.userData.originalPos);
+                }
+                
+                particle.rotation.x += 0.02;
+                particle.rotation.y += 0.03;
+            });
+
+            // Animate mystic particles
+            if (this.mysticParticles) {
+                this.mysticParticles.rotation.y += 0.002;
+                const positions = this.mysticParticles.geometry.attributes.position.array;
+                
+                for (let i = 0; i < positions.length; i += 3) {
+                    positions[i + 1] += Math.sin(time + positions[i] * 0.01) * 0.5;
+                }
+                this.mysticParticles.geometry.attributes.position.needsUpdate = true;
+            }
+
+            // Camera movement
+            camera.position.x += (mouseX * 200 - camera.position.x) * 0.03;
+            camera.position.y += (-mouseY * 200 - camera.position.y) * 0.03;
+            camera.lookAt(0, 0, 0);
+
+            renderer.render(scene, camera);
+        }
+    </script>
+</body>
+</html>

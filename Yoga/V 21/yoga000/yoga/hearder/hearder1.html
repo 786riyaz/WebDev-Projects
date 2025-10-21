@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Physio & Yoga - Modern Header</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #4a8b71;
+            --primary-light: rgba(74, 139, 113, 0.15);
+            --secondary-color: #f8f9fa;
+            --accent-color: #f85f40;
+            --text-dark: #2d3748;
+            --text-light: #718096;
+            --glass-effect: rgba(255, 255, 255, 0.85);
+            --shadow-light: 0 4px 6px rgba(0, 0, 0, 0.05);
+            --shadow-medium: 0 10px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            background-color: #f8f9fa;
+        }
+
+        .navbar {
+            background: var(--glass-effect);
+            backdrop-filter: blur(12px);
+            box-shadow: var(--shadow-light);
+            padding: 15px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .navbar.scrolled {
+            box-shadow: var(--shadow-medium);
+            padding: 10px 0;
+        }
+
+        .navbar-brand {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar-brand span {
+            color: var(--accent-color);
+        }
+
+        .logo-icon {
+            font-size: 2rem;
+            margin-right: 10px;
+            color: var(--primary-color);
+        }
+
+        .nav-link {
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--text-dark);
+            padding: 10px 15px;
+            margin: 0 5px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-link:hover, 
+        .nav-link.active {
+            color: var(--primary-color);
+            background: var(--primary-light);
+        }
+
+        .nav-link.active::before {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 6px;
+            height: 6px;
+            background: var(--accent-color);
+            border-radius: 50%;
+        }
+
+        .dropdown-menu {
+            background: var(--glass-effect);
+            backdrop-filter: blur(12px);
+            border: none;
+            border-radius: 12px;
+            box-shadow: var(--shadow-medium);
+            padding: 10px 0;
+            margin-top: 10px;
+            opacity: 0;
+            transform: translateY(10px);
+            visibility: hidden;
+            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        .dropdown-menu.show {
+            opacity: 1;
+            transform: translateY(0);
+            visibility: visible;
+        }
+
+        .dropdown-item {
+            font-size: 0.95rem;
+            color: var(--text-dark);
+            padding: 8px 20px;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+
+        .dropdown-item:hover {
+            background: var(--primary-light);
+            color: var(--primary-color);
+            padding-left: 25px;
+        }
+
+        .dropdown-item:hover::before {
+            content: '→';
+            position: absolute;
+            left: 10px;
+            color: var(--accent-color);
+        }
+
+        .navbar-toggler {
+            border: none;
+            padding: 10px;
+        }
+
+        .navbar-toggler:focus {
+            box-shadow: none;
+        }
+
+        .navbar-toggler-icon {
+            background-image: none;
+            width: 24px;
+            height: 2px;
+            background: var(--primary-color);
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .navbar-toggler-icon::before,
+        .navbar-toggler-icon::after {
+            content: '';
+            position: absolute;
+            width: 24px;
+            height: 2px;
+            background: var(--primary-color);
+            transition: all 0.3s ease;
+        }
+
+        .navbar-toggler-icon::before {
+            top: -8px;
+        }
+
+        .navbar-toggler-icon::after {
+            top: 8px;
+        }
+
+        .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
+            background: transparent;
+        }
+
+        .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon::before {
+            transform: rotate(45deg);
+            top: 0;
+            background: var(--accent-color);
+        }
+
+        .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon::after {
+            transform: rotate(-45deg);
+            top: 0;
+            background: var(--accent-color);
+        }
+
+        .cta-button {
+            background: linear-gradient(135deg, var(--primary-color), #3a7a5f);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+            color: white;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 991px) {
+            .navbar-collapse {
+                background: var(--glass-effect);
+                backdrop-filter: blur(12px);
+                border-radius: 12px;
+                padding: 20px;
+                margin-top: 15px;
+                box-shadow: var(--shadow-medium);
+            }
+            
+            .nav-link {
+                margin: 5px 0;
+            }
+            
+            .dropdown-menu {
+                background: transparent;
+                backdrop-filter: none;
+                box-shadow: none;
+                margin: 0;
+                padding: 0 0 0 20px;
+            }
+            
+            .cta-button {
+                margin-top: 10px;
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .navbar-brand {
+                font-size: 1.5rem;
+            }
+            
+            .logo-icon {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-spa logo-icon"></i>
+                Advanced<span>Physio</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-lg-center">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">Home</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="physioDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Physiotherapy
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#ortho">Ortho & Sports</a></li>
+                            <li><a class="dropdown-item" href="#cardio">Cardio-Respiratory</a></li>
+                            <li><a class="dropdown-item" href="#neuro">Neuro & Pediatric</a></li>
+                            <li><a class="dropdown-item" href="#womens">Women's Health</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="yogaDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Yoga Services
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#power-yoga">Power Yoga</a></li>
+                            <li><a class="dropdown-item" href="#kids-yoga">Kids Yoga</a></li>
+                            <li><a class="dropdown-item" href="#aerial-yoga">Aerial Yoga</a></li>
+                            <li><a class="dropdown-item" href="#prenatal-yoga">Pre & Post Natal Yoga</a></li>
+                            <li><a class="dropdown-item" href="#fitness-yoga">Fitness Yoga</a></li>
+                            <li><a class="dropdown-item" href="#personal-yoga">Personal Training</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="therapyDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Special Therapies
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#tapping">Tapping</a></li>
+                            <li><a class="dropdown-item" href="#dry-cupping">Dry Cupping</a></li>
+                            <li><a class="dropdown-item" href="#wet-cupping">Wet Cupping</a></li>
+                            <li><a class="dropdown-item" href="#dry-needling">Dry Needling</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Contact</a>
+                    </li>
+                    <li class="nav-item ms-lg-3">
+                        <a href="#appointment" class="btn cta-button">Book Appointment</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Placeholder content to enable scrolling -->
+    <div style="height: 1500px; padding-top: 100px;">
+        <!-- This is just to demonstrate the sticky header -->
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Add scrolled class to navbar when scrolling
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 20) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Smooth hover animation for dropdown
+        document.querySelectorAll('.dropdown').forEach(dropdown => {
+            dropdown.addEventListener('mouseenter', () => {
+                dropdown.querySelector('.dropdown-toggle').classList.add('show');
+                dropdown.querySelector('.dropdown-menu').classList.add('show');
+            });
+            
+            dropdown.addEventListener('mouseleave', () => {
+                dropdown.querySelector('.dropdown-toggle').classList.remove('show');
+                dropdown.querySelector('.dropdown-menu').classList.remove('show');
+            });
+        });
+
+        // Close dropdowns when clicking elsewhere
+        document.addEventListener('click', (e) => {
+            if (!e.target.matches('.dropdown-toggle') && !e.target.closest('.dropdown-menu')) {
+                document.querySelectorAll('.dropdown-menu').forEach(menu => {
+                    menu.classList.remove('show');
+                });
+                document.querySelectorAll('.dropdown-toggle').forEach(toggle => {
+                    toggle.classList.remove('show');
+                });
+            }
+        });
+    </script>
+</body>
+
+</html>

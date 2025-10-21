@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    /* About Us Section */
+.about-section {
+    position: relative;
+    padding: 5rem 2rem;
+    background-color: #f9f9f7;
+    overflow: hidden;
+}
+
+.about-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+}
+
+.about-content {
+    position: relative;
+    z-index: 3;
+}
+
+.section-title {
+    font-size: clamp(2rem, 5vw, 3rem);
+    color: var(--primary-color);
+    margin-bottom: 2rem;
+    text-align: center;
+    position: relative;
+    display: inline-block;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.section-title:after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: var(--primary-color);
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.5s ease;
+}
+
+.section-title:hover:after {
+    transform: scaleX(1);
+    transform-origin: left;
+}
+
+.about-intro, .about-desc {
+    font-size: clamp(1rem, 1.8vw, 1.2rem);
+    line-height: 1.8;
+    color: var(--text-dark);
+    margin-bottom: 2rem;
+    text-align: center;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Certifications Grid */
+.certifications-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 4rem;
+}
+
+.certification-category {
+    background: white;
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.certification-category:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+}
+
+.category-title {
+    color: var(--primary-color);
+    font-size: 1.2rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px dashed var(--primary-light);
+}
+
+.certification-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.certification-list li {
+    position: relative;
+    padding-left: 1.5rem;
+    margin-bottom: 1rem;
+    color: var(--text-dark);
+    line-height: 1.6;
+}
+
+.certification-list li:before {
+    content: '•';
+    position: absolute;
+    left: 0;
+    color: var(--primary-color);
+    font-size: 1.5rem;
+    line-height: 1;
+}
+
+/* Decorative Elements */
+.about-decoration {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    overflow: hidden;
+}
+
+.circle {
+    position: absolute;
+    border-radius: 50%;
+    background-color: rgba(107, 142, 112, 0.1);
+    animation: float 6s ease-in-out infinite;
+}
+
+.circle-1 {
+    width: 300px;
+    height: 300px;
+    top: -100px;
+    left: -100px;
+    animation-delay: 0s;
+}
+
+.circle-2 {
+    width: 200px;
+    height: 200px;
+    bottom: -50px;
+    right: -50px;
+    animation-delay: 2s;
+}
+
+.leaf {
+    position: absolute;
+    background-image: url('data:image/svg+xml;utf8,<svg viewBox="0 0 24 24" fill="%236B8E70" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.58 20 4 16.42 4 12C4 7.58 7.58 4 12 4C16.42 4 20 7.58 20 12C20 16.42 16.42 20 12 20Z"/></svg>');
+    background-repeat: no-repeat;
+    background-size: contain;
+    opacity: 0.3;
+    animation: floatLeaf 15s ease-in-out infinite;
+}
+
+.leaf-1 {
+    width: 100px;
+    height: 100px;
+    top: 20%;
+    right: 10%;
+    animation-delay: 1s;
+}
+
+.leaf-2 {
+    width: 80px;
+    height: 80px;
+    bottom: 15%;
+    left: 10%;
+    animation-delay: 3s;
+}
+
+/* Animations */
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-20px);
+    }
+}
+
+@keyframes floatLeaf {
+    0%, 100% {
+        transform: translateY(0) rotate(0deg);
+    }
+    50% {
+        transform: translateY(-30px) rotate(10deg);
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .about-section {
+        padding: 3rem 1rem;
+    }
+    
+    .certifications-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .about-intro, .about-desc {
+        text-align: left;
+    }
+}
+
+@media (max-width: 480px) {
+    .certification-category {
+        padding: 1.5rem;
+    }
+    
+    .category-title {
+        font-size: 1rem;
+    }
+}
+</style>
+<body>
+    <section class="about-section">
+    <div class="about-container">
+        <!-- Floating decorative elements -->
+        <div class="about-decoration">
+            <div class="circle circle-1"></div>
+            <div class="circle circle-2"></div>
+            <div class="leaf leaf-1"></div>
+            <div class="leaf leaf-2"></div>
+        </div>
+        
+        <div class="about-content">
+            <div class="about-text">
+                <h2 class="section-title">About Us</h2>
+                <p class="about-intro">
+                    At Kaya Haus, you're in the hands of two seasoned physiotherapists who 
+                    combine clinical expertise with compassionate care.
+                </p>
+                <p class="about-desc">
+                    With a series of globally recognized certifications, Dr. Mayanta and Dr. Heena
+                    bring you the latest in evidence-based therapies tailored to your lifestyle.
+                </p>
+            </div>
+            
+            <div class="certifications-grid">
+                <!-- Certified In Section -->
+                <div class="certification-category" data-aos="fade-up">
+                    <h3 class="category-title">CERTIFIED IN:</h3>
+                    <ul class="certification-list">
+                        <li>Yoga & Power Yoga Fitness</li>
+                        <li>Diet & Nutrition</li>
+                        <li>Pre & Post Natal Yoga</li>
+                        <li>Pilates & Aerobics Instruction</li>
+                        <li>Spinning Training</li>
+                        <li>Advanced Fitness Training</li>
+                    </ul>
+                </div>
+                
+                <!-- Advanced Therapeutic Certifications -->
+                <div class="certification-category" data-aos="fade-up" data-aos-delay="100">
+                    <h3 class="category-title">ADVANCED THERAPEUTIC CERTIFICATIONS</h3>
+                    <ul class="certification-list">
+                        <li>Kinesiology Taping</li>
+                        <li>Dry Needling</li>
+                        <li>Cupping Dynamics</li>
+                        <li>Myofascial Release (MFR) + IASTM</li>
+                    </ul>
+                </div>
+                
+                <!-- Other Specializations -->
+                <div class="certification-category" data-aos="fade-up" data-aos-delay="200">
+                    <h3 class="category-title">OTHER SPECIALIZATIONS</h3>
+                    <ul class="certification-list">
+                        <li>Integrated Manual Therapy for Spine</li>
+                        <li>Aerial Yoga Teacher Training</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+<script>
+    // Add this script for scroll animations (requires AOS library)
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize AOS (Animate On Scroll) library
+    AOS.init({
+        duration: 800,
+        easing: 'ease-in-out',
+        once: true,
+        offset: 100
+    });
+});
+</script>
+</html>

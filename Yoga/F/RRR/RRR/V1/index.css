@@ -1,0 +1,1217 @@
+:root {
+    --primary-green: #43a047;
+    --light-green: #81c784;
+    --dark-green: #1b5e20;
+    --lightest-green: #e8f5e9;
+    --medium-light-green: #c8e6c9;
+    --medium-green: #a5d6a7;
+    --primary-color: #5D8B6A;
+    --secondary-color: #F5F9F5;
+    --accent-color: #E8F5E8;
+    --text-light: #6D7B7D;
+    --gradient-1: #5D8B6A;
+    --gradient-2: #3A6B47;
+    --success-color: #4A9D5E;
+    --feature-bg: rgba(109, 165, 95, 0.2);
+    --primary-light: rgba(107, 142, 112, 0.1);
+    --text-dark: #333333;
+    --glass-effect: rgba(107, 142, 112, 0.15);
+    --shadow-light: rgba(107, 142, 112, 0.2);
+    --shadow-medium: rgba(107, 142, 112, 0.3);
+    --transition-smooth: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    overflow-x: hidden;
+    font-family: 'Inter', sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background: #fff;
+}
+
+.hero-section {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 80px 20px 20px;
+    position: relative;
+}
+
+#vanta-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+.hero-content {
+    max-width: 1200px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.hero-container {
+    background: rgba(232, 245, 233, 0.473);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    padding: clamp(20px, 5vw, 40px);
+    display: flex;
+    align-items: center;
+    gap: clamp(20px, 3vw, 30px);
+}
+
+.hero-text {
+    flex: 1;
+    color: #333;
+}
+
+.slogan {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1rem, 2.5vw, 1.3rem);
+    margin-bottom: 12px;
+    display: flex;
+    gap: clamp(5px, 1vw, 8px);
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+}
+
+.slogan-word {
+    opacity: 0;
+    transform: translateY(15px);
+    animation: fadeInUp 0.4s ease forwards;
+}
+
+.slogan-word:nth-child(1) {
+    animation-delay: 0.1s;
+}
+
+.slogan-word:nth-child(3) {
+    animation-delay: 0.2s;
+}
+
+.slogan-word:nth-child(5) {
+    animation-delay: 0.3s;
+}
+
+.slogan-separator {
+    color: var(--primary-green);
+}
+
+.hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 4vw, 3rem);
+    font-weight: 700;
+    margin-bottom: 12px;
+    line-height: 1.2;
+}
+
+.hero-title-highlight {
+    color: var(--primary-green);
+}
+
+.hero-subtitle {
+    font-size: clamp(0.8rem, 2vw, 1rem);
+    margin-bottom: 16px;
+}
+
+.philosophy-pills {
+    display: flex;
+    gap: clamp(6px, 1.5vw, 8px);
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+}
+
+.philosophy-pill {
+    background: var(--medium-light-green);
+    color: var(--dark-green);
+    padding: clamp(5px, 1vw, 6px) clamp(10px, 2vw, 12px);
+    border-radius: 20px;
+    font-size: clamp(0.7rem, 1.8vw, 0.85rem);
+    transition: transform 0.3s ease;
+}
+
+.philosophy-pill:hover {
+    transform: translateY(-3px);
+}
+
+.hero-buttons {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.hero-buttons .btn {
+    background: var(--dark-green);
+    color: white;
+    padding: clamp(6px, 1.5vw, 8px) clamp(12px, 2.5vw, 16px);
+    font-size: clamp(0.8rem, 2vw, 0.9rem);
+    border-radius: 5px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.hero-buttons .btn:hover {
+    background: var(--primary-green);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(67, 160, 71, 0.3);
+}
+
+.hero-video {
+    flex: 1;
+    max-width: 600px;
+    perspective: 1000px;
+}
+
+.video-container {
+    transform: rotateY(10deg) rotateX(5deg);
+    transition: all 0.6s ease;
+    box-shadow: 0 25px 80px rgba(27, 94, 32, 0.2);
+    border-radius: 25px;
+    overflow: hidden;
+}
+
+.video-container:hover {
+    transform: rotateY(0deg) rotateX(0deg);
+    box-shadow: 0 30px 100px rgba(27, 94, 32, 0.3);
+}
+
+.hero-video video {
+    width: 100%;
+    border-radius: 25px;
+    object-fit: cover;
+}
+
+.about-section {
+    padding: 60px 20px;
+    position: relative;
+    background: #f5f9f5;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#particle-canvas {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+}
+
+.about-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 20% 30%, rgba(200, 230, 201, 0.3) 0%, transparent 70%), radial-gradient(circle at 80% 70%, rgba(232, 245, 233, 0.2) 0%, transparent 70%);
+    background-size: cover;
+    z-index: -1;
+}
+
+.about-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    max-width: 1200px;
+    width: 90%;
+    margin: 0 auto;
+    gap: 40px;
+    z-index: 1;
+}
+
+.founders-content {
+    flex: 1;
+    text-align: left;
+    color: #1b5e20;
+    background: rgba(232, 245, 233, 0.9);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.founders-image {
+    flex: 1;
+    max-width: 400px;
+}
+
+.founders-image img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    object-fit: cover;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.archive-badge {
+    font-size: 0.9rem;
+    font-weight: bold;
+    color: #43a047;
+    background: rgba(165, 214, 167, 0.3);
+    padding: 5px 10px;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    display: inline-block;
+}
+
+.founders-names {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.founder {
+    display: flex;
+    flex-direction: column;
+}
+
+.founder-name {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #1b5e20;
+}
+
+.founder-qualification {
+    font-size: 1.1rem;
+    color: #2e7d32;
+}
+
+.mission-statement p {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #2e7d32;
+    margin-bottom: 15px;
+}
+
+.signature {
+    font-size: 0.9rem;
+    font-style: italic;
+    color: #1b5e20;
+    margin-top: 20px;
+}
+
+.navbar {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(25px);
+    margin: 10px auto;
+    max-width: 1200px;
+    border-radius: 30px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 15px 35px rgba(27, 94, 32, 0.1);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    transition: all 0.6s ease;
+}
+
+.navbar:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 25px 50px rgba(27, 94, 32, 0.15);
+}
+
+.navbar-brand {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: clamp(1.5rem, 3vw, 1.8rem);
+    color: var(--dark-green) !important;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.4s ease;
+}
+
+.navbar-brand:hover {
+    color: var(--primary-green) !important;
+    transform: scale(1.05);
+}
+
+.navbar-brand img {
+    width: clamp(40px, 8vw, 50px);
+    height: clamp(40px, 8vw, 50px);
+    border-radius: 50%;
+    border: 3px solid var(--medium-green);
+    transition: all 0.4s ease;
+}
+
+.navbar-brand:hover img {
+    transform: scale(1.2) rotate(360deg);
+    border-color: var(--primary-green);
+}
+
+.navbar-nav .nav-link {
+    color: var(--dark-green);
+    font-weight: 600;
+    margin: 0 8px;
+    padding: 12px 20px !important;
+    border-radius: 20px;
+    position: relative;
+    transition: all 0.4s ease;
+}
+
+.navbar-nav .nav-link:hover {
+    color: var(--dark-green);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(165, 214, 167, 0.4);
+}
+
+.navbar-nav .dropdown-menu {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    border: 1px solid rgba(129, 199, 132, 0.2);
+    box-shadow: 0 10px 30px rgba(27, 94, 32, 0.1);
+    min-width: 200px;
+    margin-top: 10px;
+    animation: dropdownSlide 0.3s ease forwards;
+}
+
+.navbar-nav .dropdown-item {
+    color: var(--dark-green);
+    font-weight: 500;
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+}
+
+.navbar-nav .dropdown-item:hover {
+    background: var(--lightest-green);
+    color: var(--primary-green);
+    border-radius: 20px;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes dropdownSlide {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 991.98px) {
+    .navbar {
+        margin: 5px;
+        border-radius: 15px;
+    }
+    .navbar-collapse {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        border-radius: 10px;
+        padding: 10px;
+        margin-top: 5px;
+    }
+    .navbar-nav .nav-link {
+        margin: 5px 0;
+        padding: 10px !important;
+    }
+    .navbar-nav .dropdown-menu {
+        position: static;
+        width: 100%;
+        margin-top: 0;
+        box-shadow: none;
+    }
+    .hero-section {
+        padding: 70px 15px 15px;
+    }
+    .hero-container {
+        flex-direction: column;
+        align-items: center;
+    }
+    .hero-text {
+        max-width: 100%;
+        text-align: center;
+        order: 1;
+    }
+    .hero-video {
+        max-width: 100%;
+        order: 2;
+        margin-top: 20px;
+    }
+    .hero-title {
+        font-size: clamp(1.6rem, 3vw, 2.2rem);
+    }
+    .hero-subtitle {
+        font-size: clamp(0.75rem, 1.8vw, 0.9rem);
+    }
+    .slogan {
+        font-size: clamp(0.9rem, 2vw, 1.1rem);
+        gap: clamp(4px, 0.8vw, 6px);
+        justify-content: center;
+    }
+    .philosophy-pills {
+        gap: clamp(5px, 1vw, 6px);
+        justify-content: center;
+    }
+    .philosophy-pill {
+        font-size: clamp(0.65rem, 1.5vw, 0.8rem);
+        padding: clamp(4px, 0.8vw, 5px) clamp(8px, 1.5vw, 10px);
+    }
+    .hero-buttons {
+        justify-content: center;
+    }
+    .hero-buttons .btn {
+        font-size: clamp(0.75rem, 1.8vw, 0.85rem);
+        padding: clamp(5px, 1vw, 6px) clamp(10px, 2vw, 12px);
+    }
+}
+
+@media (max-width: 768px) {
+    .about-container {
+        flex-direction: column;
+        gap: 20px;
+    }
+    .founders-image {
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 576px) {
+    .navbar-brand img {
+        width: 40px;
+        height: 40px;
+    }
+    .navbar-nav .nav-link {
+        padding: 8px !important;
+    }
+    .hero-section {
+        padding: 60px 10px 10px;
+    }
+    .hero-container {
+        padding: clamp(15px, 4vw, 30px);
+    }
+    .slogan {
+        font-size: clamp(0.8rem, 1.8vw, 1rem);
+        gap: clamp(3px, 0.6vw, 5px);
+    }
+    .philosophy-pills {
+        gap: clamp(4px, 0.8vw, 5px);
+    }
+    .philosophy-pill {
+        font-size: clamp(0.6rem, 1.3vw, 0.75rem);
+        padding: clamp(3px, 0.6vw, 4px) clamp(6px, 1.2vw, 8px);
+    }
+    .hero-buttons .btn {
+        font-size: clamp(0.7rem, 1.6vw, 0.8rem);
+        padding: clamp(4px, 0.8vw, 5px) clamp(8px, 1.5vw, 10px);
+    }
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.features-section {
+    min-height: 100vh;
+    background: var(--secondary-color);
+    position: relative;
+    overflow: hidden;
+}
+
+@keyframes patternShift {
+    0% {
+        transform: translate(0, 0);
+    }
+    100% {
+        transform: translate(100px, 60px);
+    }
+}
+
+.content-layout {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    min-height: 100vh;
+    align-items: center;
+    gap: 60px;
+    position: relative;
+}
+
+.title-section {
+    padding: 80px 40px;
+    position: relative;
+}
+
+.section-number {
+    font-size: 8rem;
+    font-weight: 900;
+    color: rgba(93, 139, 106, 0.1);
+    position: absolute;
+    top: -20px;
+    left: 0;
+}
+
+.section-title {
+    font-size: 3.5rem;
+    font-weight: 800;
+    color: var(--primary-color);
+    margin-bottom: 30px;
+    line-height: 1.1;
+    position: relative;
+    opacity: 0;
+    transform: translateX(-100px);
+    transition: all 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.section-title.animate {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.section-title span {
+    display: block;
+    background: linear-gradient(135deg, var(--primary-color), var(--success-color));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.section-description {
+    font-size: 1.3rem;
+    color: var(--text-light);
+    line-height: 1.8;
+    margin-bottom: 40px;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 1s ease-out 0.3s;
+}
+
+.section-description.animate {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.decorative-line {
+    width: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary-color), var(--success-color));
+    border-radius: 2px;
+    position: relative;
+    opacity: 0;
+    transition: all 1s ease-out 0.6s;
+}
+
+.decorative-line.animate {
+    opacity: 1;
+    width: 100px;
+}
+
+.decorative-line::after {
+    content: '';
+    position: absolute;
+    right: -20px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 12px;
+    height: 12px;
+    background: var(--success-color);
+    border-radius: 50%;
+    animation: dotPulse 2s ease-in-out infinite;
+}
+
+@keyframes dotPulse {
+    0%, 100% {
+        transform: translateY(-50%) scale(1);
+    }
+    50% {
+        transform: translateY(-50%) scale(1.3);
+    }
+}
+
+.features-grid {
+    padding: 80px 40px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    position: relative;
+}
+
+.feature-item {
+    background: var(--feature-bg);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 25px;
+    padding: 50px 30px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(80px) rotateZ(5deg);
+    transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 0 10px 30px rgba(93, 139, 106, 0.1);
+}
+
+.feature-item.animate {
+    opacity: 1;
+    transform: translateY(0) rotateZ(0deg);
+}
+
+.feature-item:nth-child(1) {
+    transition-delay: 0.1s;
+}
+
+.feature-item:nth-child(2) {
+    transition-delay: 0.3s;
+}
+
+.feature-item:nth-child(3) {
+    transition-delay: 0.5s;
+}
+
+.feature-item:nth-child(4) {
+    transition-delay: 0.7s;
+}
+
+.feature-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, var(--primary-color), var(--success-color));
+    border-radius: 25px;
+    opacity: 0;
+    transform: scale(0.8);
+    transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.feature-item:hover::before {
+    opacity: 0.15;
+    transform: scale(1);
+}
+
+.feature-item:hover {
+    transform: translateY(-15px) scale(1.05);
+    border-color: rgba(94, 170, 110, 0.5);
+    box-shadow: 0 15px 35px rgba(93, 139, 106, 0.2);
+}
+
+.icon-hexagon {
+    width: 100px;
+    height: 100px;
+    margin: 0 auto 30px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hexagon-shape {
+    width: 100px;
+    height: 100px;
+    background: linear-gradient(135deg, var(--gradient-1), var(--gradient-2));
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+    position: absolute;
+    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.hexagon-inner {
+    width: 80px;
+    height: 80px;
+    background: var(--secondary-color);
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+    position: absolute;
+    transition: all 0.5s ease;
+}
+
+.feature-item:hover .hexagon-shape {
+    transform: rotate(60deg) scale(1.1);
+    background: linear-gradient(135deg, var(--primary-color), var(--success-color));
+}
+
+.feature-item:hover .hexagon-inner {
+    transform: rotate(-60deg) scale(0.9);
+}
+
+.feature-icon {
+    font-size: 2.5rem;
+    color: var(--primary-color);
+    position: relative;
+    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.feature-item:hover .feature-icon {
+    color: rgba(11, 37, 13, 0.726);
+    transform: scale(1.2);
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+}
+
+.feature-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin-bottom: 20px;
+    transition: all 0.3s ease;
+}
+
+.feature-text {
+    font-size: 0.95rem;
+    color: var(--text-light);
+    line-height: 1.6;
+    transition: all 0.3s ease;
+}
+
+.feature-item:hover .feature-title {
+    color: white;
+}
+
+.feature-item:hover .feature-text {
+    color: rgba(255, 255, 255, 0.9);
+}
+
+@keyframes elementFloat {
+    0%, 100% {
+        transform: translateY(0px) translateX(0px) rotate(0deg);
+        opacity: 0.3;
+    }
+    33% {
+        transform: translateY(-30px) translateX(20px) rotate(120deg);
+        opacity: 0.6;
+    }
+    66% {
+        transform: translateY(-15px) translateX(-25px) rotate(240deg);
+        opacity: 0.4;
+    }
+}
+
+.center-divider {
+    position: absolute;
+    left: calc(100% / 3);
+    top: 10%;
+    bottom: 10%;
+    width: 2px;
+    background: linear-gradient(180deg, transparent 0%, var(--primary-color) 20%, var(--success-color) 50%, var(--primary-color) 80%, transparent 100%);
+    animation: dividerGlow 4s ease-in-out infinite;
+}
+
+@keyframes dividerGlow {
+    0%, 100% {
+        opacity: 0.3;
+        box-shadow: 0 0 0 rgba(93, 139, 106, 0.5);
+    }
+    50% {
+        opacity: 0.8;
+        box-shadow: 0 0 20px rgba(93, 139, 106, 0.5);
+    }
+}
+
+@media (max-width: 1024px) {
+    .content-layout {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+    .features-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+    }
+    .center-divider {
+        display: none;
+    }
+}
+
+@media (max-width: 768px) {
+    .section-title {
+        font-size: 2.8rem;
+    }
+    .features-grid {
+        grid-template-columns: 1fr;
+        gap: 25px;
+        padding: 40px 20px;
+    }
+    .title-section {
+        padding: 60px 20px;
+    }
+}
+
+.main-header {
+    text-align: center;
+    padding: 30px 10px;
+    position: relative;
+}
+
+.main-title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--text-dark);
+    display: inline-block;
+    background: var(--glass-effect);
+    backdrop-filter: blur(10px);
+    padding: 15px 30px;
+    border-radius: 15px;
+    box-shadow: 0 8px 20px var(--shadow-light);
+    position: relative;
+    opacity: 0;
+    transform: translateY(50px) scale(0.9);
+}
+
+.main-title::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--gradient-1), var(--gradient-2));
+    border-radius: 2px;
+    animation: expandMainLine 1s ease-out 1s forwards;
+}
+
+@keyframes expandMainLine {
+    to {
+        width: 100px;
+    }
+}
+
+.main-title.animate {
+    animation: mainTitleSlide 1.5s var(--transition-smooth) forwards;
+}
+
+@keyframes mainTitleSlide {
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.Physiotherapy-section {
+    min-height: 100vh;
+    padding: 80px 20px;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+}
+
+#physio-particle-canvas {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+}
+
+.Physiotherapy-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 30% 40%, rgba(200, 230, 201, 0.2) 0%, transparent 60%), radial-gradient(circle at 70% 60%, rgba(232, 245, 233, 0.15) 0%, transparent 60%);
+    background-size: cover;
+    z-index: -1;
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translate(0, 0) rotate(0deg);
+    }
+    33% {
+        transform: translate(30px, -30px) rotate(120deg);
+    }
+    66% {
+        transform: translate(-20px, 20px) rotate(240deg);
+    }
+}
+
+.Physiotherapy-content-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    max-width: 1200px;
+    margin: 0 auto;
+    gap: 40px;
+    align-items: start;
+    position: relative;
+    z-index: 2;
+}
+
+.slider-container {
+    position: relative;
+    width: 400px;
+    height: 400px;
+    transform-style: preserve-3d;
+    perspective: 1200px;
+    margin: 0 auto;
+    z-index: 3;
+}
+
+.cube {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 1s var(--transition-smooth);
+}
+
+.cube-face {
+    position: absolute;
+    width: 400px;
+    height: 400px;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 20px 40px var(--shadow-light);
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    background: var(--glass-effect);
+    z-index: 4;
+}
+
+.cube-face video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.9;
+    transition: opacity 0.3s ease;
+}
+
+.cube-face:hover video {
+    opacity: 1;
+}
+
+.cube-front {
+    transform: rotateY(0deg) translateZ(200px);
+}
+
+.cube-right {
+    transform: rotateY(90deg) translateZ(200px);
+}
+
+.cube-back {
+    transform: rotateY(180deg) translateZ(200px);
+}
+
+.cube-left {
+    transform: rotateY(-90deg) translateZ(200px);
+}
+
+.cube-top {
+    transform: rotateX(90deg) translateZ(200px);
+}
+
+.cube-bottom {
+    transform: rotateX(-90deg) translateZ(200px);
+}
+
+.controls-panel {
+    position: absolute;
+    bottom: -100px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 15px;
+    z-index: 5;
+}
+
+.control-btn {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    background: var(--glass-effect);
+    backdrop-filter: blur(15px);
+    color: var(--text-dark);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s var(--transition-smooth);
+    font-size: 1rem;
+}
+
+.control-btn:hover {
+    transform: scale(1.1);
+    border-color: var(--accent-color);
+    background: var(--primary-light);
+}
+
+.section-title {
+    font-size: 2.8rem;
+    font-weight: 800;
+    color: var(--text-dark);
+    margin-bottom: 15px;
+    position: relative;
+    opacity: 0;
+    transform: translateY(-50px);
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    width: 80px;
+    height: 3px;
+    background: linear-gradient(90deg, var(--gradient-1), var(--gradient-2));
+    border-radius: 2px;
+    animation: expandLine 1s ease-out 1s both;
+}
+
+@keyframes expandLine {
+    from {
+        width: 0;
+    }
+    to {
+        width: 80px;
+    }
+}
+
+.section-title.animate {
+    animation: titleSlideUp 1s var(--transition-smooth) forwards;
+}
+
+@keyframes titleSlideUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.section-subtitle {
+    font-size: 1.1rem;
+    color: var(--text-light);
+    max-width: 500px;
+    opacity: 0;
+    transform: translateY(30px);
+}
+
+.section-subtitle.animate {
+    animation: subtitleFade 1s ease-out 0.5s forwards;
+}
+
+@keyframes subtitleFade {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 992px) {
+    .main-title {
+        font-size: 2.5rem;
+        padding: 10px 20px;
+    }
+    .Physiotherapy-content-layout {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    .slider-container {
+        width: 300px;
+        height: 300px;
+    }
+    .cube-face {
+        width: 300px;
+        height: 300px;
+    }
+    .cube-front {
+        transform: rotateY(0deg) translateZ(150px);
+    }
+    .cube-right {
+        transform: rotateY(90deg) translateZ(150px);
+    }
+    .cube-back {
+        transform: rotateY(180deg) translateZ(150px);
+    }
+    .cube-left {
+        transform: rotateY(-90deg) translateZ(150px);
+    }
+    .cube-top {
+        transform: rotateX(90deg) translateZ(150px);
+    }
+    .cube-bottom {
+        transform: rotateX(-90deg) translateZ(150px);
+    }
+    .section-title {
+        font-size: 2.2rem;
+    }
+    .section-subtitle {
+        font-size: 1rem;
+    }
+    .controls-panel {
+        bottom: -60px;
+    }
+    .control-btn {
+        width: 40px;
+        height: 40px;
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .main-title {
+        font-size: 2rem;
+        padding: 8px 15px;
+    }
+    .Physiotherapy-section {
+        padding: 60px 15px;
+    }
+    .slider-container {
+        width: 250px;
+        height: 250px;
+    }
+    .cube-face {
+        width: 250px;
+        height: 250px;
+    }
+    .cube-front {
+        transform: rotateY(0deg) translateZ(125px);
+    }
+    .cube-right {
+        transform: rotateY(90deg) translateZ(125px);
+    }
+    .cube-back {
+        transform: rotateY(180deg) translateZ(125px);
+    }
+    .cube-left {
+        transform: rotateY(-90deg) translateZ(125px);
+    }
+    .cube-top {
+        transform: rotateX(90deg) translateZ(125px);
+    }
+    .cube-bottom {
+        transform: rotateX(-90deg) translateZ(125px);
+    }
+    .section-title {
+        font-size: 1.8rem;
+    }
+    .section-subtitle {
+        font-size: 0.9rem;
+    }
+}

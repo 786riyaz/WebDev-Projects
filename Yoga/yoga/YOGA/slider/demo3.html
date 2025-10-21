@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Animated Image Slider</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow-x: hidden;
+        }
+
+        .slider-container {
+            perspective: 1000px;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .slider-wrapper {
+            position: relative;
+            width: 800px;
+            height: 500px;
+            transform-style: preserve-3d;
+        }
+
+        .slide {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            cursor: pointer;
+            background: #fff;
+        }
+
+        .slide img {
+            width: 100%;
+            height: 70%;
+            object-fit: cover;
+            transition: transform 0.8s ease;
+        }
+
+        .slide:hover img {
+            transform: scale(1.05);
+        }
+
+        .slide-content {
+            padding: 20px;
+            height: 30%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            color: white;
+            text-align: center;
+        }
+
+        .slide-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .slide-description {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        /* 3D Positioning */
+        .slide:nth-child(1) {
+            transform: translateZ(0px) rotateY(0deg);
+            z-index: 3;
+        }
+
+        .slide:nth-child(2) {
+            transform: translateZ(-100px) rotateY(45deg) translateX(200px);
+            z-index: 2;
+            opacity: 0.7;
+        }
+
+        .slide:nth-child(3) {
+            transform: translateZ(-200px) rotateY(90deg) translateX(350px);
+            z-index: 1;
+            opacity: 0.5;
+        }
+
+        .slide:nth-child(4) {
+            transform: translateZ(-200px) rotateY(-90deg) translateX(-350px);
+            z-index: 1;
+            opacity: 0.5;
+        }
+
+        .slide:nth-child(5) {
+            transform: translateZ(-100px) rotateY(-45deg) translateX(-200px);
+            z-index: 2;
+            opacity: 0.7;
+        }
+
+        /* Navigation */
+        .nav-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 10;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            border-color: rgba(255, 255, 255, 0.5);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .prev-btn {
+            left: 50px;
+        }
+
+        .next-btn {
+            right: 50px;
+        }
+
+        /* Indicators */
+        .indicators {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 15px;
+            z-index: 10;
+        }
+
+        .indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .indicator.active {
+            background: white;
+            transform: scale(1.3);
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+        }
+
+        /* Floating particles animation */
+        .particle {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0px) rotate(0deg);
+            }
+
+            50% {
+                transform: translateY(-20px) rotate(180deg);
+            }
+        }
+
+        .particle:nth-child(1) {
+            width: 20px;
+            height: 20px;
+            top: 20%;
+            left: 20%;
+            animation-delay: 0s;
+        }
+
+        .particle:nth-child(2) {
+            width: 15px;
+            height: 15px;
+            top: 60%;
+            left: 80%;
+            animation-delay: 2s;
+        }
+
+        .particle:nth-child(3) {
+            width: 25px;
+            height: 25px;
+            top: 80%;
+            left: 30%;
+            animation-delay: 4s;
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .slider-wrapper {
+                width: 600px;
+                height: 400px;
+            }
+
+            .slide:nth-child(2) {
+                translateX(150px);
+            }
+
+            .slide:nth-child(3) {
+                translateX(250px);
+            }
+
+            .slide:nth-child(4) {
+                translateX(-250px);
+            }
+
+            .slide:nth-child(5) {
+                translateX(-150px);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .slider-wrapper {
+                width: 350px;
+                height: 300px;
+            }
+
+            .nav-btn {
+                width: 50px;
+                height: 50px;
+            }
+
+            .prev-btn {
+                left: 20px;
+            }
+
+            .next-btn {
+                right: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="slider-container">
+        <!-- Floating particles -->
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+
+        <div class="slider-wrapper" id="slider">
+            <div class="slide">
+                <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=600&fit=crop"
+                    alt="Mountain Lake">
+                <div class="slide-content">
+                    <div class="slide-title">Mountain Serenity</div>
+                    <div class="slide-description">Breathtaking views of pristine mountain lakes</div>
+                </div>
+            </div>
+
+            <div class="slide">
+                <img src="https://images.unsplash.com/photo-1501594907352-04cda38ebc29?w=800&h=600&fit=crop"
+                    alt="Ocean Sunset">
+                <div class="slide-content">
+                    <div class="slide-title">Ocean Dreams</div>
+                    <div class="slide-description">Golden sunsets over endless horizons</div>
+                </div>
+            </div>
+
+            <div class="slide">
+                <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=800&h=600&fit=crop"
+                    alt="Forest Path">
+                <div class="slide-content">
+                    <div class="slide-title">Forest Adventure</div>
+                    <div class="slide-description">Mysterious paths through ancient woodlands</div>
+                </div>
+            </div>
+
+            <div class="slide">
+                <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=600&fit=crop"
+                    alt="Desert Dunes">
+                <div class="slide-content">
+                    <div class="slide-title">Desert Majesty</div>
+                    <div class="slide-description">Endless dunes under starlit skies</div>
+                </div>
+            </div>
+
+            <div class="slide">
+                <img src="https://images.unsplash.com/photo-1519904981063-b0cf448d479e?w=800&h=600&fit=crop"
+                    alt="City Lights">
+                <div class="slide-content">
+                    <div class="slide-title">Urban Energy</div>
+                    <div class="slide-description">Vibrant city life in motion</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation buttons -->
+        <button class="nav-btn prev-btn" onclick="prevSlide()">
+            <i class="fas fa-chevron-left"></i>
+        </button>
+        <button class="nav-btn next-btn" onclick="nextSlide()">
+            <i class="fas fa-chevron-right"></i>
+        </button>
+
+        <!-- Indicators -->
+        <div class="indicators">
+            <div class="indicator active" onclick="goToSlide(0)"></div>
+            <div class="indicator" onclick="goToSlide(1)"></div>
+            <div class="indicator" onclick="goToSlide(2)"></div>
+            <div class="indicator" onclick="goToSlide(3)"></div>
+            <div class="indicator" onclick="goToSlide(4)"></div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+    <script>
+        let currentSlide = 0;
+        const totalSlides = 5;
+        const slides = document.querySelectorAll('.slide');
+        const indicators = document.querySelectorAll('.indicator');
+
+        function updateSlider() {
+            slides.forEach((slide, index) => {
+                const position = (index - currentSlide + totalSlides) % totalSlides;
+
+                switch (position) {
+                    case 0: // Current slide
+                        slide.style.transform = 'translateZ(0px) rotateY(0deg)';
+                        slide.style.zIndex = '3';
+                        slide.style.opacity = '1';
+                        break;
+                    case 1: // Next slide
+                        slide.style.transform = 'translateZ(-100px) rotateY(45deg) translateX(200px)';
+                        slide.style.zIndex = '2';
+                        slide.style.opacity = '0.7';
+                        break;
+                    case 2: // Far right
+                        slide.style.transform = 'translateZ(-200px) rotateY(90deg) translateX(350px)';
+                        slide.style.zIndex = '1';
+                        slide.style.opacity = '0.5';
+                        break;
+                    case 3: // Far left
+                        slide.style.transform = 'translateZ(-200px) rotateY(-90deg) translateX(-350px)';
+                        slide.style.zIndex = '1';
+                        slide.style.opacity = '0.5';
+                        break;
+                    case 4: // Previous slide
+                        slide.style.transform = 'translateZ(-100px) rotateY(-45deg) translateX(-200px)';
+                        slide.style.zIndex = '2';
+                        slide.style.opacity = '0.7';
+                        break;
+                }
+            });
+
+            // Update indicators
+            indicators.forEach((indicator, index) => {
+                indicator.classList.toggle('active', index === currentSlide);
+            });
+        }
+
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % totalSlides;
+            updateSlider();
+        }
+
+        function prevSlide() {
+            currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+            updateSlider();
+        }
+
+        function goToSlide(index) {
+            currentSlide = index;
+            updateSlider();
+        }
+
+        // Auto-slide functionality
+        let autoSlideInterval = setInterval(nextSlide, 4000);
+
+        // Pause auto-slide on hover
+        document.querySelector('.slider-wrapper').addEventListener('mouseenter', () => {
+            clearInterval(autoSlideInterval);
+        });
+
+        document.querySelector('.slider-wrapper').addEventListener('mouseleave', () => {
+            autoSlideInterval = setInterval(nextSlide, 4000);
+        });
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') prevSlide();
+            if (e.key === 'ArrowRight') nextSlide();
+        });
+
+        // Touch/swipe support
+        let startX = 0;
+        let endX = 0;
+
+        document.querySelector('.slider-wrapper').addEventListener('touchstart', (e) => {
+            startX = e.touches[0].clientX;
+        });
+
+        document.querySelector('.slider-wrapper').addEventListener('touchend', (e) => {
+            endX = e.changedTouches[0].clientX;
+            const diffX = startX - endX;
+
+            if (Math.abs(diffX) > 50) {
+                if (diffX > 0) {
+                    nextSlide();
+                } else {
+                    prevSlide();
+                }
+            }
+        });
+
+        // Initialize slider
+        updateSlider();
+    </script>
+</body>
+
+</html>

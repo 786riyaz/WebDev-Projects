@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Physio & Yoga Therapy</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #6B8E70;
+            --primary-light: rgba(107, 142, 112, 0.1);
+            --secondary-color: #FFFFFF;
+            --text-dark: #333333;
+            --text-light: #777777;
+            --accent-color: #6B8E70;
+            --gradient-1: #6B8E70;
+            --gradient-2: #A8C7A7;
+            --success-color: #2E7D32;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-dark);
+            background-color: #f9f9f9;
+            padding-top: 80px;
+        }
+        
+         .navbar {
+            background: var(--glass-effect);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 15px var(--shadow-light);
+            padding: 15px 0;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .navbar.scrolled {
+            padding: 10px 0;
+            background: rgba(107, 142, 112, 0.35);
+            box-shadow: 0 4px 16px var(--shadow-medium);
+        }
+
+        .navbar-brand {
+            color: var(--primary-color);
+            font-weight: 700;
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            transition: color 0.3s ease;
+        }
+
+        .navbar-brand img {
+            height: 40px;
+            margin-right: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .navbar.scrolled .navbar-brand img {
+            height: 32px;
+        }
+
+        .navbar-brand:hover {
+            color: var(--success-color);
+        }
+
+        .nav-link {
+            color: var(--text-dark);
+            font-weight: 600;
+            font-size: 1rem;
+            margin: 0 10px;
+            position: relative;
+            padding: 10px 0;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            color: var(--success-color);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background: linear-gradient(90deg, var(--gradient-1), var(--gradient-2));
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after,
+        .nav-link.active::after {
+            width: 100%;
+        }
+
+        .dropdown-menu {
+            background: var(--glass-effect);
+            backdrop-filter: blur(10px);
+            border: none;
+            box-shadow: 0 5px 15px var(--shadow-light);
+            border-radius: 10px;
+            padding: 10px 0;
+            margin-top: 10px;
+            opacity: 0;
+            transform: translateY(-10px);
+            visibility: hidden;
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .dropdown-menu.show {
+            opacity: 1;
+            transform: translateY(0);
+            visibility: visible;
+        }
+
+        .dropdown-item {
+            padding: 10px 20px;
+            color: var(--text-dark);
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .dropdown-item:hover {
+            background: var(--primary-light);
+            color: var(--success-color);
+            transform: translateX(5px);
+        }
+
+        .dropdown-item i {
+            color: var(--success-color);
+            font-size: 0.9rem;
+        }
+
+        /* Appointment Button */
+        .btn-primary {
+            background: linear-gradient(135deg, var(--gradient-1), var(--gradient-2));
+            border: none;
+            padding: 10px 24px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: var(--secondary-color);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px var(--shadow-medium);
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn-primary:hover::before {
+            left: 100%;
+        }
+
+        .navbar-toggler {
+            border: none;
+            padding: 10px;
+            position: relative;
+        }
+
+        .navbar-toggler-icon {
+            background-image: none;
+            width: 24px;
+            height: 2px;
+            background: var(--text-dark);
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .navbar-toggler-icon::before,
+        .navbar-toggler-icon::after {
+            content: '';
+            position: absolute;
+            width: 24px;
+            height: 2px;
+            background: var(--text-dark);
+            transition: all 0.3s ease;
+        }
+
+        .navbar-toggler-icon::before {
+            top: -8px;
+        }
+
+        .navbar-toggler-icon::after {
+            top: 8px;
+        }
+
+        .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
+            background: transparent;
+        }
+
+        .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon::before {
+            transform: rotate(45deg);
+            top: 0;
+        }
+
+        .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon::after {
+            transform: rotate(-45deg);
+            top: 0;
+        }
+
+        /* Accessibility */
+        .nav-link:focus,
+        .dropdown-item:focus,
+        .btn-primary:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(107, 142, 112, 0.3);
+            border-radius: 5px;
+        }
+
+        .navbar-toggler:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(107, 142, 112, 0.3);
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 991.98px) {
+            .navbar-collapse {
+                padding: 20px;
+                background: var(--glass-effect);
+                backdrop-filter: blur(10px);
+                border-radius: 10px;
+                margin-top: 10px;
+            }
+
+            .nav-item {
+                margin: 8px 0;
+            }
+
+            .dropdown-menu {
+                margin-left: 15px;
+                width: calc(100% - 30px);
+                background: transparent;
+                backdrop-filter: none;
+                box-shadow: none;
+            }
+
+            .btn-primary {
+                width: 100%;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .navbar-brand {
+                font-size: 1.5rem;
+            }
+
+            .navbar-brand img {
+                height: 32px;
+            }
+
+            .navbar.scrolled .navbar-brand img {
+                height: 28px;
+            }
+
+            .nav-link {
+                font-size: 0.95rem;
+            }
+
+            .dropdown-item {
+                font-size: 0.85rem;
+            }
+        }
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--gradient-1), var(--gradient-2));
+            color: var(--secondary-color);
+            padding: 5rem 0;
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+        }
+        
+        /* Service Sections */
+        .service-section {
+            margin-bottom: 4rem;
+            padding: 2rem 0;
+        }
+        
+        .section-title {
+            color: var(--primary-color);
+            font-weight: 700;
+            margin-bottom: 2rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-title:after {
+            content: '';
+            position: absolute;
+            width: 50%;
+            height: 3px;
+            bottom: -10px;
+            left: 0;
+            background-color: var(--primary-color);
+        }
+        
+        .service-card {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+            height: 100%;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        
+        .service-icon {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        
+        .service-title {
+            color: var(--primary-color);
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        
+        .service-list {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        
+        .service-list li {
+            margin-bottom: 8px;
+            position: relative;
+            padding-left: 20px;
+        }
+        
+        .service-list li:before {
+            content: '•';
+            color: var(--primary-color);
+            position: absolute;
+            left: 0;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--primary-color);
+            color: var(--secondary-color);
+            padding: 3rem 0 1rem;
+        }
+        
+        .footer-title {
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-links {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links a {
+            color: var(--secondary-color);
+            text-decoration: none;
+            opacity: 0.8;
+            transition: opacity 0.3s;
+        }
+        
+        .footer-links a:hover {
+            opacity: 1;
+            text-decoration: underline;
+        }
+        
+        .social-icons a {
+            color: var(--secondary-color);
+            font-size: 1.5rem;
+            margin-right: 15px;
+            opacity: 0.8;
+            transition: opacity 0.3s;
+        }
+        
+        .social-icons a:hover {
+            opacity: 1;
+        }
+        
+        .copyright {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 20px;
+            margin-top: 30px;
+            text-align: center;
+            opacity: 0.7;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+   <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+        <div class="container">
+            <!-- Logo and Brand -->
+            <a class="navbar-brand d-flex align-items-center" href="#">
+                <!-- Placeholder logo; replace with actual logo URL -->
+                <img src="https://via.placeholder.com/40x40?text=Logo" alt="" class="me-2">
+                Yoga
+            </a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">Home</a>
+                    </li>
+
+                    <!-- Physiotherapy Dropdown -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="physioDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Physiotherapy
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="physioDropdown">
+                            <li><a class="dropdown-item" href="#ortho"><i class="fas fa-bone me-2"></i>Ortho & Sports</a></li>
+                            <li><a class="dropdown-item" href="#cardio"><i class="fas fa-heartbeat me-2"></i>Cardio-Respiratory</a></li>
+                            <li><a class="dropdown-item" href="#neuro"><i class="fas fa-brain me-2"></i>Neuro & Pediatric</a></li>
+                            <li><a class="dropdown-item" href="#womens"><i class="fas fa-female me-2"></i>Women's Health</a></li>
+                        </ul>
+                    </li>
+
+                    <!-- Yoga Services Dropdown -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="yogaDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Yoga Services
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="yogaDropdown">
+                            <li><a class="dropdown-item" href="#power-yoga"><i class="fas fa-fire me-2"></i>Power Yoga</a></li>
+                            <li><a class="dropdown-item" href="#kids-yoga"><i class="fas fa-child me-2"></i>Kids Yoga</a></li>
+                            <li><a class="dropdown-item" href="#aerial-yoga"><i class="fas fa-parachute-box me-2"></i>Aerial Yoga</a></li>
+                            <li><a class="dropdown-item" href="#prenatal-yoga"><i class="fas fa-baby me-2"></i>Pre & Post Natal Yoga</a></li>
+                            <li><a class="dropdown-item" href="#fitness-yoga"><i class="fas fa-dumbbell me-2"></i>Fitness Yoga</a></li>
+                            <li><a class="dropdown-item" href="#personal-yoga"><i class="fas fa-user me-2"></i>Personal Training</a></li>
+                        </ul>
+                    </li>
+
+                    <!-- Special Therapies Dropdown -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="therapyDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Special Therapies
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="therapyDropdown">
+                            <li><a class="dropdown-item" href="#tapping"><i class="fas fa-hand-paper me-2"></i>Tapping</a></li>
+                            <li><a class="dropdown-item" href="#dry-cupping"><i class="fas fa-circle-notch me-2"></i>Dry Cupping</a></li>
+                            <li><a class="dropdown-item" href="#wet-cupping"><i class="fas fa-tint me-2"></i>Wet Cupping</a></li>
+                            <li><a class="dropdown-item" href="#dry-needling"><i class="fas fa-syringe me-2"></i>Dry Needling</a></li>
+                        </ul>
+                    </li>
+
+                    <!-- Additional Useful Links -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#testimonials">Testimonials</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Contact</a>
+                    </li>
+
+                    <!-- Appointment CTA Button -->
+                    <li class="nav-item ms-lg-3 my-2 my-lg-0">
+                        <a class="btn btn-primary" href="#appointment">Book</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>Comprehensive Physio & Yoga Therapy</h1>
+            <p>Helping you recover from injuries, manage pain, and enhance your wellbeing through integrated physiotherapy and yoga services</p>
+            <a href="#services" class="btn btn-light btn-lg px-4">Explore Our Services</a>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <div class="container" id="services">
+        <!-- Physiotherapy Services -->
+        <section class="service-section" id="ortho">
+            <h2 class="section-title">Ortho & Sports Physiotherapy</h2>
+            <p class="mb-4">Helping you recover from injuries, manage pain, and get back to your active lifestyle.</p>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="service-card">
+                        <h3 class="service-title"><i class="fas fa-bone service-icon"></i> Pain Management</h3>
+                        <ul class="service-list">
+                            <li>AVN Hip Joint</li>
+                            <li>Posture Correction</li>
+                            <li>Joint Pain & Arthritis</li>
+                            <li>Ligament Injuries</li>
+                            <li>Post-Surgical Rehabilitation</li>
+                            <li>Sports Injury Rehab</li>
+                            <li>Injury Prevention & Performance Enhancement</li>
+                            <li>Return-to-Sport Programs</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <div class="service-card">
+                        <h3 class="service-title"><i class="fas fa-running service-icon"></i> Sports Rehabilitation</h3>
+                        <ul class="service-list">
+                            <li>Customized rehab programs</li>
+                            <li>Biomechanical analysis</li>
+                            <li>Strength & conditioning</li>
+                            <li>Sports massage therapy</li>
+                            <li>Taping & bracing</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Women's Health -->
+        <section class="service-section" id="womens">
+            <h2 class="section-title">Women's Health & Pre/Post-Natal Care</h2>
+            <p class="mb-4">Supporting women through pregnancy, recovery, and menopause with specialized care.</p>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="service-card">
+                        <h3 class="service-title"><i class="fas fa-female service-icon"></i> Pregnancy Care</h3>
+                        <ul class="service-list">
+                            <li>Back, Hip, Pelvic Pain During Pregnancy</li>
+                            <li>Diastasis Recti</li>
+                            <li>Posture Correction & Core Strengthening</li>
+                            <li>Urinary Incontinence</li>
+                            <li>Labour Prep Techniques</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <div class="service-card">
+                        <h3 class="service-title"><i class="fas fa-venus service-icon"></i> Women's Wellness</h3>
+                        <ul class="service-list">
+                            <li>Menopause Support</li>
+                            <li>Safe Movement & Lifting Education</li>
+                            <li>Pelvic Floor Rehabilitation</li>
+                            <li>Osteoporosis Management</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Cardio-Respiratory -->
+        <section class="service-section" id="cardio">
+            <h2 class="section-title">Cardio-Respiratory Physiotherapy</h2>
+            <p class="mb-4">Improving heart and lung health through rehabilitation and strengthening programs.</p>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="service-card">
+                        <h3 class="service-title"><i class="fas fa-lungs service-icon"></i> Respiratory Care</h3>
+                        <ul class="service-list">
+                            <li>Chronic Respiratory Conditions (COPD, Asthma, Bronchiectasis)</li>
+                            <li>Pulmonary Rehabilitation</li>
+                            <li>Breathing Techniques</li>
+                            <li>Airway Clearance Methods</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <div class="service-card">
+                        <h3 class="service-title"><i class="fas fa-heartbeat service-icon"></i> Cardiac Care</h3>
+                        <ul class="service-list">
+                            <li>Cardiac Rehabilitation</li>
+                            <li>Post-Cardiac Surgery Recovery</li>
+                            <li>Blood Pressure Management</li>
+                            <li>Exercise Prescription</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Neuro & Pediatric -->
+        <section class="service-section" id="neuro">
+            <h2 class="section-title">Neuro & Pediatric Physiotherapy</h2>
+            <p class="mb-4">Improving movement and coordination for neurological conditions and children's health.</p>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="service-card">
+                        <h3 class="service-title"><i class="fas fa-brain service-icon"></i> Neurological Conditions</h3>
+                        <ul class="service-list">
+                            <li>Stroke & Parkinson's</li>
+                            <li>Bell's Palsy</li>
+                            <li>Peripheral Neuropathy</li>
+                            <li>Multiple Sclerosis</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <div class="service-card">
+                        <h3 class="service-title"><i class="fas fa-child service-icon"></i> Pediatric Care</h3>
+                        <ul class="service-list">
+                            <li>Autism, ADHD</li>
+                            <li>Cerebral Palsy</li>
+                            <li>Learning Disabilities</li>
+                            <li>Developmental Delays</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Yoga Services -->
+        <section class="service-section" id="yoga">
+            <h2 class="section-title">Yoga Services</h2>
+            <p class="mb-4">Yoga for all ages and needs, from kids to illness-focused programs.</p>
+            
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="service-card" id="power-yoga">
+                        <h3 class="service-title"><i class="fas fa-fire service-icon"></i> Power Yoga</h3>
+                        <p>A dynamic, fitness-based approach to vinyasa-style yoga that builds strength and flexibility.</p>
+                        <ul class="service-list">
+                            <li>Strength building sequences</li>
+                            <li>Cardiovascular conditioning</li>
+                            <li>Advanced asana practice</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="service-card" id="kids-yoga">
+                        <h3 class="service-title"><i class="fas fa-child service-icon"></i> Kids Yoga</h3>
+                        <p>Fun and engaging yoga classes designed specifically for children of all ages.</p>
+                        <ul class="service-list">
+                            <li>Improves focus and concentration</li>
+                            <li>Enhances body awareness</li>
+                            <li>Develops coordination</li>
+                            <li>Teaches relaxation techniques</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="service-card" id="aerial-yoga">
+                        <h3 class="service-title"><i class="fas fa-parachute-box service-icon"></i> Aerial Yoga</h3>
+                        <p>Experience yoga like never before with silk hammocks that support your body.</p>
+                        <ul class="service-list">
+                            <li>Decompresses the spine</li>
+                            <li>Improves flexibility</li>
+                            <li>Builds core strength</li>
+                            <li>Fun and challenging</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="service-card" id="prenatal-yoga">
+                        <h3 class="service-title"><i class="fas fa-baby service-icon"></i> Pre & Post Natal Yoga</h3>
+                        <p>Specialized yoga practice to support women through pregnancy and postpartum recovery.</p>
+                        <ul class="service-list">
+                            <li>Prepares body for labor</li>
+                            <li>Relieves pregnancy discomfort</li>
+                            <li>Strengthens pelvic floor</li>
+                            <li>Postpartum recovery</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="service-card" id="fitness-yoga">
+                        <h3 class="service-title"><i class="fas fa-dumbbell service-icon"></i> Fitness Yoga</h3>
+                        <p>A blend of traditional yoga with fitness elements for a complete workout.</p>
+                        <ul class="service-list">
+                            <li>Combines strength and flexibility</li>
+                            <li>Cardio elements</li>
+                            <li>Functional movement patterns</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="service-card" id="personal-yoga">
+                        <h3 class="service-title"><i class="fas fa-user service-icon"></i> Personal Yoga Training</h3>
+                        <p>One-on-one customized yoga sessions tailored to your specific needs and goals.</p>
+                        <ul class="service-list">
+                            <li>Personalized sequences</li>
+                            <li>Individual attention</li>
+                            <li>Flexible scheduling</li>
+                            <li>Progress tracking</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Special Therapies -->
+        <section class="service-section" id="therapies">
+            <h2 class="section-title">Special Therapies</h2>
+            <p class="mb-4">Complementary therapies to enhance your healing and wellness journey.</p>
+            
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="service-card" id="tapping">
+                        <h3 class="service-title"><i class="fas fa-hand-paper service-icon"></i> Tapping (EFT)</h3>
+                        <p>Emotional Freedom Technique that combines ancient acupressure with modern psychology.</p>
+                        <ul class="service-list">
+                            <li>Stress and anxiety relief</li>
+                            <li>Emotional balance</li>
+                            <li>Pain management</li>
+                            <li>Performance enhancement</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="service-card" id="dry-cupping">
+                        <h3 class="service-title"><i class="fas fa-circle service-icon"></i> Dry Cupping</h3>
+                        <p>Traditional therapy using suction cups to relieve muscle tension and improve circulation.</p>
+                        <ul class="service-list">
+                            <li>Pain relief</li>
+                            <li>Improved blood flow</li>
+                            <li>Reduces inflammation</li>
+                            <li>Promotes relaxation</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="service-card" id="wet-cupping">
+                        <h3 class="service-title"><i class="fas fa-tint service-icon"></i> Wet Cupping</h3>
+                        <p>A form of bloodletting used to remove "harmful" blood from the body.</p>
+                        <ul class="service-list">
+                            <li>Detoxification</li>
+                            <li>Pain management</li>
+                            <li>Improves circulation</li>
+                            <li>Traditional healing</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="service-card" id="dry-needling">
+                        <h3 class="service-title"><i class="fas fa-bolt service-icon"></i> Dry Needling</h3>
+                        <p>Modern treatment technique that uses thin filiform needles to release muscle trigger points.</p>
+                        <ul class="service-list">
+                            <li>Myofascial pain relief</li>
+                            <li>Improved range of motion</li>
+                            <li>Reduces muscle tension</li>
+                            <li>Accelerates healing</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <h3 class="footer-title">Advanced Physio & Yoga</h3>
+                    <p>Providing comprehensive physiotherapy and yoga services to help you achieve optimal health and wellness.</p>
+                    <div class="social-icons mt-3">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 mb-4">
+                    <h3 class="footer-title">Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#services">Services</a></li>
+                        <li><a href="#ortho">Physiotherapy</a></li>
+                        <li><a href="#yoga">Yoga Services</a></li>
+                        <li><a href="#therapies">Special Therapies</a></li>
+                        <li><a href="#contact">Contact Us</a></li>
+                    </ul>
+                </div>
+                
+                <div class="col-lg-4 mb-4">
+                    <h3 class="footer-title">Contact Us</h3>
+                    <address>
+                        <p><i class="fas fa-map-marker-alt me-2"></i> 123 Wellness Street, Health City, HC 12345</p>
+                        <p><i class="fas fa-phone me-2"></i> (123) 456-7890</p>
+                        <p><i class="fas fa-envelope me-2"></i> info@physioyoga.com</p>
+                        <p><i class="fas fa-clock me-2"></i> Mon-Fri: 8am-8pm, Sat: 9am-4pm</p>
+                    </address>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2023 Advanced Physio & Yoga Therapy. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+ <script>
+        // Add scroll effect to navbar
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Smooth dropdown animation on hover (desktop)
+        document.querySelectorAll('.dropdown').forEach(dropdown => {
+            dropdown.addEventListener('mouseenter', () => {
+                const dropdownMenu = dropdown.querySelector('.dropdown-menu');
+                dropdownMenu.classList.add('show');
+            });
+            dropdown.addEventListener('mouseleave', () => {
+                const dropdownMenu = dropdown.querySelector('.dropdown-menu');
+                dropdownMenu.classList.remove('show');
+            });
+        });
+
+        // Ripple effect on click for nav links and button
+        document.querySelectorAll('.nav-link, .dropdown-item, .btn-primary').forEach(item => {
+            item.addEventListener('click', function(e) {
+                e.preventDefault();
+                const ripple = document.createElement('span');
+                ripple.style.position = 'absolute';
+                ripple.style.borderRadius = '50%';
+                ripple.style.background = 'rgba(107, 142, 112, 0.3)';
+                ripple.style.transform = 'scale(0)';
+                ripple.style.animation = 'ripple 0.6s linear';
+                ripple.style.pointerEvents = 'none';
+                const rect = this.getBoundingClientRect();
+                ripple.style.left = `${e.clientX - rect.left - 10}px`;
+                ripple.style.top = `${e.clientY - rect.top - 10}px`;
+                ripple.style.width = '20px';
+                ripple.style.height = '20px';
+                this.appendChild(ripple);
+                setTimeout(() => {
+                    ripple.remove();
+                }, 600);
+            });
+        });
+
+        // Ripple animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes ripple {
+                to {
+                    transform: scale(10);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</html>

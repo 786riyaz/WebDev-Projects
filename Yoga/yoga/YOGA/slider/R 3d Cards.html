@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Crazy 3D Image Slider</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: #111;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      perspective: 1500px;
+      overflow: hidden;
+      font-family: Arial, sans-serif;
+    }
+
+    .slider {
+      width: 600px;
+      height: 400px;
+      position: relative;
+      transform-style: preserve-3d;
+      animation: spin 20s linear infinite;
+    }
+
+    .slide-track {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      transform-style: preserve-3d;
+    }
+
+    .slide {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      transform-origin: center center -300px;
+    }
+
+    .slide:nth-child(1) { transform: rotateY(0deg) translateZ(300px); }
+    .slide:nth-child(2) { transform: rotateY(72deg) translateZ(300px); }
+    .slide:nth-child(3) { transform: rotateY(144deg) translateZ(300px); }
+    .slide:nth-child(4) { transform: rotateY(216deg) translateZ(300px); }
+    .slide:nth-child(5) { transform: rotateY(288deg) translateZ(300px); }
+
+    .slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
+    }
+
+    @keyframes spin {
+      from { transform: rotateY(0deg); }
+      to { transform: rotateY(360deg); }
+    }
+
+    /* Optional: Add overlay text */
+    .caption {
+      position: absolute;
+      bottom: 20px;
+      left: 0;
+      width: 100%;
+      text-align: center;
+      color: #fff;
+      font-size: 1.2em;
+      background: rgba(0, 0, 0, 0.4);
+      padding: 10px 0;
+      border-bottom-left-radius: 10px;
+      border-bottom-right-radius: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="slider">
+    <div class="slide-track">
+      <div class="slide">
+        <img src="https://picsum.photos/id/1015/600/400" alt="Slide 1">
+        <div class="caption">Image 1 - Test Description</div>
+      </div>
+      <div class="slide">
+        <img src="https://picsum.photos/id/1016/600/400" alt="Slide 2">
+        <div class="caption">Image 2 - Test Description</div>
+      </div>
+      <div class="slide">
+        <img src="https://picsum.photos/id/1018/600/400" alt="Slide 3">
+        <div class="caption">Image 3 - Test Description</div>
+      </div>
+      <div class="slide">
+        <img src="https://picsum.photos/id/1020/600/400" alt="Slide 4">
+        <div class="caption">Image 4 - Test Description</div>
+      </div>
+      <div class="slide">
+        <img src="https://picsum.photos/id/1024/600/400" alt="Slide 5">
+        <div class="caption">Image 5 - Test Description</div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

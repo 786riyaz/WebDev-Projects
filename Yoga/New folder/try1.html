@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Yoga Classes | ZenFlow</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --yoga-primary: #5a8f7b;
+            --yoga-secondary: #ff9a76;
+            --yoga-light: #f8f5f2;
+            --text-dark: #333;
+            --text-light: #777;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: var(--text-dark);
+            background-color: #f9f9f9;
+            padding-top: 70px;
+        }
+        
+        h1, h2, h3, .display-font {
+            font-family: 'Playfair Display', serif;
+            font-weight: 600;
+        }
+        
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1544367567-0f2fcb009e0b');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 100px 0;
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        .page-title {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .breadcrumb {
+            justify-content: center;
+            background: transparent;
+        }
+        
+        .breadcrumb-item a {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+        }
+        
+        .breadcrumb-item.active {
+            color: white;
+        }
+        
+        /* Class Filter */
+        .class-filter {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            margin-bottom: 40px;
+        }
+        
+        .filter-title {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: var(--yoga-primary);
+        }
+        
+        .filter-group {
+            margin-bottom: 20px;
+        }
+        
+        .filter-btn {
+            background-color: white;
+            color: var(--text-dark);
+            border: 1px solid #ddd;
+            border-radius: 50px;
+            padding: 5px 15px;
+            margin-right: 10px;
+            margin-bottom: 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .filter-btn:hover, .filter-btn.active {
+            background-color: var(--yoga-primary);
+            color: white;
+            border-color: var(--yoga-primary);
+        }
+        
+        /* Class Cards */
+        .class-card {
+            border: none;
+            border-radius: 10px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            background-color: white;
+        }
+        
+        .class-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+        
+        .class-img {
+            height: 220px;
+            object-fit: cover;
+            width: 100%;
+        }
+        
+        .class-body {
+            padding: 25px;
+        }
+        
+        .class-level {
+            display: inline-block;
+            padding: 3px 12px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+        
+        .level-beginner {
+            background-color: rgba(90, 143, 123, 0.1);
+            color: var(--yoga-primary);
+        }
+        
+        .level-intermediate {
+            background-color: rgba(255, 193, 7, 0.1);
+            color: #ffc107;
+        }
+        
+        .level-advanced {
+            background-color: rgba(220, 53, 69, 0.1);
+            color: #dc3545;
+        }
+        
+        .class-title {
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+        }
+        
+        .class-meta {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+        
+        .class-meta i {
+            margin-right: 5px;
+        }
+        
+        .class-description {
+            margin-bottom: 20px;
+            color: var(--text-dark);
+        }
+        
+        .class-price {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--yoga-primary);
+            margin-bottom: 15px;
+        }
+        
+        /* Instructor Section */
+        .instructor-section {
+            background-color: white;
+            padding: 80px 0;
+        }
+        
+        .instructor-card {
+            text-align: center;
+            padding: 30px;
+            transition: all 0.3s ease;
+        }
+        
+        .instructor-img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 20px;
+            border: 3px solid var(--yoga-light);
+        }
+        
+        .instructor-name {
+            font-size: 1.3rem;
+            margin-bottom: 5px;
+        }
+        
+        .instructor-specialty {
+            color: var(--yoga-primary);
+            font-weight: 500;
+            margin-bottom: 15px;
+        }
+        
+        /* Schedule Table */
+        .schedule-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .schedule-table th {
+            background-color: var(--yoga-primary);
+            color: white;
+            padding: 15px;
+            text-align: center;
+        }
+        
+        .schedule-table td {
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+            text-align: center;
+            vertical-align: middle;
+        }
+        
+        .schedule-table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .schedule-table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        
+        .schedule-class {
+            font-weight: 500;
+        }
+        
+        .schedule-instructor {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+        
+        .btn-book {
+            background-color: var(--yoga-primary);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 5px 15px;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-book:hover {
+            background-color: #4a7b68;
+        }
+        
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            .page-title {
+                font-size: 2.2rem;
+            }
+            
+            .schedule-table {
+                display: block;
+                overflow-x: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar (Your Existing Navbar) -->
+    <nav class="navbar navbar-expand-lg yoga-navbar">
+        <!-- ... your existing navbar code ... -->
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1 class="page-title display-font">Our Yoga Classes</h1>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Classes</li>
+                </ol>
+            </nav>
+        </div>
+    </section>
+
+    <!-- Class Filter -->
+  
+    <!-- Class Listing -->
+    <section class="class-listing">
+        <div class="container">
+            <div class="row">
+                <!-- Class 1 -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="class-card">
+                        <img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b" class="class-img" alt="Hatha Yoga">
+                        <div class="class-body">
+                            <span class="class-level level-beginner">Beginner</span>
+                            <h3 class="class-title">Hatha Yoga Basics</h3>
+                            <div class="class-meta">
+                                <span><i class="far fa-clock"></i> 60 mins</span>
+                                <span class="ms-3"><i class="fas fa-user"></i> Sarah Johnson</span>
+                            </div>
+                            <p class="class-description">Perfect for beginners to learn foundational poses and breathing techniques in a supportive environment.</p>
+                            <div class="class-price">$15/class or $120/month</div>
+                            <a href="#" class="btn btn-primary">Book Now</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Class 2 -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="class-card">
+                        <img src="https://images.unsplash.com/photo-1518611012118-696072aa579a" class="class-img" alt="Vinyasa Flow">
+                        <div class="class-body">
+                            <span class="class-level level-intermediate">Intermediate</span>
+                            <h3 class="class-title">Vinyasa Flow</h3>
+                            <div class="class-meta">
+                                <span><i class="far fa-clock"></i> 75 mins</span>
+                                <span class="ms-3"><i class="fas fa-user"></i> Michael Chen</span>
+                            </div>
+                            <p class="class-description">Dynamic movement synchronized with breath to build strength, flexibility and endurance.</p>
+                            <div class="class-price">$18/class or $140/month</div>
+                            <a href="#" class="btn btn-primary">Book Now</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Class 3 -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="class-card">
+                        <img src="https://images.unsplash.com/photo-1506126613408-eca07ce68773" class="class-img" alt="Yin Yoga">
+                        <div class="class-body">
+                            <span class="class-level level-all">All Levels</span>
+                            <h3 class="class-title">Yin Yoga</h3>
+                            <div class="class-meta">
+                                <span><i class="far fa-clock"></i> 90 mins</span>
+                                <span class="ms-3"><i class="fas fa-user"></i> Emma Rodriguez</span>
+                            </div>
+                            <p class="class-description">Slow-paced style with poses held for longer periods to increase flexibility and release tension.</p>
+                            <div class="class-price">$20/class or $150/month</div>
+                            <a href="#" class="btn btn-primary">Book Now</a>
+                        </div>
+                    </div>
+                </div>
+                
+               
+            </div>
+            
+            <!-- Pagination -->
+            <nav aria-label="Class pagination" class="mt-5">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item disabled">
+                        <a class="page-link" href="#" tabindex="-1">Previous</a>
+                    </li>
+                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </section>
+
+    <!-- Class Schedule -->
+    <section class="class-schedule py-5 bg-light">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="display-font">Weekly Class Schedule</h2>
+                <p class="lead">Find the perfect time for your practice</p>
+            </div>
+            
+            <div class="table-responsive">
+                <table class="schedule-table">
+                    <thead>
+                        <tr>
+                            <th>Time</th>
+                            <th>Monday</th>
+                            <th>Tuesday</th>
+                            <th>Wednesday</th>
+                            <th>Thursday</th>
+                            <th>Friday</th>
+                            <th>Saturday</th>
+                            <th>Sunday</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>6:00 AM</td>
+                            <td>
+                                <div class="schedule-class">Morning Flow</div>
+                                <div class="schedule-instructor">Sarah</div>
+                                <button class="btn-book">Book</button>
+                            </td>
+                            <td></td>
+                            <td>
+                                <div class="schedule-class">Sunrise Yoga</div>
+                                <div class="schedule-instructor">Michael</div>
+                                <button class="btn-book">Book</button>
+                            </td>
+                            <td></td>
+                            <td>
+                                <div class="schedule-class">Wake Up Flow</div>
+                                <div class="schedule-instructor">Emma</div>
+                                <button class="btn-book">Book</button>
+                            </td>
+                            <td></td>
+                            <td>
+                                <div class="schedule-class">Sunday Sunrise</div>
+                                <div class="schedule-instructor">David</div>
+                                <button class="btn-book">Book</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>9:00 AM</td>
+                            <td>
+                                <div class="schedule-class">Hatha Basics</div>
+                                <div class="schedule-instructor">Jessica</div>
+                                <button class="btn-book">Book</button>
+                            </td>
+                            <td>
+                                <div class="schedule-class">Vinyasa Flow</div>
+                                <div class="schedule-instructor">Ryan</div>
+                                <button class="btn-book">Book</button>
+                            </td>
+                            <td>
+                                <div class="schedule-class">Gentle Yoga</div>
+                                <div class="schedule-instructor">Sarah</div>
+                                <button class="btn-book">Book</button>
+                            </td>
+                            <td>
+                                <div class="schedule-class">Power Yoga</div>
+                                <div class="schedule-instructor">Michael</div>
+                                <button class="btn-book">Book</button>
+                            </td>
+                            <td>
+                                <div class="schedule-class">Yin Yoga</div>
+                                <div class="schedule-instructor">Emma</div>
+                                <button class="btn-book">Book</button>
+                            </td>
+                            <td>
+                                <div class="schedule-class">Weekend Flow</div>
+                                <div class="schedule-instructor">David</div>
+                                <button class="btn-book">Book</button>
+                            </td>
+                            <td>
+                                <div class="schedule-class">Family Yoga</div>
+                                <div class="schedule-instructor">Jessica</div>
+                                <button class="btn-book">Book</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>12:00 PM</td>
+                            <td>
+                                <div class="schedule-class">Lunchtime Flow</div>
+                                <div class="schedule-instructor">Ryan</div>
+                                <button class="btn-book">Book</button>
+                            </td>
+                            <td></td>
+                            <td>
+                                <div class="schedule-class">Midday Reset</div>
+                                <div class="schedule-instructor">Sarah</div>
+                                <button class="btn-book">Book</button>
+                            </td>
+                            <td></td>
+                            <td>
+                                <div class="schedule-class">Office Yoga</div>
+                                <div class="schedule-instructor">Michael</div>
+                                <button class="btn-book">Book</button>
+                            </td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>6:00 PM</td>
+                            <td>
+                                <div class="schedule-class">Evening Flow</div>
+                                <div class="schedule-instructor">Emma</div>
+                                <button class="btn-book">Book</button>
+                            </td>
+                            <td>
+                                <div class="schedule-class">Power Yoga</div>
+                                <div class="schedule-instructor">David</div>
+                                <button class="btn-book">Book</button>
+                            </td>
+                            <td>
+                                <div class="schedule-class">Restorative</div>
+                                <div class="schedule-instructor">Jessica</div>
+                                <button class="btn-book">Book</button>
+                            </td>
+                            <td>
+                                <div class="schedule-class">Vinyasa Flow</div>
+                                <div class="schedule-instructor">Ryan</div>
+                                <button class="btn-book">Book</button>
+                            </td>
+                            <td>
+                                <div class="schedule-class">Friday Wind Down</div>
+                                <div class="schedule-instructor">Sarah</div>
+                                <button class="btn-book">Book</button>
+                            </td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- Instructors Section -->
+    <section class="instructor-section">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="display-font">Meet Our Instructors</h2>
+                <p class="lead">Learn from certified yoga experts</p>
+            </div>
+            
+            <div class="row">
+                <div class="col-lg-3 col-md-6">
+                    <div class="instructor-card">
+                        <img src="https://randomuser.me/api/portraits/women/32.jpg" class="instructor-img" alt="Sarah Johnson">
+                        <h4 class="instructor-name">Sarah Johnson</h4>
+                        <p class="instructor-specialty">Hatha & Restorative</p>
+                        <p>500hr RYT with 12 years teaching experience specializing in therapeutic yoga.</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="instructor-card">
+                        <img src="https://randomuser.me/api/portraits/men/45.jpg" class="instructor-img" alt="Michael Chen">
+                        <h4 class="instructor-name">Michael Chen</h4>
+                        <p class="instructor-specialty">Vinyasa Flow</p>
+                        <p>E-RYT 500 certified, brings dynamic energy and precise alignment to his classes.</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="instructor-card">
+                        <img src="https://randomuser.me/api/portraits/women/68.jpg" class="instructor-img" alt="Emma Rodriguez">
+                        <h4 class="instructor-name">Emma Rodriguez</h4>
+                        <p class="instructor-specialty">Yin & Meditation</p>
+                        <p>Combines yoga with mindfulness techniques for deep relaxation and stress relief.</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="instructor-card">
+                        <img src="https://randomuser.me/api/portraits/men/75.jpg" class="instructor-img" alt="David Wilson">
+                        <h4 class="instructor-name">David Wilson</h4>
+                        <p class="instructor-specialty">Power Yoga</p>
+                        <p>Athletic approach to yoga with emphasis on building strength and endurance.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+  
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Filter button functionality
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                // Remove active class from all buttons in group
+                this.parentElement.querySelectorAll('.filter-btn').forEach(b => {
+                    b.classList.remove('active');
+                });
+                // Add active class to clicked button
+                this.classList.add('active');
+                // Here you would typically filter the classes
+                // For demo purposes we're just toggling the active state
+            });
+        });
+        
+        // Navbar scroll effect (from your existing code)
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.yoga-navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+    </script>
+</body>
+</html>

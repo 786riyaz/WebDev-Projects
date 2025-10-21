@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZenForms - Geometric Yoga</title>
+    <style>
+        body { 
+            margin: 0; 
+            overflow: hidden; 
+            background: #121212;
+            font-family: 'Helvetica', sans-serif;
+        }
+        #canvas { display: block; }
+        .ui {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 15px;
+            z-index: 100;
+        }
+        button {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.3);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 1rem;
+            backdrop-filter: blur(5px);
+        }
+        button:hover {
+            background: rgba(255,255,255,0.2);
+        }
+        .title {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            text-align: center;
+            z-index: 100;
+            pointer-events: none;
+        }
+        h1 { 
+            font-size: 4rem; 
+            margin-bottom: 1rem;
+            font-weight: 300;
+        }
+        p { 
+            font-size: 1.2rem;
+            max-width: 500px;
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas"></canvas>
+    
+    <div class="title">
+        <h1>Geometric Harmony</h1>
+        <p>Find your center through perfect forms</p>
+    </div>
+    
+    <div class="ui">
+        <button id="meditate-btn">Meditate</button>
+        <button id="flow-btn">Flow</button>
+        <button id="align-btn">Align</button>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/controls/OrbitControls.js"></script>
+    <script>
+        // Initialize scene
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ 
+            canvas: document.getElementById('canvas'),
+            antialias: true 
+        });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(window.devicePixelRatio);
+        renderer.outputEncoding = THREE.sRGBEncoding;
+        renderer.toneMapping = THREE.ACESFilmicToneMapping;
+        renderer.toneMappingExposure = 0.8;
+
+        // Camera position
+        camera.position.set(0, 5, 15);
+        
+        // Controls
+        const controls = new THREE.OrbitControls(camera, renderer.domElement);
+        controls.enableDamping = true;
+        controls.dampingFactor = 0.05;
+        controls.minDistance = 5;
+        controls.maxDistance = 30;
+        controls.maxPolarAngle = Math.PI * 0.49;
+        controls.target.set(0, 2, 0);
+
+        // Lighting
+        const ambientLight = new THREE.AmbientLight(0x404040, 0.5);
+        scene.add(ambientLight);
+        
+        const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+        directionalLight.position.set(5, 10, 7);
+        scene.add(directionalLight);
+        
+        const directionalLight2 = new THREE.DirectionalLight(0xffffff, 0.5);
+        directionalLight2.position.set(-5, 5, -5);
+        scene.add(directionalLight2);
+
+        // Create geometric forms
+        const geometries = [
+            new THREE.IcosahedronGeometry(1, 0),
+            new THREE.OctahedronGeometry(1, 0),
+            new THREE.TetrahedronGeometry(1, 0),
+            new THREE.DodecahedronGeometry(1, 0),
+            new THREE.BoxGeometry(1, 1, 1),
+            new THREE.SphereGeometry(1, 32, 32),
+            new THREE.ConeGeometry(1, 2, 32),
+            new THREE.CylinderGeometry(1, 1, 2, 32),
+            new THREE.TorusGeometry(1, 0.4, 16, 32),
+            new THREE.TorusKnotGeometry(1, 0.3, 100, 16)
+        ];
+        
+        const materials = [
+            new THREE.MeshPhysicalMaterial({ 
+                color: 0xff4136, 
+                metalness: 0.1, 
+                roughness: 0.5,
+                clearcoat: 0.5,
+                transparent: true,
+                opacity: 0.9
+            }),
+            new THREE.MeshPhysicalMaterial({ 
+                color: 0x0074d9, 
+                metalness: 0.2, 
+                roughness: 0.4,
+                clearcoat: 0.7
+            }),
+            new THREE.MeshPhysicalMaterial({ 
+                color: 0x2ecc40, 
+                metalness: 0.3, 
+                roughness: 0.3,
+                transmission: 0.5,
+                transparent: true
+            }),
+            new THREE.MeshPhysicalMaterial({ 
+                color: 0xffdc00, 
+                metalness: 0.4, 
+                roughness: 0.2,
+                sheen: 0.5
+            }),
+            new THREE.MeshPhysicalMaterial({ 
+                color: 0xb10dc9, 
+                metalness: 0.5, 
+                roughness: 0.1,
+                iridescence: 1,
+                iridescenceIOR: 1.3
+            })
+        ];
+        
+        // Create a grid of geometric forms
+        const gridSize = 5;
+        const spacing = 3;
+        const offset = (gridSize - 1) * spacing * 0.5;
+        
+        for (let x = 0; x < gridSize; x++) {
+            for (let z = 0; z < gridSize; z++) {
+                const geoIndex = Math.floor(Math.random() * geometries.length);
+                const matIndex = Math.floor(Math.random() * materials.length);
+                
+                const geometry = geometries[geoIndex];
+                const material = materials[matIndex].clone();
+                
+                const mesh = new THREE.Mesh(geometry, material);
+                mesh.position.set(
+                    x * spacing - offset,
+                    0,
+                    z * spacing - offset
+                );
+                
+                // Random scale
+                const scale = 0.5 + Math.random() * 1.5;
+                mesh.scale.set(scale, scale, scale);
+                
+                // Random rotation
+                mesh.rotation.set(
+                    Math.random() * Math.PI,
+                    Math.random() * Math.PI,
+                    Math.random() * Math.PI
+                );
+                
+                scene.add(mesh);
+            }
+        }
+        
+        // Create a central platform
+        const platformGeometry = new THREE.CylinderGeometry(8, 8, 0.2, 64);
+        const platformMaterial = new THREE.MeshStandardMaterial({ 
+            color: 0x333333,
+            roughness: 0.7,
+            metalness: 0.1
+        });
+        const platform = new THREE.Mesh(platformGeometry, platformMaterial);
+        platform.position.y = -0.1;
+        scene.add(platform);
+        
+        // Animation modes
+        const animationModes = {
+            meditate: { speed: 0.01, scale: 1, colorChange: false },
+            flow: { speed: 0.05, scale: 1.2, colorChange: true },
+            align: { speed: 0.02, scale: 1, colorChange: false }
+        };
+        
+        let currentMode = 'meditate';
+        
+        // Set mode function
+        function setMode(mode) {
+            currentMode = mode;
+        }
+        
+        // Event listeners
+        document.getElementById('meditate-btn').addEventListener('click', () => setMode('meditate'));
+        document.getElementById('flow-btn').addEventListener('click', () => setMode('flow'));
+        document.getElementById('align-btn').addEventListener('click', () => setMode('align'));
+        
+        // Animation
+        function animate() {
+            requestAnimationFrame(animate);
+            
+            const mode = animationModes[currentMode];
+            const time = Date.now() * 0.001;
+            
+            // Animate all meshes
+            scene.traverse((child) => {
+                if (child.isMesh) {
+                    // Rotation
+                    child.rotation.x += 0.005 * mode.speed;
+                    child.rotation.y += 0.007 * mode.speed;
+                    child.rotation.z += 0.003 * mode.speed;
+                    
+                    // Pulsating scale
+                    if (mode.scale > 1) {
+                        const pulse = Math.sin(time * 2) * 0.1 * mode.scale;
+                        child.scale.setScalar(1 + pulse);
+                    }
+                    
+                    // Color change
+                    if (mode.colorChange && child.material.color) {
+                        child.material.color.offsetHSL(0.001, 0, 0);
+                    }
+                }
+            });
+            
+            controls.update();
+            renderer.render(scene, camera);
+        }
+        animate();
+        
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+    </script>
+</body>
+</html>

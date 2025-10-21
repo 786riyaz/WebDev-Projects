@@ -1,0 +1,1031 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yoga Waves - Kids Underwater Yoga</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --ocean-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            --glass-effect: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.2);
+            --text-light: rgba(255, 255, 255, 0.9);
+            --text-dark: #2d3748;
+            --accent-cyan: #06d6a0;
+            --accent-purple: #8b5cf6;
+            --accent-pink: #f093fb;
+            --accent-orange: #ffd166;
+            --shadow-glow: 0 8px 32px rgba(31, 38, 135, 0.37);
+            --shadow-intense: 0 20px 60px rgba(31, 38, 135, 0.5);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: var(--text-dark);
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        /* Enhanced Navbar */
+        .navbar {
+            background: var(--glass-effect);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--glass-border);
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+            padding: 15px 0;
+            transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .navbar.scrolled {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(30px);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .navbar-brand {
+            font-family: 'Baloo 2', cursive;
+            font-weight: 700;
+            color: var(--text-light) !important;
+            font-size: 2rem;
+            display: flex;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .navbar.scrolled .navbar-brand {
+            color: var(--text-dark) !important;
+        }
+
+        .navbar-brand img {
+            height: 50px;
+            margin-right: 15px;
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .nav-link {
+            color: var(--text-light) !important;
+            font-weight: 600;
+            margin: 0 20px;
+            font-size: 1rem;
+            position: relative;
+            padding: 12px 0 !important;
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .navbar.scrolled .nav-link {
+            color: var(--text-dark) !important;
+        }
+
+        .nav-link::before {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-cyan), var(--accent-purple));
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            transition: width 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            border-radius: 3px;
+        }
+
+        .nav-link:hover::before {
+            width: 100%;
+        }
+
+        .nav-link:hover {
+            transform: translateY(-2px);
+            color: var(--accent-cyan) !important;
+        }
+
+        /* Hero Section Enhancement */
+        .hero-section {
+            background: var(--ocean-gradient);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-title {
+            font-family: 'Baloo 2', cursive;
+            font-size: clamp(3rem, 8vw, 5rem);
+            font-weight: 700;
+            color: white;
+            margin-bottom: 30px;
+            text-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            line-height: 1.1;
+            animation: slideInUp 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1.2rem, 3vw, 1.8rem);
+            color: var(--text-light);
+            margin-bottom: 40px;
+            font-weight: 300;
+            line-height: 1.6;
+            animation: slideInUp 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.2s both;
+        }
+
+        .hero-buttons {
+            animation: slideInUp 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.4s both;
+        }
+
+        .btn-hero {
+            padding: 18px 35px;
+            font-weight: 600;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-primary-hero {
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+            color: white;
+            box-shadow: 0 15px 35px rgba(6, 214, 160, 0.4);
+        }
+
+        .btn-primary-hero:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(6, 214, 160, 0.6);
+            color: white;
+        }
+
+        .btn-outline-hero {
+            background: var(--glass-effect);
+            backdrop-filter: blur(10px);
+            border: 2px solid var(--glass-border);
+            color: white;
+        }
+
+        .btn-outline-hero:hover {
+            background: white;
+            color: var(--text-dark);
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-glow);
+        }
+
+        /* Floating Animation Elements */
+        .floating-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .bubble {
+            position: absolute;
+            background: var(--glass-effect);
+            border: 1px solid var(--glass-border);
+            border-radius: 50%;
+            backdrop-filter: blur(10px);
+            animation: bubbleFloat 15s infinite linear;
+        }
+
+        .bubble:nth-child(1) { width: 80px; height: 80px; left: 10%; animation-delay: 0s; }
+        .bubble:nth-child(2) { width: 120px; height: 120px; left: 20%; animation-delay: 2s; }
+        .bubble:nth-child(3) { width: 100px; height: 100px; left: 35%; animation-delay: 4s; }
+        .bubble:nth-child(4) { width: 150px; height: 150px; left: 50%; animation-delay: 1s; }
+        .bubble:nth-child(5) { width: 90px; height: 90px; left: 70%; animation-delay: 3s; }
+        .bubble:nth-child(6) { width: 110px; height: 110px; left: 85%; animation-delay: 5s; }
+
+        @keyframes bubbleFloat {
+            0% {
+                transform: translateY(100vh) scale(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) scale(1);
+                opacity: 0;
+            }
+        }
+
+        /* Wave Animation */
+        .wave-container {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100px;
+        }
+
+        .wave {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 200%;
+            height: 100px;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120'%3E%3Cpath d='M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V120H0Z' fill='%23ffffff'/%3E%3C/svg%3E") repeat-x;
+            animation: waveMove 10s infinite linear;
+        }
+
+        @keyframes waveMove {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* Enhanced Cards */
+        .glass-card {
+            background: var(--glass-effect);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 25px;
+            padding: 40px;
+            transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .glass-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.7s;
+        }
+
+        .glass-card:hover::before {
+            left: 100%;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-15px) rotateX(5deg);
+            box-shadow: var(--shadow-intense);
+        }
+
+        .card-icon {
+            font-size: 3.5rem;
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 25px;
+            animation: iconPulse 3s ease-in-out infinite;
+        }
+
+        @keyframes iconPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        /* Section Styling */
+        .content-section {
+            background: white;
+            position: relative;
+            z-index: 1;
+            padding: 100px 0;
+        }
+
+        .section-title {
+            font-family: 'Baloo 2', cursive;
+            font-size: clamp(2.5rem, 5vw, 3.5rem);
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 60px;
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 5px;
+            background: linear-gradient(90deg, var(--accent-cyan), var(--accent-purple));
+            border-radius: 3px;
+        }
+
+        /* Video Cards Enhancement */
+        .video-card {
+            background: white;
+            border-radius: 25px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            position: relative;
+        }
+
+        .video-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-intense);
+        }
+
+        .video-card video {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .video-card:hover video {
+            transform: scale(1.05);
+        }
+
+        .video-info {
+            padding: 30px;
+        }
+
+        .video-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        /* Gallery Enhancement */
+        .gallery-item {
+            border-radius: 25px;
+            overflow: hidden;
+            position: relative;
+            transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            cursor: pointer;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            transition: transform 0.7s ease;
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-intense);
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.2);
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, rgba(102, 126, 234, 0.8), rgba(118, 75, 162, 0.8));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .gallery-item:hover .gallery-overlay {
+            opacity: 1;
+        }
+
+        .gallery-overlay h5 {
+            color: white;
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-align: center;
+            transform: translateY(20px);
+            transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .gallery-item:hover .gallery-overlay h5 {
+            transform: translateY(0);
+        }
+
+        /* Footer Enhancement */
+        footer {
+            background: var(--ocean-gradient);
+            color: white;
+            padding: 80px 0 30px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120'%3E%3Cpath d='M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V120H0Z' fill='%23ffffff'/%3E%3C/svg%3E") top center no-repeat;
+            background-size: 100% 120px;
+            opacity: 0.1;
+        }
+
+        .social-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            background: var(--glass-effect);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            border-radius: 50%;
+            color: white;
+            margin: 0 10px;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            font-size: 1.2rem;
+        }
+
+        .social-icon:hover {
+            background: white;
+            color: var(--text-dark);
+            transform: translateY(-5px) scale(1.1);
+            box-shadow: var(--shadow-glow);
+        }
+
+        /* Scroll Animation */
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .animate-on-scroll.animated {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Custom Animations */
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero-title { font-size: 2.5rem; }
+            .hero-subtitle { font-size: 1.2rem; }
+            .section-title { font-size: 2rem; }
+            .glass-card { padding: 25px; }
+            .nav-link { margin: 0 10px; }
+        }
+
+        /* Smooth scroll enhancement */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Loading animation */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--ocean-gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease-out;
+        }
+
+        .loading-spinner {
+            width: 80px;
+            height: 80px;
+            border: 4px solid rgba(255,255,255,0.3);
+            border-top: 4px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner"></div>
+    </div>
+
+    <!-- Enhanced Navigation -->
+    <nav class="navbar navbar-expand-lg" id="mainNavbar">
+        <div class="container">
+            <a class="navbar-brand" href="#home">
+                <img src="https://cdn-icons-png.flaticon.com/512/3050/3050229.png" alt="Yoga Waves Logo">
+                Yoga Waves
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#benefits">Benefits</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#videos">Videos</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#gallery">Gallery</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Enhanced Hero Section -->
+    <section class="hero-section" id="home">
+        <div class="floating-bg">
+            <div class="bubble"></div>
+            <div class="bubble"></div>
+            <div class="bubble"></div>
+            <div class="bubble"></div>
+            <div class="bubble"></div>
+            <div class="bubble"></div>
+        </div>
+        
+        <div class="container">
+            <div class="row align-items-center min-vh-100">
+                <div class="col-lg-6 hero-content">
+                    <h1 class="hero-title">Dive into<br>Yoga Waves!</h1>
+                    <p class="hero-subtitle">Transform your child's wellness journey with magical underwater yoga adventures that build strength, mindfulness, and joy.</p>
+                    <div class="hero-buttons">
+                        <a href="#videos" class="btn btn-hero btn-primary-hero me-3">Start Swimming</a>
+                        <a href="#benefits" class="btn btn-hero btn-outline-hero">Learn More</a>
+                    </div>
+                </div>
+                <div class="col-lg-6 d-none d-lg-block">
+                    <div class="position-relative">
+                        <img src="https://images.unsplash.com/photo-1545205597-3d9d02c29597?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" 
+                             alt="Kids practicing underwater yoga" 
+                             class="img-fluid rounded-4" 
+                             style="border: 3px solid rgba(255,255,255,0.3); backdrop-filter: blur(10px); animation: float 6s ease-in-out infinite;">
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="wave-container">
+            <div class="wave"></div>
+        </div>
+    </section>
+
+    <!-- Enhanced Benefits Section -->
+    <section class="content-section" id="benefits">
+        <div class="container">
+            <h2 class="section-title animate-on-scroll">Why Dive Into Yoga?</h2>
+            <div class="row g-4 mt-5">
+                <div class="col-lg-4 animate-on-scroll">
+                    <div class="glass-card text-center">
+                        <div class="card-icon">
+                            <i class="fas fa-fish"></i>
+                        </div>
+                        <h3 class="mb-3">Ocean Adventures</h3>
+                        <p class="mb-0">Immersive storytelling combines yoga poses with underwater adventures, making fitness feel like play.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 animate-on-scroll">
+                    <div class="glass-card text-center">
+                        <div class="card-icon">
+                            <i class="fas fa-water"></i>
+                        </div>
+                        <h3 class="mb-3">Mindful Breathing</h3>
+                        <p class="mb-0">Deep breathing techniques inspired by ocean waves help children develop emotional regulation and calm focus.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 animate-on-scroll">
+                    <div class="glass-card text-center">
+                        <div class="card-icon">
+                            <i class="fas fa-anchor"></i>
+                        </div>
+                        <h3 class="mb-3">Strength & Balance</h3>
+                        <p class="mb-0">Build core strength and improve balance through poses inspired by sea creatures and ocean movements.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Enhanced Video Section -->
+    <section class="content-section bg-light" id="videos">
+        <div class="container">
+            <h2 class="section-title animate-on-scroll">Underwater Adventures</h2>
+            <p class="text-center mb-5 animate-on-scroll">Dive into our collection of magical yoga sessions</p>
+            
+            <div class="row g-4">
+                <div class="col-lg-4 animate-on-scroll">
+                    <div class="video-card">
+                        <div class="video-badge">New</div>
+                        <video controls poster="https://images.unsplash.com/photo-1603988363607-e1e4a66962c6?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80">
+                            <source src="yoga-video1.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                        <div class="video-info">
+                            <h4 class="mb-2">Ocean Explorer Flow</h4>
+                            <p class="text-muted mb-3">15 min • Beginner Friendly</p>
+                            <p class="mb-0">Journey through coral reefs with dolphin poses and sea turtle stretches.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 animate-on-scroll">
+                    <div class="video-card">
+                        <div class="video-badge">Popular</div>
+                        <video controls poster="https://images.unsplash.com/photo-1544568100-847a948585b9?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80">
+                            <source src="yoga-video2.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                        <div class="video-info">
+                            <h4 class="mb-2">Deep Sea Meditation</h4>
+                            <p class="text-muted mb-3">20 min • All Levels</p>
+                            <p class="mb-0">Calm your mind in the peaceful depths of our guided meditation.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 animate-on-scroll">
+                    <div class="video-card">
+                        <div class="video-badge">Challenge</div>
+                        <video controls poster="https://images.unsplash.com/photo-1517649763962-0c623066013b?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80">
+                            <source src="yoga-video3.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                        <div class="video-info">
+                            <h4 class="mb-2">Whale Power Flow</h4>
+                            <p class="text-muted mb-3">25 min • Intermediate</p>
+                            <p class="mb-0">Build strength with powerful poses inspired by ocean giants.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Enhanced Gallery Section -->
+    <section class="content-section" id="gallery">
+        <div class="container">
+            <h2 class="section-title animate-on-scroll">Magical Moments</h2>
+            <p class="text-center mb-5 animate-on-scroll">See the joy and wonder in every pose</p>
+            
+            <div class="row g-4">
+                <div class="col-lg-3 col-md-6 animate-on-scroll">
+                    <div class="gallery-item">
+                        <img src="https://images.unsplash.com/photo-1603988363607-e1e4a66962c6?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Dolphin Pose">
+                        <div class="gallery-overlay">
+                            <h5>Playful Dolphin</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 animate-on-scroll">
+                    <div class="gallery-item">
+                        <img src="https://images.unsplash.com/photo-1544568100-847a948585b9?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Starfish Stretch">
+                        <div class="gallery-overlay">
+                            <h5>Starfish Stretch</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 animate-on-scroll">
+                    <div class="gallery-item">
+                        <img src="https://images.unsplash.com/photo-1517649763962-0c623066013b?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Sea Turtle Flow">
+                        <div class="gallery-overlay">
+                            <h5>Sea Turtle Flow</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 animate-on-scroll">
+                    <div class="gallery-item">
+                        <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Jellyfish Meditation">
+                        <div class="gallery-overlay">
+                            <h5>Jellyfish Peace</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action Section -->
+    <section class="content-section bg-light" id="cta">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6 animate-on-scroll">
+                    <div class="glass-card">
+                        <div class="text-center">
+                            <div class="card-icon">
+                                <i class="fas fa-download"></i>
+                            </div>
+                            <h3 class="mb-3">Start Your Ocean Journey</h3>
+                            <p class="mb-4">Download our complete underwater yoga kit with poses, activities, and guided sessions.</p>
+                            <a href="#" class="btn btn-hero btn-primary-hero">Download Free Kit</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 animate-on-scroll">
+                    <h2 class="section-title text-start">Ready to Dive In?</h2>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <div class="d-flex align-items-center">
+                                <div class="me-3">
+                                    <i class="fas fa-check-circle text-success" style="font-size: 1.5rem;"></i>
+                                </div>
+                                <div>
+                                    <h5 class="mb-1">Ocean Pose Guide</h5>
+                                    <p class="mb-0 text-muted">Step-by-step instructions</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="d-flex align-items-center">
+                                <div class="me-3">
+                                    <i class="fas fa-check-circle text-success" style="font-size: 1.5rem;"></i>
+                                </div>
+                                <div>
+                                    <h5 class="mb-1">Video Library</h5>
+                                    <p class="mb-0 text-muted">Guided sessions</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="d-flex align-items-center">
+                                <div class="me-3">
+                                    <i class="fas fa-check-circle text-success" style="font-size: 1.5rem;"></i>
+                                </div>
+                                <div>
+                                    <h5 class="mb-1">Safety Guidelines</h5>
+                                    <p class="mb-0 text-muted">Age-appropriate practices</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="d-flex align-items-center">
+                                <div class="me-3">
+                                    <i class="fas fa-check-circle text-success" style="font-size: 1.5rem;"></i>
+                                </div>
+                                <div>
+                                    <h5 class="mb-1">Parent Resources</h5>
+                                    <p class="mb-0 text-muted">Support materials</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Enhanced Footer -->
+    <footer id="contact">
+        <div class="container position-relative">
+            <div class="row">
+                <div class="col-lg-4 mb-5">
+                    <div class="d-flex align-items-center mb-4">
+                        <img src="https://cdn-icons-png.flaticon.com/512/3050/3050229.png" alt="Yoga Waves Logo" style="height: 50px; margin-right: 15px; filter: brightness(0) invert(1);">
+                        <span style="font-size: 2rem; font-weight: 700; font-family: 'Baloo 2', cursive;">Yoga Waves</span>
+                    </div>
+                    <p class="mb-4" style="opacity: 0.9;">Creating magical underwater yoga experiences that inspire children to move, breathe, and grow with confidence and joy.</p>
+                    <div class="mb-4">
+                        <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-tiktok"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h5 class="mb-4" style="font-weight: 600;">Programs</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#" style="color: rgba(255,255,255,0.8); text-decoration: none; transition: color 0.3s;" onmouseover="this.style.color='#06d6a0'" onmouseout="this.style.color='rgba(255,255,255,0.8)'">Little Swimmers (3-5)</a></li>
+                        <li class="mb-2"><a href="#" style="color: rgba(255,255,255,0.8); text-decoration: none; transition: color 0.3s;" onmouseover="this.style.color='#06d6a0'" onmouseout="this.style.color='rgba(255,255,255,0.8)'">Ocean Explorers (6-8)</a></li>
+                        <li class="mb-2"><a href="#" style="color: rgba(255,255,255,0.8); text-decoration: none; transition: color 0.3s;" onmouseover="this.style.color='#06d6a0'" onmouseout="this.style.color='rgba(255,255,255,0.8)'">Deep Sea Divers (9-12)</a></li>
+                        <li class="mb-2"><a href="#" style="color: rgba(255,255,255,0.8); text-decoration: none; transition: color 0.3s;" onmouseover="this.style.color='#06d6a0'" onmouseout="this.style.color='rgba(255,255,255,0.8)'">Family Sessions</a></li>
+                        <li><a href="#" style="color: rgba(255,255,255,0.8); text-decoration: none; transition: color 0.3s;" onmouseover="this.style.color='#06d6a0'" onmouseout="this.style.color='rgba(255,255,255,0.8)'">Birthday Parties</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h5 class="mb-4" style="font-weight: 600;">Resources</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#" style="color: rgba(255,255,255,0.8); text-decoration: none; transition: color 0.3s;" onmouseover="this.style.color='#06d6a0'" onmouseout="this.style.color='rgba(255,255,255,0.8)'">Pose Library</a></li>
+                        <li class="mb-2"><a href="#" style="color: rgba(255,255,255,0.8); text-decoration: none; transition: color 0.3s;" onmouseover="this.style.color='#06d6a0'" onmouseout="this.style.color='rgba(255,255,255,0.8)'">Video Tutorials</a></li>
+                        <li class="mb-2"><a href="#" style="color: rgba(255,255,255,0.8); text-decoration: none; transition: color 0.3s;" onmouseover="this.style.color='#06d6a0'" onmouseout="this.style.color='rgba(255,255,255,0.8)'">Parent Guides</a></li>
+                        <li class="mb-2"><a href="#" style="color: rgba(255,255,255,0.8); text-decoration: none; transition: color 0.3s;" onmouseover="this.style.color='#06d6a0'" onmouseout="this.style.color='rgba(255,255,255,0.8)'">Safety Tips</a></li>
+                        <li><a href="#" style="color: rgba(255,255,255,0.8); text-decoration: none; transition: color 0.3s;" onmouseover="this.style.color='#06d6a0'" onmouseout="this.style.color='rgba(255,255,255,0.8)'">Blog & Articles</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4">
+                    <h5 class="mb-4" style="font-weight: 600;">Stay Connected</h5>
+                    <p class="mb-3" style="opacity: 0.9;">Join our ocean community for weekly tips, new videos, and special offers!</p>
+                    <div class="input-group mb-3">
+                        <input type="email" class="form-control" placeholder="Enter your email" style="border-radius: 25px 0 0 25px; border: none; padding: 15px 20px;">
+                        <button class="btn" type="button" style="background: linear-gradient(135deg, #06d6a0, #8b5cf6); border: none; border-radius: 0 25px 25px 0; color: white; padding: 15px 25px; font-weight: 600;">Subscribe</button>
+                    </div>
+                    <div class="mt-4">
+                        <p class="mb-2" style="opacity: 0.8;"><i class="fas fa-envelope me-2"></i> hello@yogawaves.com</p>
+                        <p class="mb-2" style="opacity: 0.8;"><i class="fas fa-phone me-2"></i> (555) 123-WAVE</p>
+                        <p class="mb-0" style="opacity: 0.8;"><i class="fas fa-map-marker-alt me-2"></i> Ocean Studio, Seaside CA</p>
+                    </div>
+                </div>
+            </div>
+            <hr style="margin: 60px 0 30px; opacity: 0.3;">
+            <div class="row align-items-center">
+                <div class="col-md-6 text-center text-md-start">
+                    <p class="mb-0" style="opacity: 0.8;">© 2025 Yoga Waves. Crafted with 🌊 for amazing kids.</p>
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    <a href="#" style="color: rgba(255,255,255,0.8); text-decoration: none; margin: 0 15px; transition: color 0.3s;" onmouseover="this.style.color='#06d6a0'" onmouseout="this.style.color='rgba(255,255,255,0.8)'">Privacy Policy</a>
+                    <a href="#" style="color: rgba(255,255,255,0.8); text-decoration: none; margin: 0 15px; transition: color 0.3s;" onmouseover="this.style.color='#06d6a0'" onmouseout="this.style.color='rgba(255,255,255,0.8)'">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Loading screen
+        window.addEventListener('load', function() {
+            const loadingOverlay = document.getElementById('loadingOverlay');
+            setTimeout(() => {
+                loadingOverlay.style.opacity = '0';
+                setTimeout(() => {
+                    loadingOverlay.style.display = 'none';
+                }, 500);
+            }, 1000);
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('mainNavbar');
+            if (window.scrollY > 100) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    const navbarHeight = document.querySelector('.navbar').offsetHeight;
+                    const targetPosition = target.offsetTop - navbarHeight;
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Enhanced scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animated');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all elements with animate-on-scroll class
+        document.querySelectorAll('.animate-on-scroll').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Parallax effect for hero section
+        window.addEventListener('scroll', function() {
+            const scrolled = window.pageYOffset;
+            const rate = scrolled * -0.5;
+            const heroSection = document.querySelector('.hero-section');
+            if (heroSection) {
+                heroSection.style.transform = `translateY(${rate}px)`;
+            }
+        });
+
+        // Enhanced bubble generation
+        function createRandomBubbles() {
+            const heroSection = document.querySelector('.floating-bg');
+            if (!heroSection) return;
+
+            setInterval(() => {
+                const bubble = document.createElement('div');
+                bubble.className = 'bubble';
+                bubble.style.left = Math.random() * 100 + '%';
+                bubble.style.width = bubble.style.height = (Math.random() * 60 + 40) + 'px';
+                bubble.style.animationDuration = (Math.random() * 10 + 10) + 's';
+                bubble.style.animationDelay = '0s';
+                
+                heroSection.appendChild(bubble);
+                
+                setTimeout(() => {
+                    if (bubble.parentNode) {
+                        bubble.parentNode.removeChild(bubble);
+                    }
+                }, 20000);
+            }, 3000);
+        }
+
+        // Initialize random bubbles
+        createRandomBubbles();
+
+        // Add interactive hover effects to cards
+        document.querySelectorAll('.glass-card, .video-card').forEach(card => {
+            card.addEventListener('mouseenter', function(e) {
+                this.style.transform = 'translateY(-15px) rotateX(5deg)';
+            });
+            
+            card.addEventListener('mouseleave', function(e) {
+                this.style.transform = 'translateY(0) rotateX(0)';
+            });
+        });
+
+        // Dynamic background colors
+        const colors = ['#667eea', '#764ba2', '#f093fb', '#06d6a0'];
+        let colorIndex = 0;
+
+        setInterval(() => {
+            document.documentElement.style.setProperty('--accent-color', colors[colorIndex]);
+            colorIndex = (colorIndex + 1) % colors.length;
+        }, 5000);
+
+        // Enhanced video play tracking
+        document.querySelectorAll('video').forEach(video => {
+            video.addEventListener('play', function() {
+                this.closest('.video-card').style.boxShadow = '0 25px 50px rgba(102, 126, 234, 0.4)';
+            });
+            
+            video.addEventListener('pause', function() {
+                this.closest('.video-card').style.boxShadow = '0 10px 30px rgba(0,0,0,0.1)';
+            });
+        });
+
+        // Add floating animation to random elements
+        function addFloatingAnimation() {
+            const elements = document.querySelectorAll('.card-icon');
+            elements.forEach((el, index) => {
+                el.style.animationDelay = (index * 0.5) + 's';
+                el.style.animation = 'float 6s ease-in-out infinite';
+            });
+        }
+
+        // Initialize floating animations
+        addFloatingAnimation();
+
+        // Performance optimization: Reduce animations on slower devices
+        if (navigator.hardwareConcurrency && navigator.hardwareConcurrency < 4) {
+            document.documentElement.style.setProperty('--animation-duration', '0.2s');
+        }
+    </script>
+</body>
+</html>

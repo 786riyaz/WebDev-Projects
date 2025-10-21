@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cosmic Yoga Universe</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            height: 100vh;
+            overflow: hidden;
+            background: linear-gradient(45deg, #000428, #004e92, #009ffd, #00d2ff);
+            background-size: 400% 400%;
+            animation: cosmicBackground 20s ease infinite;
+            font-family: 'Arial', sans-serif;
+        }
+
+        @keyframes cosmicBackground {
+            0%, 100% { background-position: 0% 50%; }
+            25% { background-position: 100% 50%; }
+            50% { background-position: 100% 100%; }
+            75% { background-position: 0% 100%; }
+        }
+
+        #container {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+        }
+
+        .content-overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: white;
+            z-index: 10;
+            pointer-events: none;
+        }
+
+        .yoga-title {
+            font-size: 6rem;
+            font-weight: 100;
+            margin-bottom: 2rem;
+            text-shadow: 0 0 50px rgba(255,255,255,0.8);
+            animation: cosmicFloat 12s ease-in-out infinite;
+            letter-spacing: 1em;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #f7b731, #5f27cd, #ff9ff3);
+            background-size: 600% 600%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: cosmicGradient 8s ease infinite, cosmicFloat 12s ease-in-out infinite;
+        }
+
+        .yoga-subtitle {
+            font-size: 2.2rem;
+            font-weight: 200;
+            opacity: 0.95;
+            text-shadow: 0 0 30px rgba(255,255,255,0.6);
+            animation: stellarPulse 8s ease-in-out infinite;
+            color: #e6f3ff;
+            margin-bottom: 3rem;
+        }
+
+        .cosmic-info {
+            position: absolute;
+            bottom: 12%;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 1.3rem;
+            opacity: 0.8;
+            color: #b3e0ff;
+            animation: nebulaBreathe 10s ease-in-out infinite;
+            text-align: center;
+            line-height: 2;
+            letter-spacing: 0.1em;
+        }
+
+        @keyframes cosmicGradient {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        @keyframes cosmicFloat {
+            0%, 100% {
+                transform: translate(-50%, -50%) scale(1) rotateY(0deg);
+                text-shadow: 0 0 50px rgba(255,255,255,0.8);
+            }
+            50% {
+                transform: translate(-50%, -50%) scale(1.08) rotateY(2deg);
+                text-shadow: 0 0 80px rgba(255,255,255,1);
+            }
+        }
+
+        @keyframes stellarPulse {
+            0%, 100% {
+                transform: translateY(0px) scale(1);
+                opacity: 0.95;
+            }
+            50% {
+                transform: translateY(-15px) scale(1.02);
+                opacity: 1;
+            }
+        }
+
+        @keyframes nebulaBreathe {
+            0%, 100% { opacity: 0.8; transform: translateX(-50%) scale(1); }
+            50% { opacity: 1; transform: translateX(-50%) scale(1.05); }
+        }
+
+        .loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #4ecdc4;
+            font-size: 1.8rem;
+            z-index: 5;
+            text-shadow: 0 0 40px rgba(78, 205, 196, 0.8);
+            animation: loadingPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes loadingPulse {
+            0%, 100% { opacity: 0.7; transform: translate(-50%, -50%) scale(1); }
+            50% { opacity: 1; transform: translate(-50%, -50%) scale(1.1); }
+        }
+
+        .stars-indicator {
+            position: absolute;
+            top: 5%;
+            right: 5%;
+            display: flex;
+            gap: 8px;
+            z-index: 8;
+        }
+
+        .star {
+            width: 6px;
+            height: 6px;
+            background: white;
+            border-radius: 50%;
+            animation: starTwinkle 3s ease-in-out infinite;
+        }
+
+        .star:nth-child(odd) { animation-delay: 1.5s; }
+
+        @keyframes starTwinkle {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.5); }
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <div class="loading">Manifesting Cosmic Energy...</div>
+        <div class="content-overlay" style="opacity: 0;" id="content">
+            <h1 class="yoga-title">INFINITY</h1>
+            <p class="yoga-subtitle">Journey Beyond the Stars</p>
+            <div class="cosmic-info">
+                Float • Breathe • Transcend<br>
+                In the endless expanse of consciousness
+            </div>
+        </div>
+        <div class="stars-indicator">
+            <div class="star"></div>
+            <div class="star"></div>
+            <div class="star"></div>
+            <div class="star"></div>
+            <div class="star"></div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+        let scene, camera, renderer;
+        let floatingIslands = [], cosmicRings = [], nebulaClouds = [], starField;
+        let mouseX = 0, mouseY = 0;
+        let time = 0;
+
+        init();
+        animate();
+
+        function init() {
+            // Scene setup
+            scene = new THREE.Scene();
+
+            // Camera setup
+            camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 1, 10000);
+            camera.position.set(0, 300, 1000);
+
+            // Renderer setup
+            renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setClearColor(0x000000, 0);
+            renderer.shadowMap.enabled = true;
+            renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+            document.getElementById('container').appendChild(renderer.domElement);
+
+            // Setup cosmic lighting
+            setupCosmicLighting();
+            
+            // Create 3D elements
+            createFloatingIslands();
+            createCosmicRings();
+            createNebulaClouds();
+            createStarField();
+            createEnergyOrbs();
+            createCosmicTunnels();
+
+            // Event listeners
+            document.addEventListener('mousemove', onMouseMove, false);
+            window.addEventListener('resize', onWindowResize, false);
+
+            // Reveal content
+            setTimeout(() => {
+                document.querySelector('.loading').style.display = 'none';
+                document.getElementById('content').style.opacity = '1';
+                document.getElementById('content').style.transition = 'opacity 4s ease-in-out';
+            }, 3500);
+        }
+
+        function setupCosmicLighting() {
+            // Ambient cosmic light
+            const ambientLight = new THREE.AmbientLight(0x1a1a3a, 0.4);
+            scene.add(ambientLight);
+
+            // Central star light
+            const starLight = new THREE.PointLight(0xffffff, 2, 3000);
+            starLight.position.set(0, 0, 0);
+            scene.add(starLight);
+
+            // Nebula lights
+            const colors = [0x4ecdc4, 0xff6b6b, 0x45b7d1, 0xf7b731, 0x5f27cd];
+            colors.forEach((color, i) => {
+                const light = new THREE.PointLight(color, 1.2, 2000);
+                const angle = (i / colors.length) * Math.PI * 2;
+                light.position.set(
+                    Math.cos(angle) * 800,
+                    Math.sin(i) * 300,
+                    Math.sin(angle) * 800
+                );
+                scene.add(light);
+            });
+        }
+
+        function createFloatingIslands() {
+            for (let i = 0; i < 8; i++) {
+                const islandGroup = new THREE.Group();
+                
+                // Main island base
+                const baseGeometry = new THREE.CylinderGeometry(60 + Math.random() * 40, 80 + Math.random() * 60, 30, 8);
+                const baseMaterial = new THREE.MeshPhongMaterial({
+                    color: 0x2c3e50,
+                    shininess: 30
+                });
+                const base = new THREE.Mesh(baseGeometry, baseMaterial);
+                base.castShadow = true;
+                islandGroup.add(base);
+
+                // Crystal formations on islands
+                for (let j = 0; j < 5; j++) {
+                    const crystalGeometry = new THREE.ConeGeometry(5 + Math.random() * 8, 20 + Math.random() * 30, 6);
+                    const crystalMaterial = new THREE.MeshPhongMaterial({
+                        color: new THREE.Color().setHSL(Math.random(), 0.8, 0.7),
+                        transparent: true,
+                        opacity: 0.8,
+                        emissive: new THREE.Color().setHSL(Math.random(), 0.6, 0.3),
+                        shininess: 100
+                    });
+                    
+                    const crystal = new THREE.Mesh(crystalGeometry, crystalMaterial);
+                    crystal.position.set(
+                        (Math.random() - 0.5) * 100,
+                        15 + Math.random() * 20,
+                        (Math.random() - 0.5) * 100
+                    );
+                    crystal.rotation.y = Math.random() * Math.PI * 2;
+                    islandGroup.add(crystal);
+                }
+
+                // Position islands in 3D space
+                const radius = 500 + i * 200;
+                const angle = (i / 8) * Math.PI * 2;
+                islandGroup.position.set(
+                    Math.cos(angle) * radius,
+                    (Math.random() - 0.5) * 400,
+                    Math.sin(angle) * radius
+                );
+
+                islandGroup.userData = {
+                    rotationSpeed: 0.001 + Math.random() * 0.002,
+                    floatSpeed: 0.3 + Math.random() * 0.4,
+                    originalY: islandGroup.position.y
+                };
+
+                floatingIslands.push(islandGroup);
+                scene.add(islandGroup);
+            }
+        }
+
+        function createCosmicRings() {
+            for (let i = 0; i < 12; i++) {
+                const ringGeometry = new THREE.TorusGeometry(
+                    100 + i * 80, 
+                    5 + Math.random() * 10, 
+                    16, 
+                    100
+                );
+                
+                const ringMaterial = new THREE.MeshPhongMaterial({
+                    color: new THREE.Color().setHSL(i / 12, 0.8, 0.6),
+                    transparent: true,
+                    opacity: 0.3,
+                    emissive: new THREE.Color().setHSL(i / 12, 0.6, 0.2),
+                    side: THREE.DoubleSide
+                });
+
+                const ring = new THREE.Mesh(ringGeometry, ringMaterial);
+                ring.position.set(0, 0, 0);
+                ring.rotation.x = Math.random() * Math.PI;
+                ring.rotation.y = Math.random() * Math.PI;
+                ring.rotation.z = Math.random() * Math.PI;
+
+                ring.userData = {
+                    rotationSpeed: {
+                        x: (Math.random() - 0.5) * 0.005,
+                        y: (Math.random() - 0.5) * 0.005,
+                        z: (Math.random() - 0.5) * 0.005
+                    }
+                };
+
+                cosmicRings.push(ring);
+                scene.add(ring);
+            }
+        }
+
+        function createNebulaClouds() {
+            for (let i = 0; i < 20; i++) {
+                const cloudGeometry = new THREE.SphereGeometry(50 + Math.random() * 100, 16, 16);
+                const cloudMaterial = new THREE.MeshPhongMaterial({
+                    color: new THREE.Color().setHSL(Math.random(), 0.7, 0.5),
+                    transparent: true,
+                    opacity: 0.15,
+                    emissive: new THREE.Color().setHSL(Math.random(), 0.5, 0.3),
+                    emissiveIntensity: 0.4
+                });
+
+                const cloud = new THREE.Mesh(cloudGeometry, cloudMaterial);
+                cloud.position.set(
+                    (Math.random() - 0.5) * 3000,
+                    (Math.random() - 0.5) * 1500,
+                    (Math.random() - 0.5) * 3000
+                );
+
+                cloud.userData = {
+                    rotationSpeed: (Math.random() - 0.5) * 0.003,
+                    pulseSpeed: Math.random() * 0.5 + 0.2
+                };
+
+                nebulaClouds.push(cloud);
+                scene.add(cloud);
+            }
+        }
+
+        function createStarField() {
+            const starCount = 2000;
+            const geometry = new THREE.BufferGeometry();
+            const positions = new Float32Array(starCount * 3);
+            const colors = new Float32Array(starCount * 3);
+            const sizes = new Float32Array(starCount);
+
+            for (let i = 0; i < starCount; i++) {
+                const i3 = i * 3;
+                
+                positions[i3] = (Math.random() - 0.5) * 8000;
+                positions[i3 + 1] = (Math.random() - 0.5) * 4000;
+                positions[i3 + 2] = (Math.random() - 0.5) * 8000;
+
+                const color = new THREE.Color().setHSL(Math.random(), 0.3, 0.8 + Math.random() * 0.2);
+                colors[i3] = color.r;
+                colors[i3 + 1] = color.g;
+                colors[i3 + 2] = color.b;
+
+                sizes[i] = Math.random() * 3 + 1;
+            }
+
+            geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+            geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+            geometry.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
+
+            const material = new THREE.PointsMaterial({
+                size: 2,
+                sizeAttenuation: true,
+                vertexColors: true,
+                transparent: true,
+                opacity: 0.9,
+                blending: THREE.AdditiveBlending
+            });
+
+            starField = new THREE.Points(geometry, material);
+            scene.add(starField);
+        }
+
+        function createEnergyOrbs() {
+            for (let i = 0; i < 15; i++) {
+                const orbGeometry = new THREE.SphereGeometry(15 + Math.random() * 20, 32, 32);
+                const orbMaterial = new THREE.MeshPhongMaterial({
+                    color: new THREE.Color().setHSL(Math.random(), 0.8, 0.7),
+                    transparent: true,
+                    opacity: 0.7,
+                    emissive: new THREE.Color().setHSL(Math.random(), 0.6, 0.5),
+                    emissiveIntensity: 0.8,
+                    shininess: 100
+                });
+
+                const orb = new THREE.Mesh(orbGeometry, orbMaterial);
+                orb.position.set(
+                    (Math.random() - 0.5) * 2000,
+                    (Math.random() - 0.5) * 1000,
+                    (Math.random() - 0.5) * 2000
+                );
+
+                orb.userData = {
+                    velocity: new THREE.Vector3(
+                        (Math.random() - 0.5) * 3,
+                        (Math.random() - 0.5) * 2,
+                        (Math.random() - 0.5) * 3
+                    ),
+                    pulseSpeed: Math.random() * 1 + 0.5
+                };
+
+                floatingIslands.push(orb);
+                scene.add(orb);
+            }
+        }
+
+        function createCosmicTunnels() {
+            for (let i = 0; i < 3; i++) {
+                const tunnelGeometry = new THREE.CylinderGeometry(200, 250, 1000, 32, 1, true);
+                const tunnelMaterial = new THREE.MeshPhongMaterial({
+                    color: new THREE.Color().setHSL(i / 3, 0.7, 0.4),
+                    transparent: true,
+                    opacity: 0.1,
+                    side: THREE.BackSide,
+                    emissive: new THREE.Color().setHSL(i / 3, 0.5, 0.2)
+                });
+
+                const tunnel = new THREE.Mesh(tunnelGeometry, tunnelMaterial);
+                tunnel.position.set(0, 0, -2000 + i * 1500);
+                tunnel.rotation.z = i * Math.PI / 3;
+
+                cosmicRings.push(tunnel);
+                scene.add(tunnel);
+            }
+        }
+
+        function onMouseMove(event) {
+            mouseX = (event.clientX / window.innerWidth) * 2 - 1;
+            mouseY = -(event.clientY / window.innerHeight) * 2 + 1;
+        }
+
+        function onWindowResize() {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+            time += 0.01;
+
+            // Animate floating islands
+            floatingIslands.forEach((island, index) => {
+                if (island.userData.rotationSpeed) {
+                    island.rotation.y += island.userData.rotationSpeed;
+                }
+                if (island.userData.floatSpeed) {
+                    island.position.y = island.userData.originalY + Math.sin(time * island.userData.floatSpeed + index) * 50;
+                }
+                if (island.userData.velocity) {
+                    island.position.add(island.userData.velocity);
+                    if (island.position.length() > 2500) {
+                        island.position.normalize().multiplyScalar(500);
+                    }
+                }
+                if (island.userData.pulseSpeed) {
+                    const pulse = 1 + Math.sin(time * island.userData.pulseSpeed) * 0.3;
+                    island.scale.set(pulse, pulse, pulse);
+                }
+            });
+
+            // Animate cosmic rings
+            cosmicRings.forEach((ring, index) => {
+                if (ring.userData.rotationSpeed) {
+                    ring.rotation.x += ring.userData.rotationSpeed.x;
+                    ring.rotation.y += ring.userData.rotationSpeed.y;
+                    ring.rotation.z += ring.userData.rotationSpeed.z;
+                }
+                if (ring.material.emissiveIntensity !== undefined) {
+                    ring.material.emissiveIntensity = 0.2 + Math.sin(time + index) * 0.2;
+                }
+            });
+
+            // Animate nebula clouds
+            nebulaClouds.forEach((cloud, index) => {
+                cloud.rotation.y += cloud.userData.rotationSpeed;
+                const pulse = 1 + Math.sin(time * cloud.userData.pulseSpeed + index) * 0.4;
+                cloud.scale.set(pulse, pulse, pulse);
+                cloud.material.emissiveIntensity = 0.4 + Math.sin(time * 0.5 + index) * 0.3;
+            });
+
+            // Animate star field
+            if (starField) {
+                starField.rotation.y += 0.0005;
+                starField.rotation.x += 0.0002;
+            }
+
+            // Dynamic camera movement
+            const targetX = mouseX * 500;
+            const targetY = -mouseY * 300 + 300;
+            
+            camera.position.x += (targetX - camera.position.x) * 0.02;
+            camera.position.y += (targetY - camera.position.y) * 0.02;
+            
+            // Camera orbital movement
+            const radius = 1000;
+            camera.position.x += Math.cos(time * 0.1) * radius * 0.001;
+            camera.position.z += Math.sin(time * 0.1) * radius * 0.001;
+            
+            camera.lookAt(0, 0, 0);
+
+            renderer.render(scene, camera);
+        }
+    </script>
+</body>
+</html>

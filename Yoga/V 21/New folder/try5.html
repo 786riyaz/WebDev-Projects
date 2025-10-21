@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yoga Testimonials</title>
+    <style>
+        :root {
+            --yoga-primary: #000;
+            --yoga-secondary: #ff9a76;
+            --yoga-light: #f8f5f2;
+            --navbar-bg: rgba(255, 255, 255, 0.98);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        body {
+            background-color: var(--yoga-light);
+            color: var(--yoga-primary);
+        }
+        
+        .testimonials-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 80px 20px;
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        .section-header h2 {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: var(--yoga-primary);
+        }
+        
+        .section-header p {
+            font-size: 18px;
+            color: #555;
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+        
+        .divider {
+            width: 80px;
+            height: 4px;
+            background-color: var(--yoga-secondary);
+            margin: 20px auto;
+            border-radius: 2px;
+        }
+        
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .testimonial-card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .testimonial-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+        }
+        
+        .testimonial-card::before {
+            content: '"';
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 80px;
+            color: var(--yoga-secondary);
+            opacity: 0.1;
+            font-family: Georgia, serif;
+            line-height: 1;
+        }
+        
+        .testimonial-content {
+            position: relative;
+            z-index: 1;
+            margin-bottom: 20px;
+            font-size: 16px;
+            line-height: 1.7;
+            color: #444;
+        }
+        
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+        }
+        
+        .author-img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 15px;
+            border: 3px solid var(--yoga-secondary);
+        }
+        
+        .author-info h4 {
+            font-size: 18px;
+            margin-bottom: 5px;
+            color: var(--yoga-primary);
+        }
+        
+        .author-info p {
+            font-size: 14px;
+            color: var(--yoga-secondary);
+            font-style: italic;
+        }
+        
+        .rating {
+            color: var(--yoga-secondary);
+            margin-top: 5px;
+            font-size: 14px;
+        }
+        
+        .cta-section {
+            text-align: center;
+            margin-top: 80px;
+        }
+        
+        .cta-section h3 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: var(--yoga-primary);
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background-color: var(--yoga-secondary);
+            color: white;
+            padding: 15px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            border: 2px solid var(--yoga-secondary);
+        }
+        
+        .cta-button:hover {
+            background-color: transparent;
+            color: var(--yoga-secondary);
+        }
+        
+        @media (max-width: 768px) {
+            .section-header h2 {
+                font-size: 28px;
+            }
+            
+            .section-header p {
+                font-size: 16px;
+            }
+            
+            .testimonials-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="testimonials-container">
+        <div class="section-header">
+            <h2>What Our Students Say</h2>
+            <div class="divider"></div>
+            <p>Hear from our yoga community about their transformative experiences with our classes and teachers.</p>
+        </div>
+        
+        <div class="testimonials-grid">
+            <div class="testimonial-card">
+                <div class="testimonial-content">
+                    <p>This yoga studio has completely transformed my life. The instructors are knowledgeable and create a welcoming environment for all levels. I've never felt stronger or more at peace.</p>
+                </div>
+                <div class="testimonial-author">
+                    <img src="https://randomuser.me/api/portraits/women/43.jpg" alt="Sarah J." class="author-img">
+                    <div class="author-info">
+                        <h4>Sarah Johnson</h4>
+                        <p>Student for 2 years</p>
+                        <div class="rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="testimonial-card">
+                <div class="testimonial-content">
+                    <p>As someone who was skeptical about yoga, I'm now a complete convert. The teachers here explain everything so clearly and modify poses for beginners. My back pain has significantly improved.</p>
+                </div>
+                <div class="testimonial-author">
+                    <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Michael T." class="author-img">
+                    <div class="author-info">
+                        <h4>Michael Thompson</h4>
+                        <p>Beginner Student</p>
+                        <div class="rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="testimonial-card">
+                <div class="testimonial-content">
+                    <p>The prenatal yoga classes were a lifesaver during my pregnancy. The instructor was so attentive and created a safe space for expecting mothers. I continued with mommy-and-me classes postpartum!</p>
+                </div>
+                <div class="testimonial-author">
+                    <img src="https://randomuser.me/api/portraits/women/65.jpg" alt="Priya M." class="author-img">
+                    <div class="author-info">
+                        <h4>Priya Mehta</h4>
+                        <p>Prenatal Student</p>
+                        <div class="rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="testimonial-card">
+                <div class="testimonial-content">
+                    <p>I've practiced yoga for years at various studios, but this one stands out. The attention to alignment and the spiritual aspect they incorporate is exceptional. I leave every class feeling renewed.</p>
+                </div>
+                <div class="testimonial-author">
+                    <img src="https://randomuser.me/api/portraits/women/22.jpg" alt="Lisa C." class="author-img">
+                    <div class="author-info">
+                        <h4>Lisa Chen</h4>
+                        <p>Advanced Practitioner</p>
+                        <div class="rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="testimonial-card">
+                <div class="testimonial-content">
+                    <p>The corporate yoga sessions they organized for our company made such a difference in our workplace. Stress levels decreased noticeably, and team bonding improved. Highly recommend!</p>
+                </div>
+                <div class="testimonial-author">
+                    <img src="https://randomuser.me/api/portraits/men/55.jpg" alt="David R." class="author-img">
+                    <div class="author-info">
+                        <h4>David Rodriguez</h4>
+                        <p>Corporate Client</p>
+                        <div class="rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="testimonial-card">
+                <div class="testimonial-content">
+                    <p>After trying several studios, I finally found my yoga home here. The teachers remember your name and your practice, offering personalized adjustments. The community is warm and welcoming.</p>
+                </div>
+                <div class="testimonial-author">
+                    <img src="https://randomuser.me/api/portraits/women/78.jpg" alt="Emma K." class="author-img">
+                    <div class="author-info">
+                        <h4>Emma Kowalski</h4>
+                        <p>Regular Student</p>
+                        <div class="rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="cta-section">
+            <h3>Ready to Begin Your Yoga Journey?</h3>
+            <a href="#" class="cta-button">Join Our Community</a>
+        </div>
+    </div>
+</body>
+</html>

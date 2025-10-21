@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zen Garden Features - Serene Yoga</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+         :root {
+            --primary-color: #6B8E70;
+            --secondary-color: #2C3E50;
+            --accent-color: #E8F5E8;
+            --text-light: #7F8C8D;
+            --gradient-1: #667eea;
+            --gradient-2: #764ba2;
+            --success-color: #27AE60;
+        }  
+
+                 /* :root {
+            --primary-color: #6B8E70;
+            --secondary-color: #6B8E70;
+            --accent-color: #E8F5E8;
+            --text-light: #7F8C8D;
+            --gradient-1: #667eea;
+            --gradient-2: #764ba2;
+            --success-color: #27AE60;
+        } 
+ */
+
+
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Split Screen Layout */
+        .features-section {
+            min-height: 100vh;
+            background: var(--secondary-color);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Animated Background Pattern */
+        .zen-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.1;
+            background-image:
+                radial-gradient(circle at 25% 25%, var(--primary-color) 2px, transparent 2px),
+                radial-gradient(circle at 75% 75%, var(--success-color) 1px, transparent 1px);
+            background-size: 100px 100px, 60px 60px;
+            animation: patternShift 30s linear infinite;
+        }
+
+        @keyframes patternShift {
+            0% {
+                transform: translate(0, 0);
+            }
+
+            100% {
+                transform: translate(100px, 60px);
+            }
+        }
+
+        /* Main Content Layout */
+        .content-layout {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            min-height: 100vh;
+            align-items: center;
+            gap: 60px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Left Side - Title Section */
+        .title-section {
+            padding: 80px 40px;
+            position: relative;
+        }
+
+        .section-number {
+            font-size: 8rem;
+            font-weight: 900;
+            color: rgba(107, 142, 112, 0.1);
+            position: absolute;
+            top: -20px;
+            left: 0;
+            z-index: -1;
+            animation: numberFloat 4s ease-in-out infinite;
+        }
+
+        @keyframes numberFloat {
+
+            0%,
+            100% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        .section-title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: white;
+            margin-bottom: 30px;
+            line-height: 1.1;
+            position: relative;
+            opacity: 0;
+            animation: titleSlideIn 1.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.5s forwards;
+        }
+
+        .section-title span {
+            display: block;
+            background: linear-gradient(135deg, var(--primary-color), var(--success-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientShimmer 3s ease-in-out infinite;
+        }
+
+        @keyframes gradientShimmer {
+
+            0%,
+            100% {
+                filter: hue-rotate(0deg);
+            }
+
+            50% {
+                filter: hue-rotate(20deg);
+            }
+        }
+
+        @keyframes titleSlideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-100px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .section-description {
+            font-size: 1.3rem;
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.8;
+            margin-bottom: 40px;
+            opacity: 0;
+            animation: fadeInUp 1s ease-out 1.2s forwards;
+        }
+
+        .decorative-line {
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--success-color));
+            border-radius: 2px;
+            position: relative;
+            opacity: 0;
+            animation: lineExpand 1s ease-out 1.8s forwards;
+        }
+
+        .decorative-line::after {
+            content: '';
+            position: absolute;
+            right: -20px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 12px;
+            height: 12px;
+            background: var(--success-color);
+            border-radius: 50%;
+            animation: dotPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes lineExpand {
+            from {
+                opacity: 0;
+                width: 0;
+            }
+
+            to {
+                opacity: 1;
+                width: 100px;
+            }
+        }
+
+        @keyframes dotPulse {
+
+            0%,
+            100% {
+                transform: translateY(-50%) scale(1);
+            }
+
+            50% {
+                transform: translateY(-50%) scale(1.3);
+            }
+        }
+
+        /* Right Side - Features Grid */
+        .features-grid {
+            padding: 80px 40px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            position: relative;
+        }
+
+        .feature-item {
+            background: linear-gradient(135deg,
+                    rgba(255, 255, 255, 0.1),
+                    rgba(255, 255, 255, 0.05));
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 25px;
+            padding: 50px 30px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(80px) rotateZ(5deg);
+            animation: itemSlideIn 1s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .feature-item:nth-child(1) {
+            animation-delay: 0.8s;
+        }
+
+        .feature-item:nth-child(2) {
+            animation-delay: 1.1s;
+        }
+
+        .feature-item:nth-child(3) {
+            animation-delay: 1.4s;
+        }
+
+        .feature-item:nth-child(4) {
+            animation-delay: 1.7s;
+        }
+
+        @keyframes itemSlideIn {
+            to {
+                opacity: 1;
+                transform: translateY(0) rotateZ(0deg);
+            }
+        }
+
+        /* Morphing Background Effect */
+        .feature-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg,
+                    var(--primary-color),
+                    var(--success-color));
+            border-radius: 25px;
+            opacity: 0;
+            transform: scale(0.8);
+            transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: -1;
+        }
+
+        .feature-item:hover::before {
+            opacity: 0.15;
+            transform: scale(1);
+        }
+
+        .feature-item:hover {
+            transform: translateY(-15px) scale(1.05);
+            border-color: rgba(107, 142, 112, 0.3);
+        }
+
+        /* Hexagonal Icon Container */
+        .icon-hexagon {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 30px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hexagon-shape {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, var(--gradient-1), var(--gradient-2));
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+            position: absolute;
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .hexagon-inner {
+            width: 80px;
+            height: 80px;
+            background: var(--secondary-color);
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+            position: absolute;
+            transition: all 0.5s ease;
+        }
+
+        .feature-item:hover .hexagon-shape {
+            transform: rotate(60deg) scale(1.1);
+            background: linear-gradient(135deg, var(--primary-color), var(--success-color));
+        }
+
+        .feature-item:hover .hexagon-inner {
+            transform: rotate(-60deg) scale(0.9);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            position: relative;
+            z-index: 3;
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .feature-item:hover .feature-icon {
+            color: white;
+            transform: scale(1.2);
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+        }
+
+        /* Typography */
+        .feature-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .feature-text {
+            font-size: 0.95rem;
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.6;
+            transition: all 0.3s ease;
+        }
+
+        .feature-item:hover .feature-text {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        /* Floating Elements */
+        .floating-element {
+            position: absolute;
+            background: var(--primary-color);
+            border-radius: 50%;
+            opacity: 0.3;
+            animation: elementFloat 12s ease-in-out infinite;
+        }
+
+        .floating-element:nth-child(1) {
+            width: 20px;
+            height: 20px;
+            top: 15%;
+            right: 10%;
+            animation-delay: 0s;
+        }
+
+        .floating-element:nth-child(2) {
+            width: 15px;
+            height: 15px;
+            bottom: 20%;
+            right: 20%;
+            animation-delay: 4s;
+        }
+
+        .floating-element:nth-child(3) {
+            width: 25px;
+            height: 25px;
+            top: 60%;
+            right: 5%;
+            animation-delay: 8s;
+        }
+
+        @keyframes elementFloat {
+
+            0%,
+            100% {
+                transform: translateY(0px) translateX(0px) rotate(0deg);
+                opacity: 0.3;
+            }
+
+            33% {
+                transform: translateY(-30px) translateX(20px) rotate(120deg);
+                opacity: 0.6;
+            }
+
+            66% {
+                transform: translateY(-15px) translateX(-25px) rotate(240deg);
+                opacity: 0.4;
+            }
+        }
+
+        /* Center Divider */
+        .center-divider {
+            position: absolute;
+            left: calc(100% / 3);
+            top: 10%;
+            bottom: 10%;
+            width: 2px;
+            background: linear-gradient(180deg,
+                    transparent 0%,
+                    var(--primary-color) 20%,
+                    var(--success-color) 50%,
+                    var(--primary-color) 80%,
+                    transparent 100%);
+            animation: dividerGlow 4s ease-in-out infinite;
+        }
+
+        @keyframes dividerGlow {
+
+            0%,
+            100% {
+                opacity: 0.3;
+                box-shadow: 0 0 0 rgba(107, 142, 112, 0.5);
+            }
+
+            50% {
+                opacity: 0.8;
+                box-shadow: 0 0 20px rgba(107, 142, 112, 0.5);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .content-layout {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 30px;
+            }
+
+            .center-divider {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .section-title {
+                font-size: 2.8rem;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+                gap: 25px;
+                padding: 40px 20px;
+            }
+
+            .title-section {
+                padding: 60px 20px;
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <section class="features-section">
+        <div class="zen-pattern"></div>
+        <div class="center-divider"></div>
+
+        <div class="floating-element"></div>
+        <div class="floating-element"></div>
+        <div class="floating-element"></div>
+
+        <div class="container">
+            <div class="content-layout">
+                <!-- Left Side - Title -->
+                <div class="title-section">
+                    <div class="section-number">01</div>
+                    <h2 class="section-title">
+                        Why Choose<br>
+                        <span>Serene Yoga</span>
+                    </h2>
+                    <p class="section-description">
+                        Embark on a transformative journey that nurtures your mind, strengthens your body, and elevates
+                        your spirit through ancient wisdom and modern practice.
+                    </p>
+                    <div class="decorative-line"></div>
+                </div>
+
+                <!-- Right Side - Features -->
+                <div class="features-grid">
+                    <div class="feature-item">
+                        <div class="icon-hexagon">
+                            <div class="hexagon-shape"></div>
+                            <div class="hexagon-inner"></div>
+                            <i class="fas fa-heart feature-icon"></i>
+                        </div>
+                        <h3 class="feature-title">Mindfulness</h3>
+                        <p class="feature-text">Cultivate inner peace through guided meditation and conscious breathing
+                            techniques.</p>
+                    </div>
+
+                    <div class="feature-item">
+                        <div class="icon-hexagon">
+                            <div class="hexagon-shape"></div>
+                            <div class="hexagon-inner"></div>
+                            <i class="fas fa-user-friends feature-icon"></i>
+                        </div>
+                        <h3 class="feature-title">Expert Instructors</h3>
+                        <p class="feature-text">Learn from certified masters with years of experience in various yoga
+                            disciplines.</p>
+                    </div>
+
+                    <div class="feature-item">
+                        <div class="icon-hexagon">
+                            <div class="hexagon-shape"></div>
+                            <div class="hexagon-inner"></div>
+                            <i class="fas fa-leaf feature-icon"></i>
+                        </div>
+                        <h3 class="feature-title">Natural Environment</h3>
+                        <p class="feature-text">Practice in our serene studio designed with nature-inspired elements.
+                        </p>
+                    </div>
+
+                    <div class="feature-item">
+                        <div class="icon-hexagon">
+                            <div class="hexagon-shape"></div>
+                            <div class="hexagon-inner"></div>
+                            <i class="fas fa-spa feature-icon"></i>
+                        </div>
+                        <h3 class="feature-title">Holistic Approach</h3>
+                        <p class="feature-text">Integrate physical postures with spiritual growth for complete wellness.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+
+</html>

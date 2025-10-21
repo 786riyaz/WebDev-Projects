@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Circle Mouse Effect</title>
+    <style>
+        body {
+            margin: 0;
+            overflow-x: hidden;
+            background: #0f0f1a;
+            cursor: none; /* Hide default cursor */
+        }
+
+        /* The circle that follows the mouse */
+        .cursor-circle {
+            position: fixed;
+            width: 40px;
+            height: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            pointer-events: none; /* Prevents interference with clicks */
+            transform: translate(-50%, -50%);
+            mix-blend-mode: difference; /* Cool blending effect */
+            transition: transform 0.1s ease-out, width 0.3s ease, height 0.3s ease;
+            z-index: 9999;
+        }
+
+        /* Inner dot */
+        .cursor-dot {
+            position: fixed;
+            width: 6px;
+            height: 6px;
+            background-color: white;
+            border-radius: 50%;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            z-index: 9999;
+        }
+
+        /* Optional: Add hover effects on links/buttons */
+        a, button {
+            transition: transform 0.2s ease;
+        }
+
+        a:hover, button:hover {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <!-- The circle that follows the mouse -->
+    <div class="cursor-circle"></div>
+    <div class="cursor-dot"></div>
+
+    <!-- Your content goes here -->
+    <div style="height: 200vh; color: white; padding: 50px;">
+        <h1>Move your mouse around!</h1>
+        <p>The circle will follow smoothly.</p>
+        <a href="#" style="color: white;">Hover over links for effect</a>
+    </div>
+
+    <script>
+        const cursorCircle = document.querySelector('.cursor-circle');
+        const cursorDot = document.querySelector('.cursor-dot');
+
+        let mouseX = 0;
+        let mouseY = 0;
+        let circleX = 0;
+        let circleY = 0;
+        let scale = 1;
+
+        const speed = 0.2; // Smoothing factor (lower = smoother)
+
+        function animate() {
+            // Calculate distance between mouse and circle
+            let distX = mouseX - circleX;
+            let distY = mouseY - circleY;
+
+            // Apply easing
+            circleX += distX * speed;
+            circleY += distY * speed;
+
+            // Apply transform
+            cursorCircle.style.transform = `translate(${circleX}px, ${circleY}px) scale(${scale})`;
+            cursorDot.style.transform = `translate(${mouseX}px, ${mouseY}px)`;
+
+            requestAnimationFrame(animate);
+        }
+
+        // Track mouse movement
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+        });
+
+        // Hover effects (optional)
+        document.querySelectorAll('a, button').forEach((el) => {
+            el.addEventListener('mouseenter', () => {
+                scale = 1.5;
+                cursorCircle.style.borderColor = "rgba(255, 255, 255, 0.8)";
+            });
+            el.addEventListener('mouseleave', () => {
+                scale = 1;
+                cursorCircle.style.borderColor = "rgba(255, 255, 255, 0.5)";
+            });
+        });
+
+        // Start animation
+        animate();
+    </script>
+</body>
+</html>

@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kiaya Haus Particle Background</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background: linear-gradient(135deg, #e8f5e9 0%, #a5d6a7 100%);
+            font-family: 'Arial', sans-serif;
+        }
+        canvas {
+            display: block;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+        .content {
+            position: relative;
+            z-index: 1;
+            color: #1b5e20;
+            text-align: center;
+            padding: 50px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding-top: 80px;
+        }
+        .content-card {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            max-width: 700px;
+            margin: 0 auto;
+            animation: slideIn 1.5s ease-out;
+        }
+        .content h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 0 0 12px rgba(67, 160, 71, 0.5);
+            animation: fadeIn 2s ease-in;
+        }
+        .content p {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            opacity: 0.9;
+            text-shadow: 0 0 8px rgba(67, 160, 71, 0.3);
+            animation: fadeIn 3s ease-in;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .navbar {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            margin: 10px auto;
+            max-width: 1200px;
+            border-radius: 10px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1), 0 0 10px rgba(129, 199, 132, 0.3);
+            border: 1px solid rgba(165, 214, 167, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .navbar:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 40px rgba(0, 0, 0, 0.15), 0 0 15px rgba(129, 199, 132, 0.4);
+        }
+        .navbar-brand img {
+            width: 40px;
+            height: 40px;
+        }
+        .navbar-nav .nav-link {
+            color: #1b5e20;
+            transition: color 0.3s ease, text-shadow 0.3s ease;
+        }
+        .navbar-nav .nav-link:hover {
+            color: #43a047;
+            text-shadow: 0 0 5px rgba(129, 199, 132, 0.5);
+        }
+        .dropdown-menu {
+            background: rgba(200, 230, 201, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(165, 214, 167, 0.3);
+            animation: dropdownFade 0.3s ease;
+        }
+        .dropdown-item {
+            color: #1b5e20;
+            transition: background-color 0.3s ease, text-shadow 0.3s ease;
+        }
+        .dropdown-item:hover {
+            background-color: #a5d6a7;
+            color: #1b5e20;
+            text-shadow: 0 0 5px rgba(129, 199, 132, 0.5);
+        }
+        @keyframes dropdownFade {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .fps-counter {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            color: #1b5e20;
+            font-size: 14px;
+            opacity: 0.7;
+            text-shadow: 0 0 5px rgba(67, 160, 71, 0.5);
+            background: rgba(255, 255, 255, 0.8);
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+        .btn-primary {
+            background-color: #43a047;
+            border-color: #43a047;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .btn-primary:hover {
+            background-color: #388e3c;
+            border-color: #388e3c;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(67, 160, 71, 0.5);
+        }
+    </style>
+</head>
+<body>
+    <!-- Particle Canvas -->
+    <canvas id="particle-canvas"></canvas>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="#">
+                <img src="./image/logo.jpg" alt="Kiaya Haus" class="me-2">
+                Kiaya Haus
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#" aria-current="page">Home</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="physioDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Physiotherapy
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="physioDropdown">
+                            <li><a class="dropdown-item" href="#ortho"><i class="fas fa-bone me-2"></i>Ortho & Sports</a></li>
+                            <li><a class="dropdown-item" href="#cardio"><i class="fas fa-heartbeat me-2"></i>Cardio-Respiratory</a></li>
+                            <li><a class="dropdown-item" href="#neuro"><i class="fas fa-brain me-2"></i>Neuro & Pediatric</a></li>
+                            <li><a class="dropdown-item" href="#womens"><i class="fas fa-female me-2"></i>Women's Health</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="yogaDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Yoga Services
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="yogaDropdown">
+                            <li><a class="dropdown-item" href="#power-yoga"><i class="fas fa-fire me-2"></i>Power Yoga</a></li>
+                            <li><a class="dropdown-item" href="#kids-yoga"><i class="fas fa-child me-2"></i>Kids Yoga</a></li>
+                            <li><a class="dropdown-item" href="#aerial-yoga"><i class="fas fa-parachute-box me-2"></i>Aerial Yoga</a></li>
+                            <li><a class="dropdown-item" href="#prenatal-yoga"><i class="fas fa-baby me-2"></i>Pre & Post Natal Yoga</a></li>
+                            <li><a class="dropdown-item" href="#fitness-yoga"><i class="fas fa-dumbbell me-2"></i>Fitness Yoga</a></li>
+                            <li><a class="dropdown-item" href="#personal-yoga"><i class="fas fa-user me-2"></i>Personal Training</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="therapyDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Special Therapies
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="therapyDropdown">
+                            <li><a class="dropdown-item" href="#tapping"><i class="fas fa-hand-paper me-2"></i>Tapping</a></li>
+                            <li><a class="dropdown-item" href="#dry-cupping"><i class="fas fa-circle-notch me-2"></i>Dry Cupping</a></li>
+                            <li><a class="dropdown-item" href="#wet-cupping"><i class="fas fa-tint me-2"></i>Wet Cupping</a></li>
+                            <li><a class="dropdown-item" href="#dry-needling"><i class="fas fa-syringe me-2"></i>Dry Needling</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Content Section -->
+    <div class="content">
+        <div class="container">
+            <div class="content-card">
+                <h1 class="display-4">Welcome to Kiaya Haus</h1>
+                <p class="lead">Your destination for physiotherapy, yoga, and special therapies. Interact with the background by moving your mouse or tapping the screen!</p>
+                <a href="#learn-more" class="btn btn-primary btn-lg mt-3">Learn More</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- FPS Counter -->
+    <div class="fps-counter" id="fps-counter">FPS: 0</div>
+
+    <!-- JavaScript for Particle Effects -->
+    <script>
+        const canvas = document.getElementById('particle-canvas');
+        const ctx = canvas.getContext('2d');
+        const fpsCounter = document.getElementById('fps-counter');
+        const content = document.querySelector('.content');
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        // Particle settings
+        const particles = [];
+        const baseParticleCount = Math.floor(window.innerWidth * window.innerHeight / 5000);
+        const performanceFactor = Math.min(1, window.devicePixelRatio || 1);
+        const particleCount = Math.max(50, Math.min(baseParticleCount * performanceFactor, 200));
+        const maxRadius = 3;
+        const minRadius = 1;
+        const mouseEffectDistance = 120;
+        const colors = [
+            '129,199,132', // #81c784
+            '67,160,71',  // #43a047
+            '27,94,32',   // #1b5e20
+            '165,214,167' // #a5d6a7
+        ];
+
+        // Mouse/touch position and state
+        const pointer = {
+            x: null,
+            y: null,
+            active: false,
+            lastX: null,
+            lastY: null,
+            speed: 0,
+            trail: []
+        };
+
+        // Burst particles for click effect
+        const burstParticles = [];
+
+        // Performance tracking
+        let lastTime = performance.now();
+        let frameCount = 0;
+        let fps = 60;
+        let fpsValues = [];
+
+        // Simple Perlin noise for organic movement
+        function noise(x, y, t) {
+            return Math.sin(x * 0.01 + t * 0.001) * Math.cos(y * 0.01 + t * 0.001);
+        }
+
+        // Create particles
+        for (let i = 0; i < particleCount; i++) {
+            const colorIndex = Math.floor(Math.random() * colors.length);
+            particles.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                radius: Math.random() * (maxRadius - minRadius) + minRadius,
+                baseRadius: Math.random() * (maxRadius - minRadius) + minRadius,
+                color: `rgba(${colors[colorIndex]}, ${Math.random() * 0.6 + 0.4})`,
+                baseColor: colors[colorIndex],
+                speedX: Math.random() * 0.5 - 0.25,
+                speedY: Math.random() * 0.5 - 0.25,
+                originalSpeedX: Math.random() * 0.5 - 0.25,
+                originalSpeedY: Math.random() * 0.5 - 0.25,
+                phase: Math.random() * Math.PI * 2,
+                lastX: 0,
+                lastY: 0
+            });
+        }
+
+        // Create burst particles on click
+        function createBurst(x, y) {
+            for (let i = 0; i < 20; i++) {
+                const angle = Math.random() * Math.PI * 2;
+                const speed = Math.random() * 3 + 2;
+                const burstColor = i % 2 === 0 ? '232,245,233' : '129,199,132';
+                burstParticles.push({
+                    x,
+                    y,
+                    radius: Math.random() * 2 + 1,
+                    color: `rgba(${burstColor},0.9)`,
+                    speedX: Math.cos(angle) * speed,
+                    speedY: Math.sin(angle) * speed,
+                    life: 60
+                });
+            }
+        }
+
+        // Animation loop
+        function animate(currentTime) {
+            requestAnimationFrame(animate);
+
+            // FPS calculation
+            frameCount++;
+            const deltaTime = currentTime - lastTime;
+            if (deltaTime >= 200) {
+                const currentFps = Math.round((frameCount / deltaTime) * 1000);
+                fpsValues.push(currentFps);
+                if (fpsValues.length > 5) fpsValues.shift();
+                fps = Math.round(fpsValues.reduce((a, b) => a + b, 0) / fpsValues.length);
+                frameCount = 0;
+                lastTime = currentTime;
+                fpsCounter.textContent = `FPS: ${fps}`;
+            }
+
+            ctx.fillStyle = 'rgba(200,230,201,0.05)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Update mouse trail
+            if (pointer.active && pointer.x && pointer.y) {
+                pointer.trail.push({ x: pointer.x, y: pointer.y, age: 0 });
+                if (pointer.lastX && pointer.lastY) {
+                    const dx = pointer.x - pointer.lastX;
+                    const dy = pointer.y - pointer.lastY;
+                    pointer.speed = Math.sqrt(dx * dx + dy * dy) / deltaTime * 1000;
+                }
+                pointer.lastX = pointer.x;
+                pointer.lastY = pointer.y;
+            }
+
+            // Update trail
+            pointer.trail = pointer.trail.filter(t => t.age++ < 30);
+
+            // Draw trail
+            pointer.trail.forEach((t, i) => {
+                const opacity = 1 - t.age / 30;
+                ctx.beginPath();
+                ctx.arc(t.x, t.y, 5 * opacity, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(67,160,71,${opacity * 0.4})`;
+                ctx.shadowColor = 'rgba(67,160,71,0.5)';
+                ctx.shadowBlur = 8;
+                ctx.fill();
+                ctx.shadowBlur = 0;
+            });
+
+            // Update and draw particles
+            const time = currentTime * 0.001;
+            particles.forEach(particle => {
+                particle.lastX = particle.x;
+                particle.lastY = particle.y;
+
+                // Organic movement with noise
+                const noiseValue = noise(particle.x, particle.y, currentTime);
+                particle.speedX = particle.originalSpeedX + noiseValue * 0.2;
+                particle.speedY = particle.originalSpeedY + noiseValue * 0.2;
+
+                // Pulse effect
+                particle.radius = particle.baseRadius * (1 + 0.1 * Math.sin(time + particle.phase));
+
+                // Mouse interaction
+                if (pointer.active && pointer.x && pointer.y) {
+                    const dx = pointer.x - particle.x;
+                    const dy = pointer.y - particle.y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+
+                    if (distance < mouseEffectDistance) {
+                        const force = (mouseEffectDistance - distance) / mouseEffectDistance;
+                        const angle = Math.atan2(dy, dx);
+                        const easing = 1 - Math.pow(1 - force, 3);
+                        const speedFactor = Math.min(pointer.speed / 50, 2);
+                        const direction = speedFactor > 1 ? -1 : 1;
+                        particle.speedX = particle.originalSpeedX - direction * Math.cos(angle) * easing * (4 + speedFactor);
+                        particle.speedY = particle.originalSpeedY - direction * Math.sin(angle) * easing * (4 + speedFactor);
+                        particle.radius = Math.min(particle.baseRadius * (1 + easing * 0.5), maxRadius * 1.5);
+                        const [r,g,b] = particle.baseColor.split(',');
+                        particle.color = `rgba(${r},${g},${b},${0.4 + easing * 0.6})`;
+                    } else {
+                        particle.speedX += (particle.originalSpeedX - particle.speedX) * 0.1;
+                        particle.speedY += (particle.originalSpeedY - particle.speedY) * 0.1;
+                        particle.radius += (particle.baseRadius - particle.radius) * 0.1;
+                        const [r,g,b] = particle.baseColor.split(',');
+                        particle.color = `rgba(${r},${g},${b},${Math.random() * 0.6 + 0.4})`;
+                    }
+                } else {
+                    particle.speedX += (particle.originalSpeedX - particle.speedX) * 0.1;
+                    particle.speedY += (particle.originalSpeedY - particle.speedY) * 0.1;
+                    particle.radius += (particle.baseRadius - particle.radius) * 0.1;
+                    const [r,g,b] = particle.baseColor.split(',');
+                    particle.color = `rgba(${r},${g},${b},${Math.random() * 0.6 + 0.4})`;
+                }
+
+                // Update position
+                particle.x += particle.speedX;
+                particle.y += particle.speedY;
+
+                // Bounce off walls
+                if (particle.x < 0 || particle.x > canvas.width) {
+                    particle.speedX = -particle.speedX * (0.9 + Math.random() * 0.2);
+                    particle.x = Math.max(0, Math.min(particle.x, canvas.width));
+                }
+                if (particle.y < 0 || particle.y > canvas.height) {
+                    particle.speedY = -particle.speedY * (0.9 + Math.random() * 0.2);
+                    particle.y = Math.max(0, Math.min(particle.y, canvas.height));
+                }
+
+                // Draw particle with glow
+                ctx.beginPath();
+                ctx.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
+                ctx.fillStyle = particle.color;
+                ctx.shadowColor = `rgba(${particle.baseColor},0.5)`;
+                ctx.shadowBlur = 6;
+                ctx.fill();
+                ctx.shadowBlur = 0;
+            });
+
+            // Update and draw burst particles
+            burstParticles.forEach((particle, index) => {
+                particle.x += particle.speedX;
+                particle.y += particle.speedY;
+                particle.life--;
+                particle.radius *= 0.95;
+                
+                ctx.beginPath();
+                ctx.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
+                ctx.fillStyle = particle.color;
+                ctx.shadowColor = `rgba(${particle.color.split(',')[0]},${particle.color.split(',')[1]},${particle.color.split(',')[2]},0.5)`;
+                ctx.shadowBlur = 8;
+                ctx.fill();
+                ctx.shadowBlur = 0;
+
+                if (particle.life <= 0) {
+                    burstParticles.splice(index, 1);
+                }
+            });
+
+            // Draw connections efficiently
+            const maxConnectionDistance = 100;
+            particles.forEach((particle, i) => {
+                for (let j = i + 1; j < Math.min(i + 10, particles.length); j++) {
+                    const other = particles[j];
+                    const dx = particle.x - other.x;
+                    const dy = particle.y - other.y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+
+                    if (distance < maxConnectionDistance) {
+                        ctx.beginPath();
+                        ctx.strokeStyle = `rgba(67,160,71,${1 - distance/maxConnectionDistance})`;
+                        ctx.lineWidth = 0.5;
+                        ctx.moveTo(particle.x, particle.y);
+                        ctx.lineTo(other.x, other.y);
+                        ctx.stroke();
+                    }
+                }
+            });
+
+            // Parallax effect for content
+            if (pointer.active && pointer.x && pointer.y) {
+                const parallaxX = (pointer.x - canvas.width / 2) * 0.02;
+                const parallaxY = (pointer.y - canvas.height / 2) * 0.02;
+                content.style.transform = `translate(${parallaxX}px, ${parallaxY}px)`;
+            } else {
+                content.style.transform = `translate(0, 0)`;
+            }
+        }
+
+        // Event listeners
+        function updatePointer(e, active) {
+            if (e.type.includes('touch')) {
+                pointer.x = e.touches[0].clientX;
+                pointer.y = e.touches[0].clientY;
+            } else {
+                pointer.x = e.clientX;
+                pointer.y = e.clientY;
+            }
+            pointer.active = active;
+        }
+
+        window.addEventListener('mousemove', e => updatePointer(e, true));
+        window.addEventListener('touchmove', e => {
+            e.preventDefault();
+            updatePointer(e, true);
+        }, { passive: false });
+        window.addEventListener('mouseleave', () => {
+            pointer.active = false;
+            pointer.x = null;
+            pointer.y = null;
+        });
+        window.addEventListener('touchend', () => {
+            pointer.active = false;
+            pointer.x = null;
+            pointer.y = null;
+        });
+        window.addEventListener('click', e => createBurst(e.clientX, e.clientY));
+        window.addEventListener('touchstart', e => {
+            e.preventDefault();
+            createBurst(e.touches[0].clientX, e.touches[0].clientY);
+        }, { passive: false });
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            particles.forEach(p => {
+                p.x = Math.min(p.x, canvas.width);
+                p.y = Math.min(p.y, canvas.height);
+            });
+        });
+
+        // Start animation
+        requestAnimationFrame(animate);
+    </script>
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

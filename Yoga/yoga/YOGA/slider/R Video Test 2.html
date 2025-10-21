@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Video Switcher</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      overflow: hidden;
+      font-family: sans-serif;
+    }
+
+    #background-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      z-index: -1;
+    }
+
+    #background-video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+
+    .zoom-animation {
+      animation: zoomIn 0.5s ease;
+    }
+
+    @keyframes zoomIn {
+      from {
+        transform: scale(0.5);
+        opacity: 0.4;
+      }
+      to {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    .video-thumbnails {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      display: flex;
+      flex-direction: row;
+      gap: 16px;
+      z-index: 10;
+      background-color: rgba(0, 0, 0, 0.3);
+      padding: 16px;
+      border-radius: 12px;
+      max-width: calc(100% - 40px);
+      overflow-x: auto;
+    }
+
+    .video-card {
+      display: flex;
+      flex-direction: column;
+      width: 280px;
+      background-color: rgba(0, 0, 0, 0.75);
+      color: white;
+      border: 2px solid white;
+      border-radius: 12px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+
+    .video-card:hover {
+      border-color: yellow;
+      transform: scale(1.05);
+    }
+
+    .thumb {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+    }
+
+    .video-info {
+      padding: 10px;
+    }
+
+    .video-title {
+      font-size: 18px;
+      font-weight: bold;
+      margin: 0 0 6px;
+    }
+
+    .video-desc {
+      font-size: 14px;
+      color: #ccc;
+      margin: 0;
+    }
+
+    .video-card {
+  display: flex;
+  flex-direction: column;
+  width: 300px; /* Increased width */
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
+  border: 2px solid white;
+  border-radius: 16px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.video-card:hover {
+  border-color: yellow;
+  transform: scale(1.08);
+}
+
+.thumb {
+  width: 100%;
+  height: 180px; /* Increased height */
+  object-fit: cover;
+}
+
+.video-info {
+  padding: 16px; /* Increased padding */
+}
+
+.video-title {
+  font-size: 18px;
+  font-weight: bold;
+  margin: 0 0 8px;
+}
+
+.video-desc {
+  font-size: 14px;
+  color: #ccc;
+  margin: 0;
+}
+
+  </style>
+</head>
+<body>
+
+<div id="background-container">
+  <video id="background-video" autoplay muted loop playsinline>
+    <source src="Videos1.mkv" type="video/mkv">
+    Your browser does not support HTML5 video.
+  </video>
+</div>
+
+<div class="video-thumbnails" id="thumbnails"></div>
+
+<script>
+  const videoList = [
+    { src: "Videos1.mkv", title: "Video 1", desc: "Test Description" },
+    { src: "Videos2.mkv", title: "Video 2", desc: "Test Description" },
+    { src: "Videos3.mkv", title: "Video 3", desc: "Test Description" },
+    { src: "Videos4.mkv", title: "Video 4", desc: "Test Description" },
+    { src: "Videos5.mkv", title: "Video 5", desc: "Test Description" }
+  ];
+
+  let currentVideoIndex = 0;
+  const backgroundVideo = document.getElementById("background-video");
+  const thumbnailsDiv = document.getElementById("thumbnails");
+
+  function createThumbnails() {
+    thumbnailsDiv.innerHTML = '';
+
+    videoList.forEach((video, index) => {
+      if (index !== currentVideoIndex) {
+        const card = document.createElement("div");
+        card.className = "video-card";
+
+        const thumb = document.createElement("video");
+        thumb.src = video.src;
+        thumb.className = "thumb";
+        thumb.muted = true;
+        thumb.loop = true;
+        thumb.autoplay = true;
+        thumb.playsInline = true;
+
+        const infoDiv = document.createElement("div");
+        infoDiv.className = "video-info";
+
+        const title = document.createElement("p");
+        title.className = "video-title";
+        title.textContent = video.title;
+
+        const desc = document.createElement("p");
+        desc.className = "video-desc";
+        desc.textContent = video.desc;
+
+        infoDiv.appendChild(title);
+        infoDiv.appendChild(desc);
+        card.appendChild(thumb);
+        card.appendChild(infoDiv);
+
+        card.addEventListener("click", () => switchVideo(index));
+        thumbnailsDiv.appendChild(card);
+      }
+    });
+  }
+
+  function switchVideo(newIndex) {
+    if (newIndex === currentVideoIndex) return;
+
+    currentVideoIndex = newIndex;
+
+    backgroundVideo.classList.remove('zoom-animation');
+    void backgroundVideo.offsetWidth;
+    backgroundVideo.classList.add('zoom-animation');
+
+    backgroundVideo.src = videoList[newIndex].src;
+    backgroundVideo.load();
+    backgroundVideo.play();
+
+    createThumbnails();
+  }
+
+  window.addEventListener("DOMContentLoaded", () => {
+    backgroundVideo.src = videoList[currentVideoIndex].src;
+    backgroundVideo.load();
+    backgroundVideo.play();
+    createThumbnails();
+  });
+</script>
+
+</body>
+</html>

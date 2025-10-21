@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Yoga Site Background</title>
+<style>
+  html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+  }
+
+  body {
+    font-family: sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #6B8E7A;
+  }
+
+  .background {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(120deg, #6B8E7A, #E8ECEF, #FFFFFF);
+    background-size: 600% 600%;
+    animation: gradientAnimation 20s ease infinite;
+    z-index: -1;
+  }
+
+  @keyframes gradientAnimation {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+
+  .content {
+    text-align: center;
+    z-index: 1;
+  }
+
+  h1 {
+    font-size: 2.5rem;
+    color: #6B8E7A;
+  }
+
+  p {
+    font-size: 1.2rem;
+    color: #6B8E7A;
+  }
+</style>
+</head>
+<body>
+  <div class="background"></div>
+  <div class="content">
+    <h1>Welcome to Yoga Bliss</h1>
+    <p>Find your inner peace and balance</p>
+  </div>
+</body>
+</html>

@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yoga Services - Kiaya Haus</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <style>
+        :root {
+            --primary-color: #6B8E70;
+            --primary-light: rgba(107, 142, 112, 0.1);
+            --secondary-color: #FFFFFF;
+            --text-dark: #333333;
+            --text-light: #777777;
+            --accent-color: #6B8E70;
+            --gradient-1: #6B8E70;
+            --gradient-2: #A8C7A7;
+            --success-color: #2E7D32;
+            --glass-effect: rgba(107, 142, 112, 0.15);
+            --shadow-light: rgba(107, 142, 112, 0.2);
+            --shadow-medium: rgba(107, 142, 112, 0.3);
+            --transition-smooth: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            background: linear-gradient(135deg, #f8fffe 0%, #e8f5e8 50%, #d4ebda 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Main Header Styles */
+        .main-header {
+            text-align: center;
+            padding: 30px 10px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .main-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--text-dark);
+            display: inline-block;
+            background: var(--glass-effect);
+            backdrop-filter: blur(10px);
+            padding: 15px 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px var(--shadow-light);
+            position: relative;
+            opacity: 0;
+            transform: translateY(50px) scale(0.9);
+        }
+
+        .main-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--gradient-1), var(--gradient-2));
+            border-radius: 2px;
+            animation: expandMainLine 1s ease-out 2s forwards;
+        }
+
+        @keyframes expandMainLine {
+            to { width: 100px; }
+        }
+
+        .main-title.animate {
+            animation: mainTitleSlide 1.5s var(--transition-smooth) forwards;
+        }
+
+        @keyframes mainTitleSlide {
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .yoga-section {
+            min-height: 100vh;
+            padding: 80px 20px;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .bg-decoration {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            overflow: hidden;
+            z-index: 0;
+        }
+
+        .bg-decoration::before {
+            content: '';
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, var(--primary-light), transparent);
+            border-radius: 50%;
+            top: -200px;
+            right: -200px;
+            animation: float 20s ease-in-out infinite;
+        }
+
+        .bg-decoration::after {
+            content: '';
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, var(--shadow-light), transparent);
+            border-radius: 50%;
+            bottom: -150px;
+            left: -150px;
+            animation: float 25s ease-in-out infinite reverse;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            33% { transform: translate(30px, -30px) rotate(120deg); }
+            66% { transform: translate(-20px, 20px) rotate(240deg); }
+        }
+
+        .content-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            max-width: 1200px;
+            margin: 0 auto;
+            gap: 40px;
+            align-items: start;
+            position: relative;
+            z-index: 2;
+        }
+
+        .slider-container {
+            position: relative;
+            width: 400px;
+            height: 400px;
+            transform-style: preserve-3d;
+            perspective: 1200px;
+            margin: 0 auto;
+            z-index: 3;
+        }
+
+        .cube {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+            transition: transform 1s var(--transition-smooth);
+        }
+
+        .cube-face {
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px var(--shadow-light);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            background: var(--glass-effect);
+            z-index: 4;
+        }
+
+        .cube-face video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.9;
+            transition: opacity 0.3s ease;
+        }
+
+        .cube-face:hover video {
+            opacity: 1;
+        }
+
+        /* Pentagonal prism face positions */
+        .cube-face-1 { transform: rotateY(0deg) translateZ(305px); } /* 400 / (2 * tan(36°)) ≈ 305px */
+        .cube-face-2 { transform: rotateY(72deg) translateZ(305px); }
+        .cube-face-3 { transform: rotateY(144deg) translateZ(305px); }
+        .cube-face-4 { transform: rotateY(216deg) translateZ(305px); }
+        .cube-face-5 { transform: rotateY(288deg) translateZ(305px); }
+
+        .controls-panel {
+            position: absolute;
+            bottom: -140px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 15px;
+            z-index: 5;
+        }
+
+        .control-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            background: var(--glass-effect);
+            backdrop-filter: blur(15px);
+            color: var(--text-dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s var(--transition-smooth);
+            font-size: 1rem;
+        }
+
+        .control-btn:hover {
+            transform: scale(1.1);
+            border-color: var(--accent-color);
+            background: var(--primary-light);
+        }
+
+        .section-title {
+            font-size: 2.8rem;
+            font-weight: 800;
+            color: var(--text-dark);
+            margin-bottom: 15px;
+            position: relative;
+            opacity: 0;
+            transform: translateY(-50px);
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--gradient-1), var(--gradient-2));
+            border-radius: 2px;
+            animation: expandLine 1s ease-out 1.5s both;
+        }
+
+        @keyframes expandLine {
+            from { width: 0; }
+            to { width: 80px; }
+        }
+
+        .section-title.animate {
+            animation: titleSlideUp 1.2s var(--transition-smooth) forwards;
+        }
+
+        @keyframes titleSlideUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section-subtitle {
+            font-size: 1.1rem;
+            color: var(--text-light);
+            max-width: 500px;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .section-subtitle.animate {
+            animation: subtitleFade 1s ease-out 0.5s forwards;
+        }
+
+        @keyframes subtitleFade {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .service-details {
+            margin-top: 20px;
+        }
+
+        .service-detail-item {
+            background: var(--glass-effect);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 15px var(--shadow-light);
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.5s var(--transition-smooth);
+        }
+
+        .service-detail-item.animate {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .service-detail-item:nth-child(1) { transition-delay: 0.1s; }
+        .service-detail-item:nth-child(2) { transition-delay: 0.2s; }
+        .service-detail-item:nth-child(3) { transition-delay: 0.3s; }
+        .service-detail-item:nth-child(4) { transition-delay: 0.4s; }
+        .service-detail-item:nth-child(5) { transition-delay: 0.5s; }
+
+        .service-detail-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 8px;
+        }
+
+        .service-detail-description {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            margin-bottom: 10px;
+        }
+
+        .service-detail-benefits {
+            list-style: none;
+            padding: 0;
+        }
+
+        .service-detail-benefits li {
+            display: flex;
+            align-items: center;
+            font-size: 0.85rem;
+            color: var(--text-light);
+            margin-bottom: 5px;
+        }
+
+        .service-detail-benefits li i {
+            color: var(--success-color);
+            margin-right: 8px;
+        }
+
+        .btn-primary-custom {
+            background: linear-gradient(135deg, var(--gradient-1), var(--gradient-2));
+            color: var(--secondary-color);
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.3s var(--transition-smooth);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary-custom::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn-primary-custom:hover::before {
+            left: 100%;
+        }
+
+        .btn-primary-custom:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px var(--shadow-medium);
+        }
+
+        @media (max-width: 992px) {
+            .main-title {
+                font-size: 2.5rem;
+                padding: 10px 20px;
+            }
+
+            .content-layout {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .slider-container {
+                width: 300px;
+                height: 300px;
+            }
+
+            .cube-face {
+                width: 300px;
+                height: 300px;
+            }
+
+            .cube-face-1 { transform: rotateY(0deg) translateZ(229px); } /* 300 / (2 * tan(36°)) ≈ 229px */
+            .cube-face-2 { transform: rotateY(72deg) translateZ(229px); }
+            .cube-face-3 { transform: rotateY(144deg) translateZ(229px); }
+            .cube-face-4 { transform: rotateY(216deg) translateZ(229px); }
+            .cube-face-5 { transform: rotateY(288deg) translateZ(229px); }
+
+            .section-title {
+                font-size: 2.2rem;
+            }
+
+            .section-subtitle {
+                font-size: 1rem;
+            }
+
+            .controls-panel {
+                bottom: -60px;
+            }
+
+            .control-btn {
+                width: 40px;
+                height: 40px;
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .main-title {
+                font-size: 2rem;
+                padding: 8px 15px;
+            }
+
+            .yoga-section {
+                padding: 60px 15px;
+            }
+
+            .slider-container {
+                width: 250px;
+                height: 250px;
+            }
+
+            .cube-face {
+                width: 250px;
+                height: 250px;
+            }
+
+            .cube-face-1 { transform: rotateY(0deg) translateZ(191px); } /* 250 / (2 * tan(36°)) ≈ 191px */
+            .cube-face-2 { transform: rotateY(72deg) translateZ(191px); }
+            .cube-face-3 { transform: rotateY(144deg) translateZ(191px); }
+            .cube-face-4 { transform: rotateY(216deg) translateZ(191px); }
+            .cube-face-5 { transform: rotateY(288deg) translateZ(191px); }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+
+            .section-subtitle {
+                font-size: 0.9rem;
+            }
+
+            .service-detail-title {
+                font-size: 1.2rem;
+            }
+
+            .service-detail-description {
+                font-size: 0.85rem;
+            }
+
+            .service-detail-benefits li {
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Main Header -->
+    <header class="main-header">
+        <h2 class="main-title">Kiaya Haus Yoga Services</h2>
+    </header>
+
+    <section class="yoga-section" id="yoga">
+        <div class="bg-decoration"></div>
+        <div class="container">
+            <div class="content-layout">
+                <!-- Left Side: Section Header -->
+                <div class="content-section">
+                    <div class="section-header">
+                        <h2 class="section-title" id="dynamic-title">Power Yoga</h2>
+                        <p class="section-subtitle" id="dynamic-subtitle">A dynamic, fitness-based approach to vinyasa-style yoga that builds strength, flexibility, and mental resilience through challenging sequences.</p>
+                    </div>
+                </div>
+
+                <!-- Right Side: 3D Cube Slider and Service Details -->
+                <div class="slider-and-details">
+                    <div class="slider-container">
+                        <div class="cube" id="cube">
+                            <div class="cube-face cube-face-1" data-service="power-yoga">
+                                <video autoplay muted loop playsinline>
+                                    <source src="https://assets.mixkit.co/videos/preview/mixkit-woman-doing-yoga-on-a-yoga-mat-45666-large.mp4" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                            </div>
+                            <div class="cube-face cube-face-2" data-service="kids-yoga">
+                                <video autoplay muted loop playsinline>
+                                    <source src="https://assets.mixkit.co/videos/preview/mixkit-young-girl-doing-yoga-in-the-garden-45669-large.mp4" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                            </div>
+                            <div class="cube-face cube-face-3" data-service="aerial-yoga">
+                                <video autoplay muted loop playsinline>
+                                    <source src="https://assets.mixkit.co/videos/preview/mixkit-woman-doing-yoga-on-a-yoga-mat-45666-large.mp4" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                            </div>
+                            <div class="cube-face cube-face-4" data-service="pre-post-natal-yoga">
+                                <video autoplay muted loop playsinline>
+                                    <source src="https://assets.mixkit.co/videos/preview/mixkit-pregnant-woman-doing-yoga-45668-large.mp4" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                            </div>
+                            <div class="cube-face cube-face-5" data-service="fitness-yoga">
+                                <video autoplay muted loop playsinline>
+                                    <source src="https://assets.mixkit.co/videos/preview/mixkit-woman-doing-yoga-outdoors-45670-large.mp4" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                            </div>
+                        </div>
+                        <div class="controls-panel">
+                            <div class="control-btn" onclick="rotateCubeLeft()" title="Rotate Left">
+                                <i class="fas fa-arrow-left"></i>
+                            </div>
+                            <div class="control-btn" onclick="rotateCubeRight()" title="Rotate Right">
+                                <i class="fas fa-arrow-right"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="service-details">
+                        <div class="service-detail-item">
+                            <h3 class="service-detail-title">Power Yoga</h3>
+                            <p class="service-detail-description">A dynamic, fitness-based approach to vinyasa-style yoga that builds strength, flexibility, and mental resilience through challenging sequences.</p>
+                            <ul class="service-detail-benefits">
+                                <li><i class="fas fa-check"></i>High-intensity workout</li>
+                                <li><i class="fas fa-check"></i>Strength & flexibility building</li>
+                                <li><i class="fas fa-check"></i>Mental focus enhancement</li>
+                            </ul>
+                            <a href="#" class="btn-primary-custom">
+                                <i class="fas fa-calendar-plus"></i> Book Class
+                            </a>
+                        </div>
+                        <div class="service-detail-item">
+                            <h3 class="service-detail-title">Kids Yoga</h3>
+                            <p class="service-detail-description">Fun and engaging yoga classes designed specifically for children, promoting creativity, physical development, and emotional balance.</p>
+                            <ul class="service-detail-benefits">
+                                <li><i class="fas fa-check"></i>Age-appropriate activities</li>
+                                <li><i class="fas fa-check"></i>Creative movement & games</li>
+                                <li><i class="fas fa-check"></i>Social skills development</li>
+                            </ul>
+                            <a href="#" class="btn-primary-custom">
+                                <i class="fas fa-calendar-plus"></i> Book Class
+                            </a>
+                        </div>
+                        <div class="service-detail-item">
+                            <h3 class="service-detail-title">Aerial Yoga</h3>
+                            <p class="service-detail-description">Experience yoga like never before with silk hammocks that support your body in gravity-defying poses and deep stretches.</p>
+                            <ul class="service-detail-benefits">
+                                <li><i class="fas fa-check"></i>Decompression therapy</li>
+                                <li><i class="fas fa-check"></i>Core strength building</li>
+                                <li><i class="fas fa-check"></i>Improved circulation</li>
+                            </ul>
+                            <a href="#" class="btn-primary-custom">
+                                <i class="fas fa-calendar-plus"></i> Book Class
+                            </a>
+                        </div>
+                        <div class="service-detail-item">
+                            <h3 class="service-detail-title">Pre & Post Natal Yoga</h3>
+                            <p class="service-detail-description">Specialized yoga practice to support women through pregnancy and postpartum recovery with safe, gentle movements.</p>
+                            <ul class="service-detail-benefits">
+                                <li><i class="fas fa-check"></i>Safe prenatal practices</li>
+                                <li><i class="fas fa-check"></i>Postpartum recovery</li>
+                                <li><i class="fas fa-check"></i>Community support</li>
+                            </ul>
+                            <a href="#" class="btn-primary-custom">
+                                <i class="fas fa-calendar-plus"></i> Book Class
+                            </a>
+                        </div>
+                        <div class="service-detail-item">
+                            <h3 class="service-detail-title">Fitness Yoga</h3>
+                            <p class="service-detail-description">A perfect blend of traditional yoga with fitness elements for a complete mind-body workout experience.</p>
+                            <ul class="service-detail-benefits">
+                                <li><i class="fas fa-check"></i>Full-body conditioning</li>
+                                <li><i class="fas fa-check"></i>Cardio & strength combo</li>
+                                <li><i class="fas fa-check"></i>Weight management</li>
+                            </ul>
+                            <a href="#" class="btn-primary-custom">
+                                <i class="fas fa-calendar-plus"></i> Book Class
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        let currentX = 0;
+        let currentY = 0;
+        const cube = document.getElementById('cube');
+        const dynamicTitle = document.getElementById('dynamic-title');
+        const dynamicSubtitle = document.getElementById('dynamic-subtitle');
+
+        // Map cube faces to yoga services
+        const services = {
+            'power-yoga': {
+                title: 'Power Yoga',
+                description: 'A dynamic, fitness-based approach to vinyasa-style yoga that builds strength, flexibility, and mental resilience through challenging sequences.'
+            },
+            'kids-yoga': {
+                title: 'Kids Yoga',
+                description: 'Fun and engaging yoga classes designed specifically for children, promoting creativity, physical development, and emotional balance.'
+            },
+            'aerial-yoga': {
+                title: 'Aerial Yoga',
+                description: 'Experience yoga like never before with silk hammocks that support your body in gravity-defying poses and deep stretches.'
+            },
+            'pre-post-natal-yoga': {
+                title: 'Pre & Post Natal Yoga',
+                description: 'Specialized yoga practice to support women through pregnancy and postpartum recovery with safe, gentle movements.'
+            },
+            'fitness-yoga': {
+                title: 'Fitness Yoga',
+                description: 'A perfect blend of traditional yoga with fitness elements for a complete mind-body workout experience.'
+            }
+        };
+
+        // Map rotation angles to cube faces (pentagonal prism: 72° increments)
+        const angleToFace = {
+            0: 'power-yoga', // face 1
+            72: 'kids-yoga', // face 2
+            144: 'aerial-yoga', // face 3
+            216: 'pre-post-natal-yoga', // face 4
+            288: 'fitness-yoga', // face 5
+            360: 'power-yoga', // face 1 (full rotation)
+            '-72': 'fitness-yoga', // face 5
+            '-144': 'pre-post-natal-yoga', // face 4
+            '-216': 'aerial-yoga', // face 3
+            '-288': 'kids-yoga', // face 2
+            '-360': 'power-yoga' // face 1
+        };
+
+        function updateCubeTransform() {
+            cube.style.transform = `rotateX(${currentX}deg) rotateY(${currentY}deg)`;
+            updateHeader();
+        }
+
+        function updateHeader() {
+            // Normalize currentY to 0-360 range
+            let normalizedY = ((currentY % 360) + 360) % 360;
+            if (currentY < 0) {
+                normalizedY = (currentY % 360 === 0) ? 0 : 360 + (currentY % 360);
+            }
+            const serviceKey = angleToFace[normalizedY] || 'power-yoga'; // Default to power-yoga
+            const service = services[serviceKey];
+
+            // Animate title and subtitle change
+            gsap.to(dynamicTitle, {
+                opacity: 0,
+                y: -20,
+                duration: 0.3,
+                onComplete: () => {
+                    dynamicTitle.textContent = service.title;
+                    gsap.to(dynamicTitle, {
+                        opacity: 1,
+                        y: 0,
+                        duration: 0.3
+                    });
+                }
+            });
+
+            gsap.to(dynamicSubtitle, {
+                opacity: 0,
+                y: 20,
+                duration: 0.3,
+                onComplete: () => {
+                    dynamicSubtitle.textContent = service.description;
+                    gsap.to(dynamicSubtitle, {
+                        opacity: 1,
+                        y: 0,
+                        duration: 0.3
+                    });
+                }
+            });
+        }
+
+        function rotateCubeLeft() {
+            currentY += 72; // Rotate left by 72 degrees for pentagonal prism
+            updateCubeTransform();
+        }
+
+        function rotateCubeRight() {
+            currentY -= 72; // Rotate right by 72 degrees for pentagonal prism
+            updateCubeTransform();
+        }
+
+        // Initialize cube position
+        updateCubeTransform();
+
+        // Auto-rotate cube every 5 seconds
+        setInterval(() => {
+            rotateCubeLeft();
+        }, 5000);
+
+        // GSAP animations for initial load
+        gsap.from(".main-title", {
+            opacity: 0,
+            y: 50,
+            scale: 0.9,
+            duration: 1.5,
+            ease: "power2.out",
+            onComplete: () => {
+                document.querySelector(".main-title").classList.add("animate");
+            }
+        });
+
+        gsap.from(".section-title", {
+            scrollTrigger: {
+                trigger: ".yoga-section",
+                start: "top 80%",
+                toggleActions: "play none none none"
+            },
+            opacity: 0,
+            y: -50,
+            duration: 1.2,
+            onComplete: () => {
+                document.querySelector(".section-title").classList.add("animate");
+            }
+        });
+
+        gsap.from(".section-subtitle", {
+            scrollTrigger: {
+                trigger: ".yoga-section",
+                start: "top 80%",
+                toggleActions: "play none none none"
+            },
+            opacity: 0,
+            y: 30,
+            duration: 1,
+            delay: 0.5,
+            onComplete: () => {
+                document.querySelector(".section-subtitle").classList.add("animate");
+            }
+        });
+
+        gsap.from(".service-detail-item", {
+            scrollTrigger: {
+                trigger: ".yoga-section",
+                start: "top 80%",
+                toggleActions: "play none none none"
+            },
+            opacity: 0,
+            y: 30,
+            stagger: 0.1,
+            duration: 0.5,
+            ease: "power2.out",
+            onComplete: function() {
+                document.querySelectorAll(".service-detail-item").forEach(item => item.classList.add("animate"));
+            }
+        });
+
+        // Button click animations
+        document.querySelectorAll('.btn-primary-custom').forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
+                const ripple = document.createElement('span');
+                ripple.style.position = 'absolute';
+                ripple.style.borderRadius = '50%';
+                ripple.style.background = 'rgba(255,255,255,0.3)';
+                ripple.style.transform = 'scale(0)';
+                ripple.style.animation = 'ripple 0.6s linear';
+                ripple.style.left = '50%';
+                ripple.style.top = '50%';
+                ripple.style.pointerEvents = 'none';
+                ripple.style.width = '10px';
+                ripple.style.height = '10px';
+                
+                this.appendChild(ripple);
+                
+                setTimeout(() => {
+                    ripple.remove();
+                }, 600);
+            });
+        });
+
+        // Add ripple animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes ripple {
+                to {
+                    transform: scale(20);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>

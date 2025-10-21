@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Serene Yoga Background</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: #FFFFFF;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .background-pattern {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 30%, #E8ECEF 0%, transparent 20%),
+                radial-gradient(circle at 80% 70%, #E8ECEF 0%, transparent 20%);
+            opacity: 0.6;
+            z-index: 0;
+        }
+
+        .yoga-figure {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            z-index: 1;
+            animation: float 8s ease-in-out infinite;
+        }
+
+        /* Yoga pose parts */
+        .head {
+            position: absolute;
+            top: 30%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 50px;
+            height: 50px;
+            background-color: #6B8E7A;
+            border-radius: 50%;
+            z-index: 3;
+        }
+
+        .body {
+            position: absolute;
+            top: 40%;
+            left: 50%;
+            transform: translate(-50%, 0);
+            width: 12px;
+            height: 120px;
+            background-color: #6B8E7A;
+            border-radius: 10px;
+            z-index: 2;
+        }
+
+        .arm, .leg {
+            position: absolute;
+            background-color: #6B8E7A;
+            border-radius: 10px;
+            z-index: 1;
+        }
+
+        .arm.left {
+            top: 45%;
+            left: 35%;
+            width: 80px;
+            height: 12px;
+            transform: rotate(45deg);
+            animation: arm-left 8s ease-in-out infinite;
+        }
+
+        .arm.right {
+            top: 45%;
+            right: 35%;
+            width: 80px;
+            height: 12px;
+            transform: rotate(-45deg);
+            animation: arm-right 8s ease-in-out infinite;
+        }
+
+        .leg.left {
+            top: 65%;
+            left: 45%;
+            width: 12px;
+            height: 80px;
+            transform: rotate(20deg);
+            animation: leg-left 10s ease-in-out infinite;
+        }
+
+        .leg.right {
+            top: 65%;
+            right: 45%;
+            width: 12px;
+            height: 100px;
+            transform: rotate(-10deg);
+            animation: leg-right 10s ease-in-out infinite;
+        }
+
+        .circle {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 220px;
+            height: 220px;
+            border: 3px solid #E8ECEF;
+            border-radius: 50%;
+            animation: rotate 30s linear infinite;
+        }
+
+        .circle:nth-child(2) {
+            width: 260px;
+            height: 260px;
+            animation-direction: reverse;
+            animation-duration: 40s;
+        }
+
+        /* Animations */
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes rotate {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        @keyframes arm-left {
+            0%, 100% { transform: rotate(45deg); }
+            50% { transform: rotate(60deg); }
+        }
+
+        @keyframes arm-right {
+            0%, 100% { transform: rotate(-45deg); }
+            50% { transform: rotate(-30deg); }
+        }
+
+        @keyframes leg-left {
+            0%, 100% { transform: rotate(20deg); }
+            50% { transform: rotate(35deg); }
+        }
+
+        @keyframes leg-right {
+            0%, 100% { transform: rotate(-10deg); }
+            50% { transform: rotate(5deg); }
+        }
+
+        .content {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            padding: 2rem;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 15px;
+            max-width: 600px;
+            box-shadow: 0 5px 15px rgba(107, 142, 122, 0.1);
+        }
+
+        h1 {
+            color: #6B8E7A;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        p {
+            color: #5a5a5a;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        .leaf {
+            position: absolute;
+            background-color: #6B8E7A;
+            opacity: 0.3;
+            border-radius: 50% 0 50% 50%;
+            animation: leaf-fall linear infinite;
+            z-index: 0;
+        }
+
+        @keyframes leaf-fall {
+            0% { transform: translateY(-100px) rotate(0deg); }
+            100% { transform: translateY(100vh) rotate(360deg); }
+        }
+
+        /* Create leaves */
+        .leaf:nth-child(1) {
+            width: 30px;
+            height: 30px;
+            left: 10%;
+            animation-duration: 15s;
+        }
+        .leaf:nth-child(2) {
+            width: 25px;
+            height: 25px;
+            left: 25%;
+            animation-duration: 20s;
+            animation-delay: 3s;
+        }
+        .leaf:nth-child(3) {
+            width: 35px;
+            height: 35px;
+            left: 75%;
+            animation-duration: 18s;
+            animation-delay: 5s;
+        }
+        .leaf:nth-child(4) {
+            width: 20px;
+            height: 20px;
+            left: 90%;
+            animation-duration: 12s;
+            animation-delay: 2s;
+        }
+        .leaf:nth-child(5) {
+            width: 28px;
+            height: 28px;
+            left: 60%;
+            animation-duration: 25s;
+            animation-delay: 7s;
+        }
+    </style>
+</head>
+<body>
+    <div class="background-pattern"></div>
+    
+    <!-- Animated leaves -->
+    <div class="leaf"></div>
+    <div class="leaf"></div>
+    <div class="leaf"></div>
+    <div class="leaf"></div>
+    <div class="leaf"></div>
+    
+    <!-- Yoga figure -->
+    <div class="yoga-figure">
+        <div class="circle"></div>
+        <div class="circle"></div>
+        <div class="head"></div>
+        <div class="body"></div>
+        <div class="arm left"></div>
+        <div class="arm right"></div>
+        <div class="leg left"></div>
+        <div class="leg right"></div>
+    </div>
+    
+    <!-- Content area -->
+    <div class="content">
+        <h1>Mindful Movement</h1>
+        <p>Discover the harmony of body and mind through our guided yoga practices. Each session is designed to help you find balance and inner peace.</p>
+    </div>
+</body>
+</html>

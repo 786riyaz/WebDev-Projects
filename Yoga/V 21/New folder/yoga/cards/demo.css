@@ -1,0 +1,86 @@
+/* ---------- Features Section ---------- */
+.features-section {
+    padding: 100px 0;
+    background-color: var(--secondary-color);
+    overflow: hidden;          /* hides animated overflow */
+}
+
+.section-title {
+    color: var(--primary-color);
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 3rem;
+    text-align: center;
+    animation: fadeInDown 0.8s ease-out forwards;
+}
+
+/* ---------- Feature Card ---------- */
+.feature-card {
+    background-color: var(--secondary-color);
+    border-radius: 15px;
+    padding: 30px;
+    margin-bottom: 30px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    height: 100%;
+    border: 1px solid rgba(107, 142, 112, 0.1);
+    opacity: 0;                       /* start hidden for entrance */
+    transform: translateY(30px);
+    animation: fadeInUp 0.8s ease-out forwards;
+}
+
+/* Stagger the cards so they appear one after another */
+.col-md-4:nth-child(1) .feature-card { animation-delay: 0.1s; }
+.col-md-4:nth-child(2) .feature-card { animation-delay: 0.2s; }
+.col-md-4:nth-child(3) .feature-card { animation-delay: 0.3s; }
+
+.feature-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(107, 142, 112, 0.15);
+}
+
+/* Continuous gentle floating when hovered */
+.feature-card:hover {
+    animation: float 3s ease-in-out infinite;
+}
+
+/* ---------- Icon & Text ---------- */
+.feature-icon {
+    font-size: 2.5rem;
+    color: var(--primary-color);
+    margin-bottom: 20px;
+    transition: transform 0.3s ease;
+}
+
+.feature-card:hover .feature-icon {
+    transform: scale(1.15);
+}
+
+.feature-title {
+    color: var(--primary-color);
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
+.feature-text {
+    color: var(--text-light);
+    line-height: 1.6;
+}
+
+/* ---------- Keyframe Animations ---------- */
+@keyframes fadeInDown {
+    0%   { opacity: 0; transform: translateY(-20px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInUp {
+    0%   { opacity: 0; transform: translateY(30px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes float {
+    0%   { transform: translateY(-10px); }
+    50%  { transform: translateY(-16px); }
+    100% { transform: translateY(-10px); }
+}

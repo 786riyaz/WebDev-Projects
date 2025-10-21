@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zen Garden 3D Yoga Background</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            height: 100vh;
+            overflow: hidden;
+            background: radial-gradient(ellipse at center, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            font-family: 'Arial', sans-serif;
+        }
+
+        #container {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+        }
+
+        .content-overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: white;
+            z-index: 10;
+            pointer-events: none;
+        }
+
+        .yoga-title {
+            font-size: 5rem;
+            font-weight: 100;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 0 30px rgba(255,255,255,0.3);
+            animation: pulse 8s ease-in-out infinite;
+            letter-spacing: 0.3em;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4);
+            background-size: 400% 400%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientShift 8s ease infinite, pulse 8s ease-in-out infinite;
+        }
+
+        .yoga-subtitle {
+            font-size: 1.6rem;
+            font-weight: 200;
+            opacity: 0.9;
+            text-shadow: 0 0 20px rgba(255,255,255,0.2);
+            animation: float 4s ease-in-out infinite;
+            color: #e8f4f8;
+        }
+
+        .meditation-text {
+            position: absolute;
+            bottom: 10%;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 1rem;
+            opacity: 0.6;
+            color: #b8d4d4;
+            animation: breatheText 6s ease-in-out infinite;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: translate(-50%, -50%) scale(1);
+                text-shadow: 0 0 30px rgba(255,255,255,0.3);
+            }
+            50% {
+                transform: translate(-50%, -50%) scale(1.02);
+                text-shadow: 0 0 50px rgba(255,255,255,0.5);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px);
+                opacity: 0.9;
+            }
+            50% {
+                transform: translateY(-10px);
+                opacity: 1;
+            }
+        }
+
+        @keyframes breatheText {
+            0%, 100% { opacity: 0.6; }
+            50% { opacity: 1; }
+        }
+
+        .loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #4ecdc4;
+            font-size: 1.4rem;
+            z-index: 5;
+            text-shadow: 0 0 20px rgba(78, 205, 196, 0.5);
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <div class="loading">Creating Zen Space...</div>
+        <div class="content-overlay" style="opacity: 0;" id="content">
+            <h1 class="yoga-title">NAMASTE</h1>
+            <p class="yoga-subtitle">The Light in Me Honors the Light in You</p>
+            <div class="meditation-text">Breathe • Focus • Flow</div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+        let scene, camera, renderer;
+        let flowingRings = [], floatingOrbs = [], waterRipples = [];
+        let mouseX = 0, mouseY = 0;
+        let time = 0;
+
+        init();
+        animate();
+
+        function init() {
+            // Scene setup
+            scene = new THREE.Scene();
+            scene.fog = new THREE.FogExp2(0x1a1a2e, 0.0008);
+
+            // Camera setup
+            camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 1, 4000);
+            camera.position.set(0, 200, 800);
+
+            // Renderer setup
+            renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setClearColor(0x000000, 0);
+            renderer.shadowMap.enabled = true;
+            renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+            document.getElementById('container').appendChild(renderer.domElement);
+
+            // Lighting setup
+            setupLighting();
+            
+            // Create zen elements
+            createFlowingRings();
+            createFloatingOrbs();
+            createWaterRipples();
+            createZenGarden();
+            createEnergyField();
+
+            // Event listeners
+            document.addEventListener('mousemove', onMouseMove, false);
+            window.addEventListener('resize', onWindowResize, false);
+
+            // Reveal content
+            setTimeout(() => {
+                document.querySelector('.loading').style.display = 'none';
+                document.getElementById('content').style.opacity = '1';
+                document.getElementById('content').style.transition = 'opacity 3s ease-in-out';
+            }, 2500);
+        }
+
+        function setupLighting() {
+            // Ambient light
+            const ambientLight = new THREE.AmbientLight(0x2c3e50, 0.4);
+            scene.add(ambientLight);
+
+            // Main directional light
+            const mainLight = new THREE.DirectionalLight(0x4ecdc4, 0.8);
+            mainLight.position.set(200, 500, 300);
+            mainLight.castShadow = true;
+            mainLight.shadow.mapSize.width = 2048;
+            mainLight.shadow.mapSize.height = 2048;
+            scene.add(mainLight);
+
+            // Accent lights
+            const accentLight1 = new THREE.PointLight(0xff6b6b, 0.5, 1000);
+            accentLight1.position.set(-300, 200, 100);
+            scene.add(accentLight1);
+
+            const accentLight2 = new THREE.PointLight(0x96ceb4, 0.4, 800);
+            accentLight2.position.set(300, -100, 200);
+            scene.add(accentLight2);
+        }
+
+        function createFlowingRings() {
+            for (let i = 0; i < 5; i++) {
+                const geometry = new THREE.TorusGeometry(80 + i * 40, 3, 8, 32);
+                const material = new THREE.MeshPhongMaterial({
+                    color: new THREE.Color().setHSL(0.5 + i * 0.1, 0.7, 0.6),
+                    transparent: true,
+                    opacity: 0.3,
+                    emissive: new THREE.Color().setHSL(0.5 + i * 0.1, 0.5, 0.1)
+                });
+
+                const ring = new THREE.Mesh(geometry, material);
+                ring.position.set(0, i * -50, 0);
+                ring.rotation.x = Math.PI / 2;
+                
+                ring.userData = {
+                    originalY: ring.position.y,
+                    rotationSpeed: 0.002 + i * 0.001,
+                    floatSpeed: 0.5 + i * 0.2
+                };
+
+                flowingRings.push(ring);
+                scene.add(ring);
+            }
+        }
+
+        function createFloatingOrbs() {
+            for (let i = 0; i < 20; i++) {
+                const geometry = new THREE.SphereGeometry(8 + Math.random() * 12, 16, 16);
+                const material = new THREE.MeshPhongMaterial({
+                    color: new THREE.Color().setHSL(Math.random() * 0.3 + 0.4, 0.8, 0.7),
+                    transparent: true,
+                    opacity: 0.6,
+                    emissive: new THREE.Color().setHSL(Math.random() * 0.3 + 0.4, 0.4, 0.2)
+                });
+
+                const orb = new THREE.Mesh(geometry, material);
+                orb.position.set(
+                    (Math.random() - 0.5) * 1200,
+                    Math.random() * 400 - 200,
+                    (Math.random() - 0.5) * 800
+                );
+
+                orb.userData = {
+                    originalPos: orb.position.clone(),
+                    floatSpeed: Math.random() * 0.5 + 0.2,
+                    amplitude: Math.random() * 30 + 20
+                };
+
+                floatingOrbs.push(orb);
+                scene.add(orb);
+            }
+        }
+
+        function createWaterRipples() {
+            for (let i = 0; i < 8; i++) {
+                const geometry = new THREE.RingGeometry(50, 60, 32);
+                const material = new THREE.MeshBasicMaterial({
+                    color: 0x4ecdc4,
+                    transparent: true,
+                    opacity: 0.1,
+                    side: THREE.DoubleSide
+                });
+
+                const ripple = new THREE.Mesh(geometry, material);
+                ripple.position.set(0, -250, 0);
+                ripple.rotation.x = -Math.PI / 2;
+                
+                ripple.userData = {
+                    originalScale: 1,
+                    pulseSpeed: 0.3 + i * 0.1,
+                    delay: i * 0.5
+                };
+
+                waterRipples.push(ripple);
+                scene.add(ripple);
+            }
+        }
+
+        function createZenGarden() {
+            // Ground plane
+            const groundGeometry = new THREE.PlaneGeometry(2000, 2000);
+            const groundMaterial = new THREE.MeshPhongMaterial({
+                color: 0x2c3e50,
+                transparent: true,
+                opacity: 0.3
+            });
+            const ground = new THREE.Mesh(groundGeometry, groundMaterial);
+            ground.rotation.x = -Math.PI / 2;
+            ground.position.y = -300;
+            ground.receiveShadow = true;
+            scene.add(ground);
+
+            // Zen stones
+            for (let i = 0; i < 6; i++) {
+                const stoneGeometry = new THREE.DodecahedronGeometry(20 + Math.random() * 15);
+                const stoneMaterial = new THREE.MeshPhongMaterial({
+                    color: 0x34495e,
+                    shininess: 30
+                });
+                const stone = new THREE.Mesh(stoneGeometry, stoneMaterial);
+                stone.position.set(
+                    (Math.random() - 0.5) * 400,
+                    -280,
+                    (Math.random() - 0.5) * 400
+                );
+                stone.castShadow = true;
+                scene.add(stone);
+            }
+        }
+
+        function createEnergyField() {
+            const particleCount = 800;
+            const geometry = new THREE.BufferGeometry();
+            const positions = new Float32Array(particleCount * 3);
+            const colors = new Float32Array(particleCount * 3);
+            const sizes = new Float32Array(particleCount);
+
+            const colorPalette = [
+                new THREE.Color(0x4ecdc4),
+                new THREE.Color(0xff6b6b),
+                new THREE.Color(0x45b7d1),
+                new THREE.Color(0x96ceb4),
+                new THREE.Color(0xffa07a)
+            ];
+
+            for (let i = 0; i < particleCount; i++) {
+                const i3 = i * 3;
+                
+                positions[i3] = (Math.random() - 0.5) * 1500;
+                positions[i3 + 1] = (Math.random() - 0.5) * 800;
+                positions[i3 + 2] = (Math.random() - 0.5) * 1500;
+
+                const color = colorPalette[Math.floor(Math.random() * colorPalette.length)];
+                colors[i3] = color.r;
+                colors[i3 + 1] = color.g;
+                colors[i3 + 2] = color.b;
+
+                sizes[i] = Math.random() * 4 + 1;
+            }
+
+            geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+            geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+            geometry.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
+
+            const material = new THREE.PointsMaterial({
+                size: 2,
+                sizeAttenuation: true,
+                vertexColors: true,
+                transparent: true,
+                opacity: 0.8,
+                blending: THREE.AdditiveBlending
+            });
+
+            const particles = new THREE.Points(geometry, material);
+            scene.add(particles);
+
+            // Store for animation
+            particles.userData = { geometry, positions };
+            this.energyField = particles;
+        }
+
+        function onMouseMove(event) {
+            mouseX = (event.clientX / window.innerWidth) * 2 - 1;
+            mouseY = -(event.clientY / window.innerHeight) * 2 + 1;
+        }
+
+        function onWindowResize() {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+            time += 0.01;
+
+            // Animate flowing rings
+            flowingRings.forEach((ring, index) => {
+                ring.rotation.z += ring.userData.rotationSpeed;
+                ring.position.y = ring.userData.originalY + Math.sin(time * ring.userData.floatSpeed) * 20;
+                ring.material.opacity = 0.2 + Math.sin(time + index) * 0.1;
+            });
+
+            // Animate floating orbs
+            floatingOrbs.forEach((orb, index) => {
+                const userData = orb.userData;
+                orb.position.y = userData.originalPos.y + Math.sin(time * userData.floatSpeed + index) * userData.amplitude;
+                orb.position.x = userData.originalPos.x + Math.cos(time * userData.floatSpeed * 0.7 + index) * 20;
+                orb.rotation.y += 0.01;
+                orb.rotation.x += 0.005;
+            });
+
+            // Animate water ripples
+            waterRipples.forEach((ripple, index) => {
+                const userData = ripple.userData;
+                const scale = 1 + Math.sin(time * userData.pulseSpeed + userData.delay) * 0.3;
+                ripple.scale.set(scale, scale, scale);
+                ripple.material.opacity = 0.1 * (1 - Math.abs(Math.sin(time * userData.pulseSpeed + userData.delay)) * 0.5);
+            });
+
+            // Animate energy field
+            if (this.energyField) {
+                const positions = this.energyField.userData.positions;
+                for (let i = 0; i < positions.length; i += 3) {
+                    positions[i + 1] += Math.sin(time + positions[i] * 0.01) * 0.3;
+                    positions[i] += Math.cos(time + positions[i + 2] * 0.01) * 0.1;
+                }
+                this.energyField.userData.geometry.attributes.position.needsUpdate = true;
+                this.energyField.rotation.y += 0.001;
+            }
+
+            // Camera movement
+            camera.position.x += (mouseX * 100 - camera.position.x) * 0.02;
+            camera.position.y += (-mouseY * 100 + 200 - camera.position.y) * 0.02;
+            camera.lookAt(0, 0, 0);
+
+            renderer.render(scene, camera);
+        }
+    </script>
+</body>
+</html>

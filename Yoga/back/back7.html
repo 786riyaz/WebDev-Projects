@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZenFlow - 3D Yoga Background</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        #canvas-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+        
+        .content {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+            pointer-events: none;
+        }
+        
+        h1 {
+            font-size: 5rem;
+            margin-bottom: 1rem;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            font-weight: 300;
+        }
+        
+        p {
+            font-size: 1.5rem;
+            max-width: 600px;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.3);
+        }
+        
+        .controls {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 15px;
+            pointer-events: auto;
+        }
+        
+        button {
+            background: rgba(255,255,255,0.2);
+            border: 1px solid rgba(255,255,255,0.4);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 30px;
+            cursor: pointer;
+            backdrop-filter: blur(5px);
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+        
+        button:hover {
+            background: rgba(255,255,255,0.3);
+            transform: translateY(-3px);
+        }
+    </style>
+</head>
+<body>
+    <div id="canvas-container"></div>
+    
+    <div class="content">
+        <h1>Find Your Center</h1>
+        <p>Immerse yourself in our 3D yoga environment designed for focus and tranquility</p>
+    </div>
+    
+    <div class="controls">
+        <button id="day-mode">Day</button>
+        <button id="sunset-mode">Sunset</button>
+        <button id="night-mode">Night</button>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/controls/OrbitControls.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/loaders/GLTFLoader.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/objects/Water.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/objects/Sky.js"></script>
+    <script>
+        // Main Three.js implementation
+        document.addEventListener('DOMContentLoaded', () => {
+            // Scene setup
+            const container = document.getElementById('canvas-container');
+            const scene = new THREE.Scene();
+            
+            // Camera
+            const camera = new THREE.PerspectiveCamera(
+                55, 
+                window.innerWidth / window.innerHeight, 
+                0.1, 
+                2000
+            );
+            camera.position.set(0, 5, 15);
+            
+            // Renderer
+            const renderer = new THREE.WebGLRenderer({
+                antialias: true,
+                alpha: true
+            });
+            renderer.setPixelRatio(window.devicePixelRatio);
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.toneMapping = THREE.ACESFilmicToneMapping;
+            renderer.toneMappingExposure = 0.8;
+            container.appendChild(renderer.domElement);
+            
+            // Environment
+            const sky = new THREE.Sky();
+            sky.scale.setScalar(10000);
+            scene.add(sky);
+
+            const sun = new THREE.Vector3();
+            const skyUniforms = sky.material.uniforms;
+            skyUniforms['turbidity'].value = 10;
+            skyUniforms['rayleigh'].value = 2;
+            skyUniforms['mieCoefficient'].value = 0.005;
+            skyUniforms['mieDirectionalG'].value = 0.8;
+            
+            // Water
+            const waterGeometry = new THREE.PlaneGeometry(10000, 10000);
+            const water = new THREE.Water(
+                waterGeometry,
+                {
+                    textureWidth: 512,
+                    textureHeight: 512,
+                    waterNormals: new THREE.TextureLoader().load('https://threejs.org/examples/textures/waternormals.jpg', function(texture) {
+                        texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
+                    }),
+                    sunDirection: new THREE.Vector3(),
+                    sunColor: 0xffffff,
+                    waterColor: 0x001e0f,
+                    distortionScale: 3.7,
+                    fog: scene.fog !== undefined
+                }
+            );
+            water.rotation.x = -Math.PI / 2;
+            scene.add(water);
+            
+            // Terrain
+            const terrainGeometry = new THREE.PlaneGeometry(200, 200, 50, 50);
+            const terrainMaterial = new THREE.MeshStandardMaterial({ 
+                color: 0x3a5c40,
+                roughness: 0.8,
+                metalness: 0.2
+            });
+            const terrain = new THREE.Mesh(terrainGeometry, terrainMaterial);
+            terrain.rotation.x = -Math.PI / 2;
+            terrain.position.y = -0.5;
+            scene.add(terrain);
+            
+            // Add some rocks
+            const rockGeometry = new THREE.DodecahedronGeometry(1, 0);
+            const rockMaterial = new THREE.MeshStandardMaterial({ 
+                color: 0x7a7a7a,
+                roughness: 0.7
+            });
+            
+            for (let i = 0; i < 10; i++) {
+                const rock = new THREE.Mesh(rockGeometry, rockMaterial);
+                rock.position.set(
+                    Math.random() * 60 - 30,
+                    -0.5 + Math.random() * 0.5,
+                    Math.random() * 60 - 30
+                );
+                rock.scale.setScalar(0.5 + Math.random() * 2);
+                rock.rotation.set(
+                    Math.random() * Math.PI,
+                    Math.random() * Math.PI,
+                    Math.random() * Math.PI
+                );
+                scene.add(rock);
+            }
+            
+            // Add vegetation
+            const grassGeometry = new THREE.ConeGeometry(0.5, 2, 4);
+            const grassMaterial = new THREE.MeshStandardMaterial({ 
+                color: 0x4CAF50,
+                flatShading: true
+            });
+            
+            for (let i = 0; i < 100; i++) {
+                const grass = new THREE.Mesh(grassGeometry, grassMaterial);
+                grass.position.set(
+                    Math.random() * 60 - 30,
+                    -0.5,
+                    Math.random() * 60 - 30
+                );
+                grass.rotation.y = Math.random() * Math.PI;
+                grass.scale.setScalar(0.3 + Math.random() * 0.7);
+                scene.add(grass);
+            }
+            
+            // Lighting
+            const ambientLight = new THREE.AmbientLight(0x404040, 0.5);
+            scene.add(ambientLight);
+            
+            const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+            directionalLight.position.copy(sun);
+            directionalLight.castShadow = true;
+            directionalLight.shadow.mapSize.width = 2048;
+            directionalLight.shadow.mapSize.height = 2048;
+            scene.add(directionalLight);
+            
+            // Yoga platform
+            const platformGeometry = new THREE.CylinderGeometry(3, 3, 0.2, 32);
+            const platformMaterial = new THREE.MeshStandardMaterial({ 
+                color: 0xf5f5dc,
+                roughness: 0.4,
+                metalness: 0.1
+            });
+            const platform = new THREE.Mesh(platformGeometry, platformMaterial);
+            platform.position.y = 0;
+            scene.add(platform);
+            
+            // Simple yoga mat
+            const matGeometry = new THREE.CylinderGeometry(2.8, 2.8, 0.1, 32);
+            const matMaterial = new THREE.MeshStandardMaterial({ 
+                color: 0x8B4513,
+                roughness: 0.7
+            });
+            const mat = new THREE.Mesh(matGeometry, matMaterial);
+            mat.position.y = 0.11;
+            scene.add(mat);
+            
+            // Controls
+            const controls = new THREE.OrbitControls(camera, renderer.domElement);
+            controls.enableDamping = true;
+            controls.dampingFactor = 0.05;
+            controls.minDistance = 5;
+            controls.maxDistance = 30;
+            controls.maxPolarAngle = Math.PI * 0.495;
+            controls.target.set(0, 1, 0);
+            
+            // Environment modes
+            const environments = {
+                day: {
+                    sky: [10, 2, 0.005, 0.8],
+                    sunPosition: [0, 1, 0],
+                    waterColor: 0x001e0f,
+                    terrainColor: 0x3a5c40,
+                    exposure: 0.8
+                },
+                sunset: {
+                    sky: [20, 5, 0.005, 0.5],
+                    sunPosition: [-1, 0.1, -1],
+                    waterColor: 0x0a2a3a,
+                    terrainColor: 0x5a3c2a,
+                    exposure: 0.6
+                },
+                night: {
+                    sky: [1, 0.1, 0.001, 0.9],
+                    sunPosition: [0, -1, 0],
+                    waterColor: 0x000a1a,
+                    terrainColor: 0x1a1a2a,
+                    exposure: 0.4
+                }
+            };
+            
+            function setEnvironment(env) {
+                const config = environments[env];
+                
+                // Update sky
+                skyUniforms['turbidity'].value = config.sky[0];
+                skyUniforms['rayleigh'].value = config.sky[1];
+                skyUniforms['mieCoefficient'].value = config.sky[2];
+                skyUniforms['mieDirectionalG'].value = config.sky[3];
+                
+                // Update sun
+                sun.set(...config.sunPosition).normalize();
+                skyUniforms['sunPosition'].value.copy(sun);
+                water.material.uniforms['sunDirection'].value.copy(sun).normalize();
+                directionalLight.position.copy(sun);
+                
+                // Update colors
+                water.material.uniforms['waterColor'].value.setHex(config.waterColor);
+                terrain.material.color.setHex(config.terrainColor);
+                
+                // Update exposure
+                renderer.toneMappingExposure = config.exposure;
+            }
+            
+            // Set initial environment
+            setEnvironment('day');
+            
+            // Event listeners for buttons
+            document.getElementById('day-mode').addEventListener('click', () => setEnvironment('day'));
+            document.getElementById('sunset-mode').addEventListener('click', () => setEnvironment('sunset'));
+            document.getElementById('night-mode').addEventListener('click', () => setEnvironment('night'));
+            
+            // Handle window resize
+            window.addEventListener('resize', () => {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            });
+            
+            // Animation loop
+            function animate() {
+                requestAnimationFrame(animate);
+                
+                const time = performance.now() * 0.001;
+                
+                // Update water
+                water.material.uniforms['time'].value += 1.0 / 60.0;
+                
+                // Rotate sun for day/night cycle demo
+                // sun.x = Math.sin(time * 0.1) * 2;
+                // sun.z = Math.cos(time * 0.1) * 2;
+                // skyUniforms['sunPosition'].value.copy(sun);
+                // water.material.uniforms['sunDirection'].value.copy(sun).normalize();
+                // directionalLight.position.copy(sun);
+                
+                controls.update();
+                renderer.render(scene, camera);
+            }
+            
+            animate();
+        });
+    </script>
+</body>
+</html>

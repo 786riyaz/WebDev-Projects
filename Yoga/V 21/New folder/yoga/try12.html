@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yoga & Physiotherapy Center</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #6B8E70;
+            --primary-light: rgba(107, 142, 112, 0.1);
+            --secondary-color: #FFFFFF;
+            --text-dark: #333333;
+            --text-light: #555555; /* Improved contrast */
+            --accent-color: #6B8E70;
+            --gradient-1: #6B8E70;
+            --gradient-2: #A8C7A7;
+            --success-color: #2E7D32;
+        }
+
+        /* Navbar Styling */
+        .navbar {
+            background-color: var(--secondary-color);
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            padding: 0.8rem 0;
+            transition: all 0.3s ease;
+            opacity: 0;
+            animation: fadeIn 1s ease-out forwards;
+        }
+
+        .navbar.scrolled {
+            padding: 0.5rem 0;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+        }
+
+        .navbar-brand {
+            font-weight: 700;
+            color: var(--primary-color);
+            font-size: 1.5rem;
+        }
+
+        .navbar-brand img {
+            height: 40px;
+            width: auto;
+            transition: transform 0.3s ease;
+        }
+
+        .nav-link {
+            color: var(--text-dark);
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            margin: 0 0.2rem;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover, .nav-link:focus {
+            color: var(--primary-color);
+        }
+
+        .nav-link.active {
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        .dropdown-menu {
+            border: none;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 0.5rem;
+            padding: 0.5rem 0;
+        }
+
+        .dropdown-item {
+            padding: 0.5rem 1.5rem;
+            color: var(--text-dark);
+            transition: all 0.2s ease;
+        }
+
+        .dropdown-item:hover {
+            background-color: var(--primary-light);
+            color: var(--primary-color);
+        }
+
+        .dropdown-item i {
+            width: 20px;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: #5a7b5f;
+            border-color: #5a7b5f;
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(107, 142, 112, 0.3);
+        }
+
+        .navbar-toggler {
+            border: none;
+            padding: 0.5rem;
+        }
+
+        .navbar-toggler:focus {
+            box-shadow: none;
+        }
+
+        /* Responsive Navbar */
+        @media (max-width: 991.98px) {
+            .navbar-collapse {
+                background-color: var(--secondary-color);
+                padding: 1rem;
+                border-radius: 0.5rem;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+                margin-top: 0.5rem;
+                transition: transform 0.3s ease;
+            }
+
+            .nav-item {
+                margin: 0.3rem 0;
+            }
+
+            .dropdown-menu {
+                box-shadow: none;
+                border-left: 3px solid var(--primary-light);
+                margin-left: 1rem;
+            }
+
+            .btn-primary {
+                width: 100%;
+                margin-top: 0.5rem;
+            }
+        }
+
+        /* Hero Section */
+        .hero-section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(107,142,112,0.2));
+            margin-top: 70px;
+        }
+
+        .hero-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            opacity: 0.15;
+            background-image: 
+                radial-gradient(circle at 20% 30%, var(--primary-color) 0%, transparent 20%),
+                radial-gradient(circle at 80% 70%, var(--primary-color) 0%, transparent 20%);
+            animation: pulse 10s ease-in-out infinite alternate;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 0.15; transform: scale(1); }
+            100% { opacity: 0.25; transform: scale(1.02); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            width: 100%;
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .hero-container {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 40px;
+            justify-content: center;
+        }
+
+        .hero-text {
+            flex: 1;
+            min-width: 300px;
+            animation: fadeInLeft 1s ease-out;
+        }
+
+        .hero-image {
+            flex: 1;
+            min-width: 300px;
+            animation: fadeInRight 1s ease-out;
+        }
+
+        .hero-title {
+            color: var(--primary-color);
+            font-size: clamp(2.5rem, 5vw, 3.5rem);
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .hero-subtitle {
+            color: var(--text-dark);
+            font-size: clamp(1rem, 2.5vw, 1.3rem);
+            margin-bottom: 2rem;
+            line-height: 1.6;
+            max-width: 600px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .btn-outline-primary {
+            color: var(--primary-color);
+            border-color: var(--primary-color);
+            background-color: transparent;
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-outline-primary:hover {
+            background-color: var(--primary-color);
+            color: white;
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(107, 142, 112, 0.3);
+        }
+
+        /* Animated Yoga Figure */
+        .yoga-figure-container {
+            position: relative;
+            width: 100%;
+            height: clamp(300px, 40vw, 400px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .yoga-figure {
+            position: relative;
+            width: clamp(200px, 30vw, 300px);
+            height: clamp(200px, 30vw, 300px);
+            animation: float 5s ease-in-out infinite;
+        }
+
+        .yoga-circle {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            border: 2px solid var(--primary-light);
+            animation: rotate 30s linear infinite;
+            transition: box-shadow 0.3s ease;
+        }
+
+        .yoga-circle:hover {
+            box-shadow: 0 0 15px rgba(107, 142, 112, 0.5);
+        }
+
+        .yoga-circle:nth-child(1) {
+            width: clamp(150px, 25vw, 250px);
+            height: clamp(150px, 25vw, 250px);
+            border-width: 3px;
+            animation-duration: 40s;
+            animation-direction: reverse;
+        }
+
+        .yoga-circle:nth-child(2) {
+            width: clamp(200px, 32vw, 320px);
+            height: clamp(200px, 32vw, 320px);
+            border-style: dashed;
+            animation-duration: 50s;
+        }
+
+        .yoga-circle:nth-child(3) {
+            width: clamp(100px, 18vw, 180px);
+            height: clamp(100px, 18vw, 180px);
+            border-width: 1px;
+            animation-duration: 25s;
+            animation-direction: reverse;
+        }
+
+        /* Yoga Pose SVG */
+        .yoga-pose {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(1);
+            width: clamp(100px, 15vw, 150px);
+            height: clamp(100px, 15vw, 150px);
+            z-index: 2;
+            animation: pulsePose 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes pulsePose {
+            0% { transform: translate(-50%, -50%) scale(1); }
+            100% { transform: translate(-50%, -50%) scale(1.1); }
+        }
+
+        /* Floating Leaves */
+        .floating-leaf {
+            position: absolute;
+            opacity: 0.7;
+            z-index: 1;
+            animation: floatLeaf 15s ease-in-out infinite;
+        }
+
+        .leaf-1 {
+            width: 40px;
+            top: 20%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .leaf-2 {
+            width: 30px;
+            top: 70%;
+            left: 15%;
+            animation-delay: 3s;
+        }
+
+        .leaf-3 {
+            width: 35px;
+            top: 40%;
+            right: 10%;
+            animation-delay: 1.5s;
+        }
+
+        .leaf-4 {
+            width: 25px;
+            top: 80%;
+            right: 15%;
+            animation-delay: 4.5s;
+        }
+
+        @keyframes floatLeaf {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg) scale(1);
+                opacity: 0.7;
+            }
+            50% {
+                transform: translateY(-20vh) rotate(180deg) scale(1.2);
+                opacity: 0.9;
+            }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        @keyframes rotate {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeInLeft {
+            from { opacity: 0; transform: translateX(-50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes fadeInRight {
+            from { opacity: 0; transform: translateX(50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        /* About Section */
+        .about-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 80px 20px;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 40px;
+        }
+
+        .founders-image {
+            flex: 1;
+            min-width: 300px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(107, 142, 112, 0.2);
+            transition: transform 0.5s ease;
+        }
+
+        .founders-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+
+        .founders-image:hover {
+            transform: translateY(-10px);
+        }
+
+        .founders-image:hover img {
+            transform: scale(1.05);
+        }
+
+        .founders-content {
+            flex: 1;
+            min-width: 300px;
+            background: var(--secondary-color);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(107, 142, 112, 0.1);
+        }
+
+        .archive-badge {
+            background: linear-gradient(135deg, var(--gradient-1), var(--gradient-2));
+            color: white;
+            display: inline-block;
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-size: 0.95rem;
+            margin-bottom: 25px;
+            font-weight: 600;
+        }
+
+        .founders-names {
+            margin-bottom: 35px;
+        }
+
+        .founder {
+            margin-bottom: 20px;
+            padding: 20px;
+            border-radius: 10px;
+            background: var(--primary-light);
+            transition: all 0.3s ease;
+        }
+
+        .founder:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(107, 142, 112, 0.1);
+        }
+
+        .founder-name {
+            font-size: 1.4rem;
+            color: var(--primary-color);
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .founder-qualification {
+            font-size: 1rem;
+            color: var(--text-light);
+            font-style: italic;
+        }
+
+        .mission-statement {
+            margin: 35px 0;
+            font-size: 1.15rem;
+            line-height: 1.9;
+            color: var(--text-dark);
+        }
+
+        .signature {
+            font-style: italic;
+            margin-top: 35px;
+            color: var(--primary-color);
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            .hero-section {
+                min-height: 80vh;
+            }
+
+            .hero-title {
+                font-size: clamp(2rem, 4vw, 2.5rem);
+            }
+
+            .hero-subtitle {
+                font-size: clamp(0.9rem, 2vw, 1.1rem);
+            }
+
+            .hero-buttons {
+                justify-content: center;
+            }
+
+            .hero-container {
+                text-align: center;
+            }
+
+            .about-container {
+                padding: 40px 15px;
+            }
+
+            .founders-content {
+                padding: 25px;
+            }
+
+            .yoga-figure-container {
+                height: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="#">
+                         <!-- <svg class="me-2" width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 2L2 7L12 12L22 7L12 2Z" fill="#6B8E70"/>
+                    <path d="M2 17L12 22L22 17" stroke="#6B8E70" stroke-width="2"/>
+                    <path d="M2 12L12 17L22 12" stroke="#6B8E70" stroke-width="2"/>
+                </svg> -->
+                 <img src="logo.jpg" alt="Yoga & Physiotherapy Logo" class="me-2">
+                Yoga & Physio
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">Home</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="physioDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Physiotherapy
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="physioDropdown">
+                            <li><a class="dropdown-item" href="#ortho"><i class="fas fa-bone me-2"></i>Ortho & Sports</a></li>
+                            <li><a class="dropdown-item" href="#cardio"><i class="fas fa-heartbeat me-2"></i>Cardio-Respiratory</a></li>
+                            <li><a class="dropdown-item" href="#neuro"><i class="fas fa-brain me-2"></i>Neuro & Pediatric</a></li>
+                            <li><a class="dropdown-item" href="#womens"><i class="fas fa-female me-2"></i>Women's Health</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="yogaDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Yoga Services
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="yogaDropdown">
+                            <li><a class="dropdown-item" href="#power-yoga"><i class="fas fa-fire me-2"></i>Power Yoga</a></li>
+                            <li><a class="dropdown-item" href="#kids-yoga"><i class="fas fa-child me-2"></i>Kids Yoga</a></li>
+                            <li><a class="dropdown-item" href="#aerial-yoga"><i class="fas fa-parachute-box me-2"></i>Aerial Yoga</a></li>
+                            <li><a class="dropdown-item" href="#prenatal-yoga"><i class="fas fa-baby me-2"></i>Pre & Post Natal Yoga</a></li>
+                            <li><a class="dropdown-item" href="#fitness-yoga"><i class="fas fa-dumbbell me-2"></i>Fitness Yoga</a></li>
+                            <li><a class="dropdown-item" href="#personal-yoga"><i class="fas fa-user me-2"></i>Personal Training</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="therapyDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Special Therapies
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="therapyDropdown">
+                            <li><a class="dropdown-item" href="#tapping"><i class="fas fa-hand-paper me-2"></i>Tapping</a></li>
+                            <li><a class="dropdown-item" href="#dry-cupping"><i class="fas fa-circle-notch me-2"></i>Dry Cupping</a></li>
+                            <li><a class="dropdown-item" href="#wet-cupping"><i class="fas fa-tint me-2"></i>Wet Cupping</a></li>
+                            <li><a class="dropdown-item" href="#dry-needling"><i class="fas fa-syringe me-2"></i>Dry Needling</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Contact</a>
+                    </li>
+                    <li class="nav-item ms-lg-3 my-2 my-lg-0">
+                        <a class="btn btn-primary" href="#appointment">Book Appointment</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-background"></div>
+        <!-- Floating Leaves -->
+        <svg class="floating-leaf leaf-1" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.58 20 4 16.42 4 12C4 7.58 7.58 4 12 4C16.42 4 20 7.58 20 12C20 16.42 16.42 20 12 20Z" fill="#6B8E70"/>
+        </svg>
+        <svg class="floating-leaf leaf-2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.58 20 4 16.42 4 12C4 7.58 7.58 4 12 4C16.42 4 20 7.58 20 12C20 16.42 16.42 20 12 20Z" fill="#6B8E70"/>
+        </svg>
+        <svg class="floating-leaf leaf-3" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.58 20 4 16.42 4 12C4 7.58 7.58 4 12 4C16.42 4 20 7.58 20 12C20 16.42 16.42 20 12 20Z" fill="#6B8E70"/>
+        </svg>
+        <svg class="floating-leaf leaf-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.58 20 4 16.42 4 12C4 7.58 7.58 4 12 4C16.42 4 20 7.58 20 12C20 16.42 16.42 20 12 20Z" fill="#6B8E70"/>
+        </svg>
+        <div class="hero-content">
+            <div class="hero-container">
+                <div class="hero-text">
+                    <h1 class="hero-title">Holistic Healing Through Yoga & Physiotherapy</h1>
+                    <p class="hero-subtitle">Experience personalized care that nurtures your mind, body, and soul. Our expert team combines traditional wisdom with modern techniques to help you achieve optimal wellness.</p>
+                    <div class="hero-buttons">
+                        <a href="#appointment" class="btn btn-primary">Book a Session</a>
+                        <a href="#services" class="btn btn-outline-primary">Our Services</a>
+                    </div>
+                </div>
+                <div class="hero-image">
+                    <div class="yoga-figure-container">
+                        <div class="yoga-circle"></div>
+                        <div class="yoga-circle"></div>
+                        <div class="yoga-circle"></div>
+                        <svg class="yoga-pose" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="50" cy="25" r="10" fill="var(--primary-color)"/>
+                            <line x1="50" y1="35" x2="50" y2="65" stroke="var(--primary-color)" stroke-width="3"/>
+                            <line x1="50" y1="45" x2="30" y2="35" stroke="var(--primary-color)" stroke-width="3"/>
+                            <line x1="50" y1="45" x2="70" y2="55" stroke="var(--primary-color)" stroke-width="3"/>
+                            <line x1="50" y1="65" x2="40" y2="85" stroke="var(--primary-color)" stroke-width="3"/>
+                            <line x1="50" y1="65" x2="60" y2="90" stroke="var(--primary-color)" stroke-width="3"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about-container" id="about">
+        <div class="founders-image">
+            <img src="photo.jpg" alt="Dr. Mayanta Kalathiya and Dr. Heena Khatri">
+        </div>
+        <div class="founders-content">
+            <div class="archive-badge">ARCHIVE 2025/6</div>
+            <div class="founders-names">
+                <div class="founder">
+                    <div class="founder-name">DR. MAYANTA KALATHIYA</div>
+                    <div class="founder-qualification">Master's in Sports Physiology</div>
+                </div>
+                <div class="founder">
+                    <div class="founder-name">DR. HEENA KHATRI</div>
+                    <div class="founder-qualification">Master's in Cardiopulmonary Physiotherapy</div>
+                </div>
+            </div>
+            <div class="mission-statement">
+                <p>At Kiaya Haus, we walk beside you on your journey to lasting health and wellness. As
+                    founders, our mission is rooted in compassion and personalized care—empowering you to feel
+                    your best, naturally. With our shared expertise in physiotherapy, yoga, and nutrition, we
+                    treat the whole person: mind, body, and soul.</p>
+                <p>Whether you're healing, growing, or simply seeking balance, we're honored to be part of your
+                    path forward.</p>
+            </div>
+            <div class="signature">
+                — DR. MAYANTA KALATHIYA & DR. HEENA KHATRI
+            </div>
+        </div>
+    </section>
+
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Debounced scroll event for navbar
+        let lastScroll = 0;
+        function debounce(func, wait) {
+            let timeout;
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
+        }
+
+        window.addEventListener('scroll', debounce(() => {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        }, 50));
+    </script>
+</body>
+</html>

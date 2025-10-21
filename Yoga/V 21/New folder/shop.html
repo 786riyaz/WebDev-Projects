@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yoga Shop</title>
+    <style>
+        :root {
+            --yoga-primary: #000;
+            --yoga-secondary: #ff9a76;
+            --yoga-light: #f8f5f2;
+            --navbar-bg: rgba(255, 255, 255, 0.98);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        body {
+            background-color: var(--yoga-light);
+            color: var(--yoga-primary);
+        }
+        
+        .shop-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+        
+        .shop-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .shop-header h1 {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: var(--yoga-primary);
+        }
+        
+        .shop-header p {
+            font-size: 18px;
+            color: #555;
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+        
+        .divider {
+            width: 80px;
+            height: 4px;
+            background-color: var(--yoga-secondary);
+            margin: 20px auto;
+            border-radius: 2px;
+        }
+        
+        .shop-filters {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .filter-group {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .filter-btn {
+            padding: 8px 20px;
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+        
+        .filter-btn:hover, .filter-btn.active {
+            background-color: var(--yoga-secondary);
+            color: white;
+            border-color: var(--yoga-secondary);
+        }
+        
+        .sort-select {
+            padding: 8px 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: white;
+            font-size: 14px;
+        }
+        
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+        
+        .product-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .product-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background-color: var(--yoga-secondary);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+            z-index: 1;
+        }
+        
+        .product-img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .product-info {
+            padding: 20px;
+        }
+        
+        .product-category {
+            color: var(--yoga-secondary);
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .product-title {
+            font-size: 18px;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        
+        .product-description {
+            color: #666;
+            font-size: 14px;
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+        
+        .product-price {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 15px;
+        }
+        
+        .price {
+            font-weight: 700;
+            font-size: 18px;
+        }
+        
+        .original-price {
+            text-decoration: line-through;
+            color: #999;
+            font-size: 14px;
+            margin-right: 5px;
+        }
+        
+        .add-to-cart {
+            background-color: var(--yoga-secondary);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            font-size: 14px;
+        }
+        
+        .add-to-cart:hover {
+            background-color: var(--yoga-primary);
+        }
+        
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 40px;
+        }
+        
+        .page-btn {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .page-btn:hover, .page-btn.active {
+            background-color: var(--yoga-secondary);
+            color: white;
+            border-color: var(--yoga-secondary);
+        }
+        
+        @media (max-width: 768px) {
+            .shop-filters {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .shop-header h1 {
+                font-size: 28px;
+            }
+            
+            .shop-header p {
+                font-size: 16px;
+            }
+            
+            .products-grid {
+                grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="shop-container">
+        <div class="shop-header">
+            <h1>Yoga Shop</h1>
+            <div class="divider"></div>
+            <p>Discover high-quality yoga essentials to support your practice. From mats to meditation cushions, we have everything you need.</p>
+        </div>
+        
+        <div class="shop-filters">
+            <div class="filter-group">
+                <button class="filter-btn active">All Products</button>
+                <button class="filter-btn">Yoga Mats</button>
+                <button class="filter-btn">Props</button>
+                <button class="filter-btn">Apparel</button>
+                <button class="filter-btn">Accessories</button>
+            </div>
+            
+            <select class="sort-select">
+                <option>Sort by: Featured</option>
+                <option>Sort by: Price Low to High</option>
+                <option>Sort by: Price High to Low</option>
+                <option>Sort by: Newest</option>
+                <option>Sort by: Best Selling</option>
+            </select>
+        </div>
+        
+        <div class="products-grid">
+            <div class="product-card">
+                <span class="product-badge">Bestseller</span>
+                <img src="https://images.unsplash.com/photo-1545205597-3d9d02c29597?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Premium Yoga Mat" class="product-img">
+                <div class="product-info">
+                    <div class="product-category">Yoga Mats</div>
+                    <h3 class="product-title">Premium Eco Yoga Mat</h3>
+                    <p class="product-description">Non-slip, eco-friendly mat made from natural tree rubber with superior cushioning.</p>
+                    <div class="product-price">
+                        <div class="price">
+                            <span class="original-price">$89.99</span>
+                            $69.99
+                        </div>
+                        <button class="add-to-cart">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="product-card">
+                <img src="https://images.unsplash.com/photo-1593810450967-f9c42742e326?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Yoga Blocks" class="product-img">
+                <div class="product-info">
+                    <div class="product-category">Props</div>
+                    <h3 class="product-title">Cork Yoga Blocks (Set of 2)</h3>
+                    <p class="product-description">Sustainable cork blocks that provide stability and support for all levels.</p>
+                    <div class="product-price">
+                        <div class="price">$34.99</div>
+                        <button class="add-to-cart">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="product-card">
+                <span class="product-badge">New</span>
+                <img src="https://images.unsplash.com/photo-1551232864-3f0890e580d9?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Meditation Cushion" class="product-img">
+                <div class="product-info">
+                    <div class="product-category">Props</div>
+                    <h3 class="product-title">Zafu Meditation Cushion</h3>
+                    <p class="product-description">Handmade buckwheat hull cushion for comfortable seated meditation.</p>
+                    <div class="product-price">
+                        <div class="price">$49.99</div>
+                        <button class="add-to-cart">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="product-card">
+                <img src="https://images.unsplash.com/photo-1551232864-3f0890e580d9?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Yoga Strap" class="product-img">
+                <div class="product-info">
+                    <div class="product-category">Accessories</div>
+                    <h3 class="product-title">Organic Cotton Yoga Strap</h3>
+                    <p class="product-description">8-foot strap to help deepen stretches and improve flexibility.</p>
+                    <div class="product-price">
+                        <div class="price">$18.99</div>
+                        <button class="add-to-cart">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="product-card">
+                <span class="product-badge">Sale</span>
+                <img src="https://images.unsplash.com/photo-1551232864-3f0890e580d9?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Yoga Pants" class="product-img">
+                <div class="product-info">
+                    <div class="product-category">Apparel</div>
+                    <h3 class="product-title">High-Waisted Yoga Pants</h3>
+                    <p class="product-description">Breathable, stretchy pants with pockets. Perfect for practice or casual wear.</p>
+                    <div class="product-price">
+                        <div class="price">
+                            <span class="original-price">$59.99</span>
+                            $39.99
+                        </div>
+                        <button class="add-to-cart">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="product-card">
+                <img src="https://images.unsplash.com/photo-1551232864-3f0890e580d9?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Yoga Mat Bag" class="product-img">
+                <div class="product-info">
+                    <div class="product-category">Accessories</div>
+                    <h3 class="product-title">Recycled Yoga Mat Bag</h3>
+                    <p class="product-description">Sustainable carrying bag with separate compartment for accessories.</p>
+                    <div class="product-price">
+                        <div class="price">$29.99</div>
+                        <button class="add-to-cart">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="product-card">
+                <img src="https://images.unsplash.com/photo-1551232864-3f0890e580d9?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Essential Oils Set" class="product-img">
+                <div class="product-info">
+                    <div class="product-category">Accessories</div>
+                    <h3 class="product-title">Yoga Essential Oils Set</h3>
+                    <p class="product-description">Organic oils for focus (peppermint), relaxation (lavender), and energy (orange).</p>
+                    <div class="product-price">
+                        <div class="price">$42.99</div>
+                        <button class="add-to-cart">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="product-card">
+                <span class="product-badge">New</span>
+                <img src="https://images.unsplash.com/photo-1551232864-3f0890e580d9?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Yoga Wheel" class="product-img">
+                <div class="product-info">
+                    <div class="product-category">Props</div>
+                    <h3 class="product-title">Therapeutic Yoga Wheel</h3>
+                    <p class="product-description">Improve flexibility and release tension with this versatile wheel.</p>
+                    <div class="product-price">
+                        <div class="price">$54.99</div>
+                        <button class="add-to-cart">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="pagination">
+            <div class="page-btn"><i class="fas fa-chevron-left"></i></div>
+            <div class="page-btn active">1</div>
+            <div class="page-btn">2</div>
+            <div class="page-btn">3</div>
+            <div class="page-btn">4</div>
+            <div class="page-btn"><i class="fas fa-chevron-right"></i></div>
+        </div>
+    </div>
+</body>
+</html>

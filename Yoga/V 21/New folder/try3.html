@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Programs - Yoga Studio</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts for Poppins and Philosopher -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&family=Philosopher:wght@700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --yoga-primary: #000;
+            --yoga-secondary: #ff9a76;
+            --yoga-light: #f8f5f2;
+            --navbar-bg: rgba(255, 255, 255, 0.98);
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #fff; /* White background */
+            position: relative;
+            overflow-x: hidden;
+            padding-top: 70px;
+        }
+
+        /* Circle Styles */
+        .circle {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.25; /* Subtle transparency */
+            pointer-events: none; /* Prevent interference with clicks */
+            z-index: -1; /* Behind content */
+        }
+
+        .circle-1 {
+            width: 200px;
+            height: 200px;
+            background: var(--yoga-secondary); /* Peachy orange */
+            top: 10%;
+            left: 5%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .circle-2 {
+            width: 250px;
+            height: 250px;
+            background: var(--yoga-light); /* Light cream */
+            bottom: 10%;
+            right: 5%;
+            animation: float 8s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translate(0, 0); }
+            50% { transform: translate(30px, 30px); } /* Reduced for mobile */
+            100% { transform: translate(0, 0); }
+        }
+
+        /* Navbar Styles */
+        .yoga-navbar {
+            background-color: var(--navbar-bg);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            padding: 12px 0;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            transition: all 0.4s ease;
+        }
+
+        .yoga-navbar.scrolled {
+            background-color: rgba(90, 143, 123, 0.98);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            padding: 8px 0;
+        }
+
+        .scrolled .nav-link,
+        .scrolled .navbar-brand,
+        .scrolled .search-btn {
+            color: rgb(20, 19, 19) !important;
+        }
+
+        .scrolled .nav-link:hover {
+            color: var(--yoga-secondary) !important;
+        }
+
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--yoga-primary);
+            display: flex;
+            align-items: center;
+            transition: all 0.4s ease;
+        }
+
+        .navbar-brand i {
+            color: var(--yoga-secondary);
+            font-size: 1.8rem;
+            margin-right: 8px;
+            transition: all 0.4s ease;
+        }
+
+        .scrolled .navbar-brand i {
+            color: white;
+        }
+
+        .nav-link {
+            color: #333 !important;
+            font-weight: 500;
+            padding: 8px 15px !important;
+            margin: 0 5px;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--yoga-primary) !important;
+        }
+
+        .nav-link.active {
+            color: var(--yoga-primary) !important;
+        }
+
+        .navbar-toggler {
+            border: none;
+            padding: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-left: auto;
+        }
+
+        .navbar-toggler:focus {
+            box-shadow: none;
+        }
+
+        .navbar-toggler-icon {
+            background-image: none;
+            height: 2px;
+            width: 24px;
+            position: relative;
+            transition: all 0.3s ease;
+            background-color: var(--yoga-primary);
+        }
+
+        .navbar-toggler-icon::before,
+        .navbar-toggler-icon::after {
+            content: '';
+            position: absolute;
+            height: 2px;
+            width: 24px;
+            background-color: var(--yoga-primary);
+            left: 0;
+            transition: all 0.3s ease;
+        }
+
+        .navbar-toggler-icon::before {
+            top: -8px;
+        }
+
+        .navbar-toggler-icon::after {
+            top: 8px;
+        }
+
+        .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
+            background-color: transparent;
+        }
+
+        .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon::before {
+            transform: rotate(45deg);
+            top: 0;
+        }
+
+        .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon::after {
+            transform: rotate(-45deg);
+            top: 0;
+        }
+
+        .scrolled .navbar-toggler-icon,
+        .scrolled .navbar-toggler-icon::before,
+        .scrolled .navbar-toggler-icon::after {
+            background-color: white;
+        }
+
+        .search-container {
+            position: relative;
+            margin-right: 15px;
+        }
+
+        .search-input {
+            width: 0;
+            opacity: 0;
+            border: none;
+            border-radius: 50px;
+            padding: 8px 15px;
+            background-color: var(--yoga-light);
+            transition: all 0.3s ease;
+        }
+
+        .search-input.active {
+            width: 180px;
+            opacity: 1;
+            padding-left: 35px;
+        }
+
+        .search-btn {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: var(--yoga-primary);
+            cursor: pointer;
+        }
+
+        .navbar-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+
+        .navbar-right {
+            display: flex;
+            align-items: center;
+        }
+
+        /* Hero Section */
+        .programs-hero {
+            background: linear-gradient(rgba(58, 99, 81, 0.85), rgba(58, 99, 81, 0.85)),
+                url('https://images.unsplash.com/photo-1545205597-3d9d02c29597?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            min-height: 60vh;
+            display: flex;
+            align-items: center;
+            padding: 40px 0;
+            color: white;
+            position: relative;
+            z-index: 0;
+        }
+
+        .programs-hero .hero-title {
+            font-family: 'Philosopher', sans-serif;
+            font-weight: 700;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+        }
+
+        .programs-hero .hero-content {
+            background-color: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(5px);
+            border-radius: 15px;
+            padding: 2.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* General Section Styles */
+        .section {
+            padding: 60px 0;
+        }
+
+        .section-title {
+            font-family: 'Philosopher', sans-serif;
+            color: var(--yoga-primary);
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        /* Programs Section */
+        .program-card {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+            transition: transform 0.3s ease;
+        }
+
+        .program-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .program-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+        }
+
+        .program-card-body {
+            padding: 20px;
+        }
+
+        .program-card-title {
+            font-family: 'Philosopher', sans-serif;
+            color: var(--yoga-primary);
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        .program-card-text {
+            color: #555;
+            font-size: 1rem;
+            margin-bottom: 15px;
+        }
+
+        .btn-program {
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-weight: 500;
+            background-color: var(--yoga-secondary);
+            color: #333;
+            border: 2px solid var(--yoga-secondary);
+            transition: all 0.3s ease;
+        }
+
+        .btn-program:hover {
+            background-color: transparent;
+            color: var(--yoga-primary);
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: var(--yoga-light);
+            text-align: center;
+        }
+
+        .btn-cta {
+            padding: 12px 28px;
+            border-radius: 50px;
+            font-weight: 500;
+            background-color: var(--yoga-secondary);
+            color: #333;
+            border: 2px solid var(--yoga-secondary);
+            transition: all 0.3s ease;
+        }
+
+        .btn-cta:hover {
+            background-color: transparent;
+            color: var(--yoga-primary);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 576px) {
+            .circle-1 {
+                width: 80px;
+                height: 80px;
+                top: 5%;
+                left: 3%;
+            }
+
+            .circle-2 {
+                width: 120px;
+                height: 120px;
+                bottom: 5%;
+                right: 3%;
+            }
+
+            .programs-hero {
+                min-height: 50vh;
+                padding: 30px 0;
+                text-align: center;
+            }
+
+            .programs-hero .hero-content {
+                padding: 1rem;
+                margin: 0 1rem;
+            }
+
+            .programs-hero .hero-title {
+                font-size: 2rem;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+
+            .program-card img {
+                height: 140px;
+            }
+
+            .program-card-title {
+                font-size: 1.3rem;
+            }
+
+            .program-card-text {
+                font-size: 0.9rem;
+            }
+
+            .btn-program, .btn-cta {
+                width: 90%;
+                max-width: 180px;
+                padding: 8px 16px;
+            }
+
+            .navbar-brand {
+                font-size: 1.2rem;
+            }
+
+            .navbar-brand i {
+                font-size: 1.5rem;
+            }
+
+            .search-input.active {
+                width: 100%;
+            }
+        }
+
+        @media (min-width: 576px) and (max-width: 767px) {
+            .circle-1 {
+                width: 100px;
+                height: 100px;
+                top: 5%;
+                left: 4%;
+            }
+
+            .circle-2 {
+                width: 150px;
+                height: 150px;
+                bottom: 5%;
+                right: 4%;
+            }
+
+            .programs-hero {
+                min-height: 50vh;
+                padding: 30px 0;
+            }
+
+            .programs-hero .hero-content {
+                padding: 1.5rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .program-card img {
+                height: 160px;
+            }
+        }
+
+        @media (min-width: 768px) and (max-width: 991px) {
+            .circle-1 {
+                width: 150px;
+                height: 150px;
+                top: 8%;
+                left: 5%;
+            }
+
+            .circle-2 {
+                width: 200px;
+                height: 200px;
+                bottom: 8%;
+                right: 5%;
+            }
+
+            .navbar-collapse {
+                background-color: white;
+                padding: 20px;
+                border-radius: 0 0 15px 15px;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+                margin-top: 10px;
+            }
+
+            .nav-item {
+                margin: 5px 0;
+            }
+
+            .nav-link {
+                padding: 10px 15px !important;
+                color: #333 !important;
+            }
+
+            .nav-link:hover {
+                color: var(--yoga-primary) !important;
+            }
+
+            .search-container {
+                margin: 15px 0;
+                width: 100%;
+            }
+
+            .search-input.active {
+                width: 100%;
+            }
+
+            .programs-hero .hero-content {
+                padding: 2rem;
+            }
+
+            .section {
+                padding: 40px 0;
+            }
+
+            .program-card img {
+                height: 180px;
+            }
+        }
+
+        @media (min-width: 992px) and (max-width: 1399px) {
+            .circle-1 {
+                width: 200px;
+                height: 200px;
+                top: 10%;
+                left: 5%;
+            }
+
+            .circle-2 {
+                width: 250px;
+                height: 250px;
+                bottom: 10%;
+                right: 5%;
+            }
+
+            .section-title {
+                font-size: 2.2rem;
+            }
+        }
+
+        @media (min-width: 1400px) {
+            .circle-1 {
+                width: 300px;
+                height: 300px;
+                top: 15%;
+                left: 10%;
+            }
+
+            .circle-2 {
+                width: 400px;
+                height: 400px;
+                bottom: 15%;
+                right: 10%;
+            }
+
+            .programs-hero .hero-content {
+                padding: 3rem;
+            }
+
+            .section-title {
+                font-size: 2.5rem;
+            }
+
+            .program-card img {
+                height: 220px;
+            }
+        }
+
+        @media (min-width: 1600px) {
+            .circle-1 {
+                width: 350px;
+                height: 350px;
+                top: 20%;
+                left: 15%;
+            }
+
+            .circle-2 {
+                width: 450px;
+                height: 450px;
+                bottom: 20%;
+                right: 15%;
+            }
+
+            .programs-hero .hero-content {
+                padding: 4rem;
+            }
+
+            .programs-hero .hero-title {
+                font-size: 4rem;
+            }
+
+            .section-title {
+                font-size: 3rem;
+            }
+
+            .program-card-title {
+                font-size: 1.8rem;
+            }
+
+            .program-card-text {
+                font-size: 1.1rem;
+            }
+
+            .program-card img {
+                height: 250px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="circle circle-1"></div>
+    <div class="circle circle-2"></div>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg yoga-navbar">
+        <div class="container navbar-container">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-spa"></i>
+                <span>Demo</span>
+            </a>
+            <div class="navbar-right">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+            </div>
+            <div class="collapse navbar-collapse" id="navbarContent">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Classes</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link active" href="#" data-bs-toggle="dropdown">
+                            Programs
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">Beginner Series</a></li>
+                            <li><a class="dropdown-item" href="#">Advanced Flow</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#">Teacher Training</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Blog</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Testimonials</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Shop</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Contact</a>
+                    </li>
+                </ul>
+                <a href="#" class="btn btn-primary rounded-pill px-4 ms-3">
+                    <i class="fas fa-calendar-alt me-2"></i>Book Now
+                </a>
+                <div class="d-lg-none">
+                    <div class="search-container mb-3">
+                        <button class="search-btn" id="mobileSearchToggle">
+                            <i class="fas fa-search"></i>
+                        </button>
+                        <input type="text" class="search-input" placeholder="Search classes...">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Programs Hero Section -->
+    <section class="programs-hero">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="hero-content">
+                        <h1 class="hero-title display-3 mb-4">Our Yoga Programs</h1>
+                        <p class="lead mb-5">Discover a range of yoga programs designed to nurture your body, mind, and soul, from beginner to advanced levels.</p>
+                        <a href="#" class="btn btn-program">Explore Programs</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    <!-- Programs Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">Explore Our Programs</h2>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="program-card">
+                       <img src="https://images.unsplash.com/photo-1506126279646-a697353d3166?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60" alt="Advanced Flow">
+                        <div class="program-card-body">
+                            <h3 class="program-card-title">Beginner Series</h3>
+                            <p class="program-card-text">Perfect for newcomers, this program introduces yoga fundamentals, focusing on alignment, breathing, and mindfulness.</p>
+                            <a href="#" class="btn btn-program">Learn More</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="program-card">
+                        <img src="https://images.unsplash.com/photo-1506126279646-a697353d3166?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60" alt="Advanced Flow">
+                        <div class="program-card-body">
+                            <h3 class="program-card-title">Advanced Flow</h3>
+                            <p class="program-card-text">Challenge yourself with dynamic sequences and advanced poses to deepen your practice and build strength.</p>
+                            <a href="#" class="btn btn-program">Learn More</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="program-card">
+                        <img src="https://images.unsplash.com/photo-1545205597-3d9d02c29597?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60" alt="Teacher Training">
+                        <div class="program-card-body">
+                            <h3 class="program-card-title">Teacher Training</h3>
+                            <p class="program-card-text">Challenge yourself with dynamic sequences and advanced poses to deepen your practice and build strength.</p>
+                            <a href="#" class="btn btn-program">Learn More</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="section cta-section">
+        <div class="container">
+            <h2 class="section-title">Start Your Yoga Journey</h2>
+            <p class="section-text mb-5">Join one of our programs today and discover the transformative power of yoga.</p>
+            <a href="#" class="btn btn-cta">Join Now</a>
+        </div>
+    </section>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Scroll Effect
+        window.addEventListener('scroll', function () {
+            const navbar = document.querySelector('.yoga-navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Mobile Search Toggle
+        document.getElementById('mobileSearchToggle').addEventListener('click', function () {
+            const searchInput = document.querySelector('.search-input');
+            searchInput.classList.toggle('active');
+            if (searchInput.classList.contains('active')) {
+                searchInput.focus();
+            }
+        });
+    </script>
+</body>
+</html>

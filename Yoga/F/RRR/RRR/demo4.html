@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enhanced Particle Background with Mouse Effects</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background: linear-gradient(135deg, #e8f5e9 0%, #a5d6a7 100%);
+            font-family: 'Arial', sans-serif;
+        }
+        canvas {
+            display: block;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+        .content {
+            position: relative;
+            z-index: 1;
+            color: #1b5e20;
+            padding: 40px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+        .content h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 0 0 12px rgba(67, 160, 71, 0.5);
+            animation: fadeIn 2s ease-in;
+        }
+        .content p {
+            max-width: 600px;
+            font-size: 1.2rem;
+            line-height: 1.6;
+            opacity: 0.9;
+            text-shadow: 0 0 8px rgba(67, 160, 71, 0.3);
+            animation: fadeIn 3s ease-in;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .fps-counter {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            color: #1b5e20;
+            font-size: 14px;
+            opacity: 0.7;
+            text-shadow: 0 0 5px rgba(67, 160, 71, 0.5);
+        }
+    </style>
+</head>
+<body>
+    <canvas id="particle-canvas"></canvas>
+    <div class="content">
+        <h1>Kiaya Haus Particle Universe</h1>
+        <p>Experience an interactive cosmic dance of particles. Move your mouse or touch the screen to influence their motion, creating mesmerizing patterns. Click to create vibrant particle bursts!</p>
+    </div>
+    <div class="fps-counter" id="fps-counter">FPS: 0</div>
+
+    <script>
+        const canvas = document.getElementById('particle-canvas');
+        const ctx = canvas.getContext('2d', { alpha: false });
+        const fpsCounter = document.getElementById('fps-counter');
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        // Particle settings
+        const particles = [];
+        const baseParticleCount = Math.floor(window.innerWidth * window.innerHeight / 5000);
+        const performanceFactor = Math.min(1, window.devicePixelRatio || 1);
+        const particleCount = Math.max(50, baseParticleCount * performanceFactor);
+        const maxRadius = 3;
+        const minRadius = 1;
+        const mouseEffectDistance = 120;
+        const colors = [
+            '129,199,132', // #81c784
+            '67,160,71',  // #43a047
+            '27,94,32',   // #1b5e20
+            '165,214,167' // #a5d6a7
+        ];
+
+        // Mouse/touch position and state
+        const pointer = {
+            x: null,
+            y: null,
+            active: false,
+            lastX: null,
+            lastY: null,
+            speed: 0,
+            trail: []
+        };
+
+        // Burst particles for click effect
+        const burstParticles = [];
+
+        // Performance tracking
+        let lastTime = performance.now();
+        let frameCount = 0;
+        let fps = 60;
+
+        // Create particles
+        for (let i = 0; i < particleCount; i++) {
+            const colorIndex = Math.floor(Math.random() * colors.length);
+            particles.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                radius: Math.random() * (maxRadius - minRadius) + minRadius,
+                baseRadius: Math.random() * (maxRadius - minRadius) + minRadius,
+                color: `rgba(${colors[colorIndex]}, ${Math.random() * 0.6 + 0.4})`,
+                baseColor: colors[colorIndex],
+                speedX: Math.random() * 0.5 - 0.25,
+                speedY: Math.random() * 0.5 - 0.25,
+                originalSpeedX: Math.random() * 0.5 - 0.25,
+                originalSpeedY: Math.random() * 0.5 - 0.25,
+                lastX: 0,
+                lastY: 0
+            });
+        }
+
+        // Create burst particles on click
+        function createBurst(x, y) {
+            for (let i = 0; i < 20; i++) {
+                const angle = Math.random() * Math.PI * 2;
+                const speed = Math.random() * 3 + 2;
+                const burstColor = i % 2 === 0 ? '232,245,233' : '129,199,132'; // Alternate #e8f5e9 and #81c784
+                burstParticles.push({
+                    x,
+                    y,
+                    radius: Math.random() * 2 + 1,
+                    color: `rgba(${burstColor},0.9)`,
+                    speedX: Math.cos(angle) * speed,
+                    speedY: Math.sin(angle) * speed,
+                    life: 60
+                });
+            }
+        }
+
+        // Animation loop
+        function animate(currentTime) {
+            requestAnimationFrame(animate);
+
+            // FPS calculation
+            frameCount++;
+            if (currentTime - lastTime >= 1000) {
+                fps = frameCount;
+                frameCount = 0;
+                lastTime = currentTime;
+                fpsCounter.textContent = `FPS: ${fps}`;
+            }
+
+            ctx.fillStyle = 'rgba(200,230,201,0.05)'; // #c8e6c9 with lower opacity
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Update mouse trail
+            if (pointer.active && pointer.x && pointer.y) {
+                pointer.trail.push({ x: pointer.x, y: pointer.y, age: 0 });
+                if (pointer.lastX && pointer.lastY) {
+                    const dx = pointer.x - pointer.lastX;
+                    const dy = pointer.y - pointer.lastY;
+                    pointer.speed = Math.sqrt(dx * dx + dy * dy) / (currentTime - lastTime) * 1000;
+                }
+                pointer.lastX = pointer.x;
+                pointer.lastY = pointer.y;
+            }
+
+            // Update trail
+            pointer.trail = pointer.trail.filter(t => t.age++ < 30);
+            
+            // Draw trail
+            pointer.trail.forEach((t, i) => {
+                const opacity = 1 - t.age / 30;
+                ctx.beginPath();
+                ctx.arc(t.x, t.y, 5 * opacity, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(67,160,71,${opacity * 0.4})`; // #43a047
+                ctx.shadowColor = 'rgba(67,160,71,0.5)';
+                ctx.shadowBlur = 8;
+                ctx.fill();
+            });
+
+            // Update and draw particles
+            particles.forEach(particle => {
+                particle.lastX = particle.x;
+                particle.lastY = particle.y;
+
+                // Mouse interaction
+                if (pointer.active && pointer.x && pointer.y) {
+                    const dx = pointer.x - particle.x;
+                    const dy = pointer.y - particle.y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+
+                    if (distance < mouseEffectDistance) {
+                        const force = (mouseEffectDistance - distance) / mouseEffectDistance;
+                        const angle = Math.atan2(dy, dx);
+                        const easing = 1 - Math.pow(1 - force, 3);
+                        
+                        // Dynamic mouse effect based on speed
+                        const speedFactor = Math.min(pointer.speed / 50, 2);
+                        const direction = speedFactor > 1 ? -1 : 1; // Repel if moving fast
+                        particle.speedX = particle.originalSpeedX - direction * Math.cos(angle) * easing * (4 + speedFactor);
+                        particle.speedY = particle.originalSpeedY - direction * Math.sin(angle) * easing * (4 + speedFactor);
+
+                        // Dynamic radius
+                        particle.radius = Math.min(particle.baseRadius * (1 + easing * 0.5), maxRadius * 1.5);
+
+                        // Color shift with glow
+                        const glow = 1 - distance / mouseEffectDistance;
+                        const [r,g,b] = particle.baseColor.split(',');
+                        particle.color = `rgba(${r},${g},${b},${0.4 + glow * 0.6})`;
+                    } else {
+                        particle.speedX += (particle.originalSpeedX - particle.speedX) * 0.1;
+                        particle.speedY += (particle.originalSpeedY - particle.speedY) * 0.1;
+                        particle.radius += (particle.baseRadius - particle.radius) * 0.1;
+                        const [r,g,b] = particle.baseColor.split(',');
+                        particle.color = `rgba(${r},${g},${b},${Math.random() * 0.6 + 0.4})`;
+                    }
+                } else {
+                    particle.speedX += (particle.originalSpeedX - particle.speedX) * 0.1;
+                    particle.speedY += (particle.originalSpeedY - particle.speedY) * 0.1;
+                    particle.radius += (particle.baseRadius - particle.radius) * 0.1;
+                    const [r,g,b] = particle.baseColor.split(',');
+                    particle.color = `rgba(${r},${g},${b},${Math.random() * 0.6 + 0.4})`;
+                }
+
+                // Update position
+                particle.x += particle.speedX;
+                particle.y += particle.speedY;
+
+                // Bounce off walls
+                if (particle.x < 0 || particle.x > canvas.width) {
+                    particle.speedX = -particle.speedX * (0.9 + Math.random() * 0.2);
+                    particle.x = Math.max(0, Math.min(particle.x, canvas.width));
+                }
+                if (particle.y < 0 || particle.y > canvas.height) {
+                    particle.speedY = -particle.speedY * (0.9 + Math.random() * 0.2);
+                    particle.y = Math.max(0, Math.min(particle.y, canvas.height));
+                }
+
+                // Draw particle with glow
+                ctx.beginPath();
+                ctx.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
+                ctx.fillStyle = particle.color;
+                ctx.shadowColor = `rgba(${particle.baseColor},0.5)`;
+                ctx.shadowBlur = 6;
+                ctx.fill();
+                ctx.shadowBlur = 0; // Reset shadow to avoid affecting other drawings
+            });
+
+            // Update and draw burst particles
+            burstParticles.forEach((particle, index) => {
+                particle.x += particle.speedX;
+                particle.y += particle.speedY;
+                particle.life--;
+                particle.radius *= 0.95;
+                
+                ctx.beginPath();
+                ctx.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
+                ctx.fillStyle = particle.color;
+                ctx.shadowColor = `rgba(${particle.color.split(',')[0]},${particle.color.split(',')[1]},${particle.color.split(',')[2]},0.5)`;
+                ctx.shadowBlur = 8;
+                ctx.fill();
+                ctx.shadowBlur = 0;
+
+                if (particle.life <= 0) {
+                    burstParticles.splice(index, 1);
+                }
+            });
+
+            // Draw connections
+            particles.forEach((particle, i) => {
+                for (let j = i + 1; j < particles.length; j++) {
+                    const other = particles[j];
+                    const dx = particle.x - other.x;
+                    const dy = particle.y - other.y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+
+                    if (distance < 100) {
+                        ctx.beginPath();
+                        ctx.strokeStyle = `rgba(67,160,71,${1 - distance/100})`; // #43a047
+                        ctx.lineWidth = 0.5;
+                        ctx.moveTo(particle.x, particle.y);
+                        ctx.lineTo(other.x, other.y);
+                        ctx.stroke();
+                    }
+                }
+            });
+        }
+
+        // Event listeners
+        function updatePointer(e, active) {
+            pointer.x = e.clientX || (e.touches && e.touches[0].clientX);
+            pointer.y = e.clientY || (e.touches && e.touches[0].clientY);
+            pointer.active = active;
+        }
+
+        window.addEventListener('mousemove', e => updatePointer(e, true));
+        window.addEventListener('touchmove', e => {
+            e.preventDefault();
+            updatePointer(e, true);
+        }, { passive: false });
+        window.addEventListener('mouseout', () => updatePointer({}, false));
+        window.addEventListener('touchend', () => updatePointer({}, false));
+        window.addEventListener('click', e => createBurst(e.clientX, e.clientY));
+        window.addEventListener('touchstart', e => {
+            e.preventDefault();
+            createBurst(e.touches[0].clientX, e.touches[0].clientY);
+        }, { passive: false });
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            particles.forEach(p => {
+                p.x = Math.min(p.x, canvas.width);
+                p.y = Math.min(p.y, canvas.height);
+            });
+        });
+
+        // Start animation
+        requestAnimationFrame(animate);
+    </script>
+</body>
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Moving Circles Background</title>
+  <style>
+    :root {
+      --yoga-primary: #000;
+      --yoga-secondary: #ff9a76;
+      --yoga-light: #f8f5f2;
+      --navbar-bg: rgba(255, 255, 255, 0.98);
+    }
+
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #fff; /* White background */
+      overflow: hidden;
+      font-family: 'Open Sans', sans-serif;
+      position: relative;
+    }
+
+    .circle {
+      position: absolute;
+      border-radius: 50%;
+      opacity: 0.3; /* Subtle transparency for a soft look */
+    }
+
+    .circle-1 {
+      width: 300px;
+      height: 300px;
+      background: var(--yoga-secondary);
+      top: 10%;
+      left: 10%;
+      animation: float 6s ease-in-out infinite;
+    }
+
+    .circle-2 {
+      width: 400px;
+      height: 400px;
+      background: var(--yoga-light);
+      bottom: 10%;
+      right: 10%;
+      animation: float 8s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0% {
+        transform: translate(0, 0);
+      }
+      50% {
+        transform: translate(50px, 50px);
+      }
+      100% {
+        transform: translate(0, 0);
+      }
+    }
+
+   
+  </style>
+</head>
+<body>
+  <div class="circle circle-1"></div>
+  <div class="circle circle-2"></div>
+ 
+</body>
+</html>

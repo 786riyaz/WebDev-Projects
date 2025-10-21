@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>3D Parallax Video Background</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <style>
+
+
+  </style>
+</head>
+<body>
+  <div class="bg-video-container">
+    <video autoplay muted loop playsinline id="bg-video">
+      <source src="demo1.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+    <div class="overlay" id="overlay"></div>
+  </div>
+
+  <div class="container content text-center">
+    <div>
+      <h1>Welcome</h1>
+      <p>Experience a 3D parallax video background with mouse interaction</p>
+      <a href="#" class="btn btn-light mt-3">Get Started</a>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    document.addEventListener('mousemove', (e) => {
+      const video = document.getElementById('bg-video');
+      const overlay = document.getElementById('overlay');
+      const mouseX = e.clientX / window.innerWidth - 0.5;
+      const mouseY = e.clientY / window.innerHeight - 0.5;
+      
+      const maxTilt = 3; // Reduced for subtler effect
+      const scale = 1.05; // Subtle zoom
+      const rotateX = mouseY * maxTilt;
+      const rotateY = -mouseX * maxTilt;
+      
+      // Video transform
+      video.style.transform = `scale(${scale}) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+      
+      // Overlay moves faster for parallax
+      const overlayX = -mouseX * 20; // Pixels
+      const overlayY = -mouseY * 20;
+      overlay.style.transform = `translate(${overlayX}px, ${overlayY}px)`;
+    });
+
+    document.addEventListener('mouseleave', () => {
+      const video = document.getElementById('bg-video');
+      const overlay = document.getElementById('overlay');
+      video.style.transform = 'scale(1) rotateX(0deg) rotateY(0deg)';
+      overlay.style.transform = 'translate(0px, 0px)';
+    });
+  </script>
+</body>
+</html>

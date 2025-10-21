@@ -1,0 +1,984 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kiaya Haus - Holistic Healing Center</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #43a047;
+            --primary-light: #81c784;
+            --primary-dark: #1b5e20;
+            --primary-extra-light: #a5d6a7;
+            --primary-bg-light: #e8f5e9;
+        }
+        
+        body {
+            margin: 0;
+            overflow-x: hidden;
+            background: linear-gradient(135deg, var(--primary-bg-light) 0%, var(--primary-extra-light) 100%);
+            font-family: 'Poppins', 'Arial', sans-serif;
+            color: #333;
+            perspective: 1000px;
+        }
+        
+        canvas {
+            display: block;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+        
+        /* 3D Animated Hero Section */
+        .hero-section {
+            position: relative;
+            z-index: 1;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 100px 20px 20px;
+            transform-style: preserve-3d;
+            transition: transform 0.5s ease-out;
+        }
+        
+        .hero-container {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            gap: 50px;
+            transform-style: preserve-3d;
+        }
+        
+        .hero-video {
+            flex: 1;
+            max-width: 600px;
+            perspective: 1000px;
+            transform-style: preserve-3d;
+        }
+        
+        .video-container {
+            position: relative;
+            transform: rotateY(10deg) rotateX(5deg) translateZ(20px);
+            transition: transform 0.5s ease, box-shadow 0.5s ease;
+            box-shadow: 0 30px 50px rgba(0, 0, 0, 0.2), 
+                        0 0 30px rgba(129, 199, 132, 0.6),
+                        0 0 0 1px rgba(255,255,255,0.1);
+            border-radius: 20px;
+            overflow: hidden;
+            backface-visibility: hidden;
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        .video-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, 
+                        rgba(129, 199, 132, 0.2) 0%, 
+                        rgba(67, 160, 71, 0.1) 50%, 
+                        rgba(27, 94, 32, 0.05) 100%);
+            z-index: 1;
+            pointer-events: none;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: rotateY(10deg) rotateX(5deg) translateZ(20px) translateY(0); }
+            50% { transform: rotateY(10deg) rotateX(5deg) translateZ(20px) translateY(-20px); }
+        }
+        
+        .video-container:hover {
+            transform: rotateY(0deg) rotateX(0deg) translateZ(30px);
+            box-shadow: 0 40px 70px rgba(0, 0, 0, 0.3), 
+                        0 0 50px rgba(129, 199, 132, 0.8),
+                        0 0 0 1px rgba(255,255,255,0.2);
+            animation: none;
+        }
+        
+        .hero-video video {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 20px;
+            transform: translateZ(0);
+        }
+        
+        .hero-text {
+            flex: 1;
+            max-width: 600px;
+            text-align: left;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1),
+                        0 0 20px rgba(129, 199, 132, 0.3);
+            transform: translateZ(30px);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+            transition: transform 0.5s ease, box-shadow 0.5s ease;
+            animation: fadeInUp 1s ease-out forwards;
+        }
+        
+        .hero-text:hover {
+            transform: translateZ(50px);
+            box-shadow: 0 30px 70px rgba(0, 0, 0, 0.15), 
+                        0 0 30px rgba(129, 199, 132, 0.5),
+                        0 0 0 1px rgba(255,255,255,0.3);
+        }
+        
+        .slogan-wrapper {
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+        
+        .slogan {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: var(--primary-dark);
+        }
+        
+        .slogan-word {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUpWord 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+            display: inline-block;
+        }
+        
+        .slogan-word:nth-child(1) { animation-delay: 0.3s; }
+        .slogan-word:nth-child(3) { animation-delay: 0.6s; }
+        .slogan-word:nth-child(5) { animation-delay: 0.9s; }
+        
+        .slogan-separator {
+            color: var(--primary-color);
+            font-size: 2rem;
+            opacity: 0;
+            transform: scale(0.5);
+            animation: scaleIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+        
+        .slogan-separator:nth-child(2) { animation-delay: 0.45s; }
+        .slogan-separator:nth-child(4) { animation-delay: 0.75s; }
+        
+        .hero-title {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+            text-shadow: 0 0 15px rgba(67, 160, 71, 0.3);
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s ease-out 0.5s forwards;
+        }
+        
+        .hero-title-highlight {
+            color: var(--primary-color);
+            position: relative;
+            display: inline-block;
+        }
+        
+        .hero-title-highlight::after {
+            content: '';
+            position: absolute;
+            bottom: 5px;
+            left: 0;
+            width: 100%;
+            height: 10px;
+            background: rgba(129, 199, 132, 0.3);
+            z-index: -1;
+            transform: scaleX(0);
+            transform-origin: left;
+            animation: scaleInFull 1s ease-out 1.2s forwards;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.3rem;
+            line-height: 1.7;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 1s ease-out 0.8s forwards;
+            margin-bottom: 30px;
+        }
+        
+        .philosophy-pills {
+            display: flex;
+            gap: 15px;
+            margin: 30px 0;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 1s ease-out 1s forwards;
+        }
+        
+        .philosophy-pill {
+            background: var(--primary-extra-light);
+            color: var(--primary-dark);
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-size: 1rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 5px 15px rgba(67, 160, 71, 0.2);
+            transition: all 0.3s ease;
+            cursor: default;
+        }
+        
+        .philosophy-pill:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 8px 25px rgba(67, 160, 71, 0.3);
+        }
+        
+        .hero-buttons {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 1s ease-out 1.2s forwards;
+        }
+        
+        .hero-buttons .btn {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            color: white;
+            padding: 12px 30px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(67, 160, 71, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-buttons .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: all 0.5s ease;
+        }
+        
+        .hero-buttons .btn:hover {
+            background-color: var(--primary-dark);
+            border-color: var(--primary-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(67, 160, 71, 0.5);
+        }
+        
+        .hero-buttons .btn:hover::before {
+            left: 100%;
+        }
+        
+        /* Animation Keyframes */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes fadeInUpWord {
+            from { opacity: 0; transform: translateY(30px) rotateX(90deg); }
+            to { opacity: 1; transform: translateY(0) rotateX(0); }
+        }
+        
+        @keyframes scaleIn {
+            from { opacity: 0; transform: scale(0.5); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        
+        @keyframes scaleInFull {
+            from { transform: scaleX(0); }
+            to { transform: scaleX(1); }
+        }
+        
+        /* 3D Floating Navbar */
+        .navbar {
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            margin: 15px auto;
+            max-width: 1200px;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1), 
+                        0 0 15px rgba(129, 199, 132, 0.4),
+                        0 0 0 1px rgba(255,255,255,0.1);
+            border: 1px solid rgba(165, 214, 167, 0.3);
+            transition: all 0.5s ease;
+            transform-style: preserve-3d;
+            transform: translateZ(20px);
+            padding: 10px 20px;
+        }
+        
+        .navbar:hover {
+            transform: translateZ(30px);
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.15), 
+                        0 0 20px rgba(129, 199, 132, 0.6),
+                        0 0 0 1px rgba(255,255,255,0.2);
+        }
+        
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--primary-dark);
+            transition: all 0.3s ease;
+        }
+        
+        .navbar-brand:hover {
+            color: var(--primary-color);
+            transform: scale(1.05);
+        }
+        
+        .navbar-brand svg {
+            transition: all 0.5s ease;
+        }
+        
+        .navbar-brand:hover svg {
+            transform: rotate(15deg) scale(1.1);
+        }
+        
+        .navbar-nav .nav-link {
+            color: var(--primary-dark);
+            font-weight: 500;
+            padding: 8px 15px;
+            margin: 0 5px;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .navbar-nav .nav-link::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary-color);
+            transition: all 0.3s ease;
+        }
+        
+        .navbar-nav .nav-link:hover {
+            color: var(--primary-color);
+            transform: translateY(-2px);
+        }
+        
+        .navbar-nav .nav-link:hover::before {
+            width: 100%;
+        }
+        
+        .navbar-nav .nav-link.active {
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+        
+        .navbar-nav .nav-link.active::before {
+            width: 100%;
+        }
+        
+        .dropdown-menu {
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(165, 214, 167, 0.3);
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transform: translateZ(20px);
+            transition: all 0.3s ease;
+            opacity: 0;
+            display: block;
+            pointer-events: none;
+            transform-origin: top center;
+            transform: perspective(1000px) rotateX(-15deg) translateY(10px);
+        }
+        
+        .dropdown-menu.show {
+            opacity: 1;
+            pointer-events: auto;
+            transform: perspective(1000px) rotateX(0) translateY(0);
+        }
+        
+        .dropdown-item {
+            padding: 10px 20px;
+            transition: all 0.3s ease;
+            border-radius: 5px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .dropdown-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(129, 199, 132, 0.1), transparent);
+            transition: all 0.5s ease;
+        }
+        
+        .dropdown-item:hover {
+            background-color: var(--primary-extra-light);
+            color: var(--primary-dark);
+            padding-left: 25px;
+        }
+        
+        .dropdown-item:hover::before {
+            left: 100%;
+        }
+        
+        .dropdown-item i {
+            width: 20px;
+            text-align: center;
+            margin-right: 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .dropdown-item:hover i {
+            transform: scale(1.2);
+            color: var(--primary-color);
+        }
+        
+        /* FPS Counter */
+        .fps-counter {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            color: var(--primary-dark);
+            font-size: 14px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 8px 15px;
+            border-radius: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            z-index: 100;
+            font-family: monospace;
+            transform: translateZ(30px);
+            border: 1px solid rgba(165, 214, 167, 0.3);
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .hero-container {
+                flex-direction: column;
+                gap: 40px;
+                padding-top: 80px;
+            }
+            
+            .hero-video, .hero-text {
+                max-width: 100%;
+            }
+            
+            .video-container {
+                transform: rotateY(0) rotateX(0) translateZ(20px);
+                animation: floatMobile 6s ease-in-out infinite;
+            }
+            
+            @keyframes floatMobile {
+                0%, 100% { transform: rotateY(0) rotateX(0) translateZ(20px) translateY(0); }
+                50% { transform: rotateY(0) rotateX(0) translateZ(20px) translateY(-15px); }
+            }
+            
+            .hero-title {
+                font-size: 2.8rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .slogan {
+                font-size: 1.5rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.2rem;
+            }
+            
+            .slogan {
+                font-size: 1.3rem;
+                gap: 8px;
+            }
+            
+            .slogan-separator {
+                font-size: 1.5rem;
+            }
+            
+            .philosophy-pills {
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+            
+            .philosophy-pill {
+                padding: 8px 15px;
+                font-size: 0.9rem;
+            }
+            
+            .navbar {
+                margin: 10px;
+                padding: 10px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .hero-title {
+                font-size: 1.8rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+            
+            .hero-text {
+                padding: 25px;
+            }
+            
+            .slogan {
+                font-size: 1.1rem;
+                gap: 5px;
+            }
+            
+            .slogan-separator {
+                font-size: 1.2rem;
+            }
+            
+            .hero-buttons .btn {
+                padding: 10px 20px;
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Particle Canvas -->
+    <canvas id="particle-canvas"></canvas>
+
+    <!-- 3D Floating Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" class="me-2">
+                    <circle cx="20" cy="20" r="18" fill="var(--primary-color)"/>
+                    <path d="M20 10L28 30H12L20 10Z" fill="var(--primary-bg-light)"/>
+                    <path d="M20 15L25 28H15L20 15Z" fill="var(--primary-light)"/>
+                </svg>
+                Kiaya Haus
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#" aria-current="page">Home</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="physioDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Physiotherapy
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="physioDropdown">
+                            <li><a class="dropdown-item" href="#ortho"><i class="fas fa-bone me-2"></i>Ortho & Sports</a></li>
+                            <li><a class="dropdown-item" href="#cardio"><i class="fas fa-heartbeat me-2"></i>Cardio-Respiratory</a></li>
+                            <li><a class="dropdown-item" href="#neuro"><i class="fas fa-brain me-2"></i>Neuro & Pediatric</a></li>
+                            <li><a class="dropdown-item" href="#womens"><i class="fas fa-female me-2"></i>Women's Health</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="yogaDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Yoga Services
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="yogaDropdown">
+                            <li><a class="dropdown-item" href="#power-yoga"><i class="fas fa-fire me-2"></i>Power Yoga</a></li>
+                            <li><a class="dropdown-item" href="#kids-yoga"><i class="fas fa-child me-2"></i>Kids Yoga</a></li>
+                            <li><a class="dropdown-item" href="#aerial-yoga"><i class="fas fa-parachute-box me-2"></i>Aerial Yoga</a></li>
+                            <li><a class="dropdown-item" href="#prenatal-yoga"><i class="fas fa-baby me-2"></i>Pre & Post Natal Yoga</a></li>
+                            <li><a class="dropdown-item" href="#fitness-yoga"><i class="fas fa-dumbbell me-2"></i>Fitness Yoga</a></li>
+                            <li><a class="dropdown-item" href="#personal-yoga"><i class="fas fa-user me-2"></i>Personal Training</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="therapyDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Special Therapies
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="therapyDropdown">
+                            <li><a class="dropdown-item" href="#tapping"><i class="fas fa-hand-paper me-2"></i>Tapping</a></li>
+                            <li><a class="dropdown-item" href="#dry-cupping"><i class="fas fa-circle-notch me-2"></i>Dry Cupping</a></li>
+                            <li><a class="dropdown-item" href="#wet-cupping"><i class="fas fa-tint me-2"></i>Wet Cupping</a></li>
+                            <li><a class="dropdown-item" href="#dry-needling"><i class="fas fa-syringe me-2"></i>Dry Needling</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 3D Hero Section -->
+    <section class="hero-section" id="hero">
+        <div class="hero-container">
+            <div class="hero-text">
+                <div class="slogan-wrapper">
+                    <div class="slogan">
+                        <span class="slogan-word" data-word="breathe">Breathe</span>
+                        <span class="slogan-separator">•</span>
+                        <span class="slogan-word" data-word="balance">Balance</span>
+                        <span class="slogan-separator">•</span>
+                        <span class="slogan-word" data-word="become">Become</span>
+                    </div>
+                </div>
+                <h1 class="hero-title">
+                    Holistic <span class="hero-title-highlight">Healing</span><br>
+                    Through Yoga & Physiotherapy
+                </h1>
+                <p class="hero-subtitle">
+                    Experience personalized care that nurtures your mind, body, and soul. Our expert team combines traditional wisdom with modern techniques to help you achieve optimal wellness and discover your true potential.
+                </p>
+                <div class="philosophy-pills">
+                    <span class="philosophy-pill">Mind</span>
+                    <span class="philosophy-pill">Body</span>
+                    <span class="philosophy-pill">Soul</span>
+                </div>
+                <div class="hero-buttons">
+                    <a href="#services" class="btn" aria-label="Explore our yoga and physiotherapy services">
+                        <i class="fas fa-calendar-alt me-2"></i> Book Now
+                    </a>
+                </div>
+            </div>
+
+            <div class="hero-video">
+                <div class="video-container">
+                    <video autoplay muted loop playsinline poster="https://via.placeholder.com/600x400/e8f5e9/a5d6a7?text=Kiaya+Haus">
+                        <source src="https://assets.mixkit.co/videos/preview/mixkit-woman-doing-yoga-1583-large.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FPS Counter -->
+    <div class="fps-counter" id="fps-counter">FPS: 0</div>
+
+    <!-- Enhanced Particle System with 3D Effects -->
+       <script>
+        const canvas = document.getElementById('particle-canvas');
+        const ctx = canvas.getContext('2d');
+        const fpsCounter = document.getElementById('fps-counter');
+        const content = document.querySelector('.content');
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        // Particle settings
+        const particles = [];
+        const baseParticleCount = Math.floor(window.innerWidth * window.innerHeight / 5000);
+        const performanceFactor = Math.min(1, window.devicePixelRatio || 1);
+        const particleCount = Math.max(50, Math.min(baseParticleCount * performanceFactor, 200));
+        const maxRadius = 3;
+        const minRadius = 1;
+        const mouseEffectDistance = 120;
+        const colors = [
+            '129,199,132', // #81c784
+            '67,160,71',  // #43a047
+            '27,94,32',   // #1b5e20
+            '165,214,167' // #a5d6a7
+        ];
+
+        // Mouse/touch position and state
+        const pointer = {
+            x: null,
+            y: null,
+            active: false,
+            lastX: null,
+            lastY: null,
+            speed: 0,
+            trail: []
+        };
+
+        // Burst particles for click effect
+        const burstParticles = [];
+
+        // Performance tracking
+        let lastTime = performance.now();
+        let frameCount = 0;
+        let fps = 60;
+        let fpsValues = [];
+
+        // Simple Perlin noise for organic movement
+        function noise(x, y, t) {
+            return Math.sin(x * 0.01 + t * 0.001) * Math.cos(y * 0.01 + t * 0.001);
+        }
+
+        // Create particles
+        for (let i = 0; i < particleCount; i++) {
+            const colorIndex = Math.floor(Math.random() * colors.length);
+            particles.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                radius: Math.random() * (maxRadius - minRadius) + minRadius,
+                baseRadius: Math.random() * (maxRadius - minRadius) + minRadius,
+                color: `rgba(${colors[colorIndex]}, ${Math.random() * 0.6 + 0.4})`,
+                baseColor: colors[colorIndex],
+                speedX: Math.random() * 0.5 - 0.25,
+                speedY: Math.random() * 0.5 - 0.25,
+                originalSpeedX: Math.random() * 0.5 - 0.25,
+                originalSpeedY: Math.random() * 0.5 - 0.25,
+                phase: Math.random() * Math.PI * 2,
+                lastX: 0,
+                lastY: 0
+            });
+        }
+
+        // Create burst particles on click
+        function createBurst(x, y) {
+            for (let i = 0; i < 20; i++) {
+                const angle = Math.random() * Math.PI * 2;
+                const speed = Math.random() * 3 + 2;
+                const burstColor = i % 2 === 0 ? '232,245,233' : '129,199,132';
+                burstParticles.push({
+                    x,
+                    y,
+                    radius: Math.random() * 2 + 1,
+                    color: `rgba(${burstColor},0.9)`,
+                    speedX: Math.cos(angle) * speed,
+                    speedY: Math.sin(angle) * speed,
+                    life: 60
+                });
+            }
+        }
+
+        // Animation loop
+        function animate(currentTime) {
+            requestAnimationFrame(animate);
+
+            // FPS calculation
+            frameCount++;
+            const deltaTime = currentTime - lastTime;
+            if (deltaTime >= 200) {
+                const currentFps = Math.round((frameCount / deltaTime) * 1000);
+                fpsValues.push(currentFps);
+                if (fpsValues.length > 5) fpsValues.shift();
+                fps = Math.round(fpsValues.reduce((a, b) => a + b, 0) / fpsValues.length);
+                frameCount = 0;
+                lastTime = currentTime;
+                fpsCounter.textContent = `FPS: ${fps}`;
+            }
+
+            ctx.fillStyle = 'rgba(200,230,201,0.05)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Update mouse trail
+            if (pointer.active && pointer.x && pointer.y) {
+                pointer.trail.push({ x: pointer.x, y: pointer.y, age: 0 });
+                if (pointer.lastX && pointer.lastY) {
+                    const dx = pointer.x - pointer.lastX;
+                    const dy = pointer.y - pointer.lastY;
+                    pointer.speed = Math.sqrt(dx * dx + dy * dy) / deltaTime * 1000;
+                }
+                pointer.lastX = pointer.x;
+                pointer.lastY = pointer.y;
+            }
+
+            // Update trail
+            pointer.trail = pointer.trail.filter(t => t.age++ < 30);
+
+            // Draw trail
+            pointer.trail.forEach((t, i) => {
+                const opacity = 1 - t.age / 30;
+                ctx.beginPath();
+                ctx.arc(t.x, t.y, 5 * opacity, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(67,160,71,${opacity * 0.4})`;
+                ctx.shadowColor = 'rgba(67,160,71,0.5)';
+                ctx.shadowBlur = 8;
+                ctx.fill();
+                ctx.shadowBlur = 0;
+            });
+
+            // Update and draw particles
+            const time = currentTime * 0.001;
+            particles.forEach(particle => {
+                particle.lastX = particle.x;
+                particle.lastY = particle.y;
+
+                // Organic movement with noise
+                const noiseValue = noise(particle.x, particle.y, currentTime);
+                particle.speedX = particle.originalSpeedX + noiseValue * 0.2;
+                particle.speedY = particle.originalSpeedY + noiseValue * 0.2;
+
+                // Pulse effect
+                particle.radius = particle.baseRadius * (1 + 0.1 * Math.sin(time + particle.phase));
+
+                // Mouse interaction
+                if (pointer.active && pointer.x && pointer.y) {
+                    const dx = pointer.x - particle.x;
+                    const dy = pointer.y - particle.y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+
+                    if (distance < mouseEffectDistance) {
+                        const force = (mouseEffectDistance - distance) / mouseEffectDistance;
+                        const angle = Math.atan2(dy, dx);
+                        const easing = 1 - Math.pow(1 - force, 3);
+                        const speedFactor = Math.min(pointer.speed / 50, 2);
+                        const direction = speedFactor > 1 ? -1 : 1;
+                        particle.speedX = particle.originalSpeedX - direction * Math.cos(angle) * easing * (4 + speedFactor);
+                        particle.speedY = particle.originalSpeedY - direction * Math.sin(angle) * easing * (4 + speedFactor);
+                        particle.radius = Math.min(particle.baseRadius * (1 + easing * 0.5), maxRadius * 1.5);
+                        const [r,g,b] = particle.baseColor.split(',');
+                        particle.color = `rgba(${r},${g},${b},${0.4 + easing * 0.6})`;
+                    } else {
+                        particle.speedX += (particle.originalSpeedX - particle.speedX) * 0.1;
+                        particle.speedY += (particle.originalSpeedY - particle.speedY) * 0.1;
+                        particle.radius += (particle.baseRadius - particle.radius) * 0.1;
+                        const [r,g,b] = particle.baseColor.split(',');
+                        particle.color = `rgba(${r},${g},${b},${Math.random() * 0.6 + 0.4})`;
+                    }
+                } else {
+                    particle.speedX += (particle.originalSpeedX - particle.speedX) * 0.1;
+                    particle.speedY += (particle.originalSpeedY - particle.speedY) * 0.1;
+                    particle.radius += (particle.baseRadius - particle.radius) * 0.1;
+                    const [r,g,b] = particle.baseColor.split(',');
+                    particle.color = `rgba(${r},${g},${b},${Math.random() * 0.6 + 0.4})`;
+                }
+
+                // Update position
+                particle.x += particle.speedX;
+                particle.y += particle.speedY;
+
+                // Bounce off walls
+                if (particle.x < 0 || particle.x > canvas.width) {
+                    particle.speedX = -particle.speedX * (0.9 + Math.random() * 0.2);
+                    particle.x = Math.max(0, Math.min(particle.x, canvas.width));
+                }
+                if (particle.y < 0 || particle.y > canvas.height) {
+                    particle.speedY = -particle.speedY * (0.9 + Math.random() * 0.2);
+                    particle.y = Math.max(0, Math.min(particle.y, canvas.height));
+                }
+
+                // Draw particle with glow
+                ctx.beginPath();
+                ctx.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
+                ctx.fillStyle = particle.color;
+                ctx.shadowColor = `rgba(${particle.baseColor},0.5)`;
+                ctx.shadowBlur = 6;
+                ctx.fill();
+                ctx.shadowBlur = 0;
+            });
+
+            // Update and draw burst particles
+            burstParticles.forEach((particle, index) => {
+                particle.x += particle.speedX;
+                particle.y += particle.speedY;
+                particle.life--;
+                particle.radius *= 0.95;
+                
+                ctx.beginPath();
+                ctx.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
+                ctx.fillStyle = particle.color;
+                ctx.shadowColor = `rgba(${particle.color.split(',')[0]},${particle.color.split(',')[1]},${particle.color.split(',')[2]},0.5)`;
+                ctx.shadowBlur = 8;
+                ctx.fill();
+                ctx.shadowBlur = 0;
+
+                if (particle.life <= 0) {
+                    burstParticles.splice(index, 1);
+                }
+            });
+
+            // Draw connections efficiently
+            const maxConnectionDistance = 100;
+            particles.forEach((particle, i) => {
+                for (let j = i + 1; j < Math.min(i + 10, particles.length); j++) {
+                    const other = particles[j];
+                    const dx = particle.x - other.x;
+                    const dy = particle.y - other.y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+
+                    if (distance < maxConnectionDistance) {
+                        ctx.beginPath();
+                        ctx.strokeStyle = `rgba(67,160,71,${1 - distance/maxConnectionDistance})`;
+                        ctx.lineWidth = 0.5;
+                        ctx.moveTo(particle.x, particle.y);
+                        ctx.lineTo(other.x, other.y);
+                        ctx.stroke();
+                    }
+                }
+            });
+
+            // Parallax effect for content
+            if (pointer.active && pointer.x && pointer.y) {
+                const parallaxX = (pointer.x - canvas.width / 2) * 0.02;
+                const parallaxY = (pointer.y - canvas.height / 2) * 0.02;
+                content.style.transform = `translate(${parallaxX}px, ${parallaxY}px)`;
+            } else {
+                content.style.transform = `translate(0, 0)`;
+            }
+        }
+
+        // Event listeners
+        function updatePointer(e, active) {
+            if (e.type.includes('touch')) {
+                pointer.x = e.touches[0].clientX;
+                pointer.y = e.touches[0].clientY;
+            } else {
+                pointer.x = e.clientX;
+                pointer.y = e.clientY;
+            }
+            pointer.active = active;
+        }
+
+        window.addEventListener('mousemove', e => updatePointer(e, true));
+        window.addEventListener('touchmove', e => {
+            e.preventDefault();
+            updatePointer(e, true);
+        }, { passive: false });
+        window.addEventListener('mouseleave', () => {
+            pointer.active = false;
+            pointer.x = null;
+            pointer.y = null;
+        });
+        window.addEventListener('touchend', () => {
+            pointer.active = false;
+            pointer.x = null;
+            pointer.y = null;
+        });
+        window.addEventListener('click', e => createBurst(e.clientX, e.clientY));
+        window.addEventListener('touchstart', e => {
+            e.preventDefault();
+            createBurst(e.touches[0].clientX, e.touches[0].clientY);
+        }, { passive: false });
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            particles.forEach(p => {
+                p.x = Math.min(p.x, canvas.width);
+                p.y = Math.min(p.y, canvas.height);
+            });
+        });
+
+        // Start animation
+        requestAnimationFrame(animate);
+    </script>

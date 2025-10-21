@@ -1,0 +1,358 @@
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Cube Slider - Rotate Left</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #667eea;
+            --secondary-color: #764ba2;
+            --accent-color: #ff6b6b;
+            --text-light: #ffffff;
+            --shadow-color: rgba(0, 0, 0, 0.3);
+            --glass-bg: rgba(255, 255, 255, 0.1);
+            --transition-smooth: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        .slider-container {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            z-index: 1;
+            perspective: 1200px;
+            padding: 20px;
+        }
+
+        .slider-wrapper {
+            position: relative;
+            width: 500px;
+            height: 500px;
+            transform-style: preserve-3d;
+            transition: transform 1s var(--transition-smooth);
+        }
+
+        .cube {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+            transition: transform 1s var(--transition-smooth);
+        }
+
+        .cube-face {
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 30px 60px var(--shadow-color);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .cube-face img {
+            width: 100%;
+            height: 70%;
+            object-fit: cover;
+        }
+
+        .cube-content {
+            height: 30%;
+            padding: 25px;
+            background: linear-gradient(135deg, var(--accent-color), #4ecdc4);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            text-align: center;
+            color: var(--text-light);
+        }
+
+        .cube-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .cube-description {
+            font-size: 1rem;
+            opacity: 0.95;
+        }
+
+        .cube-front { transform: rotateY(0deg) translateZ(250px); }
+        .cube-right { transform: rotateY(90deg) translateZ(250px); }
+        .cube-back { transform: rotateY(180deg) translateZ(250px); }
+        .cube-left { transform: rotateY(-90deg) translateZ(250px); }
+
+        .controls-panel {
+            position: fixed;
+            top: 50%;
+            left: 50px;
+            transform: translateY(-50%);
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .control-btn {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            color: var(--text-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s var(--transition-smooth);
+            font-size: 1.2rem;
+        }
+
+        .control-btn:hover {
+            transform: scale(1.1);
+            border-color: rgba(255, 255, 255, 0.6);
+        }
+
+        .nav-dots {
+            display: flex;
+            gap: 10px;
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
+        }
+
+        .nav-dot {
+            width: 12px;
+            height: 12px;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .nav-dot.active {
+            background: var(--accent-color);
+        }
+
+        .nav-dot:hover {
+            background: rgba(255, 255, 255, 0.8);
+        }
+
+        @media (max-width: 768px) {
+            .slider-wrapper, .cube-face {
+                width: 320px;
+                height: 320px;
+            }
+            .cube-front, .cube-right, .cube-back, .cube-left {
+                transform: rotateY(0deg) translateZ(160px);
+            }
+            .cube-right { transform: rotateY(90deg) translateZ(160px); }
+            .cube-back { transform: rotateY(180deg) translateZ(160px); }
+            .cube-left { transform: rotateY(-90deg) translateZ(160px); }
+            .controls-panel {
+                flex-direction: row;
+                bottom: 80px;
+                left: 50%;
+                transform: translateX(-50%);
+                top: auto;
+                background: var(--glass-bg);
+                padding: 10px;
+                border-radius: 50px;
+            }
+            .control-btn {
+                width: 50px;
+                height: 50px;
+            }
+            .nav-dots {
+                bottom: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="slider-container">
+        <div class="slider-wrapper">
+            <div class="cube" id="cube">
+                <div class="cube-face cube-front" data-index="0">
+                    <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=600&fit=crop" alt="Mountain Lake">
+                    <div class="cube-content">
+                        <div class="cube-title">Mountain Serenity</div>
+                        <div class="cube-description">Breathtaking alpine lakes surrounded by majestic peaks</div>
+                    </div>
+                </div>
+                <div class="cube-face cube-right" data-index="1">
+                    <img src="https://images.unsplash.com/photo-1501594907352-04cda38ebc29?w=800&h=600&fit=crop" alt="Ocean Sunset">
+                    <div class="cube-content">
+                        <div class="cube-title">Ocean Dreams</div>
+                        <div class="cube-description">Golden sunsets painting endless ocean horizons</div>
+                    </div>
+                </div>
+                <div class="cube-face cube-back" data-index="2">
+                    <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=800&h=600&fit=crop" alt="Forest Path">
+                    <div class="cube-content">
+                        <div class="cube-title">Forest Adventure</div>
+                        <div class="cube-description">Mysterious woodland paths through ancient trees</div>
+                    </div>
+                </div>
+                <div class="cube-face cube-left" data-index="3">
+                    <img src="https://images.unsplash.com/photo-1518837695005-2083093ee35b?w=800&h=600&fit=crop" alt="Desert Dunes">
+                    <div class="cube-content">
+                        <div class="cube-title">Desert Majesty</div>
+                        <div class="cube-description">Endless golden dunes under starlit desert skies</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="nav-dots" id="navDots">
+            <div class="nav-dot active" onclick="navigateToFace(0)"></div>
+            <div class="nav-dot" onclick="navigateToFace(1)"></div>
+            <div class="nav-dot" onclick="navigateToFace(2)"></div>
+            <div class="nav-dot" onclick="navigateToFace(3)"></div>
+        </div>
+    </div>
+
+    <div class="controls-panel">
+        <div class="control-btn" onclick="rotateCube('left')" title="Rotate Left">
+            <i class="fas fa-chevron-left"></i>
+        </div>
+        <div class="control-btn" onclick="toggleAutoRotate()" title="Auto Rotate" id="autoBtn">
+            <i class="fas fa-pause"></i>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+    <script>
+        let currentY = 0;
+        let currentIndex = 0;
+        let isAutoRotating = true;
+        let autoRotateInterval;
+        const cube = document.getElementById('cube');
+        const autoBtn = document.getElementById('autoBtn');
+        const dots = document.querySelectorAll('.nav-dot');
+        const angles = [0, -90, -180, -270];
+
+        function updateCubeTransform() {
+            cube.style.transform = `rotateY(${currentY}deg)`;
+            updateActiveDot();
+        }
+
+        function updateActiveDot() {
+            dots.forEach((dot, index) => {
+                dot.classList.toggle('active', index === currentIndex);
+            });
+        }
+
+        function rotateCube(direction) {
+            if (direction === 'left') {
+                currentY += 90;
+                currentIndex = (currentIndex + 1) % 4;
+            }
+            updateCubeTransform();
+        }
+
+        function navigateToFace(index) {
+            currentIndex = index;
+            currentY = angles[index];
+            updateCubeTransform();
+            pauseAutoRotateTemporarily();
+        }
+
+        function pauseAutoRotateTemporarily() {
+            if (isAutoRotating) {
+                clearInterval(autoRotateInterval);
+                autoBtn.innerHTML = '<i class="fas fa-play"></i>';
+                isAutoRotating = false;
+                setTimeout(() => {
+                    if (!isAutoRotating) {
+                        toggleAutoRotate();
+                    }
+                }, 5000);
+            }
+        }
+
+        function toggleAutoRotate() {
+            if (isAutoRotating) {
+                clearInterval(autoRotateInterval);
+                autoBtn.innerHTML = '<i class="fas fa-play"></i>';
+                isAutoRotating = false;
+            } else {
+                autoRotateInterval = setInterval(() => {
+                    rotateCube('left');
+                }, 3000);
+                autoBtn.innerHTML = '<i class="fas fa-pause"></i>';
+                isAutoRotating = true;
+            }
+        }
+
+        // Start auto-rotation on page load
+        autoRotateInterval = setInterval(() => {
+            rotateCube('left');
+        }, 3000);
+
+        updateCubeTransform();
+    </script>
+</body>
+</html>

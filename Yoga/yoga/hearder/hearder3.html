@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<style>
+    /* Navbar link hover effect */
+.navbar-nav .nav-link {
+    padding: 10px 15px;
+    transition: all 0.3s ease;
+    color: #333;
+}
+
+.navbar-nav .nav-link:hover,
+.navbar-nav .nav-link.active {
+    color: #007bff;
+    font-weight: 500;
+}
+
+/* Dropdown hover support on desktop */
+@media (min-width: 992px) {
+    .navbar-nav .dropdown:hover .dropdown-menu {
+        display: block;
+        margin-top: 0;
+    }
+}
+
+/* Smooth scroll behavior (for anchor links) */
+html {
+    scroll-behavior: smooth;
+}
+
+</style>
+<body>
+       <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm fixed-top">
+    <div class="container">
+        <a class="navbar-brand fw-bold text-primary" href="#">Advanced Physio & Yoga</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <!-- Home -->
+                <li class="nav-item">
+                    <a class="nav-link active" href="#">Home</a>
+                </li>
+
+                <!-- Physiotherapy Dropdown -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="physioDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Physiotherapy
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="physioDropdown">
+                        <li><a class="dropdown-item" href="#ortho">Ortho & Sports</a></li>
+                        <li><a class="dropdown-item" href="#cardio">Cardio-Respiratory</a></li>
+                        <li><a class="dropdown-item" href="#neuro">Neuro & Pediatric</a></li>
+                        <li><a class="dropdown-item" href="#womens">Women's Health</a></li>
+                    </ul>
+                </li>
+
+                <!-- Yoga Services Dropdown -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="yogaDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Yoga Services
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="yogaDropdown">
+                        <li><a class="dropdown-item" href="#power-yoga">Power Yoga</a></li>
+                        <li><a class="dropdown-item" href="#kids-yoga">Kids Yoga</a></li>
+                        <li><a class="dropdown-item" href="#aerial-yoga">Aerial Yoga</a></li>
+                        <li><a class="dropdown-item" href="#prenatal-yoga">Pre & Post Natal Yoga</a></li>
+                        <li><a class="dropdown-item" href="#fitness-yoga">Fitness Yoga</a></li>
+                        <li><a class="dropdown-item" href="#personal-yoga">Personal Training</a></li>
+                    </ul>
+                </li>
+
+                <!-- Special Therapies Dropdown -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="therapyDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Special Therapies
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="therapyDropdown">
+                        <li><a class="dropdown-item" href="#tapping">Tapping</a></li>
+                        <li><a class="dropdown-item" href="#dry-cupping">Dry Cupping</a></li>
+                        <li><a class="dropdown-item" href="#wet-cupping">Wet Cupping</a></li>
+                        <li><a class="dropdown-item" href="#dry-needling">Dry Needling</a></li>
+                    </ul>
+                </li>
+
+                <!-- Contact -->
+                <li class="nav-item">
+                    <a class="nav-link" href="#contact">Contact</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+</body>
+</html>

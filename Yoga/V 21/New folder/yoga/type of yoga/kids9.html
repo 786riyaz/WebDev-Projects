@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yoga Waves - Interactive Ocean Adventure</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&family=Comic+Neue:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --ocean-deep: #0B1426;
+            --ocean-mid: #1B365D;
+            --ocean-light: #2E5984;
+            --coral-pink: #FF6B9D;
+            --coral-orange: #FF8E53;
+            --sea-green: #00D9C0;
+            --bubble-blue: #4ECDC4;
+            --pearl-white: #F7F9FC;
+            --starfish-yellow: #FFE066;
+            --sea-purple: #9B59B6;
+            --text-dark: #2C3E50;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Fredoka', cursive;
+            background: var(--ocean-deep);
+            color: var(--pearl-white);
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        /* Underwater Canvas Background */
+        #underwater-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* Floating Navigation Bubble */
+        .nav-bubble {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 60px;
+            padding: 15px 30px;
+            z-index: 1000;
+            transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            box-shadow: 0 8px 32px rgba(0, 217, 192, 0.3);
+        }
+
+        .nav-bubble:hover {
+            transform: translateX(-50%) translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 45px rgba(0, 217, 192, 0.5);
+        }
+
+        .nav-brand {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--sea-green);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            animation: glow 3s ease-in-out infinite alternate;
+        }
+
+        .nav-brand img {
+            width: 40px;
+            height: 40px;
+            margin-right: 10px;
+            animation: swim 4s ease-in-out infinite;
+        }
+
+        @keyframes swim {
+            0%, 100% { transform: translateX(0) rotate(0deg); }
+            25% { transform: translateX(5px) rotate(5deg); }
+            75% { transform: translateX(-5px) rotate(-5deg); }
+        }
+
+        @keyframes glow {
+            from { text-shadow: 0 0 10px var(--sea-green); }
+            to { text-shadow: 0 0 20px var(--sea-green), 0 0 30px var(--bubble-blue); }
+        }
+
+        /* Immersive Hero Section */
+        .ocean-hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            text-align: center;
+            z-index: 2;
+            max-width: 800px;
+            padding: 40px;
+        }
+
+        .hero-title {
+            font-size: clamp(3rem, 10vw, 6rem);
+            font-weight: 700;
+            color: var(--pearl-white);
+            margin-bottom: 30px;
+            animation: titleRise 2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            text-shadow: 0 0 30px rgba(0, 217, 192, 0.8);
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1.2rem, 4vw, 2rem);
+            color: var(--bubble-blue);
+            margin-bottom: 40px;
+            font-weight: 400;
+            animation: subtitleRise 2s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.3s both;
+        }
+
+        .hero-buttons {
+            animation: buttonsRise 2s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.6s both;
+        }
+
+        @keyframes titleRise {
+            from { opacity: 0; transform: translateY(100px) scale(0.8); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        @keyframes subtitleRise {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes buttonsRise {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Magical Buttons */
+        .ocean-btn {
+            display: inline-block;
+            padding: 18px 40px;
+            margin: 15px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.2rem;
+            text-decoration: none;
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            position: relative;
+            overflow: hidden;
+            border: 3px solid transparent;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn-primary-ocean {
+            background: linear-gradient(135deg, var(--coral-pink), var(--coral-orange));
+            color: white;
+            box-shadow: 0 10px 30px rgba(255, 107, 157, 0.4);
+        }
+
+        .btn-primary-ocean:hover {
+            transform: translateY(-8px) scale(1.05);
+            box-shadow: 0 20px 40px rgba(255, 107, 157, 0.6);
+            color: white;
+        }
+
+        .btn-secondary-ocean {
+            background: linear-gradient(135deg, var(--sea-green), var(--bubble-blue));
+            color: white;
+            box-shadow: 0 10px 30px rgba(0, 217, 192, 0.4);
+        }
+
+        .btn-secondary-ocean:hover {
+            transform: translateY(-8px) scale(1.05);
+            box-shadow: 0 20px 40px rgba(0, 217, 192, 0.6);
+            color: white;
+        }
+
+        /* Floating Navigation Menu */
+        .floating-nav {
+            position: fixed;
+            right: 30px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 1000;
+        }
+
+        .nav-item {
+            display: block;
+            width: 60px;
+            height: 60px;
+            margin: 15px 0;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            border-radius: 50%;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            color: var(--pearl-white);
+            font-size: 1.3rem;
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            position: relative;
+        }
+
+        .nav-item:hover {
+            background: var(--sea-green);
+            transform: scale(1.2) rotate(360deg);
+            color: white;
+            box-shadow: 0 0 30px rgba(0, 217, 192, 0.8);
+        }
+
+        .nav-item::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            right: 70px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--ocean-deep);
+            color: var(--pearl-white);
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .nav-item:hover::after {
+            opacity: 1;
+        }
+
+        /* Interactive Cards with 3D Effect */
+        .ocean-section {
+            padding: 100px 0;
+            position: relative;
+        }
+
+        .sea-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 30px;
+            padding: 40px;
+            margin: 30px 0;
+            transition: all 0.6s cubic-bezier(0.23, 1, 0.320, 1);
+            position: relative;
+            overflow: hidden;
+            transform-style: preserve-3d;
+        }
+
+        .sea-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(from 0deg, transparent, var(--sea-green), transparent);
+            animation: rotate 6s linear infinite;
+            z-index: -1;
+        }
+
+        .sea-card::after {
+            content: '';
+            position: absolute;
+            inset: 2px;
+            background: rgba(11, 20, 38, 0.9);
+            border-radius: 28px;
+            z-index: -1;
+        }
+
+        @keyframes rotate {
+            to { transform: rotate(360deg); }
+        }
+
+        .sea-card:hover {
+            transform: translateY(-20px) rotateX(15deg) rotateY(5deg);
+            box-shadow: 0 25px 50px rgba(0, 217, 192, 0.3);
+        }
+
+        .card-icon {
+            font-size: 4rem;
+            color: var(--coral-pink);
+            margin-bottom: 25px;
+            animation: float 4s ease-in-out infinite;
+            text-shadow: 0 0 20px currentColor;
+        }
+
+        .card-icon.sea-green { color: var(--sea-green); }
+        .card-icon.bubble-blue { color: var(--bubble-blue); }
+        .card-icon.starfish-yellow { color: var(--starfish-yellow); }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(5deg); }
+        }
+
+        /* Interactive Video Gallery */
+        .video-ocean {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 25px;
+            overflow: hidden;
+            position: relative;
+            transition: all 0.5s ease;
+            margin: 20px 0;
+            border: 3px solid transparent;
+            background-clip: padding-box;
+        }
+
+        .video-ocean::before {
+            content: '';
+            position: absolute;
+            inset: -3px;
+            background: linear-gradient(45deg, var(--coral-pink), var(--sea-green), var(--bubble-blue), var(--coral-orange));
+            border-radius: 25px;
+            z-index: -1;
+            animation: gradientMove 4s ease-in-out infinite;
+        }
+
+        @keyframes gradientMove {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .video-ocean:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0, 217, 192, 0.4);
+        }
+
+        .video-ocean video {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 22px;
+        }
+
+        .video-info {
+            padding: 25px;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .video-play-btn {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80px;
+            height: 80px;
+            background: rgba(255, 107, 157, 0.9);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: white;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .video-play-btn:hover {
+            transform: translate(-50%, -50%) scale(1.2);
+            background: var(--coral-pink);
+        }
+
+        /* Underwater Gallery */
+        .gallery-fish {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            margin: 20px 0;
+            cursor: pointer;
+            transition: all 0.5s cubic-bezier(0.23, 1, 0.320, 1);
+        }
+
+        .gallery-fish img {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+            transition: transform 0.8s ease;
+        }
+
+        .gallery-fish:hover {
+            transform: translateY(-15px) rotateZ(2deg);
+            box-shadow: 0 25px 50px rgba(0, 217, 192, 0.5);
+        }
+
+        .gallery-fish:hover img {
+            transform: scale(1.15) rotate(-2deg);
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(255, 107, 157, 0.8), rgba(0, 217, 192, 0.8));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: all 0.5s ease;
+        }
+
+        .gallery-fish:hover .gallery-overlay {
+            opacity: 1;
+        }
+
+        .gallery-text {
+            color: white;
+            font-size: 1.8rem;
+            font-weight: 700;
+            text-align: center;
+            transform: scale(0.8);
+            transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        .gallery-fish:hover .gallery-text {
+            transform: scale(1);
+        }
+
+        /* Section Titles */
+        .ocean-title {
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 60px;
+            background: linear-gradient(135deg, var(--coral-pink), var(--sea-green));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            position: relative;
+        }
+
+        .ocean-title::after {
+            content: '🌊';
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 2rem;
+            animation: wave 2s ease-in-out infinite;
+        }
+
+        @keyframes wave {
+            0%, 100% { transform: translateX(-50%) rotate(0deg); }
+            50% { transform: translateX(-50%) rotate(20deg); }
+        }
+
+        /* Coral Reef Footer */
+        .coral-footer {
+            background: linear-gradient(135deg, var(--ocean-deep), var(--ocean-mid));
+            padding: 80px 0 30px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .coral-footer::before {
+            content: '';
+            position: absolute;
+            top: -100px;
+            left: 0;
+            width: 100%;
+            height: 200px;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120'%3E%3Cpath d='M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V120H0Z' fill='%23FF6B9D'/%3E%3C/svg%3E") center top no-repeat;
+            background-size: cover;
+        }
+
+        .footer-social {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 60px;
+            height: 60px;
+            margin: 0 15px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            color: var(--pearl-white);
+            font-size: 1.5rem;
+            text-decoration: none;
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        .footer-social:hover {
+            background: var(--coral-pink);
+            transform: translateY(-10px) rotate(360deg);
+            color: white;
+            box-shadow: 0 10px 30px rgba(255, 107, 157, 0.6);
+        }
+
+        /* Scroll Progress Bar */
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--coral-pink), var(--sea-green));
+            z-index: 10000;
+            transition: width 0.1s ease;
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .floating-nav { display: none; }
+            .nav-bubble { 
+                position: relative; 
+                top: 10px; 
+                transform: none;
+                margin: 20px;
+                left: auto;
+            }
+            .ocean-btn { 
+                display: block; 
+                margin: 10px auto; 
+                width: 80%; 
+                text-align: center; 
+            }
+            .sea-card { margin: 20px 10px; padding: 25px; }
+        }
+
+        /* Loading Animation */
+        .ocean-loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--ocean-deep);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            transition: opacity 0.8s ease;
+        }
+
+        .jellyfish-loader {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: radial-gradient(circle, var(--coral-pink), transparent);
+            animation: jellyfish 2s ease-in-out infinite;
+        }
+
+        @keyframes jellyfish {
+            0%, 100% { transform: scale(0.8) translateY(0); opacity: 0.7; }
+            50% { transform: scale(1.2) translateY(-20px); opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Underwater Canvas -->
+    <canvas id="underwater-canvas"></canvas>
+
+    <!-- Loading Screen -->
+    <div class="ocean-loader" id="oceanLoader">
+        <div class="jellyfish-loader"></div>
+    </div>
+
+    <!-- Scroll Progress Bar -->
+    <div class="scroll-progress" id="scrollProgress"></div>
+
+    <!-- Floating Navigation Bubble -->
+    <div class="nav-bubble">
+        <a href="#home" class="nav-brand">
+            <img src="https://cdn-icons-png.flaticon.com/512/3050/3050229.png" alt="🐠">
+            Yoga Waves
+        </a>
+    </div>
+
+    <!-- Floating Side Navigation -->
+    <div class="floating-nav">
+        <a href="#home" class="nav-item" data-tooltip="Home"><i class="fas fa-home"></i></a>
+        <a href="#benefits" class="nav-item" data-tooltip="Benefits"><i class="fas fa-heart"></i></a>
+        <a href="#videos" class="nav-item" data-tooltip="Videos"><i class="fas fa-play"></i></a>
+        <a href="#gallery" class="nav-item" data-tooltip="Gallery"><i class="fas fa-images"></i></a>
+        <a href="#contact" class="nav-item" data-tooltip="Contact"><i class="fas fa-envelope"></i></a>
+    </div>
+
+    <!-- Immersive Hero Section -->
+    <section class="ocean-hero" id="home">
+        <div class="hero-content">
+            <h1 class="hero-title">🐙 Dive Deep Into Yoga Magic! 🌊</h1>
+            <p class="hero-subtitle">Where little ocean explorers discover strength, peace, and wonder through underwater yoga adventures!</p>
+            <div class="hero-buttons">
+                <a href="#videos" class="ocean-btn btn-primary-ocean">🏊‍♀️ Start Swimming</a>
+                <a href="#benefits" class="ocean-btn btn-secondary-ocean">🐠 Explore Ocean</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits Ocean -->
+    <section class="ocean-section" id="benefits">
+        <div class="container">
+            <h2 class="ocean-title">Why Swim With Us?</h2>
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="sea-card text-center">
+                        <div class="card-icon coral-pink">🐙</div>
+                        <h3 style="color: var(--coral-pink); margin-bottom: 20px;">Playful Adventures</h3>
+                        <p>Transform into sea creatures while building strength and flexibility through imaginative underwater journeys!</p>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="sea-card text-center">
+                        <div class="card-icon sea-green">🧘‍♀️</div>
+                        <h3 style="color: var(--sea-green); margin-bottom: 20px;">Ocean Mindfulness</h3>
+                        <p>Learn to breathe like waves and find inner calm in our magical underwater meditation spaces.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="sea-card text-center">
+                        <div class="card-icon starfish-yellow">⭐</div>
+                        <h3 style="color: var(--starfish-yellow); margin-bottom: 20px;">Starfish Strong</h3>
+                        <p>Build confidence and core strength while having fun with poses inspired by amazing sea life!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Video Ocean -->
+    <section class="ocean-section" id="videos" style="background: rgba(255,255,255,0.02);">
+        <div class="container">
+            <h2 class="ocean-title">Underwater Video Adventures</h2>
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="video-ocean">
+                        <div style="position: relative;">
+                            <video poster="https://images.unsplash.com/photo-1603988363607-e1e4a66962c6?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" controls>
+                                <source src="yoga-video1.mp4" type="video/mp4">
+                            </video>
+                            <div class="video-play-btn"><i class="fas fa-play"></i></div>
+                        </div>
+                        <div class="video-info">
+                            <h4 style="color: var(--coral-pink);">🐠 Little Fish Flow</h4>
+                            <p>15 min • Ages 3-6</p>
+                            <p>Swim through beginner poses with colorful fish friends!</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="video-ocean">
+                        <div style="position: relative;">
+                            <video poster="https://images.unsplash.com/photo-1544568100-847a948585b9?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" controls>
+                                <source src="yoga-video2.mp4" type="video/mp4">
+                            </video>
+                            <div class="video-play-btn"><i class="fas fa-play"></i></div>
+                        </div>
+                        <div class="video-info">
+                            <h4 style="color: var(--sea-green);">🐢 Sea Turtle Wisdom</h4>
+                            <p>20 min • Ages 7-10</p>
+                            <p>Deep breathing and balance with wise sea turtles!</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="video-ocean">
+                        <div style="position: relative;">
+                            <video poster="https://images.unsplash.com/photo-1517649763962-0c623066013b?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" controls>
+                                <source src="yoga-video3.mp4" type="video/mp4">
+                            </video>
+                            <div class="video-play-btn"><i class="fas fa-play"></i></div>
+                        </div>
+                        <div class="video-info">
+                            <h4 style="color: var(--bubble-blue);">🐋 Whale Power</h4>
+                            <p>25 min • Ages 11+</p>
+                            <p>Strength and grace with majestic whale movements!</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Underwater Gallery -->
+    <section class="ocean-section" id="gallery">
+        <div class="container">
+            <h2 class="ocean-title">Ocean Memories</h2>
+            <div class="row">
+                <div class="col-lg-3 col-md-6">
+                    <div class="gallery-fish">
+                        <img src="https://images.unsplash.com/photo-1603988363607-e1e4a66962c6?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Dolphin Joy">
+                        <div class="gallery-overlay">
+                            <div class="gallery-text">🐬 Dolphin Joy</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="gallery-fish">
+                        <img src="https://images.unsplash.com/photo-1544568100-847a948585b9?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Starfish Stretch">
+                        <div class="gallery-overlay">
+                            <div class="gallery-text">⭐ Starfish Power</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="gallery-fish">
+                        <img src="https://images.unsplash.com/photo-1517649763962-0c623066013b?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Sea Flow">
+                        <div class="gallery-overlay">
+                            <div class="gallery-text">🌊 Ocean Flow</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="gallery-fish">
+                        <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Peaceful Waves">
+                        <div class="gallery-overlay">
+                            <div class="gallery-text">🧘‍♀️ Inner Peace</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Coral Reef Footer -->
+    <footer class="coral-footer" id="

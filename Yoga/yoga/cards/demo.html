@@ -1,0 +1,1055 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Serene Yoga Studio</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #6B8E70;
+            --primary-light: rgba(107, 142, 112, 0.1);
+            --secondary-color: #FFFFFF;
+            --text-dark: #333333;
+            --text-light: #777777;
+        }
+        
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--secondary-color);
+            color: var(--text-dark);
+            overflow-x: hidden;
+        }
+        
+        /* Navbar Styles */
+        .navbar-custom {
+            background-color: var(--primary-color);
+            padding: 15px 0;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+        
+        .navbar-custom.scrolled {
+            padding: 10px 0;
+            background-color: rgba(107, 142, 112, 0.95);
+            backdrop-filter: blur(10px);
+        }
+        
+        .navbar-brand-custom {
+            color: var(--secondary-color);
+            font-weight: 700;
+            font-size: 1.8rem;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .navbar-brand-custom i {
+            margin-right: 10px;
+            font-size: 1.5rem;
+        }
+        
+        .navbar-brand-custom:hover {
+            color: var(--secondary-color);
+            opacity: 0.9;
+        }
+        
+        .nav-link-custom {
+            color: var(--secondary-color);
+            font-weight: 500;
+            margin: 0 5px;
+            padding: 8px 15px;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .nav-link-custom:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: var(--secondary-color);
+        }
+        
+        .nav-link-custom::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background: var(--secondary-color);
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link-custom:hover::after {
+            width: 60%;
+        }
+        
+        .btn-custom {
+            background-color: var(--secondary-color);
+            color: var(--primary-color);
+            border: none;
+            font-weight: 600;
+            padding: 8px 20px;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn-custom:hover {
+            background-color: rgba(255, 255, 255, 0.9);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+        }
+        
+        .btn-outline-custom {
+            background-color: transparent;
+            color: var(--secondary-color);
+            border: 2px solid var(--secondary-color);
+            font-weight: 600;
+            padding: 8px 20px;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-outline-custom:hover {
+            background-color: var(--secondary-color);
+            color: var(--primary-color);
+        }
+        
+        /* Hero Section */
+        .hero-section {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            background-color: var(--primary-light);
+            margin-top: 70px; /* To account for fixed navbar */
+        }
+        
+        .background-pattern {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 30%, var(--primary-light) 0%, transparent 20%),
+                radial-gradient(circle at 80% 70%, var(--primary-light) 0%, transparent 20%);
+            opacity: 0.6;
+            z-index: 0;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            padding: 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .hero-title {
+            color: var(--primary-color);
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+        
+        .hero-subtitle {
+            color: var(--text-dark);
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+        
+        .hero-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 2rem;
+        }
+        
+        /* Yoga Figure Animation */
+        .yoga-figure-container {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1;
+        }
+        
+        .yoga-figure {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            z-index: 1;
+            animation: float 8s ease-in-out infinite;
+        }
+        
+        /* Yoga pose parts */
+        .head {
+            position: absolute;
+            top: 30%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 50px;
+            height: 50px;
+            background-color: var(--primary-color);
+            border-radius: 50%;
+            z-index: 3;
+        }
+        
+        .body {
+            position: absolute;
+            top: 40%;
+            left: 50%;
+            transform: translate(-50%, 0);
+            width: 12px;
+            height: 120px;
+            background-color: var(--primary-color);
+            border-radius: 10px;
+            z-index: 2;
+        }
+        
+        .arm, .leg {
+            position: absolute;
+            background-color: var(--primary-color);
+            border-radius: 10px;
+            z-index: 1;
+        }
+        
+        .arm.left {
+            top: 45%;
+            left: 35%;
+            width: 80px;
+            height: 12px;
+            transform: rotate(45deg);
+            animation: arm-left 8s ease-in-out infinite;
+        }
+        
+        .arm.right {
+            top: 45%;
+            right: 35%;
+            width: 80px;
+            height: 12px;
+            transform: rotate(-45deg);
+            animation: arm-right 8s ease-in-out infinite;
+        }
+        
+        .leg.left {
+            top: 65%;
+            left: 45%;
+            width: 12px;
+            height: 80px;
+            transform: rotate(20deg);
+            animation: leg-left 10s ease-in-out infinite;
+        }
+        
+        .leg.right {
+            top: 65%;
+            right: 45%;
+            width: 12px;
+            height: 100px;
+            transform: rotate(-10deg);
+            animation: leg-right 10s ease-in-out infinite;
+        }
+        
+        .circle {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 220px;
+            height: 220px;
+            border: 3px solid var(--primary-light);
+            border-radius: 50%;
+            animation: rotate 30s linear infinite;
+            z-index: -1;
+        }
+        
+        .circle:nth-child(2) {
+            width: 260px;
+            height: 260px;
+            animation-direction: reverse;
+            animation-duration: 40s;
+        }
+        
+        .circle:nth-child(3) {
+            width: 180px;
+            height: 180px;
+            border: 2px dashed var(--primary-color);
+            animation: rotate-reverse 25s linear infinite;
+        }
+        
+        /* Animations */
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        @keyframes rotate {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+        
+        @keyframes rotate-reverse {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(-360deg); }
+        }
+        
+        @keyframes arm-left {
+            0%, 100% { transform: rotate(45deg); }
+            50% { transform: rotate(60deg); }
+        }
+        
+        @keyframes arm-right {
+            0%, 100% { transform: rotate(-45deg); }
+            50% { transform: rotate(-30deg); }
+        }
+        
+        @keyframes leg-left {
+            0%, 100% { transform: rotate(20deg); }
+            50% { transform: rotate(35deg); }
+        }
+        
+        @keyframes leg-right {
+            0%, 100% { transform: rotate(-10deg); }
+            50% { transform: rotate(5deg); }
+        }
+        
+        /* Leaves Animation */
+        .leaf {
+            position: absolute;
+            background-color: var(--primary-color);
+            opacity: 0.3;
+            border-radius: 50% 0 50% 50%;
+            animation: leaf-fall linear infinite;
+            z-index: 0;
+        }
+        
+        @keyframes leaf-fall {
+            0% { transform: translateY(-100px) rotate(0deg); }
+            100% { transform: translateY(100vh) rotate(360deg); }
+        }
+        
+        /* Create leaves */
+        .leaf:nth-child(1) {
+            width: 30px;
+            height: 30px;
+            left: 10%;
+            animation-duration: 15s;
+        }
+        .leaf:nth-child(2) {
+            width: 25px;
+            height: 25px;
+            left: 25%;
+            animation-duration: 20s;
+            animation-delay: 3s;
+        }
+        .leaf:nth-child(3) {
+            width: 35px;
+            height: 35px;
+            left: 75%;
+            animation-duration: 18s;
+            animation-delay: 5s;
+        }
+        .leaf:nth-child(4) {
+            width: 20px;
+            height: 20px;
+            left: 90%;
+            animation-duration: 12s;
+            animation-delay: 2s;
+        }
+        .leaf:nth-child(5) {
+            width: 28px;
+            height: 28px;
+            left: 60%;
+            animation-duration: 25s;
+            animation-delay: 7s;
+        }
+        
+        /* Features Section */
+        .features-section {
+            padding: 100px 0;
+            background-color: var(--secondary-color);
+        }
+        
+        .section-title {
+            color: var(--primary-color);
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+        
+        .feature-card {
+            background-color: var(--secondary-color);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            height: 100%;
+            border: 1px solid rgba(107, 142, 112, 0.1);
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(107, 142, 112, 0.1);
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+        
+        .feature-title {
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        
+        .feature-text {
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+        
+        /* Classes Section */
+        .classes-section {
+            padding: 100px 0;
+            background-color: var(--primary-light);
+        }
+        
+        .class-card {
+            background-color: var(--secondary-color);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            margin-bottom: 30px;
+        }
+        
+        .class-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(107, 142, 112, 0.2);
+        }
+        
+        .class-img {
+            height: 200px;
+            object-fit: cover;
+            width: 100%;
+        }
+        
+        .class-body {
+            padding: 25px;
+        }
+        
+        .class-title {
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        
+        .class-meta {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            color: var(--text-light);
+        }
+        
+        .class-text {
+            color: var(--text-light);
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        
+        /* Testimonials Section */
+        .testimonials-section {
+            padding: 100px 0;
+            background-color: var(--secondary-color);
+        }
+        
+        .testimonial-card {
+            background-color: var(--secondary-color);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+            margin-bottom: 30px;
+            border: 1px solid rgba(107, 142, 112, 0.1);
+        }
+        
+        .testimonial-text {
+            color: var(--text-dark);
+            font-style: italic;
+            margin-bottom: 20px;
+            line-height: 1.6;
+            position: relative;
+        }
+        
+        .testimonial-text::before,
+        .testimonial-text::after {
+            content: '"';
+            color: var(--primary-color);
+            font-size: 2rem;
+            opacity: 0.3;
+        }
+        
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+        }
+        
+        .author-img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 15px;
+            border: 3px solid var(--primary-light);
+        }
+        
+        .author-info h5 {
+            color: var(--primary-color);
+            margin-bottom: 5px;
+        }
+        
+        .author-info p {
+            color: var(--text-light);
+            margin-bottom: 0;
+        }
+        
+        /* CTA Section */
+        .cta-section {
+            padding: 100px 0;
+            background-color: var(--primary-color);
+            color: var(--secondary-color);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .cta-pattern {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 80% 70%, rgba(255, 255, 255, 0.1) 0%, transparent 20%);
+            opacity: 0.6;
+            z-index: 0;
+        }
+        
+        .cta-content {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+        }
+        
+        .cta-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+        
+        .cta-text {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+        
+        /* Footer */
+        .footer {
+            background-color: #2a3e30;
+            color: var(--secondary-color);
+            padding: 70px 0 30px;
+        }
+        
+        .footer-logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--secondary-color);
+        }
+        
+        .footer-text {
+            opacity: 0.7;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .social-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: var(--secondary-color);
+            transition: all 0.3s ease;
+        }
+        
+        .social-link:hover {
+            background-color: var(--primary-color);
+            transform: translateY(-3px);
+        }
+        
+        .footer-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: var(--secondary-color);
+        }
+        
+        .footer-links {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.7);
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+        
+        .footer-links a:hover {
+            color: var(--secondary-color);
+            padding-left: 5px;
+        }
+        
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 30px;
+            margin-top: 50px;
+            text-align: center;
+            opacity: 0.7;
+        }
+        
+        /* Responsive Adjustments */
+        @media (max-width: 1199.98px) {
+            .hero-title {
+                font-size: 3rem;
+            }
+        }
+        
+        @media (max-width: 991.98px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .navbar-collapse {
+                background-color: var(--primary-color);
+                padding: 20px;
+                border-radius: 10px;
+                margin-top: 15px;
+            }
+            
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn-custom, .btn-outline-custom {
+                width: 100%;
+                max-width: 250px;
+            }
+        }
+        
+        @media (max-width: 767.98px) {
+            .hero-title {
+                font-size: 2.2rem;
+            }
+            
+            .yoga-figure {
+                width: 200px;
+                height: 200px;
+            }
+            
+            .circle {
+                width: 150px;
+                height: 150px;
+            }
+            
+            .circle:nth-child(2) {
+                width: 180px;
+                height: 180px;
+            }
+            
+            .circle:nth-child(3) {
+                width: 120px;
+                height: 120px;
+            }
+            
+            .head {
+                width: 40px;
+                height: 40px;
+            }
+            
+            .body {
+                width: 10px;
+                height: 100px;
+            }
+            
+            .arm.left, .arm.right {
+                width: 60px;
+                height: 10px;
+            }
+            
+            .leg.left, .leg.right {
+                width: 10px;
+                height: 60px;
+            }
+        }
+        
+        @media (max-width: 575.98px) {
+            .hero-title {
+                font-size: 1.8rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+            
+            .cta-title {
+                font-size: 2rem;
+            }
+            
+            .footer {
+                text-align: center;
+            }
+            
+            .social-links {
+                justify-content: center;
+            }
+        }
+    </style>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-custom">
+        <div class="container">
+            <a class="navbar-brand navbar-brand-custom" href="#">
+                <i class="fas fa-spa"></i> Serene
+            </a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link nav-link-custom active" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link nav-link-custom" href="#">Classes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link nav-link-custom" href="#">Teachers</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link nav-link-custom" href="#">Pricing</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link nav-link-custom" href="#">Contact</a>
+                    </li>
+                </ul>
+                
+                <button class="btn btn-custom ms-lg-3">Join Now</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="background-pattern"></div>
+        
+        <!-- Animated leaves -->
+        <div class="leaf"></div>
+        <div class="leaf"></div>
+        <div class="leaf"></div>
+        <div class="leaf"></div>
+        <div class="leaf"></div>
+        
+        <!-- Yoga figure with animated circles -->
+        <div class="yoga-figure-container">
+            <div class="yoga-figure">
+                <div class="circle"></div>
+                <div class="circle" style="z-index: -2;"></div>
+                <div class="circle" style="z-index: -3;"></div>
+                <div class="head"></div>
+                <div class="body"></div>
+                <div class="arm left"></div>
+                <div class="arm right"></div>
+                <div class="leg left"></div>
+                <div class="leg right"></div>
+            </div>
+        </div>
+        
+        <div class="hero-content">
+            <h1 class="hero-title">Find Your Balance, Mind & Body</h1>
+            <p class="hero-subtitle">Discover the transformative power of yoga with our expert instructors in a peaceful, welcoming environment designed for all skill levels.</p>
+            <div class="hero-buttons">
+                <button class="btn btn-custom">Start Free Trial</button>
+                <button class="btn btn-outline-custom">Learn More</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features-section">
+        <div class="container">
+            <h2 class="section-title">Why Choose Serene Yoga</h2>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                        <h3 class="feature-title">Mindfulness</h3>
+                        <p class="feature-text">Our classes focus on connecting mind and body to promote overall wellbeing and reduce stress.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-user-friends"></i>
+                        </div>
+                        <h3 class="feature-title">Expert Instructors</h3>
+                        <p class="feature-text">Learn from certified yoga teachers with years of experience in various yoga disciplines.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-leaf"></i>
+                        </div>
+                        <h3 class="feature-title">Natural Environment</h3>
+                        <p class="feature-text">Practice in our serene studio designed to create a peaceful, nature-inspired atmosphere.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Classes Section -->
+    <section class="classes-section">
+        <div class="container">
+            <h2 class="section-title">Our Yoga Classes</h2>
+            <div class="row">
+                <div class="col-lg-4 col-md-6">
+                    <div class="class-card">
+                        <img src="https://images.unsplash.com/photo-1545205597-3d9d02c29597?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Hatha Yoga" class="class-img">
+                        <div class="class-body">
+                            <h3 class="class-title">Hatha Yoga</h3>
+                            <div class="class-meta">
+                                <span><i class="far fa-clock"></i> 60 mins</span>
+                                <span><i class="fas fa-user"></i> All Levels</span>
+                            </div>
+                            <p class="class-text">A gentle introduction to basic yoga postures, perfect for beginners.</p>
+                            <button class="btn btn-custom">Join Class</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="class-card">
+                        <img src="https://images.unsplash.com/photo-1545389336-cf090694435e?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Vinyasa Flow" class="class-img">
+                        <div class="class-body">
+                            <h3 class="class-title">Vinyasa Flow</h3>
+                            <div class="class-meta">
+                                <span><i class="far fa-clock"></i> 75 mins</span>
+                                <span><i class="fas fa-user"></i> Intermediate</span>
+                            </div>
+                            <p class="class-text">A dynamic practice that links breath with movement in a flowing sequence.</p>
+                            <button class="btn btn-custom">Join Class</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="class-card">
+                        <img src="https://images.unsplash.com/photo-1518611012118-696072aa579a?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Yin Yoga" class="class-img">
+                        <div class="class-body">
+                            <h3 class="class-title">Yin Yoga</h3>
+                            <div class="class-meta">
+                                <span><i class="far fa-clock"></i> 45 mins</span>
+                                <span><i class="fas fa-user"></i> All Levels</span>
+                            </div>
+                            <p class="class-text">A slow-paced style with poses held for longer periods to target deep connective tissues.</p>
+                            <button class="btn btn-custom">Join Class</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials-section">
+        <div class="container">
+            <h2 class="section-title">What Our Students Say</h2>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="testimonial-card">
+                        <p class="testimonial-text">Serene Yoga has transformed my life. The instructors are knowledgeable and create such a welcoming environment. I've never felt better!</p>
+                        <div class="testimonial-author">
+                            <img src="https://randomuser.me/api/portraits/women/32.jpg" alt="Sarah J." class="author-img">
+                            <div class="author-info">
+                                <h5>Sarah J.</h5>
+                                <p>Student for 2 years</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="testimonial-card">
+                        <p class="testimonial-text">As a beginner, I was nervous to start yoga, but the teachers at Serene made me feel comfortable and supported. Highly recommend!</p>
+                        <div class="testimonial-author">
+                            <img src="https://randomuser.me/api/portraits/men/45.jpg" alt="Michael T." class="author-img">
+                            <div class="author-info">
+                                <h5>Michael T.</h5>
+                                <p>New Student</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="testimonial-card">
+                        <p class="testimonial-text">The perfect balance of challenge and relaxation. I leave every class feeling refreshed and centered. The studio space is beautiful too.</p>
+                        <div class="testimonial-author">
+                            <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Priya K." class="author-img">
+                            <div class="author-info">
+                                <h5>Priya K.</h5>
+                                <p>Student for 1 year</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="cta-pattern"></div>
+        <div class="container">
+            <div class="cta-content">
+                <h2 class="cta-title">Ready to Begin Your Yoga Journey?</h2>
+                <p class="cta-text">Join our community today and experience the benefits of yoga for yourself.</p>
+                <button class="btn btn-custom">Start Your Free Trial</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-5 mb-lg-0">
+                    <h3 class="footer-logo"><i class="fas fa-spa"></i> Serene</h3>
+                    <p class="footer-text">Our mission is to provide a peaceful space for yoga practice that nurtures both body and mind, helping our students find balance in their busy lives.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-5 mb-md-0">
+                    <h4 class="footer-title">Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Classes</a></li>
+                        <li><a href="#">Schedule</a></li>
+                        <li><a href="#">Pricing</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-5 mb-md-0">
+                    <h4 class="footer-title">Classes</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Hatha Yoga</a></li>
+                        <li><a href="#">Vinyasa Flow</a></li>
+                        <li><a href="#">Yin Yoga</a></li>
+                        <li><a href="#">Prenatal Yoga</a></li>
+                        <li><a href="#">Meditation</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <h4 class="footer-title">Contact Us</h4>
+                    <ul class="footer-links">
+                        <li><i class="fas fa-map-marker-alt"></i> 123 Peaceful Lane, Serene City</li>
+                        <li><i class="fas fa-phone"></i> (123) 456-7890</li>
+                        <li><i class="fas fa-envelope"></i> info@sereneyoga.com</li>
+                        <li><i class="fas fa-clock"></i> Mon-Fri: 6am-9pm, Sat-Sun: 8am-6pm</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 Serene Yoga Studio. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar-custom');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
