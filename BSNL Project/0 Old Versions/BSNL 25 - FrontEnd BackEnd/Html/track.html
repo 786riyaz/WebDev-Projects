@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" 
+    integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" 
+    referrerpolicy="no-referrer" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../Css/booking.css">
+    <title>Track Complain</title>
+</head>
+<style>
+
+    .text-muted{
+        position: relative;
+        left: 50%;
+        display: flex;
+        margin-top: 15px;            
+    }
+    </style>
+<body>
+    <body>
+        <!-- Navigation Header -->
+        <!-- <header class="header">
+            <div class="container d-flex justify-content-between align-items-center">
+                <a href="../index.html" class="logo">Dashboard</a>
+                <nav class="navbar">
+                    <a href="booking.html" class="nav-link">Book Complain</a>
+                    <a href="track.html" class="nav-link">Track Complain</a>
+                    <a href="login.html" class="nav-link">Login</a>
+                </nav>
+            </div>
+        </header> -->
+        <header>
+            <nav class="navbar navbar-light bg-light fixed-top">
+                <div class="container-fluid">
+                    <a class="navbar-brand fw-bolder" href="#">Shivam Telecom</a>
+                    <div class="d-flex justify-content-end fw-bold">
+                        <!-- <a href="#" class="nav-link text-dark">Pending Complain: <span id="PendingFaults">00</span></a> -->
+                        <a class="nav-link text-dark" href="../index.html">Book Complain</a>
+                        <a class="nav-link text-dark" href="/Html/Complain_Track.html">Track Complain</a>
+                        <a class="nav-link text-dark" href="/Html/login.html">Login</a>
+                      
+                    </div>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
+                        aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="offcanvas offcanvas-end bg-white" tabindex="-1" id="offcanvasNavbar"
+                        aria-labelledby="offcanvasNavbarLabel">
+                        <div class="offcanvas-header">   
+                            <h5 class="offcanvas-title text-dark" id="offcanvasNavbarLabel">Shivam Telecom</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>  
+                        </div>
+                        <div class="offcanvas-body">
+                            <ul class="navbar-nav justify-content-end flex-grow-1 pe-3 text-dark">
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" aria-current="page" href="../index.html">Book Complain</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" href="/Html/Complain_Track.html">Track Complain</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" href="/Html/login.html">Login</a>
+                                </li>
+                            </ul>
+                            <form class="d-flex mt-3" role="search">
+                                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                                <button class="btn btn-success" type="submit">Search</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </header>
+
+
+
+        <!-- Complaint Form -->
+        <div class="container my-5">
+            <div class="booking-box mx-auto col-lg-6 col-md-8 col-sm-12">
+                <h2 class="text-center">Track Complain</h2>
+                <form action="https://sheetdb.io/api/v1/nyjlfiks3919o" method="post" id="sheetdb-form">
+                    <div class="mb-3">
+                        <!-- <label for="TelephoneNumber" class="form-label">Service Id</label> -->
+                        <div class="input-btn">
+                            <input type="text" class="form-control" id="track_circuit_id" name="" placeholder="Circuit Id" >
+                            <button type="button" id="Search_Button"><i class="fa fa-search"></i></button>
+                        </div>
+                        <small class="text-muted">OR</small>
+                    </div>
+                    <div class="mb-3">
+                        <!-- <label for="PhoneNumber" class="form-label">Number</label> -->
+                        <input type="text" class="form-control" placeholder="Complain Id" name="" id="track_id" >
+                    </div>
+                    
+                    <div class="d-flex justify-content-around">
+                        <button type="submit" class="btn btn-outline-primary" id="">Search</button>
+                        <button type="reset" class="btn btn-outline-dark">Cancel</button>
+                        
+                    </div><br>
+                    <h5 id="trackmessage">helloooo</h5>
+                </form>
+            </div>
+        </div>
+        
+        <!-- Bootstrap JS -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    </body>
+
+</body>
+<script src="../Js/track.js"></script>
+
+</html>
+

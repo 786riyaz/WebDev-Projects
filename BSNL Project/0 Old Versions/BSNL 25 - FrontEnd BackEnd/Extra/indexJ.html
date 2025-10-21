@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Submission</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+
+    <form id="myForm">
+        <label for="name">Telephone:</label>
+        <input type="text" id="name" name="name" required>
+        <br>
+        <label for="email">Address:</label>
+        <input type="email" id="email" name="email" required>
+        <br>
+        <button type="submit">Submit</button>
+    </form>
+
+    <div id="message"></div>
+
+    <script>
+        $(document).ready(function() {
+            $('#myForm').on('submit', function(event) {
+                event.preventDefault(); // Prevent the default form submission
+
+                $.ajax({
+                    type: 'POST',
+                    url: 'submit.php', // Your PHP file that handles the submission
+                    data: $(this).serialize(), // Serialize the form data
+                    success: function(response) {
+                        $('#message').text(response); // Display the response message
+                        $('#myForm')[0].reset(); // Reset the form fields
+                    },
+                    error: function() {
+                        $('#message').text('An error occurred while submitting the form.');
+                    }
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>

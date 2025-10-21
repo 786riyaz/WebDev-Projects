@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complain Booking</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <form action="complainRegister.php" method="post" class="mainDiv">
+    <!-- <form action="fetch.php" method="post" class="mainDiv"> -->
+        <H1> Register a Complaint </H1>
+
+        <input type="text" name="TelephoneNumber" id="TelephoneNumber" placeholder="0XX-XXXXXXX">
+        <button type="button" id="SearchButton">Search</button><br><br>
+
+        <textarea name="Address" id="Address" placeholder="Address" rows="4" cols="50" disabled></textarea><br>
+        <input type="text" placeholder="Number" name="Number" id="Number" disabled><br><br>
+        <input type="checkbox" name="SameAddress" id="SameAddress" checked> I want service at same location mentioned above.<br><br>
+        <h3 id="AlreadyBooked"> Your Complain is Already Booked.</h3>
+
+        <div id="sameDetailsDiv">
+            <textarea name="CurrentAddress" id="CurrentAddress" placeholder="Current Address" rows="4" cols="50"></textarea><br>
+            <input type="text" placeholder="Current Number" name="CurrentNumber" id="CurrentNumber"><br><br>
+        </div>
+
+        <textarea name="Description" id="Description" placeholder="Complain Description" rows="4"cols="50"></textarea><br>
+        <div id="SubmissionController">
+            <input type="submit" value="Submit">
+            <input type="button" value="Cancel">
+        </div>
+    </form>
+</body>
+<script src="script.js"></script>
+<script>
+
+
+</script>
+
+</html>

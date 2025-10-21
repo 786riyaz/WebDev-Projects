@@ -1,0 +1,19 @@
+Table 1 :: Customer Table
+TelephoneNumber
+Name
+Address
+MobileNumber
+Service
+
+
+Table 2 :: Complain Table
+Complain ID
+Telephone Number
+ComplainText
+MobileNumber
+
+to convert the JS date in MySQL Date
+MySQL = '2024-10-01 07:59:46'
+JS = 1727769882732
+date = Date.now();
+date.toISOString().slice(0, 19).replace('T', ' ');

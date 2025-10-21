@@ -1,0 +1,13 @@
+Table 1 :: Customer Table
+TelephoneNumber
+Name
+Address
+MobileNumber
+Service
+
+
+Table 2 :: Complain Table
+Complain ID
+Telephone Number
+ComplainText
+MobileNumber

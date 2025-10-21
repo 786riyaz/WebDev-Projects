@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" 
+    integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" 
+    referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="booking.css"> 
+    <title>Booking</title>
+</head>
+<body>
+    <header class="header">
+        <a href="" class="logo">Dashboard</a>
+        <nav class="navbar">
+            <a href="#">Book Complain</a>
+            <a href="#">Track Complain</a>
+            <a href="#">Login</a>
+        </nav>
+    </header>
+    <!-- ---------------------------------booking---------------------------------------- -->
+     <form action="https://sheetdb.io/api/v1/nyjlfiks3919o" method="post" id="sheetdb-form">
+     <div class="container">
+        <div class="booking-box">
+            <h2>Register a Complaint</h2>
+            <div class="booking-form">
+                <div class="input-btn">
+                    <input type="text" placeholder="Service Id" id="TelephoneNumber" name="data[Telephone]" required>
+                    <button type="search" id="SearchButton"><i class="fa fa-search"></i></button>
+                    
+                </div>
+                <h5 id="Details">check</h5>
+                <h5 id="example">Eg. 040-89876567/02717-69587(Landline)</h5>
+                <div class="address-text">
+                    <textarea name="" id="" placeholder="Address" required></textarea>
+                </div>
+                <div class="number-input">
+                    <input type="text" placeholder="Number" name="" required>
+                </div><br><br>
+                <div class="modify_details">
+                    <label for="">Modify your Address  </label> <input type="checkbox" onclick="hideShow()"> 
+                </div>
+                <div class="address-text" id="addressField">
+                    <textarea name="data[Address]"  placeholder="Current Address" required></textarea>
+                </div>
+                <div class="number-input" id="numberField">
+                    <input type="text" placeholder="Number" name="data[Number]" required>
+                </div>
+                
+                <div class="booking-btn">
+                    <button>Submit</button>
+                    <button>Cancle</button>
+                </div>
+            </div>
+        </div>
+     </div>
+    </form>
+</body>
+<script src="script.js">
+        var form = document.getElementById('sheetdb-form');
+        form.addEventListener("submit", e => {
+          e.preventDefault();
+          fetch(form.action, {
+              method : "POST",
+              body: new FormData(document.getElementById("sheetdb-form")),
+          }).then(
+              response => response.json()
+          ).then((html) => {
+            // you can put any JS code here
+            window.open('booking.html', '_blank');
+
+          });
+        });
+</script>
+</html>
+
+
+
+
+<div class="main p-3">
+    <div class="text-center">
+        <h1>
+            Dashboard
+            <hr>
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" placeholder="Recipient's username"
+                    aria-label="Recipient's username" aria-describedby="button-addon2">
+                <button class="btn btn-outline-secondary" type="button" id="button-addon2">Button</button>
+            </div>
+            <table class="table caption-top">
+                <caption>Fault Orders</caption>
+                <thead>
+                    <tr>
+                        <th scope="col">Complain_ID</th>
+                        <th scope="col">Telephone Number</th>
+                        <th scope="col">Address</th>
+                        <th scope="col">Mobile Number</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Duration</th>
+                        <th scope="col">Assign</th>
+                        <th scope="col">Close</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td scope="row">1</td>
+                        <td>Mark</td>
+                        <td>Otto</td>
+                        <td>@md</td>
+                        <td>@mdo</td>
+                        <td>@mdo</td>
+                        <td><button type="button" class="btn btn-outline-danger">Assign</button></td>
+                        <td><button type="button" class="btn btn-outline-secondary">Close</button></td>
+                    </tr>
+                    <tr class="CloseRemark">
+                        <td colspan="2">
+                            <select class="form-select" aria-label="Default select example">
+                                <option selected>Open this select menu</option>
+                                <option value="1">One</option>
+                                <option value="2">Two</option>
+                                <option value="3">Three</option>
+                            </select></td>
+                        <td colspan="5">
+                            <div class="input-group mb-3">
+                                <span class="input-group-text" id="inputGroup-sizing-default">Remark</span>
+                                <input type="text" class="form-control" aria-label="Sizing example input"
+                                    aria-describedby="inputGroup-sizing-default">
+                            </div>
+                        </td>
+                        <td><button type="button" class="btn btn-outline-secondary">Submit</button></td>
+                    </tr>
+                </tbody>
+            </table>
+            <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-end">
+                    <li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                </ul>
+            </nav>
+        </h1>
+    </div>
+</div>
+
+
+<script>
+    // Add event listeners to "Close" buttons
+    document.querySelectorAll('.closeBtn').forEach((button, index) => {
+        button.addEventListener('click', function() {
+            // Find the associated CloseRemark row and toggle visibility
+            const closeRemarkRow = document.querySelectorAll('.CloseRemark')[index];
+            if (closeRemarkRow.style.display === "none" || closeRemarkRow.style.display === "") {
+                closeRemarkRow.style.display = "table-row"; // Show the remark row
+            } else {
+                closeRemarkRow.style.display = "none"; // Hide the remark row
+            }
+        });
+    });
+</script>
