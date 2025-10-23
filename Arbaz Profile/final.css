@@ -1,0 +1,107 @@
+:root {
+  --bg-color: #bbbbbb;
+  --text-color: #cc4c4c;
+  --main-color: #d38817af;
+  --other-color: #e65319da;
+  --p-font: 1.2rem;
+  --h1-font: 5rem;
+  --second-bg-color: #2c2929f3;
+  --heading-color: #0cb5df;
+  --about-bg-color: #0000007a;
+  --education-bg-color: #00000096;
+  --ed-timeline-color: red;
+}
+.nav-item {
+  font-weight: 500;
+  position: relative;
+  border-radius: 15px;
+
+}
+.nav-item:hover,
+.nav-item.active {
+  color: rgba(245, 240, 240, 0.726);
+}
+@media (min-width: 991px) {
+  .nav-item::before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 2px;
+    background-color: #0cb5df;
+    visibility: hidden;
+    transition: 0.3s ease-in-out;
+  }
+  .nav-item:hover::before,
+  .nav-item.active::before {
+    width: 100%;
+    visibility: visible;
+  }
+}
+
+ .nav-item a{
+  color: rgba(164, 156, 172, 0.904);
+} 
+/* -----------------------------header css end------------------------ */
+.self-container{
+  margin-top: 10%;
+  position: relative;
+  align-items: center;
+  gap: 3rem;
+}
+.imag img {
+  filter: grayscale(100%);
+  width: 100%;
+  max-width: 300px;
+  border-radius: 25px;
+  height: 100%;
+  object-fit: contain;
+  box-shadow: -1px -1px 0px #000, 9px 9px 0px #000, 10px 10px 0px #00000055;
+}
+.social-icon i {
+  display: inline-flex;
+  font-size: 25px;
+  color: var(--text-color);
+  margin-right: 18px;
+  transition: all 0.6s ease;
+}
+
+.social-icon i:hover {
+  transform: translateY(-5px);
+  color: var(--main-color);
+}
+.self-text h1 {
+  font-size: var(--h1-font);
+  line-height: 1.1;
+  font-weight: 700;
+  margin: 20px 0;
+  letter-spacing: 2px;
+  text-shadow: -1px -1px 0px #000, 7px 7px 0px #000, 9px 9px 0px #000;
+}
+.self-text h1 span {
+  color: var(--main-color);
+}
+
+.self-text h6 {
+  font-size: 22px;
+  font-weight: 550;
+}
+
+.self-text h6 span {
+  color: var (--main-color);
+}
+
+.self-text h4 {
+  font-size: 35px;
+  font-weight: bold;
+  margin-bottom: 30px;
+  font-family: Georgia, "Times New Roman", Times, serif;
+}
+.self-text p {
+  font-size: var(--p-font);
+  color: var(--other-color);
+  margin-bottom: 15px;
+  line-height: 1.5;
+}
