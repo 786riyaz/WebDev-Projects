@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Electricity Bill Calculator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            max-width: 500px;
+            width: 100%;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 2.5rem;
+            font-weight: 300;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-weight: 500;
+            font-size: 1.1rem;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e1e5e9;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            transition: border-color 0.3s ease;
+            background: #f8f9fa;
+        }
+
+        input[type="number"]:focus {
+            outline: none;
+            border-color: #667eea;
+            background: white;
+        }
+
+        button {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        #result {
+            margin-top: 30px;
+        }
+
+        .bill-result {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 25px;
+            border-left: 5px solid #667eea;
+        }
+
+        .bill-result h3 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+        }
+
+        .breakdown {
+            margin-bottom: 20px;
+        }
+
+        .tier {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #e1e5e9;
+            font-size: 1rem;
+        }
+
+        .tier:last-child {
+            border-bottom: none;
+        }
+
+        .range {
+            color: #666;
+            flex: 1;
+        }
+
+        .total {
+            background: #667eea;
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 1.3rem;
+            margin-top: 15px;
+        }
+
+        .error {
+            background: #fee;
+            color: #c33;
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 5px solid #c33;
+            font-weight: 500;
+        }
+
+        .rate-info {
+            background: #e8f4fd;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 25px;
+            border-left: 4px solid #2196f3;
+        }
+
+        .rate-info h3 {
+            color: #1976d2;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+
+        .rate-table {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            font-size: 0.9rem;
+        }
+
+        .rate-row {
+            display: contents;
+        }
+
+        .rate-row span:first-child {
+            color: #555;
+        }
+
+        .rate-row span:last-child {
+            font-weight: 600;
+            color: #1976d2;
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 25px;
+                margin: 10px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .tier {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>⚡ Electricity Bill Calculator</h1>
+        
+        <div class="rate-info">
+            <h3>📊 Current Rates</h3>
+            <div class="rate-table">
+                <div class="rate-row">
+                    <span>0-100 units:</span>
+                    <span>₹4 per unit</span>
+                </div>
+                <div class="rate-row">
+                    <span>101-200 units:</span>
+                    <span>₹6 per unit</span>
+                </div>
+                <div class="rate-row">
+                    <span>201-400 units:</span>
+                    <span>₹8 per unit</span>
+                </div>
+                <div class="rate-row">
+                    <span>400+ units:</span>
+                    <span>₹10 per unit</span>
+                </div>
+            </div>
+        </div>
+
+        <form>
+            <div class="form-group">
+                <label for="units">Enter Units Consumed</label>
+                <input type="number" id="units" name="units" placeholder="e.g., 250" min="0" step="0.01">
+            </div>
+            <button type="submit">Calculate Bill</button>
+        </form>
+        
+        <div id="result"></div>
+    </div>
+
+    <script>
+        // Modern Electricity Bill Calculator
+        class ElectricityBillCalculator {
+          constructor() {
+            console.log("🚀 Electricity Bill Calculator initialized");
+            this.initializeElements();
+            this.setupEventListeners();
+            this.initializeRates();
+            console.log("✅ Calculator setup complete");
+          }
+
+          initializeElements() {
+            console.log("🔍 Initializing DOM elements...");
+            this.unitsInput = document.getElementById("units");
+            this.resultElement = document.getElementById("result");
+            this.form = document.querySelector("form");
+            console.log("📋 DOM elements found:", {
+              unitsInput: !!this.unitsInput,
+              resultElement: !!this.resultElement,
+              form: !!this.form
+            });
+          }
+
+          initializeRates() {
+            console.log("💰 Setting up rate structure...");
+            // Tier-based rate structure (units, rate per unit)
+            this.rates = [
+              { limit: 100, rate: 4 },
+              { limit: 200, rate: 6 },
+              { limit: 400, rate: 8 },
+              { limit: Infinity, rate: 10 }
+            ];
+            console.log("📊 Rate tiers configured:", this.rates);
+          }
+
+          setupEventListeners() {
+            console.log("🎧 Setting up event listeners...");
+            this.form.addEventListener("submit", this.handleSubmit.bind(this));
+            this.unitsInput.addEventListener("input", this.handleInputChange.bind(this));
+            console.log("✅ Event listeners attached");
+          }
+
+          handleSubmit = (event) => {
+            console.log("🔄 Form submission triggered");
+            event.preventDefault();
+            const units = this.validateInput();
+            
+            if (units === null) {
+              console.log("❌ Validation failed, stopping calculation");
+              return;
+            }
+            
+            console.log("✅ Input validated, calculating bill for:", units, "units");
+            const billDetails = this.calculateBill(units);
+            this.displayResult(billDetails);
+          }
+
+          handleInputChange = () => {
+            console.log("⌨️ User input changed:", this.unitsInput.value);
+            // Clear previous error messages when user starts typing
+            this.clearErrorMessage();
+          }
+
+          validateInput() {
+            console.log("🔍 Validating input...");
+            const value = this.unitsInput.value.trim();
+            console.log("📝 Raw input value:", `"${value}"`);
+            
+            if (!value) {
+              console.log("❌ Validation failed: Empty input");
+              this.showError("Please enter the number of units");
+              return null;
+            }
+            
+            const units = parseFloat(value);
+            console.log("🔢 Parsed number:", units);
+            
+            if (isNaN(units) || units < 0) {
+              console.log("❌ Validation failed: Invalid number or negative value");
+              this.showError("Please enter a valid positive number");
+              return null;
+            }
+            
+            if (units > 10000) {
+              console.log("⚠️ Validation warning: Unusually high units");
+              this.showError("Units seem unusually high. Please verify.");
+              return null;
+            }
+            
+            console.log("✅ Input validation passed for:", units, "units");
+            return units;
+          }
+
+          calculateBill(totalUnits) {
+            console.log("🧮 Starting bill calculation for:", totalUnits, "units");
+            console.log("📊 Using rate structure:", this.rates);
+            
+            let remainingUnits = totalUnits;
+            let totalBill = 0;
+            const breakdown = [];
+            let previousLimit = 0;
+
+            console.log("🔄 Processing tiers...");
+            for (const [index, tier] of this.rates.entries()) {
+              if (remainingUnits <= 0) {
+                console.log(`⏭️ Tier ${index + 1}: No remaining units, skipping`);
+                break;
+              }
+              
+              const tierUnits = Math.min(remainingUnits, tier.limit - previousLimit);
+              const tierCost = tierUnits * tier.rate;
+              
+              console.log(`💡 Tier ${index + 1} (${previousLimit + 1}-${tier.limit === Infinity ? '∞' : tier.limit}):`);
+              console.log(`   📏 Available tier capacity: ${tier.limit - previousLimit} units`);
+              console.log(`   🔢 Units to process: ${tierUnits}`);
+              console.log(`   💰 Rate: ₹${tier.rate} per unit`);
+              console.log(`   💸 Tier cost: ${tierUnits} × ₹${tier.rate} = ₹${tierCost}`);
+              
+              if (tierUnits > 0) {
+                breakdown.push({
+                  range: `${previousLimit + 1}-${previousLimit + tierUnits} units`,
+                  units: tierUnits,
+                  rate: tier.rate,
+                  cost: tierCost
+                });
+                
+                totalBill += tierCost;
+                remainingUnits -= tierUnits;
+                console.log(`   📈 Running total: ₹${totalBill}`);
+                console.log(`   📉 Remaining units: ${remainingUnits}`);
+              }
+              
+              previousLimit = tier.limit;
+            }
+
+            const finalBill = Math.round(totalBill * 100) / 100;
+            console.log("🎯 Final calculation results:");
+            console.log("   📊 Total units processed:", totalUnits);
+            console.log("   💰 Total bill amount: ₹" + finalBill);
+            console.log("   📋 Breakdown:", breakdown);
+
+            return {
+              totalUnits,
+              totalBill: finalBill, // Round to 2 decimal places
+              breakdown
+            };
+          }
+
+          displayResult({ totalUnits, totalBill, breakdown }) {
+            console.log("🖥️ Displaying results to user...");
+            console.log("📄 Generating HTML breakdown for:", breakdown.length, "tiers");
+            
+            const breakdownHtml = breakdown
+              .map((tier, index) => {
+                console.log(`   🏷️ Tier ${index + 1} HTML: ${tier.range} - ₹${tier.cost}`);
+                return `<div class="tier">
+                  <span class="range">${tier.range}</span>: 
+                  ${tier.units} × ₹${tier.rate} = <strong>₹${tier.cost}</strong>
+                </div>`;
+              })
+              .join("");
+
+            const resultHtml = `
+              <div class="bill-result">
+                <h3>Bill Calculation for ${totalUnits} units</h3>
+                <div class="breakdown">
+                  ${breakdownHtml}
+                </div>
+                <div class="total">
+                  <strong>Total Bill: ₹${totalBill}</strong>
+                </div>
+              </div>
+            `;
+
+            this.resultElement.innerHTML = resultHtml;
+            console.log("✅ Result displayed successfully");
+            console.log("🎉 FINAL SUMMARY:");
+            console.log(`   📊 Units: ${totalUnits}`);
+            console.log(`   💰 Total Bill: ₹${totalBill}`);
+            console.log("   📋 Tier Breakdown:");
+            breakdown.forEach((tier, index) => {
+              console.log(`      ${index + 1}. ${tier.range}: ${tier.units} units × ₹${tier.rate} = ₹${tier.cost}`);
+            });
+          }
+
+          showError(message) {
+            console.log("❌ Displaying error message:", message);
+            this.resultElement.innerHTML = `<div class="error">${message}</div>`;
+          }
+
+          clearErrorMessage() {
+            if (this.resultElement.innerHTML.includes('class="error"')) {
+              console.log("🧹 Clearing previous error message");
+              this.resultElement.innerHTML = "";
+            }
+          }
+        }
+
+        // Initialize the calculator when DOM is loaded
+        document.addEventListener("DOMContentLoaded", () => {
+          console.log("🌐 DOM Content Loaded - Initializing calculator...");
+          const calculator = new ElectricityBillCalculator();
+          console.log("🎯 Calculator instance created:", calculator);
+          
+          // Add a welcome message
+          console.log("🎊 Welcome to the Electricity Bill Calculator!");
+          console.log("💡 Enter your units and click 'Calculate Bill' to see detailed breakdown");
+          console.log("🔍 Check the console for detailed calculation logs");
+        });
+    </script>
+</body>
+</html>
