@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Local Netflix-Style Video Browser</title>
+  <style>
+    :root{
+      --bg:#0b0b0d; --card:#121215; --muted:#9aa0a6;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Inter, system-ui, Arial; background:var(--bg); color:#fff}
+    header{display:flex;align-items:center;gap:16px;padding:18px 24px;border-bottom:1px solid #151515}
+    header h1{margin:0;font-size:20px}
+    .controls{margin-left:auto;display:flex;gap:12px;align-items:center}
+    input[type=text]{padding:8px 12px;border-radius:8px;border:1px solid #222;background:#0b0b0d;color:#fff}
+    #folderPicker{display:none}
+    .btn{background:#1f6feb;padding:8px 12px;border-radius:8px;border:none;color:white;cursor:pointer}
+
+    main{padding:20px}
+    .sectionTitle{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+
+    #videoGrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px}
+    .card{background:var(--card);padding:10px;border-radius:10px;overflow:hidden;border:1px solid #1a1a1a;cursor:pointer}
+    .thumb{width:100%;height:124px;background:#000;border-radius:6px;display:flex;align-items:center;justify-content:center;overflow:hidden}
+    .thumb img{width:100%;height:100%;object-fit:cover}
+    .meta{padding-top:8px;font-size:13px}
+    .subfolder{font-size:12px;color:var(--muted)}
+
+    /* Modal player */
+    #playerModal{position:fixed;inset:0;background:rgba(0,0,0,0.85);display:none;align-items:center;justify-content:center;padding:24px}
+    .playerWrap{width:min(1100px,100%);background:#070707;border-radius:10px;padding:12px;display:flex;flex-direction:column;gap:12px}
+    #player{width:100%;background:#000;border-radius:6px}
+    .controlsRow{display:flex;align-items:center;gap:12px}
+    .timeline{appearance:none;width:100%;height:6px;background:#222;border-radius:4px;cursor:pointer}
+    .time{font-size:13px;color:var(--muted)}
+    .playerTop{display:flex;align-items:center;justify-content:space-between}
+
+    .closeBtn{background:transparent;border:none;color:#fff;font-size:26px;cursor:pointer}
+
+    /* responsive */
+    @media (max-width:600px){.thumb{height:100px}.playerWrap{padding:8px}}
+  </style>
+</head>
+<body>
+  <header>
+    <h1>🎬 Local Netflix-Style Browser</h1>
+
+    <div class="controls">
+      <label class="btn" for="folderPicker">Select Folder</label>
+      <input id="folderPicker" type="file" webkitdirectory directory multiple />
+
+      <input id="search" type="text" placeholder="Search videos or folders" />
+
+      <select id="sort">
+        <option value="name">Sort: Name</option>
+        <option value="date">Sort: Date</option>
+        <option value="size">Sort: Size</option>
+      </select>
+    </div>
+  </header>
+
+  <main>
+    <div class="sectionTitle"><h2 style="margin:0;font-size:16px">Videos</h2><div class="time" id="stats"></div></div>
+    <div id="videoGrid"></div>
+  </main>
+
+  <!-- Player Modal with custom controls -->
+  <div id="playerModal">
+    <div class="playerWrap">
+      <div class="playerTop">
+        <div>
+          <strong id="playerTitle"></strong>
+          <div class="subfolder" id="playerSub"></div>
+        </div>
+        <div style="display:flex;gap:8px;align-items:center">
+          <button class="btn" id="pipBtn">PIP</button>
+          <button class="btn" id="fsBtn">Fullscreen</button>
+          <button class="closeBtn" id="closeBtn">✕</button>
+        </div>
+      </div>
+
+      <video id="player" playsinline></video>
+
+      <div class="controlsRow">
+        <button id="playPause" class="btn">Play</button>
+        <div style="flex:1;display:flex;flex-direction:column;gap:6px">
+          <input id="timeline" class="timeline" type="range" min="0" max="100" value="0" />
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <div class="time" id="currentTime">0:00</div>
+            <div style="display:flex;gap:8px;align-items:center">
+              <div class="time" id="duration">0:00</div>
+              <select id="speed">
+                <option value="0.5">0.5x</option>
+                <option value="0.75">0.75x</option>
+                <option value="1" selected>1x</option>
+                <option value="1.25">1.25x</option>
+                <option value="1.5">1.5x</option>
+                <option value="2">2x</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <input id="volume" type="range" min="0" max="1" step="0.01" value="1" style="width:110px" />
+      </div>
+
+      <div style="display:flex;gap:8px;justify-content:flex-end;align-items:center">
+        <button id="saveProgress" class="btn">Save Position</button>
+        <button id="resetProgress" class="btn">Reset Progress</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // --- Helpers ---
+    const folderPicker = document.getElementById('folderPicker');
+    const videoGrid = document.getElementById('videoGrid');
+    const searchInput = document.getElementById('search');
+    const sortSelect = document.getElementById('sort');
+    const stats = document.getElementById('stats');
+
+    // Player elements
+    const modal = document.getElementById('playerModal');
+    const player = document.getElementById('player');
+    const playerTitle = document.getElementById('playerTitle');
+    const playerSub = document.getElementById('playerSub');
+    const playPause = document.getElementById('playPause');
+    const timeline = document.getElementById('timeline');
+    const currentTimeEl = document.getElementById('currentTime');
+    const durationEl = document.getElementById('duration');
+    const volumeEl = document.getElementById('volume');
+    const speedEl = document.getElementById('speed');
+    const fsBtn = document.getElementById('fsBtn');
+    const pipBtn = document.getElementById('pipBtn');
+    const closeBtn = document.getElementById('closeBtn');
+    const saveProgressBtn = document.getElementById('saveProgress');
+    const resetProgressBtn = document.getElementById('resetProgress');
+
+    let videos = []; // {file, url, folder, name, size, lastModified, thumbnail, key}
+    let filtered = [];
+
+    const videoExt = ['mp4','webm','ogg','mov','mkv','avi','wmv','flv'];
+
+    // Generate safe key for storage
+    function storageKey(file){
+      // use webkitRelativePath if available to disambiguate
+      return 'vidpos:' + (file.webkitRelativePath || file.name) + ':' + file.size + ':' + file.lastModified;
+    }
+
+    // human time
+    function fmtTime(s){
+      if (!isFinite(s)) return '0:00';
+      s = Math.floor(s);
+      const m = Math.floor(s/60);
+      const sec = String(s%60).padStart(2,'0');
+      return m+':'+sec;
+    }
+
+    // Create a thumbnail by loading a frame at 2s
+    async function createThumbnail(url){
+      return new Promise((res) => {
+        const v = document.createElement('video');
+        v.preload = 'metadata';
+        v.src = url;
+        v.muted = true;
+        v.playsInline = true;
+        // try to seek to 2s after metadata loaded
+        v.addEventListener('loadedmetadata', () => {
+          const seekTo = Math.min(2, Math.floor(v.duration/3));
+          const onSeek = () => {
+            try{
+              const c = document.createElement('canvas');
+              c.width = v.videoWidth || 320;
+              c.height = v.videoHeight || 180;
+              const ctx = c.getContext('2d');
+              ctx.drawImage(v, 0, 0, c.width, c.height);
+              const data = c.toDataURL('image/jpeg');
+              v.src = '';
+              res(data);
+            }catch(e){
+              res(null);
+            }
+          };
+          // some browsers throw if seeking too early; guard
+          v.currentTime = seekTo;
+          v.addEventListener('seeked', onSeek, {once:true});
+        });
+        // fallback: if error, return null
+        v.addEventListener('error', ()=>res(null));
+      });
+    }
+
+    // Group by folder
+    function groupByFolder(arr){
+      const map = {};
+      arr.forEach(v=>{
+        const folder = v.folder || '/';
+        if(!map[folder]) map[folder]=[];
+        map[folder].push(v);
+      });
+      return map;
+    }
+
+    // Render grid
+    function render(list){
+      videoGrid.innerHTML='';
+      stats.textContent = `${list.length} videos`;
+      const grouped = groupByFolder(list);
+      Object.keys(grouped).sort().forEach(folder=>{
+        const heading = document.createElement('div');
+        heading.style.gridColumn = '1/-1';
+        heading.style.margin = '6px 0';
+        heading.innerHTML = `<strong style="font-size:14px">${folder}</strong>`;
+        videoGrid.appendChild(heading);
+
+        grouped[folder].forEach(v=>{
+          const card = document.createElement('div');
+          card.className = 'card';
+          const html = `
+            <div class="thumb">${v.thumbnail? `<img src='${v.thumbnail}' alt='thumb'/>` : '<span style="color:var(--muted)">No preview</span>'}</div>
+            <div class="meta">
+              <div style="font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${v.name}</div>
+              <div class="subfolder">${v.folder}</div>
+            </div>
+          `;
+          card.innerHTML = html;
+          card.addEventListener('click', ()=>openPlayer(v));
+          videoGrid.appendChild(card);
+        });
+      });
+    }
+
+    // Open player
+    async function openPlayer(v){
+      modal.style.display = 'flex';
+      playerTitle.textContent = v.name;
+      playerSub.textContent = v.folder;
+      player.src = v.url;
+      player.playbackRate = 1;
+      player.volume = Number(localStorage.getItem('lastVolume')||1);
+      volumeEl.value = player.volume;
+
+      // restore progress
+      const saved = localStorage.getItem(v.key);
+      if(saved){
+        const t = Number(saved);
+        // small safety: wait for metadata then set time
+        player.addEventListener('loadedmetadata', function fn(){
+          player.currentTime = Math.min(t, player.duration-1);
+          player.removeEventListener('loadedmetadata', fn);
+        });
+      }
+
+      player.play();
+    }
+
+    function closePlayer(){
+      player.pause();
+      player.src = '';
+      modal.style.display = 'none';
+    }
+
+    // Save progress
+    function saveProgress(){
+      if(!player.src) return;
+      const key = currentPlayingKey();
+      if(!key) return;
+      localStorage.setItem(key, player.currentTime);
+      localStorage.setItem('lastVolume', player.volume);
+      alert('Position saved');
+    }
+
+    function resetProgress(){
+      const key = currentPlayingKey();
+      if(!key) return;
+      localStorage.removeItem(key);
+      alert('Progress reset');
+    }
+
+    function currentPlayingKey(){
+      // find video object by src
+      const v = videos.find(x=>x.url === player.src);
+      return v? v.key : null;
+    }
+
+    // Events for player controls
+    playPause.addEventListener('click', ()=>{
+      if(player.paused) player.play(); else player.pause();
+    });
+    player.addEventListener('play', ()=> playPause.textContent='Pause');
+    player.addEventListener('pause', ()=> playPause.textContent='Play');
+
+    player.addEventListener('timeupdate', ()=>{
+      const pct = player.duration? (player.currentTime / player.duration) * 100 : 0;
+      timeline.value = pct;
+      currentTimeEl.textContent = fmtTime(player.currentTime);
+    });
+    player.addEventListener('loadedmetadata', ()=>{
+      durationEl.textContent = fmtTime(player.duration);
+    });
+
+    timeline.addEventListener('input', ()=>{
+      if(!player.duration) return;
+      const t = (timeline.value/100) * player.duration;
+      player.currentTime = t;
+    });
+
+    volumeEl.addEventListener('input', ()=>{ player.volume = Number(volumeEl.value); localStorage.setItem('lastVolume', player.volume)});
+    speedEl.addEventListener('change', ()=> player.playbackRate = Number(speedEl.value));
+
+    fsBtn.addEventListener('click', ()=>{
+      if(!document.fullscreenElement) player.requestFullscreen?.() || document.documentElement.requestFullscreen();
+      else document.exitFullscreen();
+    });
+
+    pipBtn.addEventListener('click', async ()=>{
+      try{ await player.requestPictureInPicture(); }catch(e){ alert('PIP not available'); }
+    });
+
+    closeBtn.addEventListener('click', closePlayer);
+    saveProgressBtn.addEventListener('click', saveProgress);
+    resetProgressBtn.addEventListener('click', resetProgress);
+
+    // store progress periodically while playing (throttled)
+    let saveTimer = null;
+    player.addEventListener('playing', ()=>{
+      if(saveTimer) clearInterval(saveTimer);
+      saveTimer = setInterval(()=>{
+        const key = currentPlayingKey(); if(key) localStorage.setItem(key, player.currentTime);
+      }, 5000);
+    });
+    player.addEventListener('pause', ()=>{ if(saveTimer) clearInterval(saveTimer); });
+    player.addEventListener('ended', ()=>{ if(saveTimer) clearInterval(saveTimer); });
+
+    // Handle folder pick
+    folderPicker.addEventListener('change', async ()=>{
+      const files = Array.from(folderPicker.files);
+      videos = [];
+      // filter and map
+      const vidFiles = files.filter(f=>{
+        const ext = (f.name.split('.').pop()||'').toLowerCase();
+        return videoExt.includes(ext);
+      });
+
+      // create objects
+      const createPromises = vidFiles.map(async (f)=>{
+        const url = URL.createObjectURL(f);
+        const folder = (f.webkitRelativePath || f.name).replace(/[^\/]+$/,'') || '/';
+        const name = f.name;
+        const key = storageKey(f);
+        let thumbnail = null;
+        try{ thumbnail = await createThumbnail(url); }catch(e){ thumbnail = null; }
+        return {file:f, url, folder, name, size:f.size, lastModified:f.lastModified, thumbnail, key};
+      });
+
+      const results = await Promise.all(createPromises);
+      videos = results;
+      filtered = [...videos];
+      applySort();
+      render(filtered);
+    });
+
+    // Search & sort
+    searchInput.addEventListener('input', ()=>{
+      const q = searchInput.value.trim().toLowerCase();
+      filtered = videos.filter(v=> v.name.toLowerCase().includes(q) || v.folder.toLowerCase().includes(q));
+      render(filtered);
+    });
+
+    sortSelect.addEventListener('change', ()=>{ applySort(); render(filtered); });
+    function applySort(){
+      const s = sortSelect.value;
+      filtered.sort((a,b)=>{
+        if(s==='name') return a.name.localeCompare(b.name);
+        if(s==='date') return b.lastModified - a.lastModified;
+        if(s==='size') return b.size - a.size;
+        return 0;
+      });
+    }
+
+    // Keyboard shortcuts
+    document.addEventListener('keydown', (e)=>{
+      if(modal.style.display==='flex'){
+        if(e.key===' '){ e.preventDefault(); if(player.paused) player.play(); else player.pause(); }
+        if(e.key==='ArrowRight') player.currentTime += 10;
+        if(e.key==='ArrowLeft') player.currentTime -= 10;
+        if(e.key==='f') fsBtn.click();
+      }
+    });
+
+    // Cleanup URL objects on unload
+    window.addEventListener('beforeunload', ()=>{
+      videos.forEach(v=>{ try{ URL.revokeObjectURL(v.url);}catch(e){} });
+    });
+
+    // Clicking outside player closes
+    modal.addEventListener('click', (ev)=>{
+      if(ev.target === modal) closePlayer();
+    });
+
+    // initial hint
+    videoGrid.innerHTML = '<div style="grid-column:1/-1;color:var(--muted);padding:20px">Choose "Select Folder" to index videos. Thumbnails are generated from the video frame (may fail for some codecs). Progress is saved locally in your browser.</div>';
+  </script>
+</body>
+</html>

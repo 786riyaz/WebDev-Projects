@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Local Netflix-Style Video Browser</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial;
+      background: #111;
+      color: #fff;
+    }
+
+    header {
+      padding: 20px;
+      font-size: 28px;
+      font-weight: bold;
+      background: #000;
+      text-align: center;
+      border-bottom: 2px solid #333;
+    }
+
+    #folderPickerContainer {
+      text-align: center;
+      padding: 20px;
+    }
+
+    #videoGrid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 20px;
+      padding: 20px;
+    }
+
+    .card {
+      background: #222;
+      padding: 10px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: 0.3s;
+      text-align: center;
+      border: 1px solid #333;
+    }
+
+    .card:hover {
+      background: #333;
+      transform: scale(1.03);
+    }
+
+    video {
+      width: 100%;
+      border-radius: 10px;
+    }
+
+    #playerModal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.85);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      padding: 30px;
+    }
+
+    #modalVideo {
+      width: 80%;
+      max-width: 1000px;
+      border-radius: 10px;
+    }
+
+    .closeBtn {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      font-size: 40px;
+      cursor: pointer;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+
+  <header>🎬 Local Netflix-Style Video Browser</header>
+
+  <div id="folderPickerContainer">
+    <input type="file" id="folderPicker" webkitdirectory directory multiple />
+    <p>Select a folder containing videos</p>
+  </div>
+
+  <div id="videoGrid"></div>
+
+  <div id="playerModal">
+    <span class="closeBtn" onclick="closePlayer()">&times;</span>
+    <video id="modalVideo" controls autoplay></video>
+  </div>
+
+  <script>
+    const folderPicker = document.getElementById("folderPicker");
+    const videoGrid = document.getElementById("videoGrid");
+    const modal = document.getElementById("playerModal");
+    const modalVideo = document.getElementById("modalVideo");
+
+    const videoExtensions = ["mp4", "mkv", "avi", "mov", "webm", "wmv", "flv"];
+
+    folderPicker.addEventListener("change", () => {
+      const files = Array.from(folderPicker.files);
+      videoGrid.innerHTML = "";
+
+      const videos = files.filter((file) => {
+        const ext = file.name.split(".").pop().toLowerCase();
+        return videoExtensions.includes(ext);
+      });
+
+      videos.forEach((videoFile) => {
+        const url = URL.createObjectURL(videoFile);
+        const card = document.createElement("div");
+        card.className = "card";
+        card.innerHTML = `
+          <p><strong>${videoFile.name}</strong></p>
+        `;
+        card.addEventListener("click", () => openPlayer(url));
+        videoGrid.appendChild(card);
+      });
+    });
+
+    function openPlayer(src) {
+      modal.style.display = "flex";
+      modalVideo.src = src;
+      modalVideo.play();
+    }
+
+    function closePlayer() {
+      modalVideo.pause();
+      modalVideo.src = "";
+      modal.style.display = "none";
+    }
+  </script>
+
+</body>
+</html>
